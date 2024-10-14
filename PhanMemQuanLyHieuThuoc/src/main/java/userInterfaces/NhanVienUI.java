@@ -15,7 +15,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import component.CustomScrollTable;
 import component.CustomTable;
 
 public class NhanVienUI extends JPanel{
@@ -72,12 +71,11 @@ public class NhanVienUI extends JPanel{
         String[] columnNames = {"Name", "Email", "Role"};
         JTable a = new JTable(data, columnNames);
         // Create custom table
-        CustomTable table = new CustomTable(800, 500, data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
-        CustomTable table1 = new CustomTable(data, columnNames);
-        CustomScrollTable nhanVienTable = new CustomScrollTable(table);
+        CustomTable table = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
        
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setPreferredSize(new Dimension(1000, 800));
         /*
         scrollPane.getViewport().setBackground(Color.blue);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -91,8 +89,6 @@ public class NhanVienUI extends JPanel{
         scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
         scrollPane.setPreferredSize(new Dimension(800, 500));
         */
-        // Add the scroll pane (containing the table) to the panel
-//        add(scrollPane);
         add(scrollPane);
         JScrollBar sb = scrollPane.getVerticalScrollBar();
 	        

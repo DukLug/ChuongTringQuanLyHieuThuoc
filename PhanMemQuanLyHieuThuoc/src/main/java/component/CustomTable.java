@@ -11,18 +11,17 @@ import java.awt.event.*;
 public class CustomTable extends JTable {
 	private CustomTableRowStyle rowStyle;
     // Constructor
-    public CustomTable(int prefWidth, int prefHeight, Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns) {
+    public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns) {
         this(data, columnNames);
-//        this.setEnabled(false);
-//        setShowHorizontalLines(true);
-//        setShowVerticalLines(false);
-//        
-//        setHeader(headerStyle, columnNames.length);
-//        
-//        this.setRowHeight(rowStyle.getHeight());
-//        this.rowStyle = rowStyle;
-//        this.setRowMargin(gapBetweenColumns);
-//        this.setMinimumSize(new Dimension(prefWidth, prefHeight));
+        this.setEnabled(false);
+        setShowHorizontalLines(true);
+        setShowVerticalLines(false);
+        
+        setHeader(headerStyle, columnNames.length);
+        
+        this.setRowHeight(rowStyle.getHeight());
+        this.rowStyle = rowStyle;
+        this.setRowMargin(gapBetweenColumns);
 
     }
     
@@ -35,20 +34,20 @@ public class CustomTable extends JTable {
 
 
 
-//	@Override
-//    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-//    	super.prepareRenderer(renderer, row, column);
-//        Component stamp = super.prepareRenderer(renderer, row, column);
-//        if (true) {
-//        	stamp.setBackground(rowStyle.getBackgroundColor());
-//        	stamp.setFont(rowStyle.getFont());
-//        }
-//           
-//        else
-//            stamp.setBackground(rowStyle.getForegroundColor());
-//        	stamp.setFont(rowStyle.getFont());
-//        return stamp;
-//    }
+	@Override
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    	super.prepareRenderer(renderer, row, column);
+        Component stamp = super.prepareRenderer(renderer, row, column);
+        if (true) {
+        	stamp.setBackground(rowStyle.getBackgroundColor());
+        	stamp.setFont(rowStyle.getFont());
+        }
+           
+        else
+            stamp.setBackground(rowStyle.getForegroundColor());
+        	stamp.setFont(rowStyle.getFont());
+        return stamp;
+    }
     
     private void setHeader(CustomTableRowStyle headerStyle, int numOfRows) {
     	JTableHeader header = getTableHeader();

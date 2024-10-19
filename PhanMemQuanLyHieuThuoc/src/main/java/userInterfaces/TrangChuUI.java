@@ -49,6 +49,7 @@ public class TrangChuUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.ApplicationHeight)); 
         setBackground(Color.yellow);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.ApplicationHeight));
@@ -121,10 +122,10 @@ public class TrangChuUI extends JFrame {
         		UIStyles.ContactIcon,
         		CustomButtonIconSide.LEFT,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
+        		new String[]{"Khách hàng", "Nhà cung cấp"},
         		new CustomButtonFunction[] {
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new KhachHangUI()),
+        			()->taiTrang(new NhaCungCapUI())
         		}
         		));
 		

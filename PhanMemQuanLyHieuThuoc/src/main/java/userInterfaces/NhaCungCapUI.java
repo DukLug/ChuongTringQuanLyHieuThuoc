@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import component.CustomTable;
-import connectDB.ConnectDB;
+//import connectDB.ConnectDB;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
@@ -66,7 +66,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		// bảng
 		JPanel panelBang = new JPanel();
 		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
-		panelBang.setBounds(41, 103, 1203, 718);
+		panelBang.setBounds(41, 91, 1203, 718);
 		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelTong.add(panelBang);
 		
@@ -96,7 +96,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		// biểu mẫu
         JPanel panelBieuMau = new JPanel() ;
 		panelBieuMau.setBackground(Color.WHITE);
-		panelBieuMau.setBounds(1265, 103, 495, 718);
+		panelBieuMau.setBounds(1265, 91, 495, 718);
 		panelTong.add(panelBieuMau);
 		panelBieuMau.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelBieuMau.setLayout(null);
@@ -200,7 +200,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		// thanh công cụ
 		JPanel panelThanhcongCu = new JPanel();
 		panelThanhcongCu.setBackground(Color.WHITE);
-		panelThanhcongCu.setBounds(41, 34, 1719, 46);
+		panelThanhcongCu.setBounds(41, 24, 1719, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
 		panelThanhcongCu.setBackground(new Color(232, 234, 236));
@@ -208,12 +208,12 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		JLabel lblTieuDe = new JLabel("NHÀ CUNG CẤP");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTieuDe.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblTieuDe.setBounds(47, 10, 203, 36);
+		lblTieuDe.setBounds(46, 7, 203, 36);
 		panelThanhcongCu.add(lblTieuDe);
 		
 		JPanel panelTim = new JPanel();
 		panelTim.setBackground(Color.WHITE);
-		panelTim.setBounds(322, 0, 438, 46);
+		panelTim.setBounds(432, 0, 438, 46);
 		panelThanhcongCu.add(panelTim);
 		panelTim.setLayout(new BorderLayout(0, 0));
 		panelTim.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));

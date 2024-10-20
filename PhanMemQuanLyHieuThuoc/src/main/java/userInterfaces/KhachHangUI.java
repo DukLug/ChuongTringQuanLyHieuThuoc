@@ -6,10 +6,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import component.CustomTable;
+import component.ImageUtilities;
+
 //import connectDB.ConnectDB;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -18,6 +24,7 @@ import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
@@ -71,18 +78,41 @@ setLayout(null);
 		
 		JPanel panelLoc = new JPanel();
 		panelLoc.setBackground(Color.WHITE);
-		panelLoc.setBounds(41, 103, 299, 718);
+		panelLoc.setBounds(41, 81, 281, 727);
 		panelTong.add(panelLoc);
 		panelLoc.setBackground(new Color(232, 234, 236));
 		panelLoc.setLayout(null);
 
+		JPanel panelKhung = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+		        super.paintComponent(g);
+		        Graphics2D g2d = (Graphics2D) g.create();
+		       		        
+		        int shadowSize = 10; // Kích thước bóng
+		        int size = Math.min(getWidth(), getHeight() - 10); // Kích thước panel lớn hơn
+//		        int size = Math.min(getWidth(), getHeight()) / 2;
+		        
+		        RoundRectangle2D border = new RoundRectangle2D.Double(0, 0, size, size - 5, 0, 0);
+		        ImageUtilities.applyQualityRenderingHints(g2d);
+		        g2d.drawImage(ImageUtilities.applyShadow(border, 4, getBackground(), Color.DARK_GRAY, 0.25f), 2, 2, this);
+		        g2d.setColor(Color.BLACK);
+		        g2d.translate(5, 5);
+		        g2d.draw(border);
+		        g2d.dispose();
+		    }
+		};
+		panelKhung.setBackground(new Color(232, 234, 236));
+		panelKhung.setBounds(0, 10, 299, 264);
+		panelLoc.add(panelKhung);
+		panelKhung.setLayout(null);
+		
 		JPanel panelLocDTL = new JPanel();
-        panelLocDTL.setBackground(Color.WHITE);
-        panelLocDTL.setBounds(10, 0, 279, 260);
-        panelLocDTL.setLayout(null);
-        panelLocDTL.setBorder(new LineBorder(Color.GRAY, 1, true)); // Viền màu xám, độ dày 2, bo góc
-        panelLoc.add(panelLocDTL);
-        
+		panelLocDTL.setBackground(Color.WHITE);
+		panelLocDTL.setBounds(8, 10, 247, 240);
+		panelLocDTL.setLayout(null);
+		panelLocDTL.setBorder(new LineBorder(Color.GRAY, 1, true)); // Viền màu xám, độ dày 2, bo góc
+		panelKhung.add(panelLocDTL);
 		
 		JLabel lblNewLabel = new JLabel("Điểm tích lũy");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -126,7 +156,7 @@ setLayout(null);
 		// bảng
 		JPanel panelBang = new JPanel();
 		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
-		panelBang.setBounds(359, 103, 885, 718);
+		panelBang.setBounds(332, 90, 911, 718);
 		panelTong.add(panelBang);
 		
 		Object[][] data = {
@@ -146,7 +176,7 @@ setLayout(null);
        
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(885, 711)); // thay đổi theo khung chứa
+        scrollPane.setPreferredSize(new Dimension(911, 711)); // thay đổi theo khung chứa
         scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
         
         panelBang.add(scrollPane);
@@ -156,7 +186,7 @@ setLayout(null);
 		// biểu mẫu
         JPanel panelBieuMau = new JPanel() ;
 		panelBieuMau.setBackground(Color.WHITE);
-		panelBieuMau.setBounds(1265, 103, 495, 718);
+		panelBieuMau.setBounds(1265, 90, 495, 718);
 		panelTong.add(panelBieuMau);
 		panelBieuMau.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelBieuMau.setLayout(null);
@@ -261,7 +291,7 @@ setLayout(null);
 		// thanh công cụ
 		JPanel panelThanhcongCu = new JPanel();
 		panelThanhcongCu.setBackground(Color.WHITE);
-		panelThanhcongCu.setBounds(41, 34, 1719, 46);
+		panelThanhcongCu.setBounds(41, 25, 1719, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
 		panelThanhcongCu.setBackground(new Color(232, 234, 236));
@@ -269,12 +299,12 @@ setLayout(null);
 		JLabel lblTieuDe = new JLabel("KHÁCH HÀNG");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTieuDe.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblTieuDe.setBounds(72, 10, 170, 26);
+		lblTieuDe.setBounds(46, 10, 170, 26);
 		panelThanhcongCu.add(lblTieuDe);
 		
 		JPanel panelTim = new JPanel();
 		panelTim.setBackground(Color.WHITE);
-		panelTim.setBounds(322, 0, 438, 46);
+		panelTim.setBounds(291, 0, 438, 46);
 		panelThanhcongCu.add(panelTim);
 		panelTim.setLayout(new BorderLayout(0, 0));
 		panelTim.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));

@@ -13,8 +13,11 @@ import java.awt.Insets;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import component.CustomButton;
 import component.CustomTable;
 import component.ImageUtilities;
+import component.CustomButton.CustomButtonIconSide;
 
 //import connectDB.ConnectDB;
 import javax.swing.JTextField;
@@ -22,6 +25,8 @@ import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
@@ -45,10 +50,11 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 	private JRadioButton rdbtn200;
 	private JRadioButton rdbtn500;
 	private JRadioButton rdbtn600;
-	private JButton btnThem;
-	private JButton btnCapNhat;
-	private JButton btnXoaTrang;
+	private CustomButton btnThem;
+	private CustomButton btnCapNhat;
+	private CustomButton btnXoaTrang;
 	private DefaultTableModel modelKH;
+	private JTextField txtCCCD;
 	
 
 	public KhachHangUI() {
@@ -71,8 +77,8 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 setLayout(null);
 		
 		JPanel panelTong = new JPanel();
-		panelTong.setBackground(new Color(232, 234, 236));
-		panelTong.setBounds(0, 0, 1800, 850);
+		panelTong.setBackground(UIStyles.backgroundColor);
+		panelTong.setBounds(10, 10, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 		add(panelTong);
 		panelTong.setLayout(null);
 		
@@ -80,7 +86,7 @@ setLayout(null);
 		panelLoc.setBackground(Color.WHITE);
 		panelLoc.setBounds(41, 81, 281, 727);
 		panelTong.add(panelLoc);
-		panelLoc.setBackground(new Color(232, 234, 236));
+		panelLoc.setBackground(UIStyles.backgroundColor);
 		panelLoc.setLayout(null);
 
 		JPanel panelKhung = new JPanel() {
@@ -102,7 +108,7 @@ setLayout(null);
 		        g2d.dispose();
 		    }
 		};
-		panelKhung.setBackground(new Color(232, 234, 236));
+		panelKhung.setBackground(UIStyles.backgroundColor);
 		panelKhung.setBounds(0, 10, 299, 264);
 		panelLoc.add(panelKhung);
 		panelKhung.setLayout(null);
@@ -154,10 +160,10 @@ setLayout(null);
 		groupDTL.add(rdbtn600);
 		
 		// bảng
-		JPanel panelBang = new JPanel();
-		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
-		panelBang.setBounds(332, 90, 911, 718);
-		panelTong.add(panelBang);
+//		JPanel panelBang = new JPanel();
+//		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
+//		panelBang.setBounds(332, 90, 911, 718);
+//		panelTong.add(panelBang);
 		
 		Object[][] data = {
 	            {"1", "john@example.com", "Developer", "1", "john@example.com"},
@@ -179,14 +185,15 @@ setLayout(null);
         scrollPane.setPreferredSize(new Dimension(911, 711)); // thay đổi theo khung chứa
         scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
         
-        panelBang.add(scrollPane);
+        scrollPane.setBounds(332, 90, 911, 718); // Đặt kích thước và vị trí của scrollPane
+        panelTong.add(scrollPane);
         
         JScrollBar sb = scrollPane.getVerticalScrollBar();
 		
 		// biểu mẫu
         JPanel panelBieuMau = new JPanel() ;
 		panelBieuMau.setBackground(Color.WHITE);
-		panelBieuMau.setBounds(1265, 90, 495, 718);
+		panelBieuMau.setBounds(1265, 90, 606, 718);
 		panelTong.add(panelBieuMau);
 		panelBieuMau.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelBieuMau.setLayout(null);
@@ -194,7 +201,7 @@ setLayout(null);
 		JLabel lblNewLabel_1 = new JLabel("Thông tin");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		lblNewLabel_1.setBounds(157, 10, 174, 57);
+		lblNewLabel_1.setBounds(229, 10, 174, 57);
 		panelBieuMau.add(lblNewLabel_1);
 		
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
@@ -226,7 +233,7 @@ setLayout(null);
 		txtMaKH.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		txtMaKH.setBackground(Color.WHITE);
 		txtMaKH.setEditable(false);
-		txtMaKH.setBounds(225, 100, 225, 35);
+		txtMaKH.setBounds(244, 102, 308, 35);
 		panelBieuMau.add(txtMaKH);
 		txtMaKH.setColumns(10);
 		txtMaKH.setBorder(new LineBorder(Color.BLACK, 1));
@@ -236,7 +243,7 @@ setLayout(null);
 		txtHoTen.setColumns(10);
 		txtHoTen.setBorder(new LineBorder(Color.BLACK, 1));
 		txtHoTen.setBackground(Color.WHITE);
-		txtHoTen.setBounds(225, 167, 225, 35);
+		txtHoTen.setBounds(244, 169, 308, 35);
 		panelBieuMau.add(txtHoTen);
 		
 		txtSDT = new JTextField();
@@ -244,7 +251,7 @@ setLayout(null);
 		txtSDT.setColumns(10);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1));
 		txtSDT.setBackground(Color.WHITE);
-		txtSDT.setBounds(225, 245, 225, 35);
+		txtSDT.setBounds(244, 244, 308, 35);
 		panelBieuMau.add(txtSDT);
 		
 		txtDiaChi = new JTextField();
@@ -252,7 +259,7 @@ setLayout(null);
 		txtDiaChi.setColumns(10);
 		txtDiaChi.setBorder(new LineBorder(Color.BLACK, 1));
 		txtDiaChi.setBackground(Color.WHITE);
-		txtDiaChi.setBounds(225, 319, 225, 35);
+		txtDiaChi.setBounds(244, 321, 308, 35);
 		panelBieuMau.add(txtDiaChi);
 		
 		txtDTL = new JTextField();
@@ -261,31 +268,38 @@ setLayout(null);
 		txtDTL.setColumns(10);
 		txtDTL.setBorder(new LineBorder(Color.BLACK, 1));
 		txtDTL.setBackground(Color.WHITE);
-		txtDTL.setBounds(225, 399, 225, 35);
+		txtDTL.setBounds(244, 399, 308, 35);
 		panelBieuMau.add(txtDTL);
-		
-		btnThem = new JButton("Thêm");
+
+		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT);
+		btnThem.setBounds(102, 563, 180, 46);
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnThem.setBackground(Color.WHITE);
-		btnThem.setBounds(49, 563, 180, 46);
-		btnThem.setIcon(UIStyles.Add);
-		btnThem.setFocusPainted(false);  // xóa khung khi thao tác
 		panelBieuMau.add(btnThem);
 		
-		btnCapNhat = new JButton("Cập nhật");
+		
+		btnCapNhat = new CustomButton("Cập nhật", UIStyles.CapNhatButtonStyle, UIStyles.Update, CustomButtonIconSide.LEFT);
 		btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnCapNhat.setBackground(Color.WHITE);
-		btnCapNhat.setBounds(267, 563, 180, 46);
-		btnCapNhat.setIcon(UIStyles.Update);
-		btnCapNhat.setFocusPainted(false); 
+		btnCapNhat.setBounds(339, 563, 180, 46);
 		panelBieuMau.add(btnCapNhat);
 		
-		btnXoaTrang = new JButton("Xóa trắng");
-		btnXoaTrang.setBackground(Color.WHITE);
+		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, null, CustomButtonIconSide.LEFT);
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnXoaTrang.setBounds(164, 634, 180, 46);
-		btnXoaTrang.setFocusPainted(false); 
+		btnXoaTrang.setBounds(223, 636, 180, 46);
 		panelBieuMau.add(btnXoaTrang);
+		
+		JLabel lblCccd = new JLabel("CCCD:");
+		lblCccd.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblCccd.setBounds(35, 476, 180, 38);
+		panelBieuMau.add(lblCccd);
+		
+		txtCCCD = new JTextField();
+		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		txtCCCD.setEditable(false);
+		txtCCCD.setColumns(10);
+		txtCCCD.setBorder(new LineBorder(Color.BLACK, 1));
+		txtCCCD.setBackground(Color.WHITE);
+		txtCCCD.setBounds(244, 476, 308, 35);
+		panelBieuMau.add(txtCCCD);
 	
 		
 		// thanh công cụ
@@ -294,7 +308,7 @@ setLayout(null);
 		panelThanhcongCu.setBounds(41, 25, 1719, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
-		panelThanhcongCu.setBackground(new Color(232, 234, 236));
+		panelThanhcongCu.setBackground(UIStyles.backgroundColor);
 		
 		JLabel lblTieuDe = new JLabel("KHÁCH HÀNG");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -315,13 +329,14 @@ setLayout(null);
 		txtTim.setBackground(Color.WHITE);
 		txtTim.setColumns(10);
 		txtTim.setBorder(BorderFactory.createEmptyBorder()); // xóa viền
+		UIStyles.setPlaceholder(txtTim, "Mã, số điện thoại khách hàng");
 		
 		JLabel icon = new JLabel(UIStyles.FInd);
 		panelTim.add(icon, BorderLayout.WEST);
 		icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // cách lề 5px
 		
 		JCheckBox chckbxHienDS = new JCheckBox("Hiện tất cả");
-		chckbxHienDS.setBackground(new Color(232, 234, 236));
+		chckbxHienDS.setBackground(UIStyles.backgroundColor);
 		chckbxHienDS.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		chckbxHienDS.setBounds(1057, 0, 146, 46);
 		chckbxHienDS.setFocusPainted(false); 
@@ -402,5 +417,4 @@ setLayout(null);
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

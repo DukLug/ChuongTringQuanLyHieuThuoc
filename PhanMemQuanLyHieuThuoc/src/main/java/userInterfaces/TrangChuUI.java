@@ -160,14 +160,8 @@ public class TrangChuUI extends JFrame {
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
-//        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
-        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, () -> {
-            taiTrang(new BanHangUI());
-            
-            // Thay đổi kích thước của topSection nếu cần
-            topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.LabelBarHeight));
-        }));
-        
+        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
+   
         navBar.setLayout(new BorderLayout());
         navBar.add(navBarWest, BorderLayout.WEST);
         navBar.add(navBarEast, BorderLayout.EAST);
@@ -195,16 +189,16 @@ public class TrangChuUI extends JFrame {
 		uiHistory.add(mainSection);
 		
 		 // Kiểm tra nếu là BanHangUI, xóa navBar
-	    if (trangDich instanceof BanHangUI) {
-	        if (navBar.getParent() != null) {
-	            topSection.remove(navBar);
-	        }
-	    } else {
-	        // Nếu không phải BanHangUI, đảm bảo navBar được thêm lại
-	        if (navBar.getParent() == null) {
-	            topSection.add(navBar, BorderLayout.CENTER);
-	        }
-	    }
+//	    if (trangDich instanceof BanHangUI) {
+//	        if (navBar.getParent() != null) {
+//	            topSection.remove(navBar);
+//	        }
+//	    } else {
+//	        // Nếu không phải BanHangUI, đảm bảo navBar được thêm lại
+//	        if (navBar.getParent() == null) {
+//	            topSection.add(navBar, BorderLayout.CENTER);
+//	        }
+//	    }
 	    
 		//Sang trang moi
 		panel.remove(mainSection);
@@ -219,28 +213,28 @@ public class TrangChuUI extends JFrame {
 			System.out.println("Khong co lich su");
 			return;
 		}
-//		panel.remove(mainSection);
-//		mainSection = uiHistory.getLast();
-//		panel.add(mainSection, BorderLayout.CENTER);
-//		panel.revalidate();
-//		panel.repaint();
-//		
-//		uiHistory.removeLast();
-		
 		panel.remove(mainSection);
-	    mainSection = uiHistory.pop(); // Lấy trang trước đó
-	    panel.add(mainSection, BorderLayout.CENTER);
-
-	    // Nếu trang trước đó là TongQuanUI, thêm lại navBar
-	    if (!(mainSection instanceof BanHangUI)) {
-	        if (navBar.getParent() == null) {
-	        	topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.TopSectionHeight));
-	            topSection.add(navBar, BorderLayout.CENTER);
-	        }
-	    }
-
-	    panel.revalidate();
-	    panel.repaint();
+		mainSection = uiHistory.getLast();
+		panel.add(mainSection, BorderLayout.CENTER);
+		panel.revalidate();
+		panel.repaint();
+		
+		uiHistory.removeLast();
+		
+//		panel.remove(mainSection);
+//	    mainSection = uiHistory.pop(); // Lấy trang trước đó
+//	    panel.add(mainSection, BorderLayout.CENTER);
+//
+//	    // Nếu trang trước đó là TongQuanUI, thêm lại navBar
+//	    if (!(mainSection instanceof BanHangUI)) {
+//	        if (navBar.getParent() == null) {
+//	        	topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.TopSectionHeight));
+//	            topSection.add(navBar, BorderLayout.CENTER);
+//	        }
+//	    }
+//
+//	    panel.revalidate();
+//	    panel.repaint();
 	}
 	
 }

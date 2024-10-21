@@ -35,12 +35,12 @@ public class NhanVienUI extends JPanel{
 		textField.setPreferredSize(new Dimension(100, 50));
 		
 		Object[][] data = {
-	            {"1", "john@example.com", "Developer"},
+	            {"1", "john@example.com", ""},
 	            {"2", "jane@example.com", "Designer"},
 	            {"3", "mike@example.com", "Manager"},
 	            {"John Doe", "john@example.com", "Developer"},
 	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnsonfffffffffffffffffffffffffffffffff", "mike@example.com", "Manager"},
+	            {"Mike Johnsonffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddffffff", "mike@example.com", "Manager"},
 	            {"John Doe", "john@example.com", "Developer"},
 	            {"Jane Smith", "jane@example.com", "Designer"},
 	            {"Mike Johnson", "mike@example.com", "Manager"},
@@ -69,9 +69,10 @@ public class NhanVienUI extends JPanel{
 	        };
 
         String[] columnNames = {"Name", "Email", "Role"};
-        JTable a = new JTable(data, columnNames);
         // Create custom table
-        CustomTable table = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
+        CustomTable table = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
+        		new int[] {500, 300, 200}
+        		);
        
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);

@@ -60,6 +60,10 @@ public class UIStyles {
 	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 30, 30);
 	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 30, 30);
 	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 30, 30);
+	public static final ImageIcon Find  = getIconFromPath("resources/find.png", 30, 30);
+	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
+	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
+	
 	
 	public static Font defaultFont = (new JLabel()).getFont();
 	public static final CustomTableRowStyle NhanVienTableHeaderStyle = new CustomTableRowStyle(

@@ -3,7 +3,11 @@ package userInterfaces;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,6 +25,7 @@ import component.CustomButton;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
 import component.CustomComboBox;
+import application.*;
 
 
 public class TrangChuUI extends JFrame {		
@@ -122,10 +127,10 @@ public class TrangChuUI extends JFrame {
         		UIStyles.ContactIcon,
         		CustomButtonIconSide.LEFT,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
+        		new String[]{"Khách hàng", "Nhà Cung Cấp"},
         		new CustomButtonFunction[] {
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new KhachHangUI()),
+        			()->taiTrang(new NhaCungCapUI())
         		}
         		));
 		
@@ -171,8 +176,12 @@ public class TrangChuUI extends JFrame {
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
-        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
-			
+
+        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, () -> {
+            taiTrang(new BanHangUI());
+            topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.LabelBarHeight));
+        }));
+        
         navBar.setLayout(new BorderLayout());
         navBar.add(navBarWest, BorderLayout.WEST);
         navBar.add(navBarEast, BorderLayout.EAST);
@@ -192,14 +201,10 @@ public class TrangChuUI extends JFrame {
         
 	}
 	
-
-
-
 	public void taiTrang(JPanel trangDich) {	
 		//Luu lich su trang
 		if(uiHistory.size() >= 10) uiHistory.removeFirst();
 		uiHistory.add(mainSection);
-		
 		
 		//Sang trang moi
 		panel.remove(mainSection);
@@ -223,4 +228,52 @@ public class TrangChuUI extends JFrame {
 		uiHistory.removeLast();
 	}
 	
+	public static void hienLoi(Class<?> errorSource, Exception e) {
+	 	if (!PhanMemQuanLyHieuThuoc.HienLoi) return;
+        String errorMessage = errorSource.getName() + ": " + e.getMessage();
+        String email = new String("support@example.com"); 
+        JLabel emailLabel = new JLabel("Please contact with us to get help: " + email);
+        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        JTextArea errorText = new JTextArea(errorMessage + "\nPlease contact with us to get help.");
+        errorText.setEditable(false);
+        
+        panel.add(new JScrollPane(errorText), BorderLayout.NORTH);
+        panel.add(emailLabel, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton copyEmailButton = new JButton("Copy Email");
+        copyEmailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                StringSelection emailSelection = new StringSelection(email);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(emailSelection, null);
+                JOptionPane.showMessageDialog(null, "Email copied to clipboard.");
+            }
+        });
+        buttonPanel.add(copyEmailButton);
+
+        JButton copyErrorButton = new JButton("Copy Error");
+        copyErrorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                StringSelection errorSelection = new StringSelection(errorMessage);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(errorSelection, null);
+                JOptionPane.showMessageDialog(null, "Error copied to clipboard.");
+            }
+        });
+        buttonPanel.add(copyErrorButton);
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        JOptionPane.showMessageDialog(null,
+                panel,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+
+        throw new IllegalArgumentException(errorMessage);
+    }
+
 }

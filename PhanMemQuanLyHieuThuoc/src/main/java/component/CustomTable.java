@@ -3,52 +3,66 @@ package component;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import userInterfaces.TrangChuUI;
 import userInterfaces.UIStyles;
 
 import java.awt.*;
 import java.awt.event.*;
+import application.*;
 
 public class CustomTable extends JTable {
 	private CustomTableRowStyle rowStyle;
     // Constructor
-    public CustomTable(int prefWidth, int prefHeight, Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns) {
-        this(data, columnNames);
-//        this.setEnabled(false);
-//        setShowHorizontalLines(true);
-//        setShowVerticalLines(false);
-//        
-//        setHeader(headerStyle, columnNames.length);
-//        
-//        this.setRowHeight(rowStyle.getHeight());
-//        this.rowStyle = rowStyle;
-//        this.setRowMargin(gapBetweenColumns);
-//        this.setMinimumSize(new Dimension(prefWidth, prefHeight));
-
+    public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns) {
+    	super(data, columnNames);
+    	if(PhanMemQuanLyHieuThuoc.HienLoi) {
+    		for (Object[] row : data) {
+                if (row.length != columnNames.length) {
+                    TrangChuUI.hienLoi(this.getClass(), new Exception("Data row length does not match the number of column names"));
+                }
+            }
+    	}
+    	
+        this.setEnabled(false);
+        setShowHorizontalLines(true);
+        setShowVerticalLines(false);
+        
+        setHeader(headerStyle, columnNames.length);
+        
+        this.setRowHeight(rowStyle.getHeight());
+        this.rowStyle = rowStyle;
+        
+        TableColumnModel columnModel = this.getColumnModel();
     }
     
     
     
-    public CustomTable(Object[][] rowData, Object[] columnNames) {
-		super(rowData, columnNames);
-		// TODO Auto-generated constructor stub
+    public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns, int[] columnsWidth) {
+		this(data, columnNames, headerStyle, rowStyle, gapBetweenColumns);
+		TableColumnModel columnModel = this.getColumnModel();
+		for(int i = 0; i<columnNames.length; i++) {
+			columnModel.getColumn(i).setPreferredWidth(columnsWidth[i]);
+			columnModel.getColumn(i).setMaxWidth(columnsWidth[i]);
+		}
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 	}
 
 
 
-//	@Override
-//    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-//    	super.prepareRenderer(renderer, row, column);
-//        Component stamp = super.prepareRenderer(renderer, row, column);
-//        if (true) {
-//        	stamp.setBackground(rowStyle.getBackgroundColor());
-//        	stamp.setFont(rowStyle.getFont());
-//        }
-//           
-//        else
-//            stamp.setBackground(rowStyle.getForegroundColor());
-//        	stamp.setFont(rowStyle.getFont());
-//        return stamp;
-//    }
+	@Override
+    public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+    	super.prepareRenderer(renderer, row, column);
+        Component stamp = super.prepareRenderer(renderer, row, column);
+        if (true) {
+        	stamp.setBackground(rowStyle.getBackgroundColor());
+        	stamp.setFont(rowStyle.getFont());
+        }
+           
+        else
+            stamp.setBackground(rowStyle.getForegroundColor());
+        	stamp.setFont(rowStyle.getFont());
+        return stamp;
+    }
     
     private void setHeader(CustomTableRowStyle headerStyle, int numOfRows) {
     	JTableHeader header = getTableHeader();
@@ -69,7 +83,7 @@ public class CustomTable extends JTable {
         	
         	getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(myHeaderRender);
         }
-        
+      
     }
     
 
@@ -123,4 +137,3 @@ public class CustomTable extends JTable {
 
 
 }
-

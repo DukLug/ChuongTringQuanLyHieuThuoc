@@ -7,9 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class BanHangUI extends JPanel{
-	
-	public JTextField textField;
+public class BanHangUI extends JPanel {
 	
 	public BanHangUI() {
 		super();
@@ -17,13 +15,14 @@ public class BanHangUI extends JPanel{
 	}
 	
 	public void taoHinh() {
-		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
-		this.setBackground(Color.WHITE);
-		this.add(new JLabel("BanHangUI"));
+		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight + UIStyles.NavBarHeight));
+		setLayout(null);
+		setBackground(Color.WHITE);
 		
-		textField = new JTextField();
-		textField.setPreferredSize(new Dimension(100, 50));
-		
-		add(textField);
+		JPanel panelTong = new JPanel();
+		panelTong.setBackground(Color.RED);
+		panelTong.setBounds(0, 0, 1800, 925);
+		add(panelTong);
 	}
+
 }

@@ -1,4 +1,9 @@
+/META-INF/
+/enity/
+/dao/
+/connectDB/
 /application/
 /component/
 /userInterfaces/
-/META-INF/
+/controller/
+/entity/

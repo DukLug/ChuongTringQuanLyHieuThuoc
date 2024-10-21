@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Stack;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -149,10 +150,10 @@ public class TrangChuUI extends JFrame {
         		UIStyles.AnalysingIcon,
         		CustomButtonIconSide.LEFT,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
+        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new ThongKeUI()),
+        			()->taiTrang(new NhanVienUI())
         		}
         		));
 		navBarWest.add(new CustomComboBox(
@@ -191,6 +192,7 @@ public class TrangChuUI extends JFrame {
         
 	}
 	
+
 
 
 	public void taiTrang(JPanel trangDich) {	

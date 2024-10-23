@@ -8,29 +8,20 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 import component.CustomButton;
 import component.CustomTable;
 import component.ImageUtilities;
 import component.CustomButton.CustomButtonIconSide;
-
-//import connectDB.ConnectDB;
 import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
@@ -173,16 +164,18 @@ setLayout(null);
 	            
 	            
 		};
-		String[] header = {"Mã số", "Họ tên", "Số điện thoại", "Địa chỉ", "Điểm tích lũy"};
-		modelKH = new DefaultTableModel(header, 0);
-		tableKH = new JTable(modelKH);
-//        tableKH = new JTable(data, columnNames);
-        // Create custom table
-        CustomTable table = new CustomTable(data, header, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
+		String[] columnNames = {"Mã số", "Họ tên", "Số điện thoại", "Địa chỉ", "Điểm tích lũy"};
+		JTable a = new JTable(data, columnNames);
+	        // Create custom table
+//		modelKH = new DefaultTableModel(header, 0);
+//		tableKH = new JTable(modelKH);
+////        tableKH = new JTable(data, columnNames);
+//        // Create custom table
+        CustomTable table = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
        
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(911, 711)); // thay đổi theo khung chứa
+        scrollPane.setPreferredSize(new Dimension(911, 711));
         scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
         
         scrollPane.setBounds(332, 90, 911, 718); // Đặt kích thước và vị trí của scrollPane
@@ -271,18 +264,18 @@ setLayout(null);
 		txtDTL.setBounds(244, 399, 308, 35);
 		panelBieuMau.add(txtDTL);
 
-		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT);
+		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThem.setBounds(102, 563, 180, 46);
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelBieuMau.add(btnThem);
 		
 		
-		btnCapNhat = new CustomButton("Cập nhật", UIStyles.CapNhatButtonStyle, UIStyles.Update, CustomButtonIconSide.LEFT);
+		btnCapNhat = new CustomButton("Cập nhật", UIStyles.CapNhatButtonStyle, UIStyles.Update, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnCapNhat.setBounds(339, 563, 180, 46);
 		panelBieuMau.add(btnCapNhat);
 		
-		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, null, CustomButtonIconSide.LEFT);
+		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.trash, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnXoaTrang.setBounds(223, 636, 180, 46);
 		panelBieuMau.add(btnXoaTrang);
@@ -351,17 +344,17 @@ setLayout(null);
 		txtHoTen.addActionListener(this);
 		txtMaKH.addActionListener(this);
 		txtSDT.addActionListener(this);
-		
-		tableKH.addMouseListener(this);
+	}
+
+	private Object quayLai() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		Object o = e.getSource();
-		
-		int donguocChon = tableKH.getSelectedRow();
-		
 		
 		if (o.equals(btnXoaTrang))
 			xoaTrang();

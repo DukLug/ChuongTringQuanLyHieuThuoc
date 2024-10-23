@@ -6,34 +6,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Toolkit;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 import component.CustomButton;
 import component.CustomTable;
 import component.CustomButton.CustomButtonIconSide;
-
-//import connectDB.ConnectDB;
 import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
-import java.awt.Component;
+
 
 public class NhaCungCapUI extends JPanel implements ActionListener, MouseListener {
 	private JTextField txtTim;
@@ -47,21 +36,10 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	private CustomButton btnXoaTrang;
 	private DefaultTableModel modelNCC;
 	private JTextField txtEmail;
-	private JScrollPane scrollPane;
-	private DefaultTableModel modelKH;
-	private JTable tableKH;
 
 	public NhaCungCapUI() {
 		super();
 		taoHinh();
-		
-		 // Khởi tạo kết nối đến cơ sở dữ liệu khi một thể hiện của NhanVien_UI được tạo ra
-//        try {
-//            ConnectDB.getInstance().connect();
-//            System.out.println("Connect!!");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
 	}
 	
 	public void taoHinh() {
@@ -87,7 +65,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		JLabel lblNewLabel_1 = new JLabel("Thông tin");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		lblNewLabel_1.setBounds(120, 10, 359, 57);
+		lblNewLabel_1.setBounds(107, 10, 359, 57);
 		panelBieuMau.add(lblNewLabel_1);
 		
 		JLabel lblMaNCC = new JLabel("Mã số:");
@@ -150,17 +128,17 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		
 		
 		
-		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT);
+		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThem.setBounds(71, 530, 180, 46);
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelBieuMau.add(btnThem);
 		
-		btnCapNhat = new CustomButton("Cập nhật", UIStyles.CapNhatButtonStyle, UIStyles.Update, CustomButtonIconSide.LEFT);
+		btnCapNhat = new CustomButton("Cập nhật", UIStyles.CapNhatButtonStyle, UIStyles.Update, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnCapNhat.setBounds(300, 530, 180, 46);
 		panelBieuMau.add(btnCapNhat);
 		
-		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, null, CustomButtonIconSide.LEFT);
+		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.trash, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnXoaTrang.setBounds(184, 609, 180, 46);
 		panelBieuMau.add(btnXoaTrang);
@@ -223,12 +201,11 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	            
 	            
 		};
-		String[] header = {"Mã số", "Họ tên", "Số điện thoại", "Email", "Địa chỉ"};
-		modelKH = new DefaultTableModel(header, 0);
-		tableKH = new JTable(modelKH);
+		String[] columnNames = {"Mã số", "Họ tên", "Số điện thoại", "Email", "Địa chỉ"};
+		JTable a = new JTable(data, columnNames);
 //        tableKH = new JTable(data, columnNames);
         // Create custom table
-        CustomTable table = new CustomTable(data, header, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
+        CustomTable table = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
        
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(1123, 711)); // thay đổi theo khung chứa
@@ -248,6 +225,11 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		txtSDT.addActionListener(this);
 		
 //		tableNCC.addMouseListener(this);
+	}
+
+	private Object quayLai() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

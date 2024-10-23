@@ -42,15 +42,15 @@ public class UIStyles {
 		);
 	
 	public static final ButtonStyle ThemButtonStyle = new ButtonStyle(
-			160, NavBarHeight, 25, Color.BLACK, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
+			160, NavBarHeight, 25, Color.WHITE, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
 		);
 	
 	public static final ButtonStyle CapNhatButtonStyle = new ButtonStyle(
-			160, NavBarHeight, 25, Color.BLACK, Color.decode("#E8C047"), Color.decode("#deb63e"), Color.decode("#d5ae38")
+			160, NavBarHeight, 25, Color.WHITE, Color.decode("#E8C047"), Color.decode("#deb63e"), Color.decode("#d5ae38")
 		);
 	
 	public static final ButtonStyle XoaTrangButtonStyle = new ButtonStyle(
-			160, NavBarHeight, 25, Color.BLACK, Color.decode("#F0F0F0"), Color.LIGHT_GRAY, Color.GRAY
+			160, NavBarHeight, 25, Color.WHITE, Color.decode("#7A7A7A"), Color.decode("#7A7A7A"), Color.decode("#5E5E5E")
 		);
 	
 	public static final int NavBarDropBoxItemHeight = NavBarHeight - 30;
@@ -78,6 +78,9 @@ public class UIStyles {
 	public static final ImageIcon FInd  = getIconFromPath("resources/find.png", 30, 30);
 	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
 	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
+	public static final ImageIcon More  = getIconFromPath("resources/more.png", 20, 20);
+	public static final ImageIcon trash  = getIconFromPath("resources/trash.png", 30, 30);
+	public static final ImageIcon barCode  = getIconFromPath("resources/barCode.png", 30, 30);
 	public static final Color backgroundColor = new Color(232, 234, 236);
 	
 	public static final Font FONT = new Font("Tahoma", Font.PLAIN, 20);
@@ -100,7 +103,7 @@ public class UIStyles {
         // Đặt placeholder
         textField.setText(placeholder);
         textField.setForeground(Color.LIGHT_GRAY); // Màu chữ của placeholder
-        textField.setFont(new Font("Tahoma", Font.ITALIC, 20));
+        textField.setFont(new Font("Tahoma", Font.ITALIC, 18));
 
         // Lắng nghe sự kiện focus
         textField.addFocusListener(new FocusAdapter() {
@@ -117,7 +120,7 @@ public class UIStyles {
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
                     textField.setForeground(Color.LIGHT_GRAY); // Đổi lại màu chữ của placeholder
-                    textField.setFont(new Font("Tahoma", Font.ITALIC, 20)); // Đặt font chữ nghiêng
+                    textField.setFont(new Font("Tahoma", Font.ITALIC, 18)); // Đặt font chữ nghiêng
                     textField.setText(placeholder); // Khôi phục placeholder
                 }
             }

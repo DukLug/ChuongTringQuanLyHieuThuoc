@@ -77,6 +77,7 @@ public class NhanVienUI extends JPanel{
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(1000, 800));
+
         /*
         scrollPane.getViewport().setBackground(Color.blue);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

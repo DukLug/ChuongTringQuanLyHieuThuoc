@@ -1,5 +1,7 @@
 package application;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,9 +18,18 @@ public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = true;
 	
 	public static void main(String[] args) {
+		
+		
 		System.setProperty("sun.java2d.uiScale", "1.0");
+
+		
         TrangChuUI trangChuUI = new TrangChuUI();
-        // Test
+        //TestSearch();
+       
+    }
+	
+	private static void TestSearch() {
+		 // Test
         ArrayList<Object> dataToSearch = new ArrayList<>();
         dataToSearch.add(new TestNguoi("A1", 10, new BigDecimal("1000.00"), TrangThaiLamViec.DANGHI));
         dataToSearch.add(new TestNguoi("A2", 20, new BigDecimal("2000.00"), TrangThaiLamViec.DANGLAM));
@@ -62,5 +73,5 @@ public class PhanMemQuanLyHieuThuoc {
         }
 
             
-    }
+	}
 }

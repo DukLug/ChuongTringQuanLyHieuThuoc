@@ -47,7 +47,7 @@ public class TrangChuUI extends JFrame {
 		super();
         lapFrame();
         uiHistory = new Stack<JPanel>();
-        taiTrang(new NhanVienUI());
+        taiTrang(new TongQuanUI());
 	}
 	
 	public void lapFrame() {
@@ -100,6 +100,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ProductIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thêm sản phẩm", "Kho hàng"},
         		new CustomButtonFunction[] {
@@ -113,6 +114,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.TransferIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Nhập hàng", "Hủy hàng"},
         		new CustomButtonFunction[] {
@@ -126,6 +128,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ContactIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Khách hàng", "Nhà Cung Cấp"},
         		new CustomButtonFunction[] {
@@ -141,6 +144,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ReportIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
@@ -154,6 +158,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.AnalysingIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
@@ -166,6 +171,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.PolicyIcon,
         		CustomButtonIconSide.LEFT,
+        		20,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {

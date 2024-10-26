@@ -75,7 +75,6 @@ public class UIStyles {
 	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 30, 30);
 	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 30, 30);
 	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 30, 30);
-<<<<<<< HEAD
 	public static final ImageIcon FInd  = getIconFromPath("resources/find.png", 30, 30);
 	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
 	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
@@ -86,12 +85,6 @@ public class UIStyles {
 	
 	public static final Font FONT = new Font("Tahoma", Font.PLAIN, 20);
 	public static final Font FONT_BLOD = new Font("Tahoma", Font.BOLD, 20);
-=======
-	public static final ImageIcon Find  = getIconFromPath("resources/find.png", 30, 30);
-	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
-	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
-	
->>>>>>> main
 	
 	public static Font defaultFont = (new JLabel()).getFont();
 	public static final CustomTableRowStyle NhanVienTableHeaderStyle = new CustomTableRowStyle(

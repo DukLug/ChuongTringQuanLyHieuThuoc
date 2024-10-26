@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-<<<<<<< HEAD
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -17,29 +16,13 @@ import component.CustomTable;
 import component.ImageUtilities;
 import component.CustomButton.CustomButtonIconSide;
 import javax.swing.JTextField;
-=======
-import java.awt.Insets;
-
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import component.CustomTable;
-import component.ImageUtilities;
-
-//import connectDB.ConnectDB;
-import javax.swing.JTextField;
-import javax.swing.JButton;
->>>>>>> main
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
-<<<<<<< HEAD
-=======
 import java.sql.SQLException;
->>>>>>> main
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
@@ -59,19 +42,11 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 	private JRadioButton rdbtn200;
 	private JRadioButton rdbtn500;
 	private JRadioButton rdbtn600;
-<<<<<<< HEAD
 	private CustomButton btnThem;
 	private CustomButton btnCapNhat;
 	private CustomButton btnXoaTrang;
 	private DefaultTableModel modelKH;
 	private JTextField txtCCCD;
-=======
-	private JButton btnThem;
-	private JButton btnCapNhat;
-	private JButton btnXoaTrang;
-	private DefaultTableModel modelKH;
->>>>>>> main
-	
 
 	public KhachHangUI() {
 		super();
@@ -93,13 +68,9 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 setLayout(null);
 		
 		JPanel panelTong = new JPanel();
-<<<<<<< HEAD
 		panelTong.setBackground(UIStyles.backgroundColor);
 		panelTong.setBounds(10, 10, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
-=======
-		panelTong.setBackground(new Color(232, 234, 236));
-		panelTong.setBounds(0, 0, 1800, 850);
->>>>>>> main
+
 		add(panelTong);
 		panelTong.setLayout(null);
 		
@@ -107,11 +78,8 @@ setLayout(null);
 		panelLoc.setBackground(Color.WHITE);
 		panelLoc.setBounds(41, 81, 281, 727);
 		panelTong.add(panelLoc);
-<<<<<<< HEAD
 		panelLoc.setBackground(UIStyles.backgroundColor);
-=======
-		panelLoc.setBackground(new Color(232, 234, 236));
->>>>>>> main
+
 		panelLoc.setLayout(null);
 
 		JPanel panelKhung = new JPanel() {
@@ -133,11 +101,7 @@ setLayout(null);
 		        g2d.dispose();
 		    }
 		};
-<<<<<<< HEAD
 		panelKhung.setBackground(UIStyles.backgroundColor);
-=======
-		panelKhung.setBackground(new Color(232, 234, 236));
->>>>>>> main
 		panelKhung.setBounds(0, 10, 299, 264);
 		panelLoc.add(panelKhung);
 		panelKhung.setLayout(null);
@@ -189,17 +153,10 @@ setLayout(null);
 		groupDTL.add(rdbtn600);
 		
 		// bảng
-<<<<<<< HEAD
 //		JPanel panelBang = new JPanel();
 //		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
 //		panelBang.setBounds(332, 90, 911, 718);
 //		panelTong.add(panelBang);
-=======
-		JPanel panelBang = new JPanel();
-		panelBang.setBorder(new LineBorder(Color.GRAY, 1, true));
-		panelBang.setBounds(332, 90, 911, 718);
-		panelTong.add(panelBang);
->>>>>>> main
 		
 		Object[][] data = {
 	            {"1", "john@example.com", "Developer", "1", "john@example.com"},
@@ -209,7 +166,6 @@ setLayout(null);
 	            
 	            
 		};
-<<<<<<< HEAD
 		String[] columnNames = {"Mã số", "Họ tên", "Số điện thoại", "Địa chỉ", "Điểm tích lũy"};
 		JTable a = new JTable(data, columnNames);
 	        // Create custom table
@@ -226,32 +182,13 @@ setLayout(null);
         
         scrollPane.setBounds(332, 90, 911, 718); // Đặt kích thước và vị trí của scrollPane
         panelTong.add(scrollPane);
-=======
-		String[] header = {"Mã số", "Họ tên", "Số điện thoại", "Địa chỉ", "Điểm tích lũy"};
-		modelKH = new DefaultTableModel(header, 0);
-		tableKH = new JTable(modelKH);
-//        tableKH = new JTable(data, columnNames);
-        // Create custom table
-        CustomTable table = new CustomTable(data, header, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
-       
-        // Add the table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(911, 711)); // thay đổi theo khung chứa
-        scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
-        
-        panelBang.add(scrollPane);
->>>>>>> main
-        
+		
         JScrollBar sb = scrollPane.getVerticalScrollBar();
 		
 		// biểu mẫu
         JPanel panelBieuMau = new JPanel() ;
 		panelBieuMau.setBackground(Color.WHITE);
-<<<<<<< HEAD
 		panelBieuMau.setBounds(1265, 90, 606, 718);
-=======
-		panelBieuMau.setBounds(1265, 90, 495, 718);
->>>>>>> main
 		panelTong.add(panelBieuMau);
 		panelBieuMau.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelBieuMau.setLayout(null);
@@ -259,11 +196,7 @@ setLayout(null);
 		JLabel lblNewLabel_1 = new JLabel("Thông tin");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 28));
-<<<<<<< HEAD
 		lblNewLabel_1.setBounds(229, 10, 174, 57);
-=======
-		lblNewLabel_1.setBounds(157, 10, 174, 57);
->>>>>>> main
 		panelBieuMau.add(lblNewLabel_1);
 		
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
@@ -295,11 +228,7 @@ setLayout(null);
 		txtMaKH.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		txtMaKH.setBackground(Color.WHITE);
 		txtMaKH.setEditable(false);
-<<<<<<< HEAD
 		txtMaKH.setBounds(244, 102, 308, 35);
-=======
-		txtMaKH.setBounds(225, 100, 225, 35);
->>>>>>> main
 		panelBieuMau.add(txtMaKH);
 		txtMaKH.setColumns(10);
 		txtMaKH.setBorder(new LineBorder(Color.BLACK, 1));
@@ -309,11 +238,7 @@ setLayout(null);
 		txtHoTen.setColumns(10);
 		txtHoTen.setBorder(new LineBorder(Color.BLACK, 1));
 		txtHoTen.setBackground(Color.WHITE);
-<<<<<<< HEAD
 		txtHoTen.setBounds(244, 169, 308, 35);
-=======
-		txtHoTen.setBounds(225, 167, 225, 35);
->>>>>>> main
 		panelBieuMau.add(txtHoTen);
 		
 		txtSDT = new JTextField();
@@ -321,11 +246,7 @@ setLayout(null);
 		txtSDT.setColumns(10);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1));
 		txtSDT.setBackground(Color.WHITE);
-<<<<<<< HEAD
 		txtSDT.setBounds(244, 244, 308, 35);
-=======
-		txtSDT.setBounds(225, 245, 225, 35);
->>>>>>> main
 		panelBieuMau.add(txtSDT);
 		
 		txtDiaChi = new JTextField();
@@ -333,11 +254,7 @@ setLayout(null);
 		txtDiaChi.setColumns(10);
 		txtDiaChi.setBorder(new LineBorder(Color.BLACK, 1));
 		txtDiaChi.setBackground(Color.WHITE);
-<<<<<<< HEAD
 		txtDiaChi.setBounds(244, 321, 308, 35);
-=======
-		txtDiaChi.setBounds(225, 319, 225, 35);
->>>>>>> main
 		panelBieuMau.add(txtDiaChi);
 		
 		txtDTL = new JTextField();
@@ -346,7 +263,6 @@ setLayout(null);
 		txtDTL.setColumns(10);
 		txtDTL.setBorder(new LineBorder(Color.BLACK, 1));
 		txtDTL.setBackground(Color.WHITE);
-<<<<<<< HEAD
 		txtDTL.setBounds(244, 399, 308, 35);
 		panelBieuMau.add(txtDTL);
 
@@ -379,34 +295,6 @@ setLayout(null);
 		txtCCCD.setBackground(Color.WHITE);
 		txtCCCD.setBounds(244, 476, 308, 35);
 		panelBieuMau.add(txtCCCD);
-=======
-		txtDTL.setBounds(225, 399, 225, 35);
-		panelBieuMau.add(txtDTL);
-		
-		btnThem = new JButton("Thêm");
-		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnThem.setBackground(Color.WHITE);
-		btnThem.setBounds(49, 563, 180, 46);
-		btnThem.setIcon(UIStyles.Add);
-		btnThem.setFocusPainted(false);  // xóa khung khi thao tác
-		panelBieuMau.add(btnThem);
-		
-		btnCapNhat = new JButton("Cập nhật");
-		btnCapNhat.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnCapNhat.setBackground(Color.WHITE);
-		btnCapNhat.setBounds(267, 563, 180, 46);
-		btnCapNhat.setIcon(UIStyles.Update);
-		btnCapNhat.setFocusPainted(false); 
-		panelBieuMau.add(btnCapNhat);
-		
-		btnXoaTrang = new JButton("Xóa trắng");
-		btnXoaTrang.setBackground(Color.WHITE);
-		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnXoaTrang.setBounds(164, 634, 180, 46);
-		btnXoaTrang.setFocusPainted(false); 
-		panelBieuMau.add(btnXoaTrang);
->>>>>>> main
-	
 		
 		// thanh công cụ
 		JPanel panelThanhcongCu = new JPanel();
@@ -414,11 +302,7 @@ setLayout(null);
 		panelThanhcongCu.setBounds(41, 25, 1719, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
-<<<<<<< HEAD
 		panelThanhcongCu.setBackground(UIStyles.backgroundColor);
-=======
-		panelThanhcongCu.setBackground(new Color(232, 234, 236));
->>>>>>> main
 		
 		JLabel lblTieuDe = new JLabel("KHÁCH HÀNG");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -439,23 +323,15 @@ setLayout(null);
 		txtTim.setBackground(Color.WHITE);
 		txtTim.setColumns(10);
 		txtTim.setBorder(BorderFactory.createEmptyBorder()); // xóa viền
-<<<<<<< HEAD
 		UIStyles.setPlaceholder(txtTim, "Mã, số điện thoại khách hàng");
 		
 		JLabel icon = new JLabel(UIStyles.FInd);
-=======
-		
-		JLabel icon = new JLabel(UIStyles.Find);
->>>>>>> main
 		panelTim.add(icon, BorderLayout.WEST);
 		icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // cách lề 5px
 		
 		JCheckBox chckbxHienDS = new JCheckBox("Hiện tất cả");
-<<<<<<< HEAD
 		chckbxHienDS.setBackground(UIStyles.backgroundColor);
-=======
-		chckbxHienDS.setBackground(new Color(232, 234, 236));
->>>>>>> main
+		
 		chckbxHienDS.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		chckbxHienDS.setBounds(1057, 0, 146, 46);
 		chckbxHienDS.setFocusPainted(false); 
@@ -470,29 +346,17 @@ setLayout(null);
 		txtHoTen.addActionListener(this);
 		txtMaKH.addActionListener(this);
 		txtSDT.addActionListener(this);
-<<<<<<< HEAD
 	}
 
 	private Object quayLai() {
 		// TODO Auto-generated method stub
 		return null;
-=======
-		
-		tableKH.addMouseListener(this);
->>>>>>> main
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		Object o = e.getSource();
-		
-<<<<<<< HEAD
-=======
-		int donguocChon = tableKH.getSelectedRow();
-		
-		
->>>>>>> main
 		if (o.equals(btnXoaTrang))
 			xoaTrang();
 		
@@ -547,9 +411,5 @@ setLayout(null);
 		// TODO Auto-generated method stub
 		
 	}
-<<<<<<< HEAD
 }
-=======
 	
-}
->>>>>>> main

@@ -3,9 +3,7 @@ package userInterfaces;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-<<<<<<< HEAD
 import java.util.Stack;
-=======
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -22,7 +20,6 @@ import java.util.Stack;
 
 
 import javax.imageio.ImageIO;
->>>>>>> main
 import javax.swing.*;
 import component.CustomButton;
 import component.CustomButton.CustomButtonFunction;
@@ -134,11 +131,8 @@ public class TrangChuUI extends JFrame {
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-<<<<<<< HEAD
         		new String[]{"Khách hàng", "Nhà cung cấp"},
-=======
-        		new String[]{"Khách hàng", "Nhà Cung Cấp"},
->>>>>>> main
+        		
         		new CustomButtonFunction[] {
         			()->taiTrang(new KhachHangUI()),
         			()->taiTrang(new NhaCungCapUI())
@@ -190,17 +184,8 @@ public class TrangChuUI extends JFrame {
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
-<<<<<<< HEAD
         navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
-   
-=======
 
-        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, () -> {
-            taiTrang(new BanHangUI());
-            topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.LabelBarHeight));
-        }));
-        
->>>>>>> main
         navBar.setLayout(new BorderLayout());
         navBar.add(navBarWest, BorderLayout.WEST);
         navBar.add(navBarEast, BorderLayout.EAST);
@@ -224,22 +209,7 @@ public class TrangChuUI extends JFrame {
 		//Luu lich su trang
 		if(uiHistory.size() >= 10) uiHistory.removeFirst();
 		uiHistory.add(mainSection);
-		
-<<<<<<< HEAD
-		 // Kiểm tra nếu là BanHangUI, xóa navBar
-//	    if (trangDich instanceof BanHangUI) {
-//	        if (navBar.getParent() != null) {
-//	            topSection.remove(navBar);
-//	        }
-//	    } else {
-//	        // Nếu không phải BanHangUI, đảm bảo navBar được thêm lại
-//	        if (navBar.getParent() == null) {
-//	            topSection.add(navBar, BorderLayout.CENTER);
-//	        }
-//	    }
-	    
-=======
->>>>>>> main
+
 		//Sang trang moi
 		panel.remove(mainSection);
 		mainSection = trangDich;
@@ -261,20 +231,6 @@ public class TrangChuUI extends JFrame {
 		
 		uiHistory.removeLast();
 		
-//		panel.remove(mainSection);
-//	    mainSection = uiHistory.pop(); // Lấy trang trước đó
-//	    panel.add(mainSection, BorderLayout.CENTER);
-//
-//	    // Nếu trang trước đó là TongQuanUI, thêm lại navBar
-//	    if (!(mainSection instanceof BanHangUI)) {
-//	        if (navBar.getParent() == null) {
-//	        	topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.TopSectionHeight));
-//	            topSection.add(navBar, BorderLayout.CENTER);
-//	        }
-//	    }
-//
-//	    panel.revalidate();
-//	    panel.repaint();
 	}
 	
 	public static void hienLoi(Class<?> errorSource, Exception e) {

@@ -47,15 +47,14 @@ public class BanHangUI extends JPanel implements ActionListener {
 	private JLabel lblNgayLap;
 	private JLabel lblTenNV;
 
-	
 	public BanHangUI() {
 		super();
 		taoHinh();
 		layThoiGianHienTai();
-	}	
-	
+	}
 	
 	public void taoHinh() {
+
 		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
 		setLayout(null);
 		setBackground(Color.WHITE);
@@ -349,6 +348,9 @@ public class BanHangUI extends JPanel implements ActionListener {
         panel.add(txtGhiChu);
         txtGhiChu.setColumns(10);
         UIStyles.setPlaceholder(txtGhiChu, "Ghi chú đơn thuốc");
+		
+  
+		
 	}
 
 	private Object quayLai() {
@@ -380,7 +382,8 @@ public class BanHangUI extends JPanel implements ActionListener {
 	private void hienThiTGHienTai() {
 	    LocalDateTime tgHienTai = LocalDateTime.now();
 	    lblNgayLap.setText(tgHienTai.format(formatter));
+
 	}
-	
 }
+
 

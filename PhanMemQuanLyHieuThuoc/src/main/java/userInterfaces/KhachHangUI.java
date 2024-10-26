@@ -69,7 +69,7 @@ setLayout(null);
 		
 		JPanel panelTong = new JPanel();
 		panelTong.setBackground(UIStyles.backgroundColor);
-		panelTong.setBounds(10, 10, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
+		panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 
 		add(panelTong);
 		panelTong.setLayout(null);

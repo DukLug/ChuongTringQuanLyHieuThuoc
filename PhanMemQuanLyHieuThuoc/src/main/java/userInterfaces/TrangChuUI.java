@@ -3,12 +3,32 @@ package userInterfaces;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+<<<<<<< HEAD
 import java.util.Stack;
+=======
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Stack;
+
+
+import javax.imageio.ImageIO;
+>>>>>>> main
 import javax.swing.*;
 import component.CustomButton;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
 import component.CustomComboBox;
+import application.*;
 
 
 public class TrangChuUI extends JFrame {		
@@ -84,6 +104,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ProductIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thêm sản phẩm", "Kho hàng"},
         		new CustomButtonFunction[] {
@@ -97,6 +118,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.TransferIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Nhập hàng", "Hủy hàng"},
         		new CustomButtonFunction[] {
@@ -110,8 +132,13 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ContactIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
+<<<<<<< HEAD
         		new String[]{"Khách hàng", "Nhà cung cấp"},
+=======
+        		new String[]{"Khách hàng", "Nhà Cung Cấp"},
+>>>>>>> main
         		new CustomButtonFunction[] {
         			()->taiTrang(new KhachHangUI()),
         			()->taiTrang(new NhaCungCapUI())
@@ -125,6 +152,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ReportIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
@@ -138,11 +166,12 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.AnalysingIcon,
         		CustomButtonIconSide.LEFT,
+        		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
+        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new ThongKeUI()),
+        			()->taiTrang(new NhanVienUI())
         		}
         		));
 		navBarWest.add(new CustomComboBox(
@@ -150,6 +179,7 @@ public class TrangChuUI extends JFrame {
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.PolicyIcon,
         		CustomButtonIconSide.LEFT,
+        		20,
         		UIStyles.NavBarDropBoxItemHeight,
         		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
         		new CustomButtonFunction[] {
@@ -160,8 +190,17 @@ public class TrangChuUI extends JFrame {
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
+<<<<<<< HEAD
         navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
    
+=======
+
+        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, () -> {
+            taiTrang(new BanHangUI());
+            topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.LabelBarHeight));
+        }));
+        
+>>>>>>> main
         navBar.setLayout(new BorderLayout());
         navBar.add(navBarWest, BorderLayout.WEST);
         navBar.add(navBarEast, BorderLayout.EAST);
@@ -181,13 +220,12 @@ public class TrangChuUI extends JFrame {
         
 	}
 	
-
-
 	public void taiTrang(JPanel trangDich) {	
 		//Luu lich su trang
 		if(uiHistory.size() >= 10) uiHistory.removeFirst();
 		uiHistory.add(mainSection);
 		
+<<<<<<< HEAD
 		 // Kiểm tra nếu là BanHangUI, xóa navBar
 //	    if (trangDich instanceof BanHangUI) {
 //	        if (navBar.getParent() != null) {
@@ -200,6 +238,8 @@ public class TrangChuUI extends JFrame {
 //	        }
 //	    }
 	    
+=======
+>>>>>>> main
 		//Sang trang moi
 		panel.remove(mainSection);
 		mainSection = trangDich;
@@ -237,4 +277,52 @@ public class TrangChuUI extends JFrame {
 //	    panel.repaint();
 	}
 	
+	public static void hienLoi(Class<?> errorSource, Exception e) {
+	 	if (!PhanMemQuanLyHieuThuoc.HienLoi) return;
+        String errorMessage = errorSource.getName() + ": " + e.getMessage();
+        String email = new String("support@example.com"); 
+        JLabel emailLabel = new JLabel("Please contact with us to get help: " + email);
+        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        JTextArea errorText = new JTextArea(errorMessage + "\nPlease contact with us to get help.");
+        errorText.setEditable(false);
+        
+        panel.add(new JScrollPane(errorText), BorderLayout.NORTH);
+        panel.add(emailLabel, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton copyEmailButton = new JButton("Copy Email");
+        copyEmailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                StringSelection emailSelection = new StringSelection(email);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(emailSelection, null);
+                JOptionPane.showMessageDialog(null, "Email copied to clipboard.");
+            }
+        });
+        buttonPanel.add(copyEmailButton);
+
+        JButton copyErrorButton = new JButton("Copy Error");
+        copyErrorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                StringSelection errorSelection = new StringSelection(errorMessage);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(errorSelection, null);
+                JOptionPane.showMessageDialog(null, "Error copied to clipboard.");
+            }
+        });
+        buttonPanel.add(copyErrorButton);
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        JOptionPane.showMessageDialog(null,
+                panel,
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+
+        throw new IllegalArgumentException(errorMessage);
+    }
+
 }

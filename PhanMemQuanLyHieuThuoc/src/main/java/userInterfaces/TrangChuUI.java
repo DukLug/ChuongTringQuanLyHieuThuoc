@@ -161,18 +161,7 @@ public class TrangChuUI extends JFrame {
         			()->taiTrang(new NhanVienUI())
         		}
         		));
-		navBarWest.add(new CustomComboBox(
-        		"Chính sách", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.PolicyIcon,
-        		CustomButtonIconSide.LEFT,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê hết hạn", "Thống kê sản phẩm"},
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new NhapHangUI())
-        		}
-        		));
+		navBarWest.add(new CustomButton("Chính sách", UIStyles.NavBarButtonStyle, UIStyles.PolicyIcon,CustomButtonIconSide.LEFT,()->taiTrang(new KhuyenMaiUI())));
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));

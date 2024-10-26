@@ -13,12 +13,17 @@ public class ConnectDB {
 	}
 
 	public static void connect() {
+		String url =  "jdbc:sqlserver://localhost:1433;databasename=NhaThuocLuongTam;encrypt=false";
+		String user = "sa";
+		String password = "sapassword";
 		try {
-			String url =  "jdbc:sqlserver://localhost:1433;databasename=NhaThuocLuongTam";
-			String user = "sa";
-			String password = "sapassword";
+			
+			 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

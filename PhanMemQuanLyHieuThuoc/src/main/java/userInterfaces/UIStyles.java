@@ -37,7 +37,15 @@ public class UIStyles {
 	public static final ButtonStyle BanHangButtonStyle = new ButtonStyle(
 			160, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
 		);
-	
+	public static final ButtonStyle TimButtonStyle = new ButtonStyle(
+			160, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
+		);
+	public static final ButtonStyle ThemButtonStyle = new ButtonStyle(
+			200, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
+		);
+		public static final ButtonStyle CapNhatButtonStyle = new ButtonStyle(
+			200, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
+		);
 	public static final int NavBarDropBoxItemHeight = NavBarHeight - 30;
 	
 	public static final Color MainSectionBackgroundColor = Color.gray;
@@ -63,6 +71,7 @@ public class UIStyles {
 	public static final ImageIcon Find  = getIconFromPath("resources/find.png", 30, 30);
 	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
 	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
+	public static final ImageIcon FindIcon  = getIconFromPath("resources/find.png", 50, 50);
 	
 	
 	public static Font defaultFont = (new JLabel()).getFont();

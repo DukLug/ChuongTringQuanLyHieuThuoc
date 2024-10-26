@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import controller.TimKiemCTR;
 import customEnum.TrangThaiLamViec;
-import enity.NhanVien;
+import entity.NhanVien;
 import entity.TestNguoi;
 import userInterfaces.*;
 

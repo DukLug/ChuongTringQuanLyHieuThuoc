@@ -1,4 +1,4 @@
-package enity;
+package entity;
 
 public enum GioiTinh {
 	Nam("Nam"),Nu("Nữ");

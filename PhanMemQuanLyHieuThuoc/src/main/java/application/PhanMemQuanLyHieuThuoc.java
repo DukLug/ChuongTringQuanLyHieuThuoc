@@ -13,20 +13,24 @@ import customEnum.TrangThaiLamViec;
 import enity.NhanVien;
 import entity.TestNguoi;
 import userInterfaces.*;
+import userInterfaces.NhapHangUI.NhapHangRow;
+import userInterfaces.UIStyles.MyStyle;
 
 public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = true;
 	
 	public static void main(String[] args) {
-		
-		
 		System.setProperty("sun.java2d.uiScale", "1.0");
+
+		UIStyles.scale = 0.3;
+		UIStyles.style = new MyStyle();
 
 		
         TrangChuUI trangChuUI = new TrangChuUI();
-        //TestSearch();
+        TestSearch();
        
     }
+
 	
 	private static void TestSearch() {
 		 // Test
@@ -72,6 +76,5 @@ public class PhanMemQuanLyHieuThuoc {
             System.out.println(nguoi.toString());
         }
 
-            
 	}
 }

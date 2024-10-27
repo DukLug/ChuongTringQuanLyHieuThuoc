@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import component.CustomButton;
 import component.CustomTable;
@@ -15,6 +16,46 @@ import component.CustomButton.CustomButtonIconSide;
 
 public class TongQuanUI extends JPanel{
 	private CustomTable customTable;
+	Object[][] data = {
+            {"1", "john@example.com", ""},
+            {"2", "jane@example.com", "Designer"},
+            {"3", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnsonffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddffffff", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"John Doe", "john@example.com", "Developer"},
+            {"Jane Smith", "jane@example.com", "Designer"},
+            {"Mike Johnson", "mike@example.com", "Manager"},
+            {"Emily Davis", "emily@example.com", "Tester"}
+        };
+
+	Object[][] data2 = {
+            {"1", "john@example.com", ""},
+
+            {"Emily Davis", "emily@example.com", "Tester"}
+        };
+    String[] columnNames = {"Name", "Email", "Role"};
 	public TongQuanUI() {
 		super();
 		taoHinh();
@@ -26,41 +67,7 @@ public class TongQuanUI extends JPanel{
 		this.setBackground(Color.white);
 		this.add(new JLabel("TongQuanUI"));
 		
-		Object[][] data = {
-	            {"1", "john@example.com", ""},
-	            {"2", "jane@example.com", "Designer"},
-	            {"3", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnsonffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddffffff", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"John Doe", "john@example.com", "Developer"},
-	            {"Jane Smith", "jane@example.com", "Designer"},
-	            {"Mike Johnson", "mike@example.com", "Manager"},
-	            {"Emily Davis", "emily@example.com", "Tester"}
-	        };
-
-        String[] columnNames = {"Name", "Email", "Role"};
+		
         // Create custom table
         customTable = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
         		new int[] {500, 300, 200},
@@ -91,6 +98,8 @@ public class TongQuanUI extends JPanel{
 	}
 	
 	private void ClickedMyTable() {
+		Object[][] data3 = new Object[][] {};
+		customTable.capNhatDuLieu(data2);
 		System.out.println(customTable.getSelectedRow());
 	}
 }

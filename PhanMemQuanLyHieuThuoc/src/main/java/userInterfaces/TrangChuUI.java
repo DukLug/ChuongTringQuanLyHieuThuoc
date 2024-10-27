@@ -47,13 +47,12 @@ public class TrangChuUI extends JFrame {
 		super();
         lapFrame();
         uiHistory = new Stack<JPanel>();
-        taiTrang(new TongQuanUI());
 	}
 	
 	public void lapFrame() {
 		if(this != null) setVisible(false);	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.ApplicationHeight)); 
+        setSize(new Dimension(UIStyles.style.w, UIStyles.style.h)); 
         setBackground(Color.yellow);
         
         panel = new JPanel();
@@ -102,7 +101,7 @@ public class TrangChuUI extends JFrame {
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thêm sản phẩm", "Kho hàng"},
+        		new String[]{"Thêm sản phẩm", "Nhập hàng"},
         		new CustomButtonFunction[] {
         			()->taiTrang(new NhanVienUI()),
         			()->taiTrang(new NhapHangUI())
@@ -203,11 +202,17 @@ public class TrangChuUI extends JFrame {
         
 
         add(panel);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //setUndecorated(true);
         setVisible(true);
         
 	}
 	
 	public void taiTrang(JPanel trangDich) {	
+		//Neu trang dang hien bo qua
+		if(trangDich.getClass() == mainSection.getClass()) {
+			return;
+		}
 		//Luu lich su trang
 		if(uiHistory.size() >= 10) uiHistory.removeFirst();
 		uiHistory.add(mainSection);
@@ -243,7 +248,7 @@ public class TrangChuUI extends JFrame {
 
         JPanel panel = new JPanel(new BorderLayout());
         
-        JTextArea errorText = new JTextArea(errorMessage + "\nPlease contact with us to get help.");
+        JTextArea errorText = new JTextArea(errorMessage);
         errorText.setEditable(false);
         
         panel.add(new JScrollPane(errorText), BorderLayout.NORTH);

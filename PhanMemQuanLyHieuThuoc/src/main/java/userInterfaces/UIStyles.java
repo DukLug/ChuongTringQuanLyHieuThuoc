@@ -13,6 +13,8 @@ import component.CustomButton.ButtonStyle;
 import component.CustomTable.CustomTableRowStyle;
 
 public class UIStyles {
+	public static double scale=1;
+	public static MyStyle style = new MyStyle();
 	public static final int ApplicationWidth = 1800;
 	public static final int ApplicationHeight = 1000;
 	public static final int TopSectionHeight = 150;
@@ -78,4 +80,8 @@ public class UIStyles {
 		return new ImageIcon(newimg);
 	}
 	
+	public static class MyStyle{
+		public int w = (int)Math.floor(1920/UIStyles.scale);
+		public int h = (int)Math.floor(1080/UIStyles.scale);
+	}
 }

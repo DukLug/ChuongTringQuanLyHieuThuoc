@@ -15,10 +15,13 @@ import component.CustomButton.CustomButtonFunction;
 public class CustomTable extends JTable {
     private CustomTableRowStyle rowStyle;
     private int selectedRow = -1;
-
+    private Object[] columnNames;
+    private CustomTableRowStyle headerStyle;
+    private int[] columnsWidth;
+    private Color selectedColor = Color.LIGHT_GRAY;
     // Constructor
     public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns) {
-        super(data, columnNames);
+        super(new DefaultTableModel(data, columnNames));
         if(PhanMemQuanLyHieuThuoc.HienLoi) {
             for (Object[] row : data) {
                 if (row.length != columnNames.length) {
@@ -26,13 +29,15 @@ public class CustomTable extends JTable {
                 }
             }
         }
-
+        this.columnNames = columnNames;
+        this.headerStyle = headerStyle;
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setRowSelectionAllowed(true); 
         setColumnSelectionAllowed(false); 
 
         setShowHorizontalLines(true);
         setShowVerticalLines(false);
+        setDefaultEditor(Object.class, null);
 
         setHeader(headerStyle, columnNames.length);
 
@@ -53,12 +58,8 @@ public class CustomTable extends JTable {
 
     public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns, int[] columnsWidth) {
         this(data, columnNames, headerStyle, rowStyle, gapBetweenColumns);
-        TableColumnModel columnModel = this.getColumnModel();
-        for (int i = 0; i < columnNames.length; i++) {
-            columnModel.getColumn(i).setPreferredWidth(columnsWidth[i]);
-            columnModel.getColumn(i).setMaxWidth(columnsWidth[i]);
-        }
-        this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        this.columnsWidth = columnsWidth;
+        setColumnsWidth();
     }
     
     public CustomTable(Object[][] data, Object[] columnNames, CustomTableRowStyle headerStyle, CustomTableRowStyle rowStyle, int gapBetweenColumns, int[] columnsWidth, CustomButtonFunction func) {
@@ -80,7 +81,7 @@ public class CustomTable extends JTable {
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component stamp = super.prepareRenderer(renderer, row, column);
         if (isRowSelected(row)) {
-            stamp.setBackground(Color.cyan); 
+            stamp.setBackground(selectedColor); 
             
         } else {
             stamp.setBackground(rowStyle.getBackgroundColor());
@@ -107,6 +108,33 @@ public class CustomTable extends JTable {
         for (int i = 0; i < numOfRows; i++) {
             getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(myHeaderRender);
         }
+    }
+    
+    private void setColumnsWidth() {
+    	if(columnsWidth!=null) {
+    		TableColumnModel columnModel = this.getColumnModel();
+            for (int i = 0; i < columnNames.length; i++) {
+                columnModel.getColumn(i).setPreferredWidth(columnsWidth[i]);
+                columnModel.getColumn(i).setMaxWidth(columnsWidth[i]);
+            }
+            this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+    	}
+    }
+    
+    public void capNhatDuLieu(Object[][] newData) {
+    	if(newData.length == 0) {
+    		this.setModel(new DefaultTableModel(null, columnNames));
+    	}
+    	else if(newData[0].length != this.getModel().getColumnCount()) {
+    		TrangChuUI.hienLoi(getClass(), new Exception("Du lieu cap nhat khong hop le"));
+    		return;
+    	}
+    	else {
+    		this.setModel(new DefaultTableModel(newData, columnNames));
+    	}
+    	setHeader(headerStyle, columnNames.length);
+    	setColumnsWidth();
+
     }
 
     public static class CustomTableRowStyle {

@@ -14,7 +14,6 @@ import enity.NhanVien;
 import entity.TestNguoi;
 import userInterfaces.*;
 import userInterfaces.NhapHangUI.NhapHangRow;
-import userInterfaces.UIStyles.MyStyle;
 
 public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = true;
@@ -22,11 +21,8 @@ public class PhanMemQuanLyHieuThuoc {
 	public static void main(String[] args) {
 		System.setProperty("sun.java2d.uiScale", "1.0");
 
-		UIStyles.scale = 0.3;
-		UIStyles.style = new MyStyle();
-
 		
-        TrangChuUI trangChuUI = new TrangChuUI();
+        TrangChuUI trangChuUI = new TrangChuUI(true);
         TestSearch();
        
     }

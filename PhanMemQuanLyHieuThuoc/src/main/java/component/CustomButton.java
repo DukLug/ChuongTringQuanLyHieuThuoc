@@ -66,6 +66,44 @@ public class CustomButton extends JButton implements ActionListener{
 		if(iconSide == CustomButtonIconSide.RIGHT) 
 			setHorizontalTextPosition(SwingConstants.LEFT);
 	}
+	
+	public CustomButton(String title, final ButtonStyle style, ImageIcon icon, CustomButtonIconSide iconSide) {
+	    super(title);
+	    
+	    // Thiết lập thuộc tính
+	    setPreferredSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setMaximumSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setMinimumSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setFont(new Font(getFont().getName(), getFont().getStyle(), style.getFontSize()));		
+	    setBackground(style.getBasicBackgroundColor());			   
+	    setBorder(BorderFactory.createEmptyBorder());
+	    setFocusPainted(false);
+	    setForeground(style.getTitleColor());     
+
+	    setIcon(icon);
+	    if (iconSide == CustomButtonIconSide.RIGHT) 
+	        setHorizontalTextPosition(SwingConstants.LEFT);
+
+	    // Thêm ChangeListener
+	    addChangeListener(new ChangeListener() {
+	        @Override
+	        public void stateChanged(ChangeEvent evt) {
+	            if (getModel().isPressed()) {
+	                setContentAreaFilled(false);
+	                setOpaque(true);
+	                setBackground(style.getPressedBackgroundColor());
+	            } else if (getModel().isRollover()) {
+	                setBackground(style.getHoverBackgroundColor());
+	            } else {
+	                setContentAreaFilled(true);
+	                setBackground(style.getBasicBackgroundColor());
+	            }
+	        }
+	    });
+
+	    // Thêm ActionListener
+	    addActionListener(this);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

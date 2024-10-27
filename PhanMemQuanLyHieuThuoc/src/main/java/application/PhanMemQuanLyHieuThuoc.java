@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import controller.TimKiemCTR;
 import customEnum.TrangThaiLamViec;
 import entity.NhanVien;
+import functionalClass.TimKiemCTR;
 import testEntity.TestNguoi;
 import userInterfaces.*;
 import userInterfaces.NhapHangUI.NhapHangRow;

@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
@@ -22,6 +24,7 @@ import component.CustomButton;
 import component.CustomTable;
 import component.CustomButton.CustomButtonIconSide;
 import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
 
 
 public class BanHangUI extends JPanel implements ActionListener { 
@@ -78,12 +81,12 @@ public class BanHangUI extends JPanel implements ActionListener {
 		panelKhachHang.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1), 
 			    "Thông tin khách hàng", TitledBorder.LEFT, TitledBorder.TOP, UIStyles.FONT, Color.BLACK));
 		panelKhachHang.setBackground(Color.WHITE);
-		panelKhachHang.setBounds(32, 57, 539, 252);
+		panelKhachHang.setBounds(32, 50, 539, 259);
 		panelThongTin.add(panelKhachHang);
 		panelKhachHang.setLayout(null);
 		
 		JPanel panelTimKH = new JPanel();
-		panelTimKH.setBounds(25, 46, 306, 35);
+		panelTimKH.setBounds(25, 61, 306, 35);
 		panelKhachHang.add(panelTimKH);
 		panelTimKH.setLayout(null);
 		panelTimKH.setBorder(new LineBorder(Color.BLACK, 1)); 
@@ -102,24 +105,24 @@ public class BanHangUI extends JPanel implements ActionListener {
 		UIStyles.setPlaceholder(txtTimSDT, "Số điện thoại");
 		
 		btnThemKH = new CustomButton("Thêm KH", UIStyles.NavBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
-		btnThemKH.setBounds(355, 46, 160, 35);
+		btnThemKH.setBounds(358, 61, 160, 35);
 		btnThemKH.setFont(UIStyles.FONT_BLOD);
 		panelKhachHang.add(btnThemKH);
 		
 		JLabel lblNewLabel = new JLabel("Tên KH:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setBounds(51, 101, 86, 25);
+		lblNewLabel.setBounds(42, 117, 86, 25);
 		panelKhachHang.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("SĐT KH:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1.setBounds(51, 151, 86, 25);
+		lblNewLabel_1.setBounds(42, 162, 86, 25);
 		panelKhachHang.add(lblNewLabel_1);
 		
 		txtTenKH = new JTextField();
 		txtTenKH.setEnabled(false);
 		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTenKH.setBounds(177, 98, 298, 30);
+		txtTenKH.setBounds(177, 115, 298, 30);
 		panelKhachHang.add(txtTenKH);
 		txtTenKH.setColumns(10);
 		txtTenKH.setBorder(new LineBorder(Color.BLACK, 1)); 
@@ -128,19 +131,31 @@ public class BanHangUI extends JPanel implements ActionListener {
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSDT.setEnabled(false);
 		txtSDT.setColumns(10);
-		txtSDT.setBounds(177, 148, 298, 30);
+		txtSDT.setBounds(177, 160, 298, 30);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1)); 
 		panelKhachHang.add(txtSDT);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Chiết khấu:");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel_1_1_1.setBounds(51, 199, 116, 25);
+		lblNewLabel_1_1_1.setBounds(42, 206, 116, 25);
 		panelKhachHang.add(lblNewLabel_1_1_1);
 		
 		JComboBox comboBoxChietKhau = new JComboBox();
+		comboBoxChietKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		comboBoxChietKhau.setBackground(Color.WHITE);
-		comboBoxChietKhau.setBounds(177, 200, 298, 30);
+		comboBoxChietKhau.setBounds(177, 203, 298, 30);
 		panelKhachHang.add(comboBoxChietKhau);
+		
+		JCheckBox chckbxKL = new JCheckBox("Khách lẻ");
+		chckbxKL.setHorizontalAlignment(SwingConstants.RIGHT);
+		chckbxKL.setBackground(Color.WHITE);
+		chckbxKL.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		chckbxKL.setBounds(358, 23, 160, 21);
+		panelKhachHang.add(chckbxKL);
+		chckbxKL.setFocusable(false);
+//		chckbxKL.setIconTextGap(5); // tạo khaonrg cách giữa ô và chữ
+//		chckbxKL.setPreferredSize(new Dimension(40, 40));
+//		chckbxKL.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		
 		// phần hóa đơn
 		JPanel panelHoaDon = new JPanel();
@@ -262,7 +277,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		
 		lblTenNV = new JLabel();
 		lblTenNV.setForeground(Color.RED);
-		lblTenNV.setBounds(32, 17, 225, 30);
+		lblTenNV.setBounds(32, 10, 225, 30);
 		panelThongTin.add(lblTenNV);
 		lblTenNV.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblTenNV.setText("Hứa Lập Quốc"); // Hoặc giá trị thực tế của nhân viên
@@ -270,7 +285,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		lblNgayLap = new JLabel();
 		lblNgayLap.setForeground(Color.BLACK);
 		lblNgayLap.setFont(new Font("Tahoma", Font.PLAIN, 20)); 
-		lblNgayLap.setBounds(310, 17, 261, 30); 
+		lblNgayLap.setBounds(310, 10, 261, 30); 
 		panelThongTin.add(lblNgayLap);
 		lblNgayLap.setHorizontalAlignment(SwingConstants.RIGHT);
 		 

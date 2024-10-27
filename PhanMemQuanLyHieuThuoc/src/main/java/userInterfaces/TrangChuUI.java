@@ -3,6 +3,7 @@ package userInterfaces;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Stack;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -20,7 +21,6 @@ import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import component.CustomButton;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
@@ -55,6 +55,7 @@ public class TrangChuUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.ApplicationHeight)); 
         setBackground(Color.yellow);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.ApplicationHeight));
@@ -130,7 +131,8 @@ public class TrangChuUI extends JFrame {
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Khách hàng", "Nhà Cung Cấp"},
+        		new String[]{"Khách hàng", "Nhà cung cấp"},
+        		
         		new CustomButtonFunction[] {
         			()->taiTrang(new KhachHangUI()),
         			()->taiTrang(new NhaCungCapUI())
@@ -182,12 +184,8 @@ public class TrangChuUI extends JFrame {
 		
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
+        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));
 
-        navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, () -> {
-            taiTrang(new BanHangUI());
-            topSection.setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.LabelBarHeight));
-        }));
-        
         navBar.setLayout(new BorderLayout());
         navBar.add(navBarWest, BorderLayout.WEST);
         navBar.add(navBarEast, BorderLayout.EAST);
@@ -211,7 +209,7 @@ public class TrangChuUI extends JFrame {
 		//Luu lich su trang
 		if(uiHistory.size() >= 10) uiHistory.removeFirst();
 		uiHistory.add(mainSection);
-		
+
 		//Sang trang moi
 		panel.remove(mainSection);
 		mainSection = trangDich;
@@ -232,6 +230,7 @@ public class TrangChuUI extends JFrame {
 		panel.repaint();
 		
 		uiHistory.removeLast();
+		
 	}
 	
 	public static void hienLoi(Class<?> errorSource, Exception e) {

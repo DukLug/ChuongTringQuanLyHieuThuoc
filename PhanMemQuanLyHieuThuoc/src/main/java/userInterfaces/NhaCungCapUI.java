@@ -55,7 +55,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		setLayout(null);
 		
 		JPanel panelTong = new JPanel();
-		panelTong.setBackground(UIStyles.backgroundColor);
+		panelTong.setBackground(UIStyles.BackgroundColor);
 		panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 		add(panelTong);
 		panelTong.setLayout(null);
@@ -145,7 +145,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		btnCapNhat.setBounds(300, 530, 180, 46);
 		panelBieuMau.add(btnCapNhat);
 		
-		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.trash, CustomButtonIconSide.LEFT, () -> quayLai());
+		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.Trash, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnXoaTrang.setBounds(184, 609, 180, 46);
 		panelBieuMau.add(btnXoaTrang);
@@ -165,7 +165,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		panelThanhcongCu.setBounds(120, 24, 1692, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
-		panelThanhcongCu.setBackground(UIStyles.backgroundColor);
+		panelThanhcongCu.setBackground(UIStyles.BackgroundColor);
 		
 		JLabel lblTieuDe = new JLabel("NHÀ CUNG CẤP");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -189,14 +189,14 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		txtTim.setBorder(BorderFactory.createEmptyBorder()); // xóa viền
 		UIStyles.setPlaceholder(txtTim, "Mã, tên nhà cung cấp");
 		
-		JLabel icon = new JLabel(UIStyles.FInd);
+		JLabel icon = new JLabel(UIStyles.Find);
 		
 		panelTim.add(icon, BorderLayout.WEST);
 		icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // cách lề 5px
 		
 		JCheckBox chckbxHienDS = new JCheckBox("Hiện tất cả");
 		
-		chckbxHienDS.setBackground(UIStyles.backgroundColor);
+		chckbxHienDS.setBackground(UIStyles.BackgroundColor);
 		chckbxHienDS.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		chckbxHienDS.setBounds(1014, 0, 146, 46);
 		chckbxHienDS.setFocusPainted(false); 

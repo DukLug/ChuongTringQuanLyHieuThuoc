@@ -68,7 +68,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 setLayout(null);
 		
 		JPanel panelTong = new JPanel();
-		panelTong.setBackground(UIStyles.backgroundColor);
+		panelTong.setBackground(UIStyles.BackgroundColor);
 		panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 
 		add(panelTong);
@@ -78,7 +78,7 @@ setLayout(null);
 		panelLoc.setBackground(Color.WHITE);
 		panelLoc.setBounds(41, 81, 281, 727);
 		panelTong.add(panelLoc);
-		panelLoc.setBackground(UIStyles.backgroundColor);
+		panelLoc.setBackground(UIStyles.BackgroundColor);
 
 		panelLoc.setLayout(null);
 
@@ -101,7 +101,7 @@ setLayout(null);
 		        g2d.dispose();
 		    }
 		};
-		panelKhung.setBackground(UIStyles.backgroundColor);
+		panelKhung.setBackground(UIStyles.BackgroundColor);
 		panelKhung.setBounds(0, 10, 299, 264);
 		panelLoc.add(panelKhung);
 		panelKhung.setLayout(null);
@@ -277,7 +277,7 @@ setLayout(null);
 		btnCapNhat.setBounds(339, 563, 180, 46);
 		panelBieuMau.add(btnCapNhat);
 		
-		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.trash, CustomButtonIconSide.LEFT, () -> quayLai());
+		btnXoaTrang = new CustomButton("Xóa trắng", UIStyles.XoaTrangButtonStyle, UIStyles.Trash, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		btnXoaTrang.setBounds(223, 636, 180, 46);
 		panelBieuMau.add(btnXoaTrang);
@@ -302,7 +302,7 @@ setLayout(null);
 		panelThanhcongCu.setBounds(41, 25, 1719, 46);
 		panelTong.add(panelThanhcongCu);
 		panelThanhcongCu.setLayout(null);
-		panelThanhcongCu.setBackground(UIStyles.backgroundColor);
+		panelThanhcongCu.setBackground(UIStyles.BackgroundColor);
 		
 		JLabel lblTieuDe = new JLabel("KHÁCH HÀNG");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -325,12 +325,12 @@ setLayout(null);
 		txtTim.setBorder(BorderFactory.createEmptyBorder()); // xóa viền
 		UIStyles.setPlaceholder(txtTim, "Mã, số điện thoại khách hàng");
 		
-		JLabel icon = new JLabel(UIStyles.FInd);
+		JLabel icon = new JLabel(UIStyles.Find);
 		panelTim.add(icon, BorderLayout.WEST);
 		icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // cách lề 5px
 		
 		JCheckBox chckbxHienDS = new JCheckBox("Hiện tất cả");
-		chckbxHienDS.setBackground(UIStyles.backgroundColor);
+		chckbxHienDS.setBackground(UIStyles.BackgroundColor);
 		
 		chckbxHienDS.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		chckbxHienDS.setBounds(1057, 0, 146, 46);

@@ -1,9 +1,7 @@
 /META-INF/
-/enity/
-/dao/
-/connectDB/
-/application/
-/component/
 /userInterfaces/
-/controller/
+/component/
 /entity/
+/application/
+/testEntity/
+/dao/

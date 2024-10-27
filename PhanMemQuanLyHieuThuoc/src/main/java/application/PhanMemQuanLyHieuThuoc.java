@@ -10,23 +10,23 @@ import javax.swing.*;
 
 import controller.TimKiemCTR;
 import customEnum.TrangThaiLamViec;
-import enity.NhanVien;
-import entity.TestNguoi;
+import entity.NhanVien;
+import testEntity.TestNguoi;
 import userInterfaces.*;
+import userInterfaces.NhapHangUI.NhapHangRow;
 
 public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = true;
 	
 	public static void main(String[] args) {
-		
-		
 		System.setProperty("sun.java2d.uiScale", "1.0");
 
 		
-        TrangChuUI trangChuUI = new TrangChuUI();
-        //TestSearch();
+        TrangChuUI trangChuUI = new TrangChuUI(false);
+        TestSearch();
        
     }
+
 	
 	private static void TestSearch() {
 		 // Test
@@ -72,6 +72,5 @@ public class PhanMemQuanLyHieuThuoc {
             System.out.println(nguoi.toString());
         }
 
-            
 	}
 }

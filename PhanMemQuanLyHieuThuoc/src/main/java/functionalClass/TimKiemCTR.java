@@ -1,4 +1,4 @@
-package controller;
+package functionalClass;
 
 
 import java.lang.reflect.Field;

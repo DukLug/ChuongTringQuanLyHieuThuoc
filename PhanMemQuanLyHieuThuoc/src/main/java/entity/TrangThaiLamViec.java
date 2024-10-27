@@ -1,4 +1,4 @@
-package enity;
+package entity;
 
 public enum TrangThaiLamViec {
 DangLam("Đang làm"),DaNghiViec("Đã nghỉ việc");

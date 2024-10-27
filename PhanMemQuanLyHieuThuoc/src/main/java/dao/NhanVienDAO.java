@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import enity.ChucVu;
-import enity.GioiTinh;
-import enity.NhanVien;
-import enity.TrangThaiLamViec;
+import entity.ChucVu;
+import entity.GioiTinh;
+import entity.NhanVien;
+import entity.TrangThaiLamViec;
 
 public class NhanVienDAO {
 private ArrayList<NhanVien> dsNhanVien;

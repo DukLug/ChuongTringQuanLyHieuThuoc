@@ -63,7 +63,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		setBackground(Color.WHITE);
 		
 		JPanel panelTong = new JPanel();
-		panelTong.setBackground(UIStyles.backgroundColor);
+		panelTong.setBackground(UIStyles.BackgroundColor);
 		panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 		add(panelTong);
 		panelTong.setLayout(null);
@@ -79,7 +79,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		// phần khách hàng
 		JPanel panelKhachHang = new JPanel();
 		panelKhachHang.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1), 
-			    "Thông tin khách hàng", TitledBorder.LEFT, TitledBorder.TOP, UIStyles.FONT, Color.BLACK));
+			    "Thông tin khách hàng", TitledBorder.LEFT, TitledBorder.TOP, UIStyles.DefaultFont, Color.BLACK));
 		panelKhachHang.setBackground(Color.WHITE);
 		panelKhachHang.setBounds(32, 50, 539, 259);
 		panelThongTin.add(panelKhachHang);
@@ -91,7 +91,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		panelTimKH.setLayout(null);
 		panelTimKH.setBorder(new LineBorder(Color.BLACK, 1)); 
 		
-		JLabel lblIconTim = new JLabel(UIStyles.FInd);
+		JLabel lblIconTim = new JLabel(UIStyles.Find);
 		lblIconTim.setBounds(269, 1, 37, 35);
 		panelTimKH.add(lblIconTim);
 		
@@ -106,7 +106,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		
 		btnThemKH = new CustomButton("Thêm KH", UIStyles.NavBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThemKH.setBounds(358, 61, 160, 35);
-		btnThemKH.setFont(UIStyles.FONT_BLOD);
+		btnThemKH.setFont(UIStyles.FontBold);
 		panelKhachHang.add(btnThemKH);
 		
 		JLabel lblNewLabel = new JLabel("Tên KH:");
@@ -161,7 +161,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		JPanel panelHoaDon = new JPanel();
 		panelHoaDon.setBackground(Color.WHITE);
 		panelHoaDon.setBorder(new TitledBorder(new LineBorder(Color.BLACK, 1), 
-			    "Thông tin hóa đơn", TitledBorder.LEFT, TitledBorder.TOP, UIStyles.FONT, Color.BLACK));
+			    "Thông tin hóa đơn", TitledBorder.LEFT, TitledBorder.TOP, UIStyles.DefaultFont, Color.BLACK));
 		panelHoaDon.setBounds(32, 319, 539, 508);
 		panelThongTin.add(panelHoaDon);
 		panelHoaDon.setLayout(null);
@@ -299,7 +299,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		panelBanHang.setBounds(10, 90, 1299, 750);
 		panelTong.add(panelBanHang);
 		panelBanHang.setLayout(null);
-		panelBanHang.setBackground(UIStyles.backgroundColor);
+		panelBanHang.setBackground(UIStyles.BackgroundColor);
 		
 		// phần tìm kiếm
 		JPanel panelTimKiem = new JPanel();
@@ -308,7 +308,7 @@ public class BanHangUI extends JPanel implements ActionListener {
 		panelBanHang.add(panelTimKiem);
 		panelTimKiem.setLayout(null);
 		
-		btnQuetMa = new JButton(UIStyles.barCode);
+		btnQuetMa = new JButton(UIStyles.BarCode);
 		btnQuetMa.setBounds(1, 1, 56, 38);
 		btnQuetMa.setBorder(null);
 		btnQuetMa.setBackground(Color.WHITE);

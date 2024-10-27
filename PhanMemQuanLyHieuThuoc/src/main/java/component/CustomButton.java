@@ -25,6 +25,7 @@ import java.util.function.Function;
 public class CustomButton extends JButton implements ActionListener{
 	
 	public CustomButtonFunction func;
+	private boolean cLickable;
 	
 	public CustomButton(String title, final ButtonStyle style, CustomButtonFunction func) 
 	{		
@@ -110,6 +111,8 @@ public class CustomButton extends JButton implements ActionListener{
 		// TODO Auto-generated method stub
 		if(func!=null)func.pressed();		
 	}
+	
+
 	
 	public static class ButtonStyle{
 		private int prefWidth;

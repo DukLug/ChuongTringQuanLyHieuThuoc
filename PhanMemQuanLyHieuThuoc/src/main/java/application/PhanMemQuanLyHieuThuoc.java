@@ -10,8 +10,8 @@ import javax.swing.*;
 
 import controller.TimKiemCTR;
 import customEnum.TrangThaiLamViec;
-import enity.NhanVien;
-import entity.TestNguoi;
+import entity.NhanVien;
+import testEntity.TestNguoi;
 import userInterfaces.*;
 import userInterfaces.NhapHangUI.NhapHangRow;
 
@@ -22,7 +22,7 @@ public class PhanMemQuanLyHieuThuoc {
 		System.setProperty("sun.java2d.uiScale", "1.0");
 
 		
-        TrangChuUI trangChuUI = new TrangChuUI(true);
+        TrangChuUI trangChuUI = new TrangChuUI(false);
         TestSearch();
        
     }

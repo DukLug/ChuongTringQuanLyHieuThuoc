@@ -48,7 +48,6 @@ public class NhanVienCTR {
 		   ArrayList<NhanVien> list = ds.layDanhSachTatCaNhanVien();
 		   return list;
 			
-			
 	   }
 	 
 	 

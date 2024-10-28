@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import userInterfaces.TrangChuUI;
+import userInterface.TrangChuUI;
 
 public class CustomItemList extends JPanel {
 	private int prefWidth;

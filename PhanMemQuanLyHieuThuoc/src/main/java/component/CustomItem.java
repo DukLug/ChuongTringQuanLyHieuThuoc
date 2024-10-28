@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import userInterfaces.TrangChuUI;
+import userInterface.TrangChuUI;
 
 public class CustomItem extends JPanel{
 	private int itemPrefWidth;

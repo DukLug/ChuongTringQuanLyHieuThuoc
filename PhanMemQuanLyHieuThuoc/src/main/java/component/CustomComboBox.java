@@ -7,7 +7,7 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import component.CustomButton.ButtonStyle;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
-import userInterfaces.UIStyles;
+import userInterface.UIStyles;
 
 import java.awt.Color;
 import java.awt.Component;

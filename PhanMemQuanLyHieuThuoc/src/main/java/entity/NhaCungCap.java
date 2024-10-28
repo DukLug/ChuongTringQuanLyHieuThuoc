@@ -10,6 +10,11 @@ public class NhaCungCap {
 	private String email;
 	private String diaChi;
 	
+	public NhaCungCap() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap, String sdt, String email, String diaChi) {
 		super();
 		this.maNhaCungCap = maNhaCungCap;

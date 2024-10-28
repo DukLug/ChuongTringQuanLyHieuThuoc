@@ -13,6 +13,11 @@ public class KhachHang {
 	private int diemTichLuy;
 	private String cccd;
 	
+	public KhachHang() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public KhachHang(String maKhachHang, String hoTen, String sdt, String diaChi, int diemTichLuy, String cccd) {
 		super();
 		this.maKhachHang = maKhachHang;

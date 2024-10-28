@@ -75,7 +75,7 @@ public class CustomTable extends JTable {
             }
         });
     }
-
+    
 
     
     public void setData(Object[][] newData) {

@@ -1,4 +1,4 @@
-package entity;
+package customDataType;
 
 public enum ChucVu {
 	NhanVienBanHang("Nhân viên bán hàng"),ChuCuaHang("Chủ cửa hàng");

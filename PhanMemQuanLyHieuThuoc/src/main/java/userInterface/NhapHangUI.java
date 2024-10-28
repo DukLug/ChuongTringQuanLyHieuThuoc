@@ -20,7 +20,7 @@ import component.CustomItemList;
 import component.RoundedBorder;
 import component.CustomButton.ButtonStyle;
 import component.CustomButton.CustomButtonIconSide;
-import entity.DonViTinh;
+import customDataType.DonViTinh;
 import component.CustomItem;
 import testEntity.TestNguoi;
 import testEntity.Thuoc;

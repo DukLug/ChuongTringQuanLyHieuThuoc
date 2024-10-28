@@ -1,4 +1,4 @@
-package entity;
+package customDataType;
 
 public enum GioiTinh {
 	Nam("Nam"),Nu("Nữ");

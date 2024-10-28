@@ -2,7 +2,7 @@ package testEntity;
 
 import java.math.BigDecimal;
 
-import customEnum.TrangThaiLamViec;
+import customDataType.TrangThaiLamViec;
 
 public class TestNguoi {
 	private String id;

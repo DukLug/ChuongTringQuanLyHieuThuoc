@@ -1,6 +1,6 @@
 package testEntity;
 
-import entity.DonViTinh;
+import customDataType.DonViTinh;
 
 public class Thuoc {
 	public String maThuoc;

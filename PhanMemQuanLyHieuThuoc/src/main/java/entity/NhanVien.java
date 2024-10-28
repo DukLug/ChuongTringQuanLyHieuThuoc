@@ -3,6 +3,10 @@ package entity;
 import java.sql.Date;
 import java.util.Objects;
 
+import customDataType.ChucVu;
+import customDataType.GioiTinh;
+import customDataType.TrangThaiLamViec;
+
 public class NhanVien {
 	private String maNhanVien;
 	private String hoten;

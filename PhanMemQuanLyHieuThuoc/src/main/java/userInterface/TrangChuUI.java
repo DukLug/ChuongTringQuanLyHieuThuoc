@@ -229,52 +229,6 @@ public class TrangChuUI extends JFrame {
 		
 	}
 	
-	public static void hienLoi(Class<?> errorSource, Exception e) {
-	 	if (!PhanMemQuanLyHieuThuoc.HienLoi) return;
-        String errorMessage = errorSource.getName() + ": " + e.getMessage();
-        String email = new String("support@example.com"); 
-        JLabel emailLabel = new JLabel("Please contact with us to get help: " + email);
-        emailLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 
-        JPanel panel = new JPanel(new BorderLayout());
-        
-        JTextArea errorText = new JTextArea(errorMessage);
-        errorText.setEditable(false);
-        
-        panel.add(new JScrollPane(errorText), BorderLayout.NORTH);
-        panel.add(emailLabel, BorderLayout.CENTER);
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
-        JButton copyEmailButton = new JButton("Copy Email");
-        copyEmailButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                StringSelection emailSelection = new StringSelection(email);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(emailSelection, null);
-                JOptionPane.showMessageDialog(null, "Email copied to clipboard.");
-            }
-        });
-        buttonPanel.add(copyEmailButton);
-
-        JButton copyErrorButton = new JButton("Copy Error");
-        copyErrorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                StringSelection errorSelection = new StringSelection(errorMessage);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(errorSelection, null);
-                JOptionPane.showMessageDialog(null, "Error copied to clipboard.");
-            }
-        });
-        buttonPanel.add(copyErrorButton);
-
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        JOptionPane.showMessageDialog(null,
-                panel,
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-
-        throw new IllegalArgumentException(errorMessage);
-    }
 
 }

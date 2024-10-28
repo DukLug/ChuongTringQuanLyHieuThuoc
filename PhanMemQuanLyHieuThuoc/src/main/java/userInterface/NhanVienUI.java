@@ -506,7 +506,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    for (NhanVien nv : list) {
 	        data[index++] = new Object[]{
 	            nv.getMaNhanVien(),
-	            nv.getHoten(),
+	            nv.getHoTen(),
 	            nv.getSdt(),
 	            nv.getCccd(),
 	            nv.getNgaySinh(),

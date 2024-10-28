@@ -1,8 +1,2 @@
 /META-INF/
-/userInterfaces/
-/component/
-/entity/
-/application/
-/testEntity/
-/dao/
-/functionalClass/
+/userInterface/

@@ -5,13 +5,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
-import userInterfaces.TrangChuUI;
-import userInterfaces.UIStyles;
-
 import java.awt.*;
 import java.awt.event.*;
 import application.*;
 import component.CustomButton.CustomButtonFunction;
+import userInterface.TrangChuUI;
+import userInterface.UIStyles;
 public class CustomTable extends JTable {
     private CustomTableRowStyle rowStyle;
     private int selectedRow = -1;
@@ -76,6 +75,36 @@ public class CustomTable extends JTable {
             }
         });
     }
+
+
+    
+    public void setData(Object[][] newData) {
+        // Kiểm tra nếu dữ liệu mới không khớp với số lượng cột hiện tại
+        if (newData.length > 0 && newData[0].length != this.getColumnCount()) {
+            TrangChuUI.hienLoi(this.getClass(), new Exception("New data row length does not match the number of columns"));
+            return; // Ngừng thực hiện nếu có lỗi về số cột
+        }
+
+        // Cập nhật dữ liệu bảng
+        for (int i = 0; i < newData.length; i++) {
+            for (int j = 0; j < newData[i].length; j++) {
+                this.setValueAt(newData[i][j], i, j);
+            }
+        }
+
+        // Thông báo cho bảng rằng dữ liệu đã thay đổi để bảng có thể vẽ lại
+        ((AbstractTableModel) this.getModel()).fireTableDataChanged();
+    }
+    
+    public void clearData() {
+        // Tạo một mảng rỗng và cập nhật dữ liệu bảng
+        Object[][] emptyData = new Object[0][getColumnCount()]; // Mảng rỗng với số cột hiện tại
+        setData(emptyData); // Gọi phương thức setData để cập nhật dữ liệu
+
+        // Thông báo cho bảng rằng dữ liệu đã thay đổi để bảng có thể vẽ lại
+        ((AbstractTableModel) this.getModel()).fireTableDataChanged();
+    }
+
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {

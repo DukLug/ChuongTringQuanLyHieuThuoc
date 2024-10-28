@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import userInterfaces.UIStyles;
+import userInterface.UIStyles;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

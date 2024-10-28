@@ -38,7 +38,7 @@ public class CustomItem extends JPanel{
 	public void addCells(JComponent[] cells) {
 		this.cells = cells;	
 		if(cells.length != cellsWidth.length) {
-			TrangChuUI.hienLoi(getClass(), new Exception("Columns's length and columnsWidth's length are different"));
+			throw new IllegalArgumentException("Columns's length and columnsWidth's length are different");
 		}
 		for(int i = 0; i < cells.length; i++) {
 			JPanel cell = new JPanel();

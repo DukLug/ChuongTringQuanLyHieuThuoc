@@ -24,7 +24,7 @@ public class CustomTable extends JTable {
         if(PhanMemQuanLyHieuThuoc.HienLoi) {
             for (Object[] row : data) {
                 if (row.length != columnNames.length) {
-                    TrangChuUI.hienLoi(this.getClass(), new Exception("Data row length does not match the number of column names"));
+                	throw new IllegalArgumentException("Data row length does not match the number of column names");
                 }
             }
         }
@@ -81,8 +81,7 @@ public class CustomTable extends JTable {
     public void setData(Object[][] newData) {
         // Kiểm tra nếu dữ liệu mới không khớp với số lượng cột hiện tại
         if (newData.length > 0 && newData[0].length != this.getColumnCount()) {
-            TrangChuUI.hienLoi(this.getClass(), new Exception("New data row length does not match the number of columns"));
-            return; // Ngừng thực hiện nếu có lỗi về số cột
+            throw new IllegalArgumentException("New data row length does not match the number of columns");
         }
 
         // Cập nhật dữ liệu bảng
@@ -155,8 +154,7 @@ public class CustomTable extends JTable {
     		this.setModel(new DefaultTableModel(null, columnNames));
     	}
     	else if(newData[0].length != this.getModel().getColumnCount()) {
-    		TrangChuUI.hienLoi(getClass(), new Exception("Du lieu cap nhat khong hop le"));
-    		return;
+    		throw new IllegalArgumentException("Du lieu cap nhat khong hop le");
     	}
     	else {
     		this.setModel(new DefaultTableModel(newData, columnNames));

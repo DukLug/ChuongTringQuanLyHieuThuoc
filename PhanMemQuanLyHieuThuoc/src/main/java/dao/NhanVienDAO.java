@@ -48,7 +48,7 @@ private ArrayList<NhanVien> dsNhanVien;
 			PreparedStatement ps = ConnectDB.getConnection()
 					.prepareStatement("Insert into NhanVien values(?,?,?,?,?,?,?,?)");
 			ps.setString(1, newNhanVien.getMaNhanVien());
-			ps.setString(2, newNhanVien.getHoten());
+			ps.setString(2, newNhanVien.getHoTen());
 			ps.setString(3, newNhanVien.getSdt());
 			ps.setString(4, newNhanVien.getCccd());
 			ps.setDate(5, new Date(newNhanVien.getNgaySinh().getTime()));
@@ -67,7 +67,7 @@ private ArrayList<NhanVien> dsNhanVien;
 		try {
 			PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
 					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, TrangThai = ?, ChucVu = ?, GioiTinh = ? where MaNhanVien = ?");
-			ps.setString(1, nv.getHoten());
+			ps.setString(1, nv.getHoTen());
 			ps.setString(2, nv.getSdt());
 			ps.setString(3, nv.getCccd());
 			ps.setDate(4, new Date(nv.getNgaySinh().getTime()));

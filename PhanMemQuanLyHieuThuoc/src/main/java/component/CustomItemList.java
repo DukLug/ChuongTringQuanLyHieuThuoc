@@ -65,7 +65,7 @@ public class CustomItemList extends JPanel {
     
     public void addItem(CustomItem item) {
     	if(item.getPreferredSize().width > this.getPreferredSize().width) {
-    		TrangChuUI.hienLoi(getClass(), new Exception("Item is larger than scrollable panel"));
+    		throw new IllegalArgumentException("Item is larger than scrollable panel");
     	}
     	if(itemList.size()!=0) {
     		JPanel gapPanel = new JPanel();
@@ -81,8 +81,7 @@ public class CustomItemList extends JPanel {
     
     public void setHeader(int width, int headerHeight, Color headerBackgroundColor,Font font, int[] columnWidths, String[] columnNames) {
     	if(columnNames.length != columnWidths.length) {
-    		TrangChuUI.hienLoi(getClass(), new Exception("Collumn names and column widths doesn't match"));
-    		return;
+    		throw new IllegalArgumentException("Collumn names and column widths doesn't match");
     	}
     	
     	header = new JPanel();

@@ -1,6 +1,7 @@
-/userInterfaces/
-/entity/
-/dao/
-/META-INF/
+/customDataType/
+/functionalClass/
+/testEntity/
+/userInterface/
+/connectDB/
 /controller/
-/application/
+/entity/

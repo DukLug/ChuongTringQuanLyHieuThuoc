@@ -4,12 +4,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import connectDB.ConnectDB;
-import enity.ChucVu;
-import enity.GioiTinh;
-import enity.NhanVien;
-import enity.TrangThaiLamViec;
+import customDataType.ChucVu;
+import customDataType.GioiTinh;
+import customDataType.TrangThaiLamViec;
+import entity.NhanVien;
 
 public class NhanVienDAO {
 private ArrayList<NhanVien> dsNhanVien;
@@ -27,7 +28,7 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
+				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
 				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
 				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
@@ -47,7 +48,7 @@ private ArrayList<NhanVien> dsNhanVien;
 			PreparedStatement ps = ConnectDB.getConnection()
 					.prepareStatement("Insert into NhanVien values(?,?,?,?,?,?,?,?)");
 			ps.setString(1, newNhanVien.getMaNhanVien());
-			ps.setString(2, newNhanVien.getHoten());
+			ps.setString(2, newNhanVien.getHoTen());
 			ps.setString(3, newNhanVien.getSdt());
 			ps.setString(4, newNhanVien.getCccd());
 			ps.setDate(5, new Date(newNhanVien.getNgaySinh().getTime()));
@@ -66,7 +67,7 @@ private ArrayList<NhanVien> dsNhanVien;
 		try {
 			PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
 					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, TrangThai = ?, ChucVu = ?, GioiTinh = ? where MaNhanVien = ?");
-			ps.setString(1, nv.getHoten());
+			ps.setString(1, nv.getHoTen());
 			ps.setString(2, nv.getSdt());
 			ps.setString(3, nv.getCccd());
 			ps.setDate(4, new Date(nv.getNgaySinh().getTime()));
@@ -82,27 +83,29 @@ private ArrayList<NhanVien> dsNhanVien;
 	}
 
 	// tìm nhân viên theo mã nhân viên
-	public NhanVien timNhanVienTheoMa(String maNhanVien) {
-		try {
-			PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where MaNhanVien = ?");
-			ps.setString(1, maNhanVien);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				String maNhanVien1 = rs.getString("MaNhanVien");
-				String hoTen = rs.getString("HoTen");
-				String sdt = rs.getString("Sdt");
-				String cccd = rs.getString("Cccd");
-				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
+	public ArrayList<NhanVien> timNhanVienTheoMa(String maNhanVien) {
+		ArrayList<NhanVien> dsNhanVien = new ArrayList<>();
+		 try {
+		        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where MaNhanVien = ?");
+		        ps.setString(1, maNhanVien);
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            String maNV = rs.getString("MaNhanVien");
+		            String hoTen = rs.getString("HoTen");
+		            String sdt = rs.getString("Sdt");
+		            String cccd = rs.getString("Cccd");
+		            Date ngaySinh = rs.getDate("NgaySinh");
+		            TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
+		            ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
+		            GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-				return new NhanVien(maNhanVien1, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		            NhanVien nv = new NhanVien(maNV, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
+		            dsNhanVien.add(nv);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		return dsNhanVien;
 	}
 
 	// Tìm nhân viên theo tên
@@ -118,7 +121,7 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
+				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
 				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
 				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
@@ -144,7 +147,7 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt1 = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
+				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
 				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
 				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
@@ -170,7 +173,7 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
+				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
 				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
 				GioiTinh gioiTinh1 = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
@@ -196,7 +199,7 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThai"));
+				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
 				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
 				GioiTinh gioiTinh1 = GioiTinh.valueOf(rs.getString("GioiTinh"));
 

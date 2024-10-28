@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import connectDB.ConnectDB;
 import dao.NhaCungCapDAO;
 import entity.NhaCungCap;
-import userInterfaces.NhaCungCapUI;
+//import userInterfaces.NhaCungCapUI;
 
 public class NhaCungCapCTR {
 

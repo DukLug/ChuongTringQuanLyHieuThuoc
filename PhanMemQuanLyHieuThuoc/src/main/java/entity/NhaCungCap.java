@@ -11,8 +11,7 @@ public class NhaCungCap {
 	private String diaChi;
 	
 	public NhaCungCap() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap, String sdt, String email, String diaChi) {
@@ -89,5 +88,5 @@ public class NhaCungCap {
 		return "NhaCungCap [maNhaCungCap=" + maNhaCungCap + ", tenNhaCungCap=" + tenNhaCungCap + ", sdt=" + sdt
 				+ ", email=" + email + ", diaChi=" + diaChi + "]";
 	}
-	
+
 }

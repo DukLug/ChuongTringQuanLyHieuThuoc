@@ -14,8 +14,7 @@ public class KhachHang {
 	private String cccd;
 	
 	public KhachHang() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public KhachHang(String maKhachHang, String hoTen, String sdt, String diaChi, int diemTichLuy, String cccd) {
@@ -101,5 +100,4 @@ public class KhachHang {
 		return "KhachHang [maKhachHang=" + maKhachHang + ", hoTen=" + hoTen + ", sdt=" + sdt + ", diaChi=" + diaChi
 				+ ", diemTichLuy=" + diemTichLuy + ", cccd=" + cccd + "]";
 	}
-	
 }

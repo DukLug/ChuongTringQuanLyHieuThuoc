@@ -1,7 +1,6 @@
-/dao/
 /userInterfaces/
-/connectDB/
+/entity/
+/dao/
 /META-INF/
 /controller/
-/component/
-/entity/
+/application/

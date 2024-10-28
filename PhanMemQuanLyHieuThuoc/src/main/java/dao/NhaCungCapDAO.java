@@ -17,38 +17,6 @@ public class NhaCungCapDAO {
 	
 	static ArrayList<NhaCungCap> dsNCC;
 	
-//	public static ArrayList<NhaCungCap> getAllNhaCungCap() {
-//		dsNCC = new ArrayList<NhaCungCap>();
-//		
-//		try {
-//			ConnectDB.getInstance();
-//			Connection con = ConnectDB.getConnection();
-//			String sql = "Select * from NhaCungCap";
-//			Statement statement = con.createStatement();
-//			
-//			//  thực thi câu lệnh sql trả về đối tương ResultSet
-//			ResultSet rs = statement.executeQuery(sql);
-//			
-//			// duyệt trên kết quả trả về
-//			while (rs.next()) { // di chuyển con trỏ xuống bản ghi tiếp theo
-//				String maNCC = rs.getString(1);
-//				String tenNCC = rs.getString(2);
-//				String sdt = rs.getString(3);
-//				String email = rs.getString(4);
-//				String diaChi = rs.getString(5);
-//				
-//				NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, sdt, email, diaChi);
-//				dsNCC.add(ncc);
-//			}
-//			
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return dsNCC;
-//	}
-	
 	public static Object[][] getAllNhaCungCap() {
 	    ArrayList<NhaCungCap> dsNCC = new ArrayList<>();
 	    

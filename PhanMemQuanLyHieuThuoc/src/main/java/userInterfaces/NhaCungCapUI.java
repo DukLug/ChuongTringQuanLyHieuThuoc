@@ -38,7 +38,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	private CustomButton btnXoaTrang;
 	private JTextField txtEmail;
 	private CustomTable customTable;
-	private Object[][] data;
+	private Object[][] data = new Object[0][0];
 	private NhaCungCap ncc;
 	private JComponent panelTong;
 	private JComponent scrollPane;
@@ -213,7 +213,9 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 //		customTable = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
 //				 new int[] {224, 224, 224, 224, 227},
 //				 ()->ClickedMyTable());
+		
 		docuLieuVaotable();
+//		taoScrollPanel(data);
 		
 //		scrollPane = new JScrollPane(customTable);
 //        scrollPane.setPreferredSize(new Dimension(1123, 711)); // thay đổi theo khung chứa
@@ -309,18 +311,12 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
  	}
 
  	private void taoScrollPanel(Object[][] data) {
- 		String[] columnNames = {"Mã", "Tên", "Số điện thoại", "Email", "Dịa chỉ"};
+ 		String[] columnNames = {"Mã", "Tên", "Số điện thoại"};
  		
  		customTable = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
-				 new int[] {224, 224, 224, 224, 227},
+				 new int[] {350, 350, 350},
 				 ()->ClickedMyTable());
  		
- 		// Khởi tạo customTable với dữ liệu trống
- 	    customTable = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
- 	            new int[] {224, 224, 224, 224, 227},
- 	            () -> ClickedMyTable());
-
- 	   
  	    // Cập nhật bảng trong JScrollPane
  	    scrollPane = new JScrollPane(customTable);
  	    scrollPane.setPreferredSize(new Dimension(1123, 711)); 
@@ -344,8 +340,8 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	        txtMaNCC.setText(customTable.getValueAt(dongDuocChon, 0).toString());
 	        txtTen.setText(customTable.getValueAt(dongDuocChon, 1).toString());
 	        txtSDT.setText(customTable.getValueAt(dongDuocChon, 2).toString());
-	        txtEmail.setText(customTable.getValueAt(dongDuocChon, 3).toString());
-	        txtDiaChi.setText(customTable.getValueAt(dongDuocChon, 4).toString());
+//	        txtEmail.setText(customTable.getValueAt(dongDuocChon, 3).toString());
+//	        txtDiaChi.setText(customTable.getValueAt(dongDuocChon, 4).toString());
 	    }
 	}
 

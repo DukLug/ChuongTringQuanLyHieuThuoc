@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connectDB.ConnectDB;
-import entity.ChucVu;
-import entity.GioiTinh;
+import customDataType.ChucVu;
+import customDataType.GioiTinh;
+import customDataType.TrangThaiLamViec;
 import entity.NhanVien;
-import entity.TrangThaiLamViec;
 
 public class NhanVienDAO {
 private ArrayList<NhanVien> dsNhanVien;

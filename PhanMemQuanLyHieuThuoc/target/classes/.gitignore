@@ -1,2 +1,10 @@
 /META-INF/
+/application/
+/functionalClass.class
+/functionalClass/
+/component/
+/customDataType/
+/dao/
+/entity/
 /userInterface/
+/testEntity/

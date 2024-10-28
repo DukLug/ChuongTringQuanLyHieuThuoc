@@ -1,7 +1,7 @@
-package entity;
+package customDataType;
 
 public enum TrangThaiLamViec {
- DangLam("Đang làm"),DaNghiViec("Đã nghỉ việc");
+	DangLam("Đang làm"),DaNghiViec("Đã nghỉ việc");
 	
 	private String trangThai;
 	

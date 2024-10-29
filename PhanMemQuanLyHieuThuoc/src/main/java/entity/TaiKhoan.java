@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 import customDataType.TrangThaiTaiKhoan;
 
 public class TaiKhoan {
@@ -16,9 +18,9 @@ public class TaiKhoan {
 	public TaiKhoan(String maTaiKhoan, String tenDangNhap, String matKhau, TrangThaiTaiKhoan trangThaiTaiKhoan) {
 		super();
 		this.maTaiKhoan = maTaiKhoan;
-		this.tenDangNhap = tenDangNhap;
-		this.matKhau = matKhau;
-		this.trangThaiTaiKhoan = trangThaiTaiKhoan;
+		setTenDangNhap(tenDangNhap);
+		setMatKhau(matKhau);
+		setTrangThaiTaiKhoan(trangThaiTaiKhoan);
 	}
 
 	public TaiKhoan(String maTaiKhoan) {
@@ -73,6 +75,25 @@ public class TaiKhoan {
 		return "TaiKhoan [maTaiKhoan=" + maTaiKhoan + ", tenDangNhap=" + tenDangNhap + ", matKhau=" + matKhau
 				+ ", trangThaiTaiKhoan=" + trangThaiTaiKhoan + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maTaiKhoan);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TaiKhoan other = (TaiKhoan) obj;
+		return Objects.equals(maTaiKhoan, other.maTaiKhoan);
+	}
+	
+	
 	
 	
 	

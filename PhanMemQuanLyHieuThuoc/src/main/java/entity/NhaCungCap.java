@@ -17,10 +17,10 @@ public class NhaCungCap {
 	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap, String sdt, String email, String diaChi) {
 		super();
 		this.maNhaCungCap = maNhaCungCap;
-		this.tenNhaCungCap = tenNhaCungCap;
-		this.sdt = sdt;
-		this.email = email;
-		this.diaChi = diaChi;
+		setTenNhaCungCap(tenNhaCungCap);
+		setSdt(sdt);
+		setEmail(email);
+		setDiaChi(diaChi);
 	}
 
 	public NhaCungCap(String maNhaCungCap) {

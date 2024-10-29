@@ -17,11 +17,11 @@ public class KhachHang {
 	public KhachHang(String maKhachHang, String hoTen, String sdt, String diaChi, int diemTichLuy, String cccd) {
 		super();
 		this.maKhachHang = maKhachHang;
-		this.hoTen = hoTen;
-		this.sdt = sdt;
-		this.diaChi = diaChi;
-		this.diemTichLuy = diemTichLuy;
-		this.cccd = cccd;
+		setHoTen(hoTen);
+		setSdt(sdt);
+		setDiaChi(diaChi);
+		setDiemTichLuy(diemTichLuy);
+		setCccd(cccd);
 	}
 
 	public KhachHang(String maKhachHang) {

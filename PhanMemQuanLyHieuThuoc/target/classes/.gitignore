@@ -1,7 +1,5 @@
-/customDataType/
-/functionalClass/
-/testEntity/
-/userInterface/
-/connectDB/
+/META-INF/
 /controller/
 /entity/
+/userInterface/
+/component/

@@ -289,7 +289,11 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	}
 	
  	private NhaCungCap layThongTin() {
-		String ma = txtMaNCC.getText();
+ 		
+ 		String ma = txtMaNCC.getText();
+ 		if (ma == "")
+ 			ma = NhaCungCapCTR.taoMa();
+
 		String ten = txtTen.getText();
 		String sdt = txtSDT.getText();
 		String email = txtEmail.getText();

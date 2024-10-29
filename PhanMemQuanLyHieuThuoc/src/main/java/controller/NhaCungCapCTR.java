@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import component.CustomButton;
 import connectDB.ConnectDB;
 import dao.NhaCungCapDAO;
 import entity.NhaCungCap;
@@ -40,9 +41,6 @@ public class NhaCungCapCTR {
 	}
 	
 	public static boolean themNCC(NhaCungCap ncc) {
-		
-		String maNCC = taoMa();
-		ncc.setMaNhaCungCap(maNCC);
 	
 		if (NhaCungCapDAO.them(ncc))
 			return true;
@@ -57,7 +55,7 @@ public class NhaCungCapCTR {
 			return false;
 	}
 	
-	private static String taoMa() {
+	public static String taoMa() {
 	    String stt = "00000";
 	    int soHienTai = Integer.parseInt(stt); 
 	    soHienTai = danhSach.length + 1;
@@ -67,42 +65,72 @@ public class NhaCungCapCTR {
 	    return maNCC;
 	}
 
-	public static Object[][] timKiem(String thongTin) {
-	    List<NhaCungCap> ketQua = new ArrayList<>();
+//	public static Object[][] timKiem(String thongTin) {
+//	    List<NhaCungCap> ketQua = new ArrayList<>();
+//	    thongTin = thongTin.toLowerCase();
+//
+//	    // Duyệt qua danhSach để tìm kiếm nhà cung cấp
+//	    for (int i = 0; i < danhSach.length; i++) {
+//	        String maNCC = ((String) danhSach[i][0]).toLowerCase();
+//	        String tenNCC = ((String) danhSach[i][1]).toLowerCase();
+//
+//	        if (maNCC.equals(thongTin) || tenNCC.contains(thongTin)) {
+//	            NhaCungCap ncc = new NhaCungCap(); // Tạo đối tượng mới
+////	            ncc.setMaNhaCungCap(maNCC);
+//	            ncc.setTenNhaCungCap(tenNCC);
+//	            ncc.setSdt((String) danhSach[i][2]); // Thêm SĐT từ cột 2
+////	            ncc.setEmail((String) danhSach[i][3]); // Thêm Email từ cột 3
+////	            ncc.setDiaChi((String) danhSach[i][4]); // Thêm Địa chỉ từ cột 4
+//
+//	            ketQua.add(ncc); // Thêm nhà cung cấp vào kết quả
+//	        }
+//	    }
+//
+//	    // Tạo mảng dữ liệu để trả về
+//	    Object[][] data = new Object[ketQua.size()][3]; // Kích thước để chứa đủ thông tin
+//	    for (int i = 0; i < ketQua.size(); i++) {
+//	        NhaCungCap ncc = ketQua.get(i);
+//	        data[i][0] = ncc.getMaNhaCungCap();
+//	        data[i][1] = ncc.getTenNhaCungCap();
+//	        data[i][2] = ncc.getSdt(); // SĐT
+////	        data[i][3] = ncc.getEmail(); // Email
+////	        data[i][4] = ncc.getDiaChi(); // Địa chỉ
+//	    }
+//
+//    
+//	    return data;
+//	}
+	
+	public static Object[][] timKiem(String thongTin){
 	    thongTin = thongTin.toLowerCase();
-
-	    // Duyệt qua danhSach để tìm kiếm nhà cung cấp
-	    for (int i = 0; i < danhSach.length; i++) {
-	        String maNCC = ((String) danhSach[i][0]).toLowerCase();
-	        String tenNCC = ((String) danhSach[i][1]).toLowerCase();
-
+	    int count = 0;
+	  
+	    // Đếm số lượng kết quả
+	    for (Object[] row : danhSach) {
+	        String maNCC = ((String) row[0]).toLowerCase();
+	        String tenNCC = ((String) row[1]).toLowerCase();
 	        if (maNCC.equals(thongTin) || tenNCC.contains(thongTin)) {
-	            NhaCungCap ncc = new NhaCungCap(); // Tạo đối tượng mới
-	            ncc.setMaNhaCungCap(maNCC);
-	            ncc.setTenNhaCungCap(tenNCC);
-	            ncc.setSdt((String) danhSach[i][2]); // Thêm SĐT từ cột 2
-//	            ncc.setEmail((String) danhSach[i][3]); // Thêm Email từ cột 3
-//	            ncc.setDiaChi((String) danhSach[i][4]); // Thêm Địa chỉ từ cột 4
-
-	            ketQua.add(ncc); // Thêm nhà cung cấp vào kết quả
+	            count++;
 	        }
 	    }
 
-	    // Tạo mảng dữ liệu để trả về
-	    Object[][] data = new Object[ketQua.size()][3]; // Kích thước để chứa đủ thông tin
-	    for (int i = 0; i < ketQua.size(); i++) {
-	        NhaCungCap ncc = ketQua.get(i);
-	        data[i][0] = ncc.getMaNhaCungCap();
-	        data[i][1] = ncc.getTenNhaCungCap();
-	        data[i][2] = ncc.getSdt(); // SĐT
-//	        data[i][3] = ncc.getEmail(); // Email
-//	        data[i][4] = ncc.getDiaChi(); // Địa chỉ
+	    // Trả về mảng rỗng nếu không có kết quả
+	    if (count == 0) return new Object[0][0];
+
+	    // Tạo mảng kết quả
+	    Object[][] data = new Object[count][3];
+	    int index = 0;
+
+	    // Thêm kết quả vào mảng
+	    for (Object[] row : danhSach) {
+	        String maNCC = ((String) row[0]).toLowerCase();
+	        String tenNCC = ((String) row[1]).toLowerCase();
+	        if (maNCC.equals(thongTin) || tenNCC.contains(thongTin)) {
+	            data[index++] = new Object[]{row[0], row[1], row[2]};
+	        }
 	    }
 
 	    return data;
 	}
-
-
-
 
 }

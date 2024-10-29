@@ -32,10 +32,6 @@ public class NhaCungCap {
 		return maNhaCungCap;
 	}
 
-	public void setMaNhaCungCap(String maNhaCungCap) {
-		this.maNhaCungCap = maNhaCungCap;
-	}
-
 	public String getTenNhaCungCap() {
 		return tenNhaCungCap;
 	}

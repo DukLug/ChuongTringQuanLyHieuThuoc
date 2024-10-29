@@ -1,5 +1,4 @@
-/META-INF/
-/controller/
-/entity/
 /userInterface/
-/component/
+/dao/
+/customDataType/
+/entity/

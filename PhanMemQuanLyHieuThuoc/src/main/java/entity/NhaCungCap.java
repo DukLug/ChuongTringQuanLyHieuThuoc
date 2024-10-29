@@ -36,31 +36,59 @@ public class NhaCungCap {
 		return tenNhaCungCap;
 	}
 
-	public void setTenNhaCungCap(String tenNhaCungCap) {
-		this.tenNhaCungCap = tenNhaCungCap;
-	}
-
 	public String getSdt() {
 		return sdt;
 	}
-
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
-	}
-
+	
 	public String getEmail() {
 		return email;
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	public String getDiaChi() {
 		return diaChi;
 	}
 
+	public void setTenNhaCungCap(String tenNhaCungCap) {
+		if (tenNhaCungCap == null)
+			throw new  IllegalArgumentException("Tên nhà cung cấp không được null");
+		if (tenNhaCungCap.isEmpty())
+			throw new  IllegalArgumentException("Tên nhà cung cấp không được rỗng");
+		if (tenNhaCungCap.length() < 1 || tenNhaCungCap.length() > 50)
+			throw new  IllegalArgumentException("Tên nhà cung cấp tối thiểu 1 ký tự và tối đa 50 ký tự");
+		
+		this.tenNhaCungCap = tenNhaCungCap;
+	}
+
+	public void setSdt(String sdt) {
+		if (sdt == null)
+			throw new  IllegalArgumentException("Số điện thoại không được null");
+		if (sdt.isEmpty())
+			throw new  IllegalArgumentException("Số điện thoại không được rỗng");
+		if (sdt.length() != 8 || sdt.length() != 10)
+			throw new  IllegalArgumentException("Số điện thoại chỉ gồm 8 hoặc 10 ký tự số");
+		
+		this.sdt = sdt;
+	}
+
+	public void setEmail(String email) {
+		if (email == null)
+			throw new  IllegalArgumentException("Email không được null");
+		if (email.isEmpty())
+			throw new  IllegalArgumentException("Email không được rỗng");
+		if (email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9].[a-zA-Z0-9]$") == false)
+			throw new  IllegalArgumentException("Sai email");
+		
+		this.email = email;
+	}
+
 	public void setDiaChi(String diaChi) {
+		if (diaChi == null)
+			throw new  IllegalArgumentException("Địa chỉ không được null");
+		if (diaChi.isEmpty())
+			throw new  IllegalArgumentException("Địa chỉ không được rỗng");
+		if (diaChi.length() < 1 || diaChi.length() > 50)
+			throw new  IllegalArgumentException("Địa chỉ tối thiểu 1 ký tự và tối đa 50 ký tự");
+		
 		this.diaChi = diaChi;
 	}
 

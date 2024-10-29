@@ -2,9 +2,6 @@ package entity;
 
 import java.util.Objects;
 
-/**
- * 
- */
 public class KhachHang {
 	private String maKhachHang;
 	private String hoTen;
@@ -36,47 +33,52 @@ public class KhachHang {
 		return maKhachHang;
 	}
 
-	public void setMaKhachHang(String maKhachHang) {
-		this.maKhachHang = maKhachHang;
-	}
-
 	public String getHoTen() {
 		return hoTen;
 	}
-
-	public void setHoTen(String hoTen) {
-		this.hoTen = hoTen;
-	}
-
+	
 	public String getSdt() {
 		return sdt;
 	}
 
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
+	public void setHoTen(String hoTen) {
+		if (hoTen.matches("^[a-zA-Z][\\sa-zA-Z]*$"))
+			throw new  IllegalArgumentException("Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+		
+		this.hoTen = hoTen;
 	}
-
+	
 	public String getDiaChi() {
 		return diaChi;
 	}
 
-	public void setDiaChi(String diaChi) {
-		this.diaChi = diaChi;
+	public void setSdt(String sdt) {
+		if (sdt.length() != 10)
+			throw new  IllegalArgumentException("Số điện thoại chỉ gồm 10 ký tự só");
+		
+		this.sdt = sdt;
 	}
 
 	public int getDiemTichLuy() {
 		return diemTichLuy;
 	}
-
-	public void setDiemTichLuy(int diemTichLuy) {
-		this.diemTichLuy = diemTichLuy;
-	}
-
+	
 	public String getCccd() {
 		return cccd;
 	}
 
+	public void setDiaChi(String diaChi) {
+		this.diaChi = diaChi;
+	}
+	
+	public void setDiemTichLuy(int diemTichLuy) {
+		this.diemTichLuy = diemTichLuy;
+	}
+
 	public void setCccd(String cccd) {
+		if (cccd.length() != 12)
+			throw new  IllegalArgumentException("Căn cước công dân chỉ gồm 10 ký tự só");
+		
 		this.cccd = cccd;
 	}
 

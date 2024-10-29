@@ -41,7 +41,16 @@ public class KhuyenMai {
 	}
 
 	public void setNgayKhuyenMai(Date ngayKhuyenMai) {
-		this.ngayKhuyenMai = ngayKhuyenMai;
+		try {
+	        Date currentDate = new Date(System.currentTimeMillis());
+	        if (!ngayKhuyenMai.after(currentDate)) {
+	            this.ngayKhuyenMai = ngayKhuyenMai;
+	        } else {
+	            throw new IllegalArgumentException("Ngày khuyến mãi phải bằng hoặc sau ngày hiện tại.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
 	}
 
 	public Date getNgayKetThuc() {
@@ -49,7 +58,19 @@ public class KhuyenMai {
 	}
 
 	public void setNgayKetThuc(Date ngayKetThuc) {
-		this.ngayKetThuc = ngayKetThuc;
+		try {
+	        if (this.ngayKhuyenMai != null) {
+	            if (ngayKetThuc.after(this.ngayKhuyenMai)) {
+	                this.ngayKetThuc = ngayKetThuc;
+	            } else {
+	                throw new IllegalArgumentException("Ngày kết thúc phải sau ngày khuyến mãi.");
+	            }
+	        } else {
+	            throw new IllegalArgumentException("Ngày khuyến mãi chưa được thiết lập.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
 	}
 
 	public String getDieuKien() {
@@ -65,8 +86,15 @@ public class KhuyenMai {
 	}
 
 	public void setChietKhau(double chietKhau) {
-		
-		this.chietKhau = chietKhau;
+		try {
+	        if (chietKhau >= 0.0 && chietKhau <= 1.0) {
+	            this.chietKhau = chietKhau;
+	        } else {
+	            throw new IllegalArgumentException("Chiết khấu phải nằm trong khoảng từ 0 đến 1.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
 	}
 
 

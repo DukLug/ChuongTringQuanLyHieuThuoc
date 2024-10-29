@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import enity.KhuyenMai;
-import enity.NhanVien;
+import entity.KhuyenMai;
+import entity.NhanVien;
 
 public class KhuyenMaiDAO {
 	private ArrayList<KhuyenMai> dsKhuyenMai;

@@ -14,7 +14,6 @@ public class KhuyenMai {
 	
 	public KhuyenMai() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public KhuyenMai(String maKhuyenMai) {
@@ -25,20 +24,17 @@ public class KhuyenMai {
 			NhanVien maNhanVien) {
 		super();
 		this.maKhuyenMai = maKhuyenMai;
-		this.ngayKhuyenMai = ngayKhuyenMai;
-		this.ngayKetThuc = ngayKetThuc;
-		this.dieuKien = dieuKien;
-		this.chietKhau = chietKhau;
-		this.maNhanVien = maNhanVien;
+		setNgayKhuyenMai(ngayKhuyenMai);
+		setNgayKetThuc(ngayKetThuc);
+		setDieuKien(dieuKien);
+		setChietKhau(chietKhau);
+		setMaNhanVien(maNhanVien);
 	}
 
 	public String getMaKhuyenMai() {
 		return maKhuyenMai;
 	}
 
-	public void setMaKhuyenMai(String maKhuyenMai) {
-		this.maKhuyenMai = maKhuyenMai;
-	}
 
 	public Date getNgayKhuyenMai() {
 		return ngayKhuyenMai;
@@ -73,13 +69,16 @@ public class KhuyenMai {
 		this.chietKhau = chietKhau;
 	}
 
-	public NhanVien getMaNhanVien() {
-		return maNhanVien;
-	}
+
 
 	public void setMaNhanVien(NhanVien maNhanVien) {
 		this.maNhanVien = maNhanVien;
 	}
+
+	public NhanVien getMaNhanVien() {
+		return maNhanVien;
+	}
+
 
 	@Override
 	public int hashCode() {

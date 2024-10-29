@@ -3,40 +3,45 @@ package entity;
 import java.sql.Date;
 import java.util.Objects;
 
+import customDataType.ChucVu;
+import customDataType.GioiTinh;
+import customDataType.TrangThaiLamViec;
+
 public class NhanVien {
 	private String maNhanVien;
 	private String hoten;
 	private String sdt;
 	private String cccd;
 	private Date ngaySinh;
-	private TrangThaiLamViec trangThaiLamViec;
-	private ChucVu chucVu;
 	private GioiTinh gioiTinh;
+	private ChucVu chucVu;
+	private TrangThaiLamViec trangThaiLamViec;
 	
 	public NhanVien(String maNhanVien) {
 		this.maNhanVien = maNhanVien;
 	}
 
-	public NhanVien(String maNhanVien, String hoten, String sdt, String cccd, Date ngaySinh,
-			TrangThaiLamViec trangThaiLamViec, ChucVu chucVu, GioiTinh gioiTinh) {
+	
+
+	public NhanVien(String maNhanVien, String hoten, String sdt, String cccd, Date ngaySinh, GioiTinh gioiTinh,
+			ChucVu chucVu, TrangThaiLamViec trangThaiLamViec) {
 		super();
 		this.maNhanVien = maNhanVien;
-		this.hoten = hoten;
-		this.sdt = sdt;
-		this.cccd = cccd;
-		this.ngaySinh = ngaySinh;
-		this.trangThaiLamViec = trangThaiLamViec;
-		this.chucVu = chucVu;
-		this.gioiTinh = gioiTinh;
+		setHoten(hoten);
+		setSdt(sdt);
+		setCccd(cccd);
+		setNgaySinh(ngaySinh);
+		setGioiTinh(gioiTinh);
+		setChucVu(chucVu);
+		setTrangThaiLamViec(trangThaiLamViec);
 	}
+
+
 
 	public String getMaNhanVien() {
 		return maNhanVien;
 	}
 
-	public void setMaNhanVien(String maNhanVien) {
-		this.maNhanVien = maNhanVien;
-	}
 
 	public String getHoten() {
 		return hoten;

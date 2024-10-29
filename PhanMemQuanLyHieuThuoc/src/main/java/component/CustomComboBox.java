@@ -7,7 +7,7 @@ import javax.swing.plaf.basic.BasicComboPopup;
 import component.CustomButton.ButtonStyle;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
-import userInterfaces.UIStyles;
+import userInterface.UIStyles;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -25,13 +25,15 @@ public class CustomComboBox extends JComboBox<String> {
     private int itemHeight;
     private String[] items;
     private CustomButtonFunction[] funcs;
-    public CustomComboBox(String title, ButtonStyle style, ImageIcon icon, CustomButtonIconSide iconSide, int itemHeight, String[] items, CustomButtonFunction[] funcs) {
+    private int selectedWidth;
+    public CustomComboBox(String title, ButtonStyle style, ImageIcon icon, CustomButtonIconSide iconSide, int selectedWidth, int itemHeight, String[] items, CustomButtonFunction[] funcs) {
     	super(items);       
         UIManager.put("ComboBox.borderPaintsFocus", Boolean.TRUE);
         this.title = title;
         this.style = style;
         this.icon = icon;
         this.iconSide = iconSide;
+        this.selectedWidth = selectedWidth;
         this.itemHeight = itemHeight;
         this.items = items;
         this.funcs = funcs;
@@ -47,9 +49,10 @@ public class CustomComboBox extends JComboBox<String> {
             }
         });
     }
-    public CustomComboBox(String title, ButtonStyle style, int itemHeight, String[] items, CustomButtonFunction[] funcs) {
-    	this(title, style, null, null, itemHeight, items, funcs);
+    public CustomComboBox(String title, ButtonStyle style, int itemHeight, int selectedWidth, String[] items, CustomButtonFunction[] funcs) {
+    	this(title, style, null, null, itemHeight, selectedWidth, items, funcs);
     }
+    
 	
     @Override
     public void setSelectedItem(Object anObject) {
@@ -93,8 +96,8 @@ public class CustomComboBox extends JComboBox<String> {
                 result.setForeground(style.getTitleColor());
                 result.setHorizontalAlignment(SwingConstants.CENTER);
                 result.setFont(new Font(getFont().getName(), getFont().getStyle(), style.getFontSize()));
-                result.setPreferredSize(new Dimension(style.getPrefWidth(), itemHeight));	
-                result.setMaximumSize(new Dimension(style.getPrefWidth(), itemHeight));	
+                result.setPreferredSize(new Dimension(style.getPrefWidth() + selectedWidth, itemHeight));	
+                result.setMaximumSize(new Dimension(style.getPrefWidth() + selectedWidth, itemHeight));	
                 return result;
             }
         });

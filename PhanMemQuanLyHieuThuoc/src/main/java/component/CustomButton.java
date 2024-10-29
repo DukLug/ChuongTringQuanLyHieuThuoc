@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import userInterfaces.UIStyles;
+import userInterface.UIStyles;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,6 +25,7 @@ import java.util.function.Function;
 public class CustomButton extends JButton implements ActionListener{
 	
 	public CustomButtonFunction func;
+	private boolean cLickable;
 	
 	public CustomButton(String title, final ButtonStyle style, CustomButtonFunction func) 
 	{		
@@ -66,12 +67,52 @@ public class CustomButton extends JButton implements ActionListener{
 		if(iconSide == CustomButtonIconSide.RIGHT) 
 			setHorizontalTextPosition(SwingConstants.LEFT);
 	}
+	
+	public CustomButton(String title, final ButtonStyle style, ImageIcon icon, CustomButtonIconSide iconSide) {
+	    super(title);
+	    
+	    // Thiết lập thuộc tính
+	    setPreferredSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setMaximumSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setMinimumSize(new Dimension(style.getPrefWidth(), style.getPrefHeight()));	
+	    setFont(new Font(getFont().getName(), getFont().getStyle(), style.getFontSize()));		
+	    setBackground(style.getBasicBackgroundColor());			   
+	    setBorder(BorderFactory.createEmptyBorder());
+	    setFocusPainted(false);
+	    setForeground(style.getTitleColor());     
+
+	    setIcon(icon);
+	    if (iconSide == CustomButtonIconSide.RIGHT) 
+	        setHorizontalTextPosition(SwingConstants.LEFT);
+
+	    // Thêm ChangeListener
+	    addChangeListener(new ChangeListener() {
+	        @Override
+	        public void stateChanged(ChangeEvent evt) {
+	            if (getModel().isPressed()) {
+	                setContentAreaFilled(false);
+	                setOpaque(true);
+	                setBackground(style.getPressedBackgroundColor());
+	            } else if (getModel().isRollover()) {
+	                setBackground(style.getHoverBackgroundColor());
+	            } else {
+	                setContentAreaFilled(true);
+	                setBackground(style.getBasicBackgroundColor());
+	            }
+	        }
+	    });
+
+	    // Thêm ActionListener
+	    addActionListener(this);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(func!=null)func.pressed();		
 	}
+	
+
 	
 	public static class ButtonStyle{
 		private int prefWidth;

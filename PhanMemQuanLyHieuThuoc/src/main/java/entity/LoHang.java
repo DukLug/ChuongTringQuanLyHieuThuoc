@@ -20,6 +20,7 @@ public class LoHang {
 		// TODO Auto-generated constructor stub
 	}
 	public LoHang(String maLo) {
+		super();
 		this.maLo = maLo;
 	}
 

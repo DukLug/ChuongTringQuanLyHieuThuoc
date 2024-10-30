@@ -43,8 +43,6 @@ public class PhanMemQuanLyHieuThuoc {
 	   if(HienLoi) {
 		   GlobalExceptionHandler.registerExceptionHandler();
 	   }
-	   	
-	   	
 		System.setProperty("sun.java2d.uiScale", "1.0");
 		//thuocList = DataImporter.readThuocFromExcel();
 		

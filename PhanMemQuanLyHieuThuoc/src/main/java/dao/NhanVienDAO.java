@@ -98,8 +98,9 @@ private ArrayList<NhanVien> dsNhanVien;
 	public boolean capNhatNhanVien(NhanVien nv) {
 		try {
 			PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, TrangThai = ?, ChucVu = ?, GioiTinh = ? where MaNhanVien = ?");
+					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, GioiTinh = ?, ChucVu = ?, TrangThaiLamViec = ? where MaNhanVien = ?");
 			ps.setString(1, nv.getHoTen());
+
 			ps.setString(2, nv.getSdt());
 			ps.setString(3, nv.getCccd());
 			ps.setDate(4, new Date(nv.getNgaySinh().getTime()));

@@ -155,6 +155,19 @@ public class CustomTable extends JTable {
     	setColumnsWidth();
 
     }
+    
+    public Object[] getRowData(int row) {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+        if (row >= 0 && row < model.getRowCount()) {
+            Object[] rowData = new Object[model.getColumnCount()];
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                rowData[i] = model.getValueAt(row, i);
+            }
+            return rowData; // Trả về dữ liệu của dòng tương ứng
+        }
+        return null;
+    }
+    
 
     public static class CustomTableRowStyle {
         private Color backgroundColor;

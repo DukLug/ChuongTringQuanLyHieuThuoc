@@ -56,6 +56,9 @@ public class NhanVienCTR {
     public boolean themNhanVien(NhanVien nv) {
         return nvDAO.themNhanVien(nv); // Gọi phương thức trong DAO để thêm nhân viên
     }
+    public boolean capNhatNhanVien(NhanVien nv) {
+        return nvDAO.capNhatNhanVien(nv); // Gọi phương thức trong DAO để cập nhật thông tin nhân viên
+    }
     
     
 }

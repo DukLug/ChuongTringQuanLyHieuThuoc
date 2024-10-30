@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum TrangThaiTaiKhoan {
+	KhongCoDuLieu("Không có dữ liệu"),
 	HoatDong("Hoạt động"),
 	NgungHoatDong("Ngừng hoạt động");
 	
@@ -26,5 +27,4 @@ public enum TrangThaiTaiKhoan {
 		}
 		throw new IllegalArgumentException("No enum constant with trangThaiTaiKhoan: " + trangThaiTaiKhoan);
 	}
-	
 }

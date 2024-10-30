@@ -122,9 +122,6 @@ public class LoHang {
 		return "LoHang [maLo=" + maLo + ", ngaySanXuat=" + ngaySanXuat + ", giaNhap=" + giaNhap + ", soLuong=" + soLuong
 				+ ", viTri=" + viTri + ", sanPham=" + sanPham + ", maChiTietDonNhap=" + maChiTietDonNhap + "]";
 	}
-	
-	
-	
-	
+
 
 }

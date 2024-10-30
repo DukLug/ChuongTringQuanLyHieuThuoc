@@ -1,10 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+
 
 import connectDB.ConnectDB;
 import customDataType.ChucVu;
@@ -83,6 +86,7 @@ private ArrayList<NhanVien> dsNhanVien;
 			ps.setString(6, newNhanVien.getGioiTinh().toString());
 			ps.setString(7, newNhanVien.getChucVu().toString());
 			ps.setString(8, newNhanVien.getTrangThaiLamViec().toString());
+
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,6 +106,7 @@ private ArrayList<NhanVien> dsNhanVien;
 			ps.setString(5, nv.getGioiTinh().toString());
 			ps.setString(6, nv.getChucVu().toString());
 			ps.setString(7, nv.getTrangThaiLamViec().toString());
+
 			ps.setString(8, nv.getMaNhanVien());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
@@ -118,16 +123,20 @@ private ArrayList<NhanVien> dsNhanVien;
 		        ps.setString(1, maNhanVien);
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
+
 		            String maNV1 = rs.getString("MaNhanVien");
+
 		            String hoTen = rs.getString("HoTen");
 		            String sdt = rs.getString("Sdt");
 		            String cccd = rs.getString("Cccd");
 		            Date ngaySinh = rs.getDate("NgaySinh");
+
 		            GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
 		            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
 		            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
 
 		            NhanVien nv = new NhanVien(maNV1, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 		            dsNhanVien.add(nv);
 		        }
 		    } catch (Exception e) {
@@ -149,11 +158,13 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
+
 				GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
 	            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
 	            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
 
 				  NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 				dsNhanVien.add(nv);
 			}
 		} catch (Exception e) {
@@ -175,11 +186,13 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt1 = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
+
 				GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
 	            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
 	            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
 
 				  NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt1, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 				dsNhanVien.add(nv);
 			}
 		} catch (Exception e) {
@@ -187,6 +200,7 @@ private ArrayList<NhanVien> dsNhanVien;
 		}
 		return dsNhanVien;
 	}
+
 
 
 	
@@ -213,6 +227,7 @@ private ArrayList<NhanVien> dsNhanVien;
 	        e.printStackTrace(); 
 		}
 	    return maNhanVienCuoi;
+
 	}
 
 }

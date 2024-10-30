@@ -27,6 +27,4 @@ public enum GioiTinh {
         }
         throw new IllegalArgumentException("No enum constant with gioiTinh: " + gioiTinh);
     }
-
-
 }

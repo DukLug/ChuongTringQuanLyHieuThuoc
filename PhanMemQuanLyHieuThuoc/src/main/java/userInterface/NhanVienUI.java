@@ -38,19 +38,27 @@ import javax.swing.SwingUtilities;
 import component.CustomTable;
 import connectDB.ConnectDB;
 import controller.NhanVienCTR;
+<<<<<<< HEAD
 import customDataType.ChucVu;
 import customDataType.GioiTinh;
 import customDataType.TrangThaiLamViec;
 import dao.NhanVienDAO;
 import entity.NhanVien;
+=======
+import dao.NhanVienDAO;
+import entity.NhanVien;
+import userInterface.UIStyles;
+>>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import component.CustomButton.CustomButtonIconSide;
 
 //import connectDB.ConnectDB;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.Date;
 import java.util.ArrayList;
+
 
 import component.CustomButton;
 import component.CustomPanel;
@@ -61,15 +69,16 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		public JTextField txtTimTheoMa;
 		public JTextField txtTimTheoTen;
 		public JTextField txtTimTheoSDT;
-		
-		
+
 		public JTextField txtMaNV;
 		public JTextField txtHoTen;
 		public JTextField txtSDT;
 		public JDateChooser jdcNgaySinh;
+
 		public JComboBox<TrangThaiLamViec> cbTrangThaiLamViec;
 		public JComboBox<ChucVu> cbChucVu;
 		public JComboBox<GioiTinh> cbGioiTinh;
+
 
 		
 		private JButton btnTimKiem;
@@ -83,6 +92,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		private CustomTable tableNhanVien;
 		private NhanVienDAO nhanVienDAO;
 		private DefaultTableModel modelNhanVien;
+
 		private JFrame frameThem;
 		private JTextField txtCCCD;
 	
@@ -258,7 +268,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		String[] headers = {"Mã Nhân Viên", "Họ Tên", "SĐT","Cccd","Ngày Sinh","Trạng Thái","Chức Vụ","Giới Tính"};  // Tiêu đề cột của bảng
 		
 		
+
 		Object[][] data = new Object[0][headers.length];
+
 		// Tạo bảng CustomTable
 		 tableNhanVien = new CustomTable(data, headers, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle,     
 	20 );
@@ -283,7 +295,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	
 		// Thêm JScrollPane chứa bảng vào panel ở giữa
 		panelDanhSachNV.add(scrollPane, BorderLayout.CENTER);
+
 		layToanBoDanhSach();
+
 	
 		return panelDanhSachNV;
 	}
@@ -293,7 +307,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	
 
 	private JFrame formThongTinNhanVien(boolean trangThai) {
+
 		frameThem = new JFrame(trangThai? "Cập Nhật Nhân Viên":"Thêm Nhân Viên");
+
 		frameThem.setSize(1000, 700); // Đặt kích thước cửa sổ
 		frameThem.setResizable(false);
 		frameThem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
@@ -351,7 +367,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblCCCD.setBounds(100, 250, 150, 30);
 		panelThem.add(lblCCCD);
 		
+
 		txtCCCD = new JTextField();
+
 		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtCCCD.setBounds(400, 250, 300, 30);
 		panelThem.add(txtCCCD);
@@ -381,6 +399,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		cbTrangThaiLamViec.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbTrangThaiLamViec.setBounds(400, 350, 300, 30);
 		  // Chọn mặc định là "Đang làm việc"
+
 		cbTrangThaiLamViec.setEnabled(trangThai);  // Không cho phép chọn trạng thái làm việc
 		panelThem.add(cbTrangThaiLamViec);
 
@@ -390,9 +409,11 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblChucVu.setBounds(100, 400, 150, 30);
 		panelThem.add(lblChucVu);
 		
+
 		cbChucVu = new JComboBox<ChucVu>();
 		cbChucVu.addItem(ChucVu.NhanVienBanHang);
 		cbChucVu.addItem(ChucVu.ChuCuaHang);
+
 		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbChucVu.setBounds(400, 400, 300, 30);
 		panelThem.add(cbChucVu);
@@ -403,9 +424,11 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblGioiTinh.setBounds(100, 450, 150, 30);
 		panelThem.add(lblGioiTinh);
 
+
 		cbGioiTinh = new JComboBox<GioiTinh>();
 		cbGioiTinh.addItem(GioiTinh.Nam);
 		cbGioiTinh.addItem(GioiTinh.Nu);
+
 		cbGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbGioiTinh.setBounds(400, 450, 300, 30);
 		panelThem.add(cbGioiTinh);
@@ -442,6 +465,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		btnAction.addActionListener(e -> {
 	        if (!trangThai) {
 	        	ThemNhanVien();
+
 	        } else {
 	          
 	        }
@@ -456,8 +480,6 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    return frameThem;
 	}
 
-	
-	
 	
 
 	private void TimKiem() {
@@ -479,7 +501,6 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	}
 	
 
-	
 	public void layToanBoDanhSach() {
 		ArrayList<NhanVien> dsNhanVien = nhanVienCTR.layDanhSachTatCaNhanVien();
 		Object[][] data = new Object[dsNhanVien.size()][8]; // 8 cột tương ứng với các trường

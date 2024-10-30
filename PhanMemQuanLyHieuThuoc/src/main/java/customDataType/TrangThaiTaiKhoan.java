@@ -26,5 +26,4 @@ public enum TrangThaiTaiKhoan {
 		}
 		throw new IllegalArgumentException("No enum constant with trangThaiTaiKhoan: " + trangThaiTaiKhoan);
 	}
-	
 }

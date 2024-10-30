@@ -27,5 +27,4 @@ public enum ChucVu {
         }
         throw new IllegalArgumentException("No enum constant with chucVu: " + chucVu);
     }
-
 }

@@ -92,9 +92,4 @@ public class TaiKhoan {
 		TaiKhoan other = (TaiKhoan) obj;
 		return Objects.equals(maTaiKhoan, other.maTaiKhoan);
 	}
-	
-	
-	
-	
-	
 }

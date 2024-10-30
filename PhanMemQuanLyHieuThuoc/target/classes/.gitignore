@@ -1,11 +1,3 @@
-/META-INF/
-/entity/
-<<<<<<< HEAD
-=======
-/component/
-/userInterface/
-/dao/
-/customDataType/
 /controller/
->>>>>>> 4b3712c94006af6ffaa88ac7fdd945bd3b071ee1
-/application/
+/customDataType/
+/dao/

@@ -1,28 +1,41 @@
 package userInterface;
 
 import java.awt.Color;
+<<<<<<< HEAD
 import java.awt.DefaultFocusTraversalPolicy;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+=======
+import java.awt.Dimension;
+import javax.swing.JLabel;
+>>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+<<<<<<< HEAD
 
 import component.CustomButton;
 import component.CustomTable;
 import controller.NhaCungCapCTR;
 import entity.NhaCungCap;
 import component.CustomButton.CustomButtonIconSide;
+=======
+import component.CustomButton;
+import component.CustomTable;
+import component.CustomButton.CustomButtonIconSide;
+
+>>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+<<<<<<< HEAD
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -50,6 +63,36 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		taoHinh();
 		NhaCungCapCTR.ketNoiData();
 		
+=======
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JCheckBox;
+
+public class NhaCungCapUI extends JPanel implements ActionListener, MouseListener {
+	private JTextField txtTim;
+	private JTextField txtMaKH;
+	private JTextField txtTen;
+	private JTextField txtSDT;
+	private JTextField txtDiaChi;
+	private JTable tableNCC;
+	private CustomButton btnThem;
+	private CustomButton btnCapNhat;
+	private CustomButton btnXoaTrang;
+	private DefaultTableModel modelNCC;
+	private JTextField txtEmail;
+
+	public NhaCungCapUI() {
+		super();
+		taoHinh();
+		
+		 // Khởi tạo kết nối đến cơ sở dữ liệu khi một thể hiện của NhanVien_UI được tạo ra
+//        try {
+//            ConnectDB.getInstance().connect();
+//            System.out.println("Connect!!");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 	}
 	
 	public void taoHinh() {
@@ -58,6 +101,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		setLayout(null);
 		
 		panelTong = new JPanel();
+		JPanel panelTong = new JPanel();
 		panelTong.setBackground(UIStyles.BackgroundColor);
 		panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
 		add(panelTong);
@@ -109,6 +153,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		lblEmail.setBounds(35, 315, 180, 38);
 		panelBieuMau.add(lblEmail);
 		
+
 		txtMaNCC = new JTextField();
 		txtMaNCC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMaNCC.setBackground(Color.WHITE);
@@ -120,6 +165,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		
 		txtTen = new JTextField();
 		txtTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		txtTen.setColumns(10);
 		txtTen.setBorder(new LineBorder(Color.BLACK, 1));
 		txtTen.setBackground(Color.WHITE);
@@ -127,7 +173,9 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		panelBieuMau.add(txtTen);
 		
 		txtSDT = new JTextField();
+
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		txtSDT.setColumns(10);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1));
 		txtSDT.setBackground(Color.WHITE);
@@ -135,13 +183,16 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		panelBieuMau.add(txtSDT);
 		
 		txtDiaChi = new JTextField();
+
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		txtDiaChi.setColumns(10);
 		txtDiaChi.setBorder(new LineBorder(Color.BLACK, 1));
 		txtDiaChi.setBackground(Color.WHITE);
 		txtDiaChi.setBounds(225, 396, 278, 35);
 		panelBieuMau.add(txtDiaChi);
 		
+
 		btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, UIStyles.Add, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThem.setBounds(71, 530, 180, 46);
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -158,7 +209,9 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		panelBieuMau.add(btnXoaTrang);
 		
 		txtEmail = new JTextField();
+
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		txtEmail.setColumns(10);
 		txtEmail.setBorder(new LineBorder(Color.BLACK, 1));
 		txtEmail.setBackground(Color.WHITE);
@@ -201,13 +254,15 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		panelTim.add(icon, BorderLayout.WEST);
 		icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // cách lề 5px
 		
+
 		chckbxHienDS = new JCheckBox("Hiện tất cả");
+
 		chckbxHienDS.setBackground(UIStyles.BackgroundColor);
 		chckbxHienDS.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		chckbxHienDS.setBounds(1014, 0, 146, 46);
 		chckbxHienDS.setFocusPainted(false); 
 		panelThanhcongCu.add(chckbxHienDS);
-		
+
 //		String[] columnNames = {"Mã", "Tên", "Số điện thoại", "Email", "Dịa chỉ"};
 	        // Create custom table
 //		customTable = new CustomTable(data, columnNames, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
@@ -222,6 +277,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 //        scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
 //        scrollPane.setBounds(120, 90, 1123, 718); // Đặt kích thước và vị trí của scrollPane
 //        panelTong.add(scrollPane);
+
         
 		btnCapNhat.addActionListener(this);
 		btnThem.addActionListener(this);
@@ -236,6 +292,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		chckbxHienDS.addActionListener(this);
 
 		customTable.addMouseListener(this);
+
 	}
 
 	@Override
@@ -348,7 +405,6 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 //	        txtDiaChi.setText(customTable.getValueAt(dongDuocChon, 4).toString());
 	    }
 	}
-
 	@Override public void mousePressed(MouseEvent e) {}
 
 	@Override public void mouseReleased(MouseEvent e) {}
@@ -360,6 +416,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	private void ClickedMyTable() {}
 
 	private void quayLai() {}
+
 
 }
 	

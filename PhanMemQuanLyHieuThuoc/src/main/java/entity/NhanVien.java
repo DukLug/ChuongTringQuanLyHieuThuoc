@@ -19,6 +19,7 @@ public class NhanVien {
 	private GioiTinh gioiTinh;
 	private ChucVu chucVu;
 	private TrangThaiLamViec trangThaiLamViec;
+
 	
 	public NhanVien(String maNhanVien) {
 		super();
@@ -26,7 +27,9 @@ public class NhanVien {
 	}
 
 	public NhanVien(String maNhanVien, String hoTen, String sdt, String cccd, Date ngaySinh,
+
 			GioiTinh gioiTinh, ChucVu chucVu, TrangThaiLamViec trangThaiLamViec) {
+
 		super();
 		this.maNhanVien = maNhanVien;
 		setHoTen(hoTen);
@@ -41,6 +44,7 @@ public class NhanVien {
 	}
 
 	
+
 	public String getMaNhanVien() {
 		return maNhanVien;
 	}

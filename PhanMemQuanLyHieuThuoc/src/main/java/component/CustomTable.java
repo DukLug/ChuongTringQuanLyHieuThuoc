@@ -219,5 +219,4 @@ public class CustomTable extends JTable {
             this.centerAlignment = centerAlignment;
         }
     }
-    
 }

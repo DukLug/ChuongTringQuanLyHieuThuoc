@@ -42,9 +42,7 @@ public class NhanVienCTR {
 	   public ArrayList<NhanVien> layDanhSachTatCaNhanVien(){
 		   NhanVienDAO ds = new NhanVienDAO();
 		   ArrayList<NhanVien> list = ds.layDanhSachTatCaNhanVien();
-		   return list;
-			
-			
+		   return list;		
 	   }
 	   
 	   public boolean themNhanVien(NhanVien nv) {

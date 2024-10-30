@@ -62,8 +62,8 @@ public class SanPhamYTe {
 		setYeuCauKeDon(yeuCauKeDon);
 		setDangBaoChe(dangBaoChe);
 		setNhaSanXuat(nhaSanXuat);
-
 	}
+
 
 
 
@@ -86,8 +86,8 @@ public class SanPhamYTe {
 		if(tenSanPham.isEmpty()) {
 			throw new IllegalArgumentException("Tên sản phẩm không được để rỗng");
 		}
-		if(tenSanPham.length() > 50) {
-			throw new IllegalArgumentException("Tên sản phẩm không được quá 50 ký tự");
+		if(tenSanPham.length() > 200) {
+			throw new IllegalArgumentException("Tên sản phẩm không được quá 200 ký tự");
 		}
 		this.tenSanPham = tenSanPham;
 	}
@@ -137,8 +137,8 @@ public class SanPhamYTe {
 		if(nuocSanXuat.isEmpty()) {
 			throw new IllegalArgumentException("Nước sản xuất không được để rỗng");
 		}
-		if(nuocSanXuat.length() > 20) {
-			throw new IllegalArgumentException("Nước sản xuất không được quá 50 ký tự");
+		if(nuocSanXuat.length() > 200) {
+			throw new IllegalArgumentException("Nước sản xuất không được quá 200 ký tự");
 		}
 		this.nuocSanXuat = nuocSanXuat;
 	}

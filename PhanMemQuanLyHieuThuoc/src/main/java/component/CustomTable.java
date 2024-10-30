@@ -133,6 +133,8 @@ public class CustomTable extends JTable {
         header.setForeground(headerStyle.getForegroundColor());
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, headerStyle.getHeight()));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
+        if(headerStyle.getCenterAlignment())
+        	header.setAlignmentX(Component.CENTER_ALIGNMENT);
         for (int i = 0; i < numOfRows; i++) {
             getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(myHeaderRender);
         }

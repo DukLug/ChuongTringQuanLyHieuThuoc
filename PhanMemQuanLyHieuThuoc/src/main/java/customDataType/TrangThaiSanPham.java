@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum TrangThaiSanPham {
+	KhongCoDuLieu("Không có dữ liệu"),
     DangBan("Đang bán"),
     NgungBan("Ngừng bán"),
     HetHang("Hết hàng");

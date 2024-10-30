@@ -1,3 +1,7 @@
-/controller/
-/entity/
+/META-INF/
+/functionalClass/
 /userInterface/
+/component/
+/controller/
+/application/
+/entity/

@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum DonViTinh {
+	KhongCoDuLieu("Không có dữ liệu"),
 	Hop("Hộp"), Vien("Viên"), Chai("Chai"), Goi("Gói"), Cai("Cái");
 	
 	private String donViTinh;

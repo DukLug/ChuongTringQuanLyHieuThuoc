@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum GioiTinh {
+	KhongCoDuLieu("Không có dữ liệu"),
 	Nam("Nam"),
     Nu("Nữ");
 

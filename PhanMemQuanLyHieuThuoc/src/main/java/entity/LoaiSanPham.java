@@ -7,6 +7,8 @@ public class LoaiSanPham {
     private String tenLoai;
     private int soLuongToiDa;
 
+    
+    
     public LoaiSanPham(String maLoai) {
         super();
         this.maLoai = maLoai;

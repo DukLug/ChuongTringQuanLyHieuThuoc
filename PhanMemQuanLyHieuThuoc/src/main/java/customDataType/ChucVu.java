@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum ChucVu {
+	KhongCoDuLieu("Không có dữ liệu"),
     NhanVienBanHang("Nhân viên bán hàng"),
     ChuCuaHang("Chủ cửa hàng");
 

@@ -1,6 +1,7 @@
 package customDataType;
 
 public enum GioiTinh {
+	KhongCoDuLieu("Không có dữ liệu"),
 	Nam("Nam"),
     Nu("Nữ");
 
@@ -27,5 +28,4 @@ public enum GioiTinh {
         }
         throw new IllegalArgumentException("No enum constant with gioiTinh: " + gioiTinh);
     }
-
 }

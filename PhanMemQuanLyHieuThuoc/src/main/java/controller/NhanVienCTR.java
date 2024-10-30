@@ -1,14 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import dao.NhanVienDAO;
 import entity.NhanVien;
 
 public class NhanVienCTR {
-	 
-
 	 private NhanVienDAO nvDAO;
 
 	    // Constructor
@@ -46,11 +42,10 @@ public class NhanVienCTR {
 	   public ArrayList<NhanVien> layDanhSachTatCaNhanVien(){
 		   NhanVienDAO ds = new NhanVienDAO();
 		   ArrayList<NhanVien> list = ds.layDanhSachTatCaNhanVien();
-		   return list;
-			
-			
+		   return list;		
 	   }
-	 
-	 
-
+	   
+	   public boolean themNhanVien(NhanVien nv) {
+	        return nvDAO.themNhanVien(nv); // Gọi phương thức trong DAO để thêm nhân viên
+	    }
 }

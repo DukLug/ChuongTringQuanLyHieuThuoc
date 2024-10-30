@@ -25,7 +25,6 @@ import com.toedter.calendar.JDateChooser;
 
 //import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 //import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -39,17 +38,22 @@ import javax.swing.SwingUtilities;
 import component.CustomTable;
 import connectDB.ConnectDB;
 import controller.NhanVienCTR;
+import customDataType.ChucVu;
+import customDataType.GioiTinh;
+import customDataType.TrangThaiLamViec;
 import dao.NhanVienDAO;
 import entity.NhanVien;
-import userInterface.UIStyles;
+
 import component.CustomButton.CustomButtonIconSide;
 
 //import connectDB.ConnectDB;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import component.CustomButton;
 import component.CustomPanel;
@@ -60,13 +64,16 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		public JTextField txtTimTheoMa;
 		public JTextField txtTimTheoTen;
 		public JTextField txtTimTheoSDT;
+
 		public JTextField txtMaNV;
 		public JTextField txtHoTen;
 		public JTextField txtSDT;
 		public JDateChooser jdcNgaySinh;
-		public JComboBox<String> cbTrangThaiLamViec;
-		public JComboBox<String> cbChucVu;
-		public JComboBox<String> cbGioiTinh;
+
+		public JComboBox<TrangThaiLamViec> cbTrangThaiLamViec;
+		public JComboBox<ChucVu> cbChucVu;
+		public JComboBox<GioiTinh> cbGioiTinh;
+
 
 		
 		private JButton btnTimKiem;
@@ -80,6 +87,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		private CustomTable tableNhanVien;
 		private NhanVienDAO nhanVienDAO;
 		private DefaultTableModel modelNhanVien;
+
+		private JFrame frameThem;
+		private JTextField txtCCCD;
 	
 
 		
@@ -253,7 +263,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		String[] headers = {"Mã Nhân Viên", "Họ Tên", "SĐT","Cccd","Ngày Sinh","Trạng Thái","Chức Vụ","Giới Tính"};  // Tiêu đề cột của bảng
 		
 		
-		Object[][] data = updateDataModel();
+
+		Object[][] data = new Object[0][headers.length];
+
 		// Tạo bảng CustomTable
 		 tableNhanVien = new CustomTable(data, headers, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle,     
 	20 );
@@ -278,6 +290,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	
 		// Thêm JScrollPane chứa bảng vào panel ở giữa
 		panelDanhSachNV.add(scrollPane, BorderLayout.CENTER);
+
+		layToanBoDanhSach();
+
 	
 		return panelDanhSachNV;
 	}
@@ -287,7 +302,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	
 
 	private JFrame formThongTinNhanVien(boolean trangThai) {
-		JFrame frameThem = new JFrame(trangThai? "Cập Nhật Nhân Viên":"Thêm Nhân Viên");
+
+		frameThem = new JFrame(trangThai? "Cập Nhật Nhân Viên":"Thêm Nhân Viên");
+
 		frameThem.setSize(1000, 700); // Đặt kích thước cửa sổ
 		frameThem.setResizable(false);
 		frameThem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
@@ -345,7 +362,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblCCCD.setBounds(100, 250, 150, 30);
 		panelThem.add(lblCCCD);
 		
-		JTextField txtCCCD = new JTextField();
+
+		txtCCCD = new JTextField();
+
 		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtCCCD.setBounds(400, 250, 300, 30);
 		panelThem.add(txtCCCD);
@@ -369,12 +388,13 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblTrangThai.setBounds(100, 350, 200, 30);
 		panelThem.add(lblTrangThai);
 
-		cbTrangThaiLamViec = new JComboBox<>();
-		cbTrangThaiLamViec.addItem("Đang làm việc");
-		cbTrangThaiLamViec.addItem("Đã nghỉ việc");
+		cbTrangThaiLamViec = new JComboBox<TrangThaiLamViec>();
+		cbTrangThaiLamViec.addItem(TrangThaiLamViec.DangLam);
+		cbTrangThaiLamViec.addItem(TrangThaiLamViec.DaNghiViec);
 		cbTrangThaiLamViec.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbTrangThaiLamViec.setBounds(400, 350, 300, 30);
-		cbTrangThaiLamViec.setSelectedIndex(0);  // Chọn mặc định là "Đang làm việc"
+		  // Chọn mặc định là "Đang làm việc"
+
 		cbTrangThaiLamViec.setEnabled(trangThai);  // Không cho phép chọn trạng thái làm việc
 		panelThem.add(cbTrangThaiLamViec);
 
@@ -384,9 +404,11 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblChucVu.setBounds(100, 400, 150, 30);
 		panelThem.add(lblChucVu);
 		
-		cbChucVu = new JComboBox<>();
-		cbChucVu.addItem("Nhân viên");
-		cbChucVu.addItem("Quản lý");
+
+		cbChucVu = new JComboBox<ChucVu>();
+		cbChucVu.addItem(ChucVu.NhanVienBanHang);
+		cbChucVu.addItem(ChucVu.ChuCuaHang);
+
 		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbChucVu.setBounds(400, 400, 300, 30);
 		panelThem.add(cbChucVu);
@@ -397,9 +419,11 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		lblGioiTinh.setBounds(100, 450, 150, 30);
 		panelThem.add(lblGioiTinh);
 
-		cbGioiTinh = new JComboBox<>();
-		cbGioiTinh.addItem("Nam");
-		cbGioiTinh.addItem("Nữ");
+
+		cbGioiTinh = new JComboBox<GioiTinh>();
+		cbGioiTinh.addItem(GioiTinh.Nam);
+		cbGioiTinh.addItem(GioiTinh.Nu);
+
 		cbGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cbGioiTinh.setBounds(400, 450, 300, 30);
 		panelThem.add(cbGioiTinh);
@@ -434,8 +458,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		panelThem.add(btnHuy);
 		
 		btnAction.addActionListener(e -> {
-	        if (trangThai) {
-	        	
+	        if (!trangThai) {
+	        	ThemNhanVien();
+
 	        } else {
 	          
 	        }
@@ -451,77 +476,102 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	}
 
 	
-	
-	private Object[][] updateDataModel() {
-	ArrayList<NhanVien> list = nhanVienCTR.layDanhSachTatCaNhanVien();
-	return convertListToDataArray(list);
-	}
 
 	private void TimKiem() {
-	    // Lấy dữ liệu từ các trường nhập liệu
-	    String maNV = txtTimTheoMa.getText().trim();
-	    String tenNV = txtTimTheoTen.getText().trim();
-	    String sdtNV = txtTimTheoSDT.getText().trim();
+		String maNV = txtTimTheoMa.getText().trim(); // Giả sử bạn có một JTextField với tên txtMaNV
 
-	    Object[][] data = null; // Khai báo mảng dữ liệu
-
-	    if (!maNV.isEmpty()) {
-	        // Tìm kiếm theo mã nhân viên
-	        ArrayList<NhanVien> list = nhanVienCTR.timKiemTheoMaNV(maNV);
-	        data = convertListToDataArray(list);
-	    } 
-	    if (!tenNV.isEmpty()) {
-	        // Tìm kiếm theo mã nhân viên
-	        ArrayList<NhanVien> list = nhanVienCTR.timKiemTheoHoTen(tenNV);
-	        data = convertListToDataArray(list);
-	    }
-	    if (!sdtNV.isEmpty()) {
-	        // Tìm kiếm theo mã nhân viên
-	        ArrayList<NhanVien> list = nhanVienCTR.timKiemTheoSDT(sdtNV);
-	        data = convertListToDataArray(list);
-	    }
-	    else {
-	        // Nếu không nhập gì, lấy tất cả nhân viên
-	        data = updateDataModel();
+	    if (maNV.isEmpty()) {
+	        layToanBoDanhSach();
+	        return;
 	    }
 
-	    // Kiểm tra và cập nhật dữ liệu cho bảng CustomTable
-	    if (data != null && data.length > 0) {
-	    	tableNhanVien.clearData();
-	        tableNhanVien.setData(data); // Cập nhật dữ liệu mới vào bảng
-	    	
+	    ArrayList<NhanVien> danhSachNhanVien = nhanVienCTR.timKiemTheoMaNV(maNV); // Gọi phương thức tìm kiếm từ Controller
+
+	    if (danhSachNhanVien.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên với mã: " + maNV, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 	    } else {
-	        JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả phù hợp.");
-	      
-	    
+	        // Cập nhật bảng nhân viên với danh sách tìm thấy
+	        capNhatBangNhanVien(danhSachNhanVien); // Giả sử bạn có một phương thức cập nhật bảng
 	    }
 	}
 	
 
-	
-	private Object[][] convertListToDataArray(List<NhanVien> list) {
-	    Object[][] data = new Object[list.size()][8];
-	    int index = 0;
+	public void layToanBoDanhSach() {
+		ArrayList<NhanVien> dsNhanVien = nhanVienCTR.layDanhSachTatCaNhanVien();
+		Object[][] data = new Object[dsNhanVien.size()][8]; // 8 cột tương ứng với các trường
 
-	    for (NhanVien nv : list) {
-	        data[index++] = new Object[]{
+		for (int i = 0; i < dsNhanVien.size(); i++) {
+		    NhanVien nv = dsNhanVien.get(i);
+		    data[i][0] = nv.getMaNhanVien();
+		    data[i][1] = nv.getHoTen();
+		    data[i][2] = nv.getSdt();
+		    data[i][3] = nv.getCccd();
+		    data[i][4] = nv.getNgaySinh();
+		    data[i][5] = nv.getGioiTinh(); 
+		    data[i][6] = nv.getChucVu(); 
+		    data[i][7] = nv.getTrangThaiLamViec(); 
+		}
+
+		tableNhanVien.setData(data); 
+	   
+	}
+	private void capNhatBangNhanVien(ArrayList<NhanVien> dsNhanVien) {
+	    // Xóa các hàng cũ trong bảng trước khi thêm mới
+	    DefaultTableModel model = (DefaultTableModel) tableNhanVien.getModel();
+	    model.setRowCount(0); // Xóa tất cả các hàng
+
+	    // Thêm các nhân viên vào bảng
+	    for (NhanVien nv : dsNhanVien) {
+	        model.addRow(new Object[]{
 	            nv.getMaNhanVien(),
 	            nv.getHoTen(),
 	            nv.getSdt(),
 	            nv.getCccd(),
 	            nv.getNgaySinh(),
-	            nv.getTrangThaiLamViec(),
-	            nv.getChucVu(),
-	            nv.getGioiTinh()
-	        };
+	            nv.getGioiTinh().name(), // Chuyển đổi enum thành chuỗi
+	            nv.getChucVu().name(),   // Chuyển đổi enum thành chuỗi
+	            nv.getTrangThaiLamViec().name() // Chuyển đổi enum thành chuỗi
+	        });
 	    }
-	    return data;
 	}
+	
+	private String phatSinhMaNhanVien() {
+	    String maNVCuoi = nhanVienDAO.layMaNhanVienCuoi();
+		if(maNVCuoi != null && !maNVCuoi.isEmpty()){
+			String sttNV = maNVCuoi.substring(2);
+			int sttInt = Integer.parseInt(sttNV) + 1;
+			String maNVMoi = "NV"+ String.format("%06d",sttInt);
+			return maNVMoi;
+		}else{
+			return "NV000001";
+		}
+
+		
+	    
+	}
+	
 
 	private void ThemNhanVien(){
-
+		// thêm nhân viên
+    	String maNV = phatSinhMaNhanVien();
+    	String hoTen = txtHoTen.getText();
+        String sdt = txtSDT.getText();
+        String cccd = txtCCCD.getText();
+        Date ngaySinh = new Date(jdcNgaySinh.getDate().getTime());
+        TrangThaiLamViec trangthai = (TrangThaiLamViec) cbTrangThaiLamViec.getSelectedItem();
+        ChucVu chucVu = (ChucVu) cbChucVu.getSelectedItem(); 
+        GioiTinh gioiTinh = (GioiTinh) cbGioiTinh.getSelectedItem();
+        NhanVien nv = new NhanVien(maNV, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangthai);
+         boolean kq = nhanVienCTR.themNhanVien(nv);
+         if (kq) {
+             JOptionPane.showMessageDialog(frameThem, "Thêm nhân viên thành công!");
+             frameThem.dispose(); 
+             layToanBoDanhSach(); 
+         } else {
+             JOptionPane.showMessageDialog(frameThem, "Thêm nhân viên thất bại!");
+         }
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -38,17 +38,12 @@ import javax.swing.SwingUtilities;
 import component.CustomTable;
 import connectDB.ConnectDB;
 import controller.NhanVienCTR;
-<<<<<<< HEAD
 import customDataType.ChucVu;
 import customDataType.GioiTinh;
 import customDataType.TrangThaiLamViec;
 import dao.NhanVienDAO;
 import entity.NhanVien;
-=======
-import dao.NhanVienDAO;
-import entity.NhanVien;
-import userInterface.UIStyles;
->>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
+
 import component.CustomButton.CustomButtonIconSide;
 
 //import connectDB.ConnectDB;

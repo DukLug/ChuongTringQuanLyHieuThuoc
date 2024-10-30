@@ -1,11 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
-import java.util.List;
-
->>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import dao.NhanVienDAO;
 import entity.NhanVien;
 
@@ -51,4 +46,8 @@ public class NhanVienCTR {
 			
 			
 	   }
+	   
+	   public boolean themNhanVien(NhanVien nv) {
+	        return nvDAO.themNhanVien(nv); // Gọi phương thức trong DAO để thêm nhân viên
+	    }
 }

@@ -54,7 +54,7 @@ public class KhuyenMai {
 	        }
 	    } catch (IllegalArgumentException e) {
 	        System.out.println(e.getMessage());
-
+	    }
 	}
 
 	public Date getNgayKetThuc() {

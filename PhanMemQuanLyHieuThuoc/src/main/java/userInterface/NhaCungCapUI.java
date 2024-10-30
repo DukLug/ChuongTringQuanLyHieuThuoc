@@ -1,41 +1,30 @@
 package userInterface;
 
 import java.awt.Color;
-<<<<<<< HEAD
+
 import java.awt.DefaultFocusTraversalPolicy;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-=======
-import java.awt.Dimension;
-import javax.swing.JLabel;
->>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-<<<<<<< HEAD
 
 import component.CustomButton;
 import component.CustomTable;
 import controller.NhaCungCapCTR;
 import entity.NhaCungCap;
 import component.CustomButton.CustomButtonIconSide;
-=======
-import component.CustomButton;
-import component.CustomTable;
-import component.CustomButton.CustomButtonIconSide;
 
->>>>>>> 58d5bf1d6ab37b1050a9a9f2306bbd22633c2f17
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
-<<<<<<< HEAD
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -63,29 +52,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		taoHinh();
 		NhaCungCapCTR.ketNoiData();
 		
-=======
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JCheckBox;
 
-public class NhaCungCapUI extends JPanel implements ActionListener, MouseListener {
-	private JTextField txtTim;
-	private JTextField txtMaKH;
-	private JTextField txtTen;
-	private JTextField txtSDT;
-	private JTextField txtDiaChi;
-	private JTable tableNCC;
-	private CustomButton btnThem;
-	private CustomButton btnCapNhat;
-	private CustomButton btnXoaTrang;
-	private DefaultTableModel modelNCC;
-	private JTextField txtEmail;
-
-	public NhaCungCapUI() {
-		super();
-		taoHinh();
-		
 		 // Khởi tạo kết nối đến cơ sở dữ liệu khi một thể hiện của NhanVien_UI được tạo ra
 //        try {
 //            ConnectDB.getInstance().connect();

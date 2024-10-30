@@ -276,8 +276,6 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		
 		else if (chckbxHienDS.isSelected()) 
 			xoaHetDuLieuTrenTablel();
-			
-		
 	}
 	
 	private void xoaTrang() {
@@ -300,7 +298,6 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		String diaChi = txtDiaChi.getText();
 		
 		NhaCungCap ncc = new NhaCungCap(ma, ten, sdt, email, diaChi);
-		
 		return ncc;
 	}
  	
@@ -335,18 +332,37 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	    customTable.addMouseListener(this);;
  	}
  	
+// 	private boolean kiemTraDauVao() {
+// 		String ten = txtTen.getText().trim();
+// 		String sdt = txtSDT.getText().trim();
+// 		String email = txtEmail.getText().trim();
+// 		String diaChi = txtDiaChi.getText().trim();
+// 		
+// 		
+// 	}
+ 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	    int dongDuocChon = customTable.getSelectedRow();
 //	    JOptionPane.showMessageDialog(this, dongDuocChon);
-
-	    if (dongDuocChon >= 0) {
-	        txtMaNCC.setText(customTable.getValueAt(dongDuocChon, 0).toString());
-	        txtTen.setText(customTable.getValueAt(dongDuocChon, 1).toString());
-	        txtSDT.setText(customTable.getValueAt(dongDuocChon, 2).toString());
-//	        txtEmail.setText(customTable.getValueAt(dongDuocChon, 3).toString());
-//	        txtDiaChi.setText(customTable.getValueAt(dongDuocChon, 4).toString());
-	    }
+	    
+	    String ma = customTable.getValueAt(dongDuocChon, 0).toString();
+	    NhaCungCap ncc = NhaCungCapCTR.timKiemTheoMa(ma);
+	    
+	    txtMaNCC.setText(ncc.getMaNhaCungCap());
+        txtTen.setText(ncc.getTenNhaCungCap());
+        txtSDT.setText(ncc.getSdt());
+        txtEmail.setText(ncc.getEmail());
+        txtDiaChi.setText(ncc.getDiaChi());
+	    
+//
+//	    if (dongDuocChon >= 0) {
+//	        txtMaNCC.setText(customTable.getValueAt(dongDuocChon, 0).toString());
+//	        txtTen.setText(customTable.getValueAt(dongDuocChon, 1).toString());
+//	        txtSDT.setText(customTable.getValueAt(dongDuocChon, 2).toString());
+////	        txtEmail.setText(customTable.getValueAt(dongDuocChon, 3).toString());
+////	        txtDiaChi.setText(customTable.getValueAt(dongDuocChon, 4).toString());
+//	    }
 	}
 
 	@Override public void mousePressed(MouseEvent e) {}

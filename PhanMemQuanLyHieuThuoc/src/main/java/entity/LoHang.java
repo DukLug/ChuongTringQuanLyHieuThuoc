@@ -20,6 +20,7 @@ public class LoHang {
 		// TODO Auto-generated constructor stub
 	}
 	public LoHang(String maLo) {
+		super();
 		this.maLo = maLo;
 	}
 
@@ -121,9 +122,6 @@ public class LoHang {
 		return "LoHang [maLo=" + maLo + ", ngaySanXuat=" + ngaySanXuat + ", giaNhap=" + giaNhap + ", soLuong=" + soLuong
 				+ ", viTri=" + viTri + ", sanPham=" + sanPham + ", maChiTietDonNhap=" + maChiTietDonNhap + "]";
 	}
-	
-	
-	
-	
+
 
 }

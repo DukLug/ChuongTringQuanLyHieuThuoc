@@ -1,13 +1,13 @@
-package controller;
+package functionalClass;
 
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
-public class TimKiemCTR {
+public class SearchTool {
 
-    public static ArrayList<Object> tim(ArrayList<Object> dataToSearch, Class<?> classToSearch, 
+    public static ArrayList<Object> search(ArrayList<Object> dataToSearch, Class<?> classToSearch, 
                                         ArrayList<Object> searchFields, ArrayList<SearchCondition> conditions) {
         ArrayList<Object> result = new ArrayList<>();
         

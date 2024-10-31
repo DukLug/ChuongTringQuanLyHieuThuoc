@@ -5,13 +5,12 @@ import dao.NhanVienDAO;
 import entity.NhanVien;
 
 public class NhanVienCTR {
-    
-    private NhanVienDAO nvDAO;
+	 private NhanVienDAO nvDAO;
 
-    // Constructor
-    public NhanVienCTR() {
-        nvDAO = new NhanVienDAO(); // Khởi tạo DAO để làm việc với cơ sở dữ liệu
-    }
+	    // Constructor
+	    public NhanVienCTR() {
+	        nvDAO = new NhanVienDAO(); // Khởi tạo DAO để làm việc với cơ sở dữ liệu
+	    }
 
     /**
      * Hàm tìm kiếm nhân viên theo mã nhân viên.
@@ -59,6 +58,5 @@ public class NhanVienCTR {
     public boolean capNhatNhanVien(NhanVien nv) {
         return nvDAO.capNhatNhanVien(nv); // Gọi phương thức trong DAO để cập nhật thông tin nhân viên
     }
-    
-    
+
 }

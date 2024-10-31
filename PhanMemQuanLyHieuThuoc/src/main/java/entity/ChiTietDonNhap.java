@@ -17,6 +17,7 @@ public class ChiTietDonNhap {
 		// TODO Auto-generated constructor stub
 	}
 	public ChiTietDonNhap(String maChiTietDonNhap) {
+		super();
 		this.maChiTietDonNhap = maChiTietDonNhap;
 	}
 
@@ -94,7 +95,6 @@ public class ChiTietDonNhap {
 		return "ChiTietDonNhap [maChiTietDonNhap=" + maChiTietDonNhap + ", maSanPham=" + maSanPham + ", soLuong="
 				+ soLuong + ", giaNhap=" + giaNhap + ", maDonNhap=" + maDonNhap + "]";
 	}
-	
 	
 	
 

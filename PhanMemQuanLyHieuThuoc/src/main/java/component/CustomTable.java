@@ -15,7 +15,6 @@ public class CustomTable extends JTable {
     private CustomTableRowStyle rowStyle;
     private int selectedRow = -1;
     private Object[] columnNames;
-    private Object[][] data;
     private CustomTableRowStyle headerStyle;
     private int[] columnsWidth;
     private Color selectedColor = Color.LIGHT_GRAY;
@@ -25,14 +24,12 @@ public class CustomTable extends JTable {
         if(PhanMemQuanLyHieuThuoc.HienLoi) {
             for (Object[] row : data) {
                 if (row.length != columnNames.length) {
-                    TrangChuUI.hienLoi(this.getClass(), new Exception("Data row length does not match the number of column names"));
+                	throw new IllegalArgumentException("Data row length does not match the number of column names");
                 }
             }
         }
-        this.data = data;
         this.columnNames = columnNames;
         this.headerStyle = headerStyle;
-        
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setRowSelectionAllowed(true); 
         setColumnSelectionAllowed(false); 
@@ -79,22 +76,29 @@ public class CustomTable extends JTable {
         });
     }
     
-    public void setData(Object[][] newData) {
-        // Lấy mô hình dữ liệu hiện tại
-        DefaultTableModel model = (DefaultTableModel) getModel();
 
-        // Xóa dữ liệu cũ
-        model.setRowCount(0); // Xóa tất cả các hàng hiện tại
+    
+
+    
+    public void setData(Object[][] newData) {
+        // Kiểm tra nếu dữ liệu mới không khớp với số lượng cột hiện tại
+        if (newData.length > 0 && newData[0].length != this.getColumnCount()) {
+            throw new IllegalArgumentException("New data row length does not match the number of columns");
+        }
+
+        // Xóa toàn bộ dữ liệu cũ
+        DefaultTableModel model = (DefaultTableModel) this.getModel();
+        model.setRowCount(0);
 
         // Thêm dữ liệu mới vào mô hình
         for (Object[] row : newData) {
-            model.addRow(row); // Thêm từng hàng vào mô hình
+            model.addRow(row);
         }
 
-        // Cập nhật lại giao diện
-        revalidate();
-        repaint(); // Đảm bảo rằng bảng được vẽ lại với dữ liệu mới
+        // Thông báo cho bảng rằng dữ liệu đã thay đổi
+        model.fireTableDataChanged();
     }
+
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -124,6 +128,8 @@ public class CustomTable extends JTable {
         header.setForeground(headerStyle.getForegroundColor());
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, headerStyle.getHeight()));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
+        if(headerStyle.getCenterAlignment())
+        	header.setAlignmentX(Component.CENTER_ALIGNMENT);
         for (int i = 0; i < numOfRows; i++) {
             getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(myHeaderRender);
         }
@@ -145,8 +151,7 @@ public class CustomTable extends JTable {
     		this.setModel(new DefaultTableModel(null, columnNames));
     	}
     	else if(newData[0].length != this.getModel().getColumnCount()) {
-    		TrangChuUI.hienLoi(getClass(), new Exception("Du lieu cap nhat khong hop le"));
-    		return;
+    		throw new IllegalArgumentException("Du lieu cap nhat khong hop le");
     	}
     	else {
     		this.setModel(new DefaultTableModel(newData, columnNames));

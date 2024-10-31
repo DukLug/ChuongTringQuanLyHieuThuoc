@@ -24,11 +24,13 @@ public class KhuyenMai {
 			NhanVien maNhanVien) {
 		super();
 		this.maKhuyenMai = maKhuyenMai;
+
 		setNgayKhuyenMai(ngayKhuyenMai);
 		setNgayKetThuc(ngayKetThuc);
 		setDieuKien(dieuKien);
 		setChietKhau(chietKhau);
 		setMaNhanVien(maNhanVien);
+
 	}
 
 	public String getMaKhuyenMai() {
@@ -36,11 +38,13 @@ public class KhuyenMai {
 	}
 
 
+
 	public Date getNgayKhuyenMai() {
 		return ngayKhuyenMai;
 	}
 
 	public void setNgayKhuyenMai(Date ngayKhuyenMai) {
+
 		try {
 	        Date currentDate = new Date(System.currentTimeMillis());
 	        if (!ngayKhuyenMai.after(currentDate)) {
@@ -58,6 +62,7 @@ public class KhuyenMai {
 	}
 
 	public void setNgayKetThuc(Date ngayKetThuc) {
+
 		try {
 	        if (this.ngayKhuyenMai != null) {
 	            if (ngayKetThuc.after(this.ngayKhuyenMai)) {
@@ -71,6 +76,7 @@ public class KhuyenMai {
 	    } catch (IllegalArgumentException e) {
 	        System.out.println(e.getMessage());
 	    }
+
 	}
 
 	public String getDieuKien() {
@@ -86,6 +92,7 @@ public class KhuyenMai {
 	}
 
 	public void setChietKhau(double chietKhau) {
+
 		try {
 	        if (chietKhau >= 0.0 && chietKhau <= 1.0) {
 	            this.chietKhau = chietKhau;
@@ -101,6 +108,7 @@ public class KhuyenMai {
 
 	public void setMaNhanVien(NhanVien maNhanVien) {
 		this.maNhanVien = maNhanVien;
+
 	}
 
 	public NhanVien getMaNhanVien() {

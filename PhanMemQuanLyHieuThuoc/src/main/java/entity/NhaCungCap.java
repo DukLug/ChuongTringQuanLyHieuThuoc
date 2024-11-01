@@ -64,8 +64,8 @@ public class NhaCungCap {
 			throw new  IllegalArgumentException("Số điện thoại không được null");
 		if (sdt.isEmpty())
 			throw new  IllegalArgumentException("Số điện thoại không được rỗng");
-		if (sdt.length() != 8 || sdt.length() != 10)
-			throw new  IllegalArgumentException("Số điện thoại chỉ gồm 8 hoặc 10 ký tự số");
+		if (sdt.length() < 10 || sdt.length() > 14)
+			throw new  IllegalArgumentException("Số điện thoại phải từ 10 đến 14 ký tự số");
 		
 		this.sdt = sdt;
 	}
@@ -75,7 +75,7 @@ public class NhaCungCap {
 			throw new  IllegalArgumentException("Email không được null");
 		if (email.isEmpty())
 			throw new  IllegalArgumentException("Email không được rỗng");
-		if (email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9].[a-zA-Z0-9]$") == false)
+		if (email.matches("^.+@.+\\..+$") == false)
 			throw new  IllegalArgumentException("Sai email");
 		
 		this.email = email;

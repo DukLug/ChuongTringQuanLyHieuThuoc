@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import dao.SanPhamYTeDAO;
 import entity.SanPhamYTe;
 import userInterface.BanHangUI_dau;
+import userInterface.BanHangUI;
+
 import userInterface.SanPhamYTeUI;
 
 public class SanPhamCTR {
@@ -22,6 +24,7 @@ public class SanPhamCTR {
 	}
 	
 	public static void capNhatSoLuong(BanHangUI_dau banHangUI) {
+
 		
 	}
 	

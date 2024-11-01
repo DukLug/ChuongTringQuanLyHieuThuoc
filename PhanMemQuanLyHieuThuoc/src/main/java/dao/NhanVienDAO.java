@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 import connectDB.ConnectDB;
 import customDataType.ChucVu;
 import customDataType.GioiTinh;
@@ -145,6 +146,34 @@ private ArrayList<NhanVien> dsNhanVien;
 		    }
 		return dsNhanVien;
 	}
+	
+	public NhanVien layNhanVienTheoMa(String maNhanVien) {
+	    NhanVien nv = null;
+
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM NhanVien WHERE MaNhanVien = ?");
+	        ps.setString(1, maNhanVien);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            String maNV1 = rs.getString("MaNhanVien");
+	            String hoTen = rs.getString("HoTen");
+	            String sdt = rs.getString("Sdt");
+	            String cccd = rs.getString("Cccd");
+	            Date ngaySinh = rs.getDate("NgaySinh");
+
+	            GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh")); 
+	            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec")); 
+	            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
+	            nv = new NhanVien(maNV1, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return nv;
+	}
+
 
 	// Tìm nhân viên theo tên
 	public ArrayList<NhanVien> timNhanVienTheoTen(String tenNhanVien) {

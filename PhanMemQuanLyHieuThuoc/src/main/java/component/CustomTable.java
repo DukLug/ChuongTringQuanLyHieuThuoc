@@ -78,6 +78,7 @@ public class CustomTable extends JTable {
     
 
     
+
     public void setData(Object[][] newData) {
         // Kiểm tra nếu dữ liệu mới không khớp với số lượng cột hiện tại
         if (newData.length > 0 && newData[0].length != this.getColumnCount()) {
@@ -93,6 +94,7 @@ public class CustomTable extends JTable {
 
         // Thông báo cho bảng rằng dữ liệu đã thay đổi để bảng có thể vẽ lại
         ((AbstractTableModel) this.getModel()).fireTableDataChanged();
+
     }
     
     public void clearData() {
@@ -103,6 +105,7 @@ public class CustomTable extends JTable {
         // Thông báo cho bảng rằng dữ liệu đã thay đổi để bảng có thể vẽ lại
         ((AbstractTableModel) this.getModel()).fireTableDataChanged();
     }
+
 
 
     @Override

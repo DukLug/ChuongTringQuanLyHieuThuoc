@@ -7,7 +7,7 @@ public enum GioiTinh {
 
     private String gioiTinh;
 
-    GioiTinh(String chucVu) {
+    GioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 

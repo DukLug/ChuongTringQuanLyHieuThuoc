@@ -1,10 +1,13 @@
 package dao;
 
+import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import connectDB.ConnectDB;
 import customDataType.ChucVu;
@@ -16,31 +19,59 @@ public class NhanVienDAO {
 private ArrayList<NhanVien> dsNhanVien;
 	
 	// lấy toàn bộ bảng nhân viên
-	public ArrayList<NhanVien> layDanhSachTatCaNhanVien(){
-		dsNhanVien = new ArrayList<NhanVien>();
-		try {
-			PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien");
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-		
-				String maNhanVien = rs.getString("MaNhanVien");
-				String hoTen = rs.getString("HoTen");
-				String sdt = rs.getString("Sdt");
-				String cccd = rs.getString("Cccd");
-				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
-
-				NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
-				dsNhanVien.add(nv);
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		//Phương thức chuyển đổi chuỗi thành TrangThaiLamViec
+		private TrangThaiLamViec parseTrangThaiLamViec(String str) {
+		    for (TrangThaiLamViec tt : TrangThaiLamViec.values()) {
+		        if (tt.getTrangThaiLamViec().equals(str)) {
+		            return tt;
+		        }
+		    }
+		    return null; // hoặc giá trị mặc định nếu cần
 		}
-		return dsNhanVien;
-	}
+		
+		// Phương thức chuyển đổi chuỗi thành ChucVu
+		private ChucVu parseChucVu(String str) {
+		    for (ChucVu cv : ChucVu.values()) {
+		        if (cv.getChucVu().equals(str)) {
+		            return cv;
+		        }
+		    }
+		    return null;
+		}
+		
+		// Phương thức chuyển đổi chuỗi thành GioiTinh
+		private GioiTinh parseGioiTinh(String str) {
+		    for (GioiTinh gt : GioiTinh.values()) {
+		        if (gt.getGioiTinh().equals(str)) {
+		            return gt;
+		        }
+		    }
+		    return null;
+		}
+		
+		// Lấy toàn bộ bảng nhân viên
+		public ArrayList<NhanVien> layDanhSachTatCaNhanVien() {
+		    dsNhanVien = new ArrayList<NhanVien>();
+		    try {
+		        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien");
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            String maNhanVien = rs.getString("MaNhanVien");
+		            String hoTen = rs.getString("HoTen");
+		            String sdt = rs.getString("Sdt");
+		            String cccd = rs.getString("Cccd");
+		            Date ngaySinh = rs.getDate("NgaySinh");
+		            GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
+		            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
+		            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
+		            NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+		            dsNhanVien.add(nv);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return dsNhanVien;
+		}
 
 	// thêm nhân viên
 	public boolean themNhanVien(NhanVien newNhanVien) {
@@ -52,9 +83,10 @@ private ArrayList<NhanVien> dsNhanVien;
 			ps.setString(3, newNhanVien.getSdt());
 			ps.setString(4, newNhanVien.getCccd());
 			ps.setDate(5, new Date(newNhanVien.getNgaySinh().getTime()));
-			ps.setString(6, newNhanVien.getTrangThaiLamViec().toString());
+			ps.setString(6, newNhanVien.getGioiTinh().toString());
 			ps.setString(7, newNhanVien.getChucVu().toString());
-			ps.setString(8, newNhanVien.getGioiTinh().toString());
+			ps.setString(8, newNhanVien.getTrangThaiLamViec().toString());
+
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,14 +98,16 @@ private ArrayList<NhanVien> dsNhanVien;
 	public boolean capNhatNhanVien(NhanVien nv) {
 		try {
 			PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, TrangThai = ?, ChucVu = ?, GioiTinh = ? where MaNhanVien = ?");
+					"Update NhanVien set HoTen = ?, Sdt = ?, Cccd = ?, NgaySinh = ?, GioiTinh = ?, ChucVu = ?, TrangThaiLamViec = ? where MaNhanVien = ?");
 			ps.setString(1, nv.getHoTen());
+
 			ps.setString(2, nv.getSdt());
 			ps.setString(3, nv.getCccd());
 			ps.setDate(4, new Date(nv.getNgaySinh().getTime()));
-			ps.setString(5, nv.getTrangThaiLamViec().toString());
+			ps.setString(5, nv.getGioiTinh().toString());
 			ps.setString(6, nv.getChucVu().toString());
-			ps.setString(7, nv.getGioiTinh().toString());
+			ps.setString(7, nv.getTrangThaiLamViec().toString());
+
 			ps.setString(8, nv.getMaNhanVien());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
@@ -90,16 +124,20 @@ private ArrayList<NhanVien> dsNhanVien;
 		        ps.setString(1, maNhanVien);
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
-		            String maNV = rs.getString("MaNhanVien");
+
+		            String maNV1 = rs.getString("MaNhanVien");
+
 		            String hoTen = rs.getString("HoTen");
 		            String sdt = rs.getString("Sdt");
 		            String cccd = rs.getString("Cccd");
 		            Date ngaySinh = rs.getDate("NgaySinh");
-		            TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-		            ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-		            GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-		            NhanVien nv = new NhanVien(maNV, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
+		            GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
+		            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
+		            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
+
+		            NhanVien nv = new NhanVien(maNV1, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 		            dsNhanVien.add(nv);
 		        }
 		    } catch (Exception e) {
@@ -121,11 +159,13 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-				NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
+				GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
+	            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
+	            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
+
+				  NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 				dsNhanVien.add(nv);
 			}
 		} catch (Exception e) {
@@ -147,11 +187,13 @@ private ArrayList<NhanVien> dsNhanVien;
 				String sdt1 = rs.getString("Sdt");
 				String cccd = rs.getString("Cccd");
 				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-				NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt1, cccd, ngaySinh, trangThai, chucVu, gioiTinh);
+				GioiTinh gioiTinh = parseGioiTinh(rs.getString("GioiTinh"));
+	            TrangThaiLamViec trangThai = parseTrangThaiLamViec(rs.getString("TrangThaiLamViec"));
+	            ChucVu chucVu = parseChucVu(rs.getString("ChucVu"));
+
+				  NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt1, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
 				dsNhanVien.add(nv);
 			}
 		} catch (Exception e) {
@@ -160,56 +202,33 @@ private ArrayList<NhanVien> dsNhanVien;
 		return dsNhanVien;
 	}
 
-	// tim nhân viên theo giới tính
-	public ArrayList<NhanVien> timNhanVienTheoGioiTinh(GioiTinh gioiTinh) {
-		ArrayList<NhanVien> dsNhanVien = new ArrayList<NhanVien>();
-		try {
-			PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where GioiTinh = ?");
-			ps.setString(1, gioiTinh.toString());
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				String maNhanVien = rs.getString("MaNhanVien");
-				String hoTen = rs.getString("HoTen");
-				String sdt = rs.getString("Sdt");
-				String cccd = rs.getString("Cccd");
-				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh1 = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-				NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh1);
-				dsNhanVien.add(nv);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dsNhanVien;
-	}
-	// tìm nhân viên theo tên và giới tính
-	public ArrayList<NhanVien> timNhanVienTheoTenVaGioiTinh(String tenNhanVien, GioiTinh gioiTinh) {
-		ArrayList<NhanVien> dsNhanVien = new ArrayList<NhanVien>();
-		try {
-			PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where HoTen like ? and GioiTinh = ?");
-			ps.setString(1, "%" + tenNhanVien + "%");
-			ps.setString(2, gioiTinh.toString());
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				String maNhanVien = rs.getString("MaNhanVien");
-				String hoTen = rs.getString("HoTen");
-				String sdt = rs.getString("Sdt");
-				String cccd = rs.getString("Cccd");
-				Date ngaySinh = rs.getDate("NgaySinh");
-				TrangThaiLamViec trangThai = TrangThaiLamViec.valueOf(rs.getString("TrangThaiLamViec"));
-				ChucVu chucVu = ChucVu.valueOf(rs.getString("ChucVu"));
-				GioiTinh gioiTinh1 = GioiTinh.valueOf(rs.getString("GioiTinh"));
 
-				NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, trangThai, chucVu, gioiTinh1);
-				dsNhanVien.add(nv);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	public String layMaNhanVienCuoi() {
+	    String maNhanVienCuoi = null;
+	    Connection conn = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+
+	    try {
+	        conn = ConnectDB.getConnection(); 
+
+	        if (conn != null) {
+	            String sql = "SELECT TOP 1 MaNhanVien FROM NhanVien ORDER BY MaNhanVien DESC";
+	            ps = conn.prepareStatement(sql);
+	            rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	            	maNhanVienCuoi = rs.getString("MaNhanVien");
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace(); 
 		}
-		return dsNhanVien;
+	    return maNhanVienCuoi;
+
 	}
 
 }

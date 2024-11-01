@@ -133,6 +133,8 @@ public class CustomTable extends JTable {
         header.setForeground(headerStyle.getForegroundColor());
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, headerStyle.getHeight()));
         header.setAlignmentY(Component.CENTER_ALIGNMENT);
+        if(headerStyle.getCenterAlignment())
+        	header.setAlignmentX(Component.CENTER_ALIGNMENT);
         for (int i = 0; i < numOfRows; i++) {
             getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(myHeaderRender);
         }
@@ -163,6 +165,19 @@ public class CustomTable extends JTable {
     	setColumnsWidth();
 
     }
+    
+    public Object[] getRowData(int row) {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+        if (row >= 0 && row < model.getRowCount()) {
+            Object[] rowData = new Object[model.getColumnCount()];
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                rowData[i] = model.getValueAt(row, i);
+            }
+            return rowData; // Trả về dữ liệu của dòng tương ứng
+        }
+        return null;
+    }
+    
 
     public static class CustomTableRowStyle {
         private Color backgroundColor;
@@ -219,5 +234,4 @@ public class CustomTable extends JTable {
             this.centerAlignment = centerAlignment;
         }
     }
-    
 }

@@ -16,9 +16,10 @@ public class NhanVien {
 	private String sdt;
 	private String cccd;
 	private Date ngaySinh;
-	private TrangThaiLamViec trangThaiLamViec;
-	private ChucVu chucVu;
 	private GioiTinh gioiTinh;
+	private ChucVu chucVu;
+	private TrangThaiLamViec trangThaiLamViec;
+
 	
 	public NhanVien(String maNhanVien) {
 		super();
@@ -26,16 +27,20 @@ public class NhanVien {
 	}
 
 	public NhanVien(String maNhanVien, String hoTen, String sdt, String cccd, Date ngaySinh,
-			TrangThaiLamViec trangThaiLamViec, ChucVu chucVu, GioiTinh gioiTinh) {
+
+			GioiTinh gioiTinh, ChucVu chucVu, TrangThaiLamViec trangThaiLamViec) {
+
 		super();
 		this.maNhanVien = maNhanVien;
 		setHoTen(hoTen);
 		setSdt(sdt);
 		setCccd(cccd);
 		setNgaySinh(ngaySinh);
-		setTrangThaiLamViec(trangThaiLamViec);
-		setChucVu(chucVu);
 		setGioiTinh(gioiTinh);
+		setChucVu(chucVu);
+		setTrangThaiLamViec(trangThaiLamViec);
+		
+		
 	}
 
 	

@@ -14,11 +14,13 @@ public class NhaCungCapCTR {
 	public static void ketNoiData() {
 		ConnectDB.getInstance().connect();
 //		System.out.println("Connect!!");
+
 	}
 	
 	public static Object[][] layData() {
 	    danhSach = NhaCungCapDAO.getAllNhaCungCap();
 	    data3Cot = new Object[danhSach.length][3];
+
 	    
 	    for (int i = 0; i < danhSach.length; i++) {
 	        data3Cot[i][0] = danhSach[i][0]; // Mã
@@ -30,6 +32,7 @@ public class NhaCungCapCTR {
 	}
 	
 	public static boolean themNCC(NhaCungCap ncc) {
+
 		if (NhaCungCapDAO.them(ncc))
 			return true;
 		else
@@ -58,6 +61,7 @@ public class NhaCungCapCTR {
 	    ArrayList<Object[]> ketQua = new ArrayList<>(); 
 	    
 	    // Duyệt danh sách và thêm các dòng phù hợp vào danh sách tạm
+
 	    for (Object[] row : danhSach) {
 	        String maNCC = ((String) row[0]).toLowerCase();
 	        String tenNCC = ((String) row[1]).toLowerCase();
@@ -92,6 +96,7 @@ public class NhaCungCapCTR {
 	        }
 	    }
 	    return false; 
+
 	}
 
 }

@@ -19,6 +19,7 @@ public class NhaCungCapDAO {
 	
 	public static Object[][] getAllNhaCungCap() {
 	    dsNCC = new ArrayList<>();
+
 	    
 	    try {
 	        ConnectDB.getInstance();

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.KhachHang;
 
+import entity.NhaCungCap;
+
 public class KhachHangDAO {
 
 	public KhachHangDAO() {}
@@ -18,6 +20,7 @@ public class KhachHangDAO {
 	
 	public static Object[][] getAllKhachHang() {
 	    dsKH = new ArrayList<>();
+
 	    
 	
 	    try {
@@ -39,6 +42,7 @@ public class KhachHangDAO {
 	            int diemTichLuy = rs.getInt(6);
 
 	            KhachHang kh = new KhachHang(maKH, tenKH, sdt, cccd, diaChi, diemTichLuy);
+
 	            dsKH.add(kh);
 	        }
 	        
@@ -48,6 +52,7 @@ public class KhachHangDAO {
 	    
 	    // Chuyển ArrayList thành mảng Object[][]
 	    Object[][] data = new Object[dsKH.size()][6];
+
 	    for (int i = 0; i < dsKH.size(); i++) {
 	        KhachHang kh = dsKH.get(i);
 	        data[i][0] = kh.getMaKhachHang();
@@ -56,6 +61,7 @@ public class KhachHangDAO {
 	        data[i][3] = kh.getCccd();
 	        data[i][4] = kh.getDiaChi();
 	        data[i][5] = kh.getDiemTichLuy();
+
 	    }
 	    
 	    return data;
@@ -77,6 +83,7 @@ public class KhachHangDAO {
 			stmt.setString(4, kh.getCccd());
 			stmt.setString(5, kh.getDiaChi());
 			stmt.setInt(6, kh.getDiemTichLuy());
+
 
 			
 			n = stmt.executeUpdate();
@@ -112,6 +119,7 @@ public class KhachHangDAO {
 			stmt.setInt(5, kh.getDiemTichLuy());
 			stmt.setString(6, kh.getMaKhachHang());
 	
+
 			n = stmt.executeUpdate();
 			
 		} catch (Exception e) {

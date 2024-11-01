@@ -66,6 +66,7 @@ public class NhaCungCap {
 			throw new  IllegalArgumentException("Số điện thoại không được rỗng");
 		if (sdt.length() < 10 || sdt.length() > 14)
 			throw new  IllegalArgumentException("Số điện thoại phải từ 10 đến 14 ký tự số");
+
 		
 		this.sdt = sdt;
 	}
@@ -76,6 +77,7 @@ public class NhaCungCap {
 		if (email.isEmpty())
 			throw new  IllegalArgumentException("Email không được rỗng");
 		if (email.matches("^.+@.+\\..+$") == false)
+
 			throw new  IllegalArgumentException("Sai email");
 		
 		this.email = email;

@@ -1,6 +1,7 @@
 package userInterface;
 
 import java.awt.Color;
+
 import java.awt.DefaultFocusTraversalPolicy;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -11,6 +12,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+
 import component.CustomButton;
 import component.CustomTable;
 import controller.NhaCungCapCTR;
@@ -36,6 +38,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	private CustomButton btnCapNhat;
 	private CustomButton btnXoaTrang;
 	private JTextField txtEmail;
+
 	private Object[][] data = new Object[0][0];
 	private NhaCungCap ncc;
 	private JComponent panelTong;
@@ -43,10 +46,13 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	private JCheckBox chckbxHienDS;
 	private CustomTable tableNCC;
 
+
 	public NhaCungCapUI() {
 		super();
+//		data = NhaCungCapCTR.layData();
 		taoHinh();
 		NhaCungCapCTR.ketNoiData();
+
 	}
 	
 	public void taoHinh() {
@@ -129,6 +135,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		
 		txtSDT = new JTextField();
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		txtSDT.setColumns(10);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1));
 		txtSDT.setBackground(Color.WHITE);
@@ -227,6 +234,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
         scrollPane.setBounds(120, 90, 1123, 718); // Đặt kích thước và vị trí của scrollPane
         panelTong.add(scrollPane);
 
+
         
 		btnCapNhat.addActionListener(this);
 		btnThem.addActionListener(this);
@@ -241,6 +249,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		chckbxHienDS.addActionListener(this);
 
 		tableNCC.addMouseListener(this);
+
 
 	}
 
@@ -282,6 +291,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 				else
 					JOptionPane.showMessageDialog(this, "Cập nhật không thành công");
 			}
+
 		}
 		
 		else if (o.equals(txtTim)) { 
@@ -294,6 +304,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 			data = NhaCungCapCTR.layData();
 			tableNCC.capNhatDuLieu(data);
 		}
+
 	}
 	
 	private void xoaTrang() {
@@ -370,6 +381,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
         txtEmail.setText(ncc.getEmail());
         txtDiaChi.setText(ncc.getDiaChi());
 	    
+
 	}
 	
 	@Override public void mousePressed(MouseEvent e) {}
@@ -381,5 +393,6 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 	@Override public void mouseExited(MouseEvent e) {}
 
 	private void quayLai() {}
+
 }
 	

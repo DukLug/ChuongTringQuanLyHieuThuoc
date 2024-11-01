@@ -15,6 +15,7 @@ public class KhachHang {
 	}
 
 	public KhachHang(String maKhachHang, String hoTen, String sdt, String cccd, String diaChi, int diemTichLuy) {
+
 		super();
 		this.maKhachHang = maKhachHang;
 		setHoTen(hoTen);
@@ -42,6 +43,11 @@ public class KhachHang {
 	}
 
 	public void setHoTen(String hoTen) {
+
+		if (hoTen.matches("^[a-zA-Z][\\sa-zA-Z]*$"))
+			throw new  IllegalArgumentException("Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+		
+
 		this.hoTen = hoTen;
 	}
 	
@@ -54,6 +60,7 @@ public class KhachHang {
 			if (sdt.length() < 10 || sdt.length() > 14)
 				throw new  IllegalArgumentException("Số điện thoại chỉ gồm 10 đến 14 ký tự số");
 		}
+
 		
 		this.sdt = sdt;
 	}
@@ -78,7 +85,7 @@ public class KhachHang {
 		if (cccd.length() > 0)
 			if (cccd.length() != 12)
 				throw new  IllegalArgumentException("Căn cước công dân phải gồm 12 ký tự só");
-		
+
 		this.cccd = cccd;
 	}
 

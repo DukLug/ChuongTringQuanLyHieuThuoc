@@ -1,7 +1,9 @@
 package dao;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connectDB.ConnectDB;
@@ -46,6 +48,30 @@ public class DonDoiTraDAO {
 		        return false; 
 		    }
 		}
+	 
+	 
+		   
+		    public boolean checkMaDonDoiTraExists(String maDonDoiTra) {
+		        boolean exists = false;
+		        String sql = "SELECT COUNT(*) FROM DonDoiTra WHERE MaDonDoiTra = ?";
+
+		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+		             
+		            ps.setString(1, maDonDoiTra);
+		            ResultSet rs = ps.executeQuery();
+
+		            if (rs.next()) {
+		                int count = rs.getInt(1);
+		                exists = (count > 0);
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+
+		        return exists;
+		   }
+		
+
 	 
 	 
 

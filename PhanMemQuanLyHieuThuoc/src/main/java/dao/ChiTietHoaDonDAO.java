@@ -45,7 +45,7 @@ public class ChiTietHoaDonDAO {
 	    return chiTietHoaDons;
 	}
 	
-	// 
+	
 
 }
 	

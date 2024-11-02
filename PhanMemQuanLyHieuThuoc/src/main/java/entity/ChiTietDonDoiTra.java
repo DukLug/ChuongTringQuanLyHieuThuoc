@@ -137,6 +137,7 @@ public class ChiTietDonDoiTra {
 		this.maChiTietDonDoiTra = maChiTietDoiTra;
 		
 	}
+
 	
 	
 	

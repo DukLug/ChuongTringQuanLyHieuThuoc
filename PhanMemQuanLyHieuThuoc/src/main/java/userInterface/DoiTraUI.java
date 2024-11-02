@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +43,7 @@ import component.CustomButton;
 import component.CustomPanel;
 import component.CustomTable;
 import controller.ChiTietHoaDonCTR;
+import dao.ChiTietDonDoiTraDAO;
 import dao.DonDoiTraDAO;
 import dao.HoaDonDAO;
 import dao.KhachHangDAO;
@@ -89,9 +91,13 @@ public class DoiTraUI extends JPanel{
 	private CustomTable tableTraHang;
 	private ChiTietHoaDonCTR chiTietHoaDonCTR;
 	private JTextField txtDiemTichLuy;
-	private Map<String, Integer> soThuTuMap = new HashMap<>();
 	private CustomTable tableDoiHang;
 	private DonDoiTraDAO donDoiTraDAO;
+	private BigDecimal tienTraKhach;
+	
+	private String lastDate = "";
+	private Map<String, Integer> soThuTuMap = new HashMap<>();
+	
 
 	public DoiTraUI() {
 		super();
@@ -101,6 +107,7 @@ public class DoiTraUI extends JPanel{
 		 }catch (Exception e) {
 		 	e.printStackTrace();
 		 }	
+		donDoiTraDAO = new DonDoiTraDAO();
 		chiTietHoaDonCTR = new ChiTietHoaDonCTR();
 		taoHinh();
 		layThoiGianHienTai();
@@ -303,7 +310,7 @@ public class DoiTraUI extends JPanel{
 				//
 				
 				
-				btnTraHang = new CustomButton("Thanh Toán", UIStyles.ThemButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+				btnTraHang = new CustomButton("Thanh Toán", UIStyles.ThemButtonStyle, null, CustomButtonIconSide.LEFT, () -> thanhToan());
 				btnTraHang.setForeground(Color.WHITE);
 				btnTraHang.setFont(new Font("Tahoma", Font.BOLD, 20));
 				btnTraHang.setBounds(90, 453, 170, 40);
@@ -532,56 +539,7 @@ public class DoiTraUI extends JPanel{
 	}
 	
 	
-	// tạo đơn đổi trả
-
-	private void taoDonDoiTra() {
-	    DonDoiTra donDoiTra = new DonDoiTra();
-	    NhanVien nv = getSelectedNhanVien();
-	    KhuyenMai km = getSelectedKhuyenMai(); 
-	    KhachHang kh = getSelectedKhachHang(); 
-	    HoaDon hd = getSelectedHoaDon();
-
-
-	    
-	    donDoiTra.setMaDonDoiTra(phatSinhMaDonDoiTra());
-	    donDoiTra.setNgayDoiTra(new Date(new java.util.Date().getTime()));
-	    donDoiTra.setTienHoan(calculateTotalRefund());
-	    donDoiTra.setMaNhanVien(nv); 
-	    donDoiTra.setMaKhuyenMai(km); 
-	    donDoiTra.setMaKhachhang(kh);
-	    donDoiTra.setMaHoaDon(hd); 
-
-	    try {
-	        donDoiTraDAO.themDonDoiTra(donDoiTra);
-	        JOptionPane.showMessageDialog(this, "Đơn đổi trả đã được tạo thành công.");
-	    } catch (Exception e) {
-	        JOptionPane.showMessageDialog(this, "Lỗi khi tạo đơn đổi trả: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	    }
-	}
-
-	private NhanVien getSelectedNhanVien() {
-	    return new NhanVien(txtMaNhanVien.getText());
-	}
-
-	private KhuyenMai getSelectedKhuyenMai() {
-	    
-	    return new KhuyenMai(cbGiamGia.getSelectedItem().toString()); 
-	}
-
-	private KhachHang getSelectedKhachHang() {
-	   
-	    return new KhachHang(txtMaKhachHang.getText());
-	}
-
-	private HoaDon getSelectedHoaDon() {
-	    return new HoaDon(txtmaHoaDon.getText()); 
-	}
-
-	private BigDecimal calculateTotalRefund() {
-	    return BigDecimal.ZERO; 
-	}
-
-
+	
 
 
 
@@ -660,27 +618,8 @@ public class DoiTraUI extends JPanel{
 	    }
 	}
 
-	
-	// tạo chi tiết đơn đổi trả
-	private ChiTietDonDoiTra taoChiTietDonDoiTra(SanPhamYTe spYTe, int soLuong, DonDoiTra maDonDoiTra, LoHang lohang) {
 
-	    
-		 ChiTietDonDoiTra chiTietDonDoiTra = new ChiTietDonDoiTra();
-
-		  
-		    String maChiTietDoiTra = phatSinhMaChiTietDoiTra(maDonDoiTra.getMaDonDoiTra());
-		    chiTietDonDoiTra.setMaChiTietDoiTra(maChiTietDoiTra); 
-
-		    chiTietDonDoiTra.setSoLuong(soLuong);
-		    chiTietDonDoiTra.setGiaBan(tinhGiaBan(spYTe, soLuong));
-		    chiTietDonDoiTra.setMaDonDoiTra(maDonDoiTra);
-		    chiTietDonDoiTra.setMaSanPham(spYTe);
-		    chiTietDonDoiTra.setMaLoHang(lohang);
-		    chiTietDonDoiTra.setMaLoHangThayThe(lohang); 
-		    
-		    return chiTietDonDoiTra;
-	}
-	
+	// tính tiền trả khách
 	private BigDecimal tinhGiaBan(SanPhamYTe spYTe, int soLuong) {
 	    
 	    return spYTe.getGiaBan().multiply(new BigDecimal(soLuong));
@@ -703,19 +642,38 @@ public class DoiTraUI extends JPanel{
 	    }
 	 
 	// phát sinh mã đơn đổi trả
-	public String phatSinhMaDonDoiTra() {
-        Date currentDate = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-        String formattedDate = sdf.format(currentDate);
+	 public String phatSinhMaDonDoiTra() {
+		    Date currentDate = new Date(System.currentTimeMillis());
+		    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+		    String formattedDate = sdf.format(currentDate);
 
-        int stt = soThuTuMap.getOrDefault(formattedDate, 0) + 1;
-        soThuTuMap.put(formattedDate, stt); 
+		    if (!formattedDate.equals(lastDate)) {
+		        soThuTuMap.clear();
+		        soThuTuMap.put(formattedDate, 0);
+		        lastDate = formattedDate;
+		    }
 
-        String maDonDoiTra = "DDT" + formattedDate + String.format("%04d", stt);
+		    int stt = soThuTuMap.get(formattedDate) + 1;
+		    soThuTuMap.put(formattedDate, stt);
 
-        return maDonDoiTra;
-    }
-	
+		    String maDonDoiTra = "DDT" + formattedDate + String.format("%04d", stt);
+		    
+		    // Kiểm tra xem mã đã tồn tại trong cơ sở dữ liệu hay chưa
+		    while (checkIfKeyExists(maDonDoiTra)) {
+		        stt++; 
+		        soThuTuMap.put(formattedDate, stt);
+		        maDonDoiTra = "DDT" + formattedDate + String.format("%04d", stt);
+		    }
+
+		    return maDonDoiTra;
+		}
+
+		// Phương thức kiểm tra xem mã đã tồn tại trong cơ sở dữ liệu chưa
+		private boolean checkIfKeyExists(String maDonDoiTra) {
+		    
+		    DonDoiTraDAO donDoiTraDAO = new DonDoiTraDAO();
+		    return donDoiTraDAO.checkMaDonDoiTraExists(maDonDoiTra);
+		}
 
 	
 	// lấy thông tin khách hàng
@@ -761,7 +719,7 @@ public class DoiTraUI extends JPanel{
 	    }
 
 	    // Tính toán số tiền trả khách
-	    BigDecimal tienTraKhach = tongTienDoiHang.subtract(tongGiaTra);
+	   tienTraKhach = tongTienDoiHang.subtract(tongGiaTra);
 
 	    // Cập nhật vào txtTienTraKhach
 	    txtTienTraKhach.setText(tienTraKhach.toString());
@@ -793,7 +751,226 @@ public class DoiTraUI extends JPanel{
 	    JOptionPane.showMessageDialog(null, "Đã làm mới dữ liệu.");
 	}
 
+	
 
+	
+	
+	// tạo đơn đổi trả
+
+		private DonDoiTra taoDonDoiTra() {
+		    String maDonDoiTra = phatSinhMaDonDoiTra(); 
+		    Date ngayDoiTra = new Date(System.currentTimeMillis()); 
+		    BigDecimal tienHoan = calculateTotalRefund(); 
+		    
+		    NhanVien nv = getSelectedNhanVien(); 
+		    KhuyenMai km = getSelectedKhuyenMai();
+		    KhachHang kh = getSelectedKhachHang(txtmaHoaDon.getText()); 
+		    HoaDon hd = getSelectedHoaDon(); 
+
+		    // Kiểm tra tính hợp lệ của nhân viên, khách hàng và hóa đơn
+		    if (nv == null || kh == null || hd == null) {
+		        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên, khách hàng, và hóa đơn hợp lệ.");
+		        return null; // Trả về null nếu có vấn đề
+		    }
+
+		    // Tạo đối tượng DonDoiTra
+		    DonDoiTra donDoiTra = new DonDoiTra(maDonDoiTra, ngayDoiTra, tienHoan, nv, km, kh, hd);
+
+		    if (donDoiTraDAO != null) {
+		        boolean kq = donDoiTraDAO.themDonDoiTra(donDoiTra); 
+		        if (kq) {
+		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thành công!");
+		            LamMoi(); 
+		            return donDoiTra; // Trả về đối tượng DonDoiTra nếu thành công
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thất bại!");
+		            return null; // Trả về null nếu thất bại
+		        }
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Đối tượng DonDoiTraDAO chưa được khởi tạo!");
+		        return null;
+		    }
+		}
+
+
+		private NhanVien getSelectedNhanVien() {
+			
+		    return new NhanVien("NV000001");
+		}
+
+		private KhuyenMai getSelectedKhuyenMai() {
+		    
+		    return new KhuyenMai(); 
+		}
+
+		private KhachHang getSelectedKhachHang(String maHD) {
+			 HoaDonDAO hdDao = new HoaDonDAO();
+			 String makh = hdDao.getMaKhachHangByMaHoaDon(maHD);
+			 KhachHang kh = new KhachHang(makh);
+			 
+		    return kh;
+		}
+
+		private HoaDon getSelectedHoaDon() {
+		    return new HoaDon(txtmaHoaDon.getText()); 
+		}
+
+		private BigDecimal calculateTotalRefund() {
+		    return tienTraKhach; 
+		}
+
+
+		
+		
+		private Object[][] layDuLieuTuBangDoiHang() {
+		    int rowCount = tableDoiHang.getRowCount(); 
+		    int columnCount = tableDoiHang.getColumnCount(); 
+
+		    System.out.println("Số hàng trong bảng DoiHang: " + rowCount);
+		    System.out.println("Số cột trong bảng DoiHang: " + columnCount);
+
+		    if (rowCount == 0 || columnCount == 0) {
+		        System.out.println("Bảng DoiHang không có dữ liệu.");
+		        return new Object[0][0]; // Trả về mảng rỗng
+		    }
+
+		    Object[][] dataDoiHang = new Object[rowCount][columnCount]; 
+
+		    for (int i = 0; i < rowCount; i++) {
+		        for (int j = 0; j < columnCount; j++) {
+		            dataDoiHang[i][j] = tableDoiHang.getValueAt(i, j); 
+		            System.out.println("Dữ liệu tại [" + i + "][" + j + "]: " + dataDoiHang[i][j]);
+		        }
+		    }
+
+		    return dataDoiHang; 
+		}
+
+
+		private Object[][] layDuLieuTuBangTraHang() {
+		    int rowCount = tableTraHang.getRowCount(); 
+		    int columnCount = tableTraHang.getColumnCount(); 
+
+		    // Kiểm tra xem bảng có dữ liệu không
+		    if (rowCount == 0 || columnCount == 0) {
+		        System.out.println("Bảng TraHang không có dữ liệu.");
+		        return new Object[0][0]; // Trả về mảng rỗng
+		    }
+
+		    Object[][] dataTraHang = new Object[rowCount][columnCount]; 
+
+		    for (int i = 0; i < rowCount; i++) {
+		        for (int j = 0; j < columnCount; j++) {
+		            dataTraHang[i][j] = tableTraHang.getValueAt(i, j); 
+		        }
+		    }
+
+		    return dataTraHang; 
+		}
+
+	
+	// Phương thức chính để thực hiện quy trình
+		private void xuLyDonDoiTra(DonDoiTra donDoiTra, LoHang loHang) {
+		    // Lấy dữ liệu từ bảng DoiHang và TraHang
+		    Object[][] dataDoiHang = layDuLieuTuBangDoiHang();
+		    Object[][] dataTraHang = layDuLieuTuBangTraHang(); 
+
+		    // Thông báo để theo dõi
+		    System.out.println("Số hàng trong bảng DoiHang: " + dataDoiHang.length);
+		    System.out.println("Số hàng trong bảng TraHang: " + dataTraHang.length);
+
+		    // Kiểm tra dữ liệu	
+		    if (dataDoiHang.length == 0) {
+		        System.out.println("Bảng DoiHang không có dữ liệu.");
+		    }
+		    if (dataTraHang.length == 0) {
+		        System.out.println("Bảng TraHang không có dữ liệu.");
+		    }
+
+		    // Lấy chi tiết đơn đổi trả từ dữ liệu
+		    ArrayList<ChiTietDonDoiTra> chiTietList = layChiTietDonDoiTraTuBang(dataDoiHang, dataTraHang, donDoiTra, loHang);
+		    
+		    // Thông báo để kiểm tra chi tiết
+		    System.out.println("Số chi tiết trong chiTietList: " + chiTietList.size());
+		    
+		    // Tiết đơn đổi trả vào cơ sở dữ liệu
+		    luuChiTietDonDoiTra(chiTietList);
+		}
+
+	// Lấy chi tiết đơn đổi trả từ bảng
+		private ArrayList<ChiTietDonDoiTra> layChiTietDonDoiTraTuBang(Object[][] dataDoiHang, Object[][] dataTraHang, DonDoiTra donDoiTra, LoHang loHang) {
+		    ArrayList<ChiTietDonDoiTra> chiTietList = new ArrayList<>();
+
+		    // Lấy chi tiết từ bảng đổi hàng
+		    addChiTietFromData(dataDoiHang, donDoiTra, loHang, chiTietList);
+		    // Lấy chi tiết từ bảng trả hàng
+		    addChiTietFromData(dataTraHang, donDoiTra, loHang, chiTietList);
+
+		    // Kiểm tra chi tiết đã được thêm thành công
+		    if (chiTietList.isEmpty()) {
+		        System.out.println("Không có chi tiết nào được thêm vào chiTietList.");
+		    }
+
+		    return chiTietList;
+		}
+
+	// Hàm để xử lý dữ liệu từ bảng và thêm vào chi tiết đơn đổi trả
+	private void addChiTietFromData(Object[][] data, DonDoiTra donDoiTra, LoHang loHang, ArrayList<ChiTietDonDoiTra> chiTietList) {
+	    for (Object[] row : data) {
+	       
+	        if (row.length > 5 && row[0] instanceof SanPhamYTe && row[4] instanceof Integer && row[5] instanceof BigDecimal) { 
+	            // Tạo đối tượng ChiTietDonDoiTra
+	            ChiTietDonDoiTra chiTiet = new ChiTietDonDoiTra	
+	            		(
+	                phatSinhMaChiTietDoiTra(donDoiTra.getMaDonDoiTra()), 
+	                (Integer) row[4], 
+	                (BigDecimal) row[5], 
+	                donDoiTra, 
+	                (SanPhamYTe) row[0], 
+	                loHang, 
+	                loHang 
+	            );
+	            System.out.println("Chi tiết sắp lưu: " + chiTiet);
+	            chiTietList.add(chiTiet); 
+	        } else {
+	            System.out.println("Lấy thất bại ");
+	        }
+	    }
+	}
+
+	
+
+	// Lưu chi tiết đơn đổi trả vào cơ sở dữ liệu
+	private void luuChiTietDonDoiTra(ArrayList<ChiTietDonDoiTra> chiTietList) {
+	    ChiTietDonDoiTraDAO chiTietDonDoiTraDAO = new ChiTietDonDoiTraDAO();
+	    boolean coLoi = false; // Biến kiểm tra xem có lỗi xảy ra hay không
+
+	    for (ChiTietDonDoiTra chiTiet : chiTietList) {
+	        if (!chiTietDonDoiTraDAO.themChiTietDoiTra(chiTiet)) {
+	            JOptionPane.showMessageDialog(null, "Lỗi khi lưu chi tiết đơn đổi trả: ");
+	            coLoi = true; 
+	        }
+	    }
+
+	    if (!coLoi) {
+	        JOptionPane.showMessageDialog(null, "Lưu chi tiết đơn đổi trả thành công!");
+	    }
+	}
+	
+	
+	private void thanhToan() {
+	 
+	    DonDoiTra donDoiTra = taoDonDoiTra();
+	    
+	    if (donDoiTra != null) {
+	    	
+	    	String maLo = "LH010920240001";
+	    	LoHang lohang = new LoHang(maLo);
+	        xuLyDonDoiTra(donDoiTra,lohang);
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Lỗi khi tạo đơn đổi trả. Vui lòng kiểm tra lại.");
+	    }
+	}
 
 	
 	

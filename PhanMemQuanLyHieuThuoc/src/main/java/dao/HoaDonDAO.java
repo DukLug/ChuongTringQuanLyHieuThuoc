@@ -37,5 +37,25 @@ public class HoaDonDAO {
 	    
 	    return chiTietHoaDon;
 	}
+	
+	// lấy mã Khách hàng theo mã hóa đơn
+    public String getMaKhachHangByMaHoaDon(String maHoaDon) {
+        String maKhachHang = null;
+        String sql = "SELECT maKhachHang FROM HoaDon WHERE MaHoaDon = ?";
+
+        try (PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, maHoaDon);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                maKhachHang = rs.getString("maKhachHang");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return maKhachHang;
+    }
 
 }

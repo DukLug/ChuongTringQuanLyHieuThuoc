@@ -70,6 +70,8 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	private CustomTable tableKhuyenMai;
 	private JSpinner spChietKhau;
 	private JFrame frameThem;
+	private String lastFormattedDate = "";
+
 	
 	 private static HashMap<String, Integer> soThuTuMap = new HashMap<>();
 
@@ -532,7 +534,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    Date ngayKhuyenMai = new Date(jdcNgayKM.getDate().getTime());
 	    Date ngayKetThuc = new Date(jdcNgayKT.getDate().getTime());
 	    String dieuKien = cbDieuKien.getSelectedItem().toString();
-	    double chietKhau = (Double) spChietKhau.getValue();
+	    double chietKhau = (Double) spChietKhau.getValue();	
 	    
 	    String maNVString = txtMaNV.getText(); 
 	    NhanVien maNV = nv_dao.layNhanVienTheoMa(maNVString); 
@@ -595,19 +597,26 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	}
 
 	private String phatSinhMaKhuyenMai() {
-   
-        Date currentDate = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-        String formattedDate = sdf.format(currentDate);
+	    // Lấy ngày hiện tại
+	    Date currentDate = new Date(System.currentTimeMillis());
+	    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+	    String formattedDate = sdf.format(currentDate);
 
-        String key = formattedDate;
-        int stt = soThuTuMap.getOrDefault(key, 0) + 1;
-        soThuTuMap.put(key, stt); 
+	    // Kiểm tra ngày hiện tại và reset nếu cần thiết
+	    if (!formattedDate.equals(lastFormattedDate)) {
+	        soThuTuMap.clear(); // Xóa map để bắt đầu lại số thứ tự
+	        lastFormattedDate = formattedDate; // Cập nhật ngày hiện tại
+	    }
 
-        String maKhuyenMai = "KM" + formattedDate + String.format("%02d", stt);
-        
-        return maKhuyenMai;
-    }
+	    // Tăng số thứ tự cho ngày hiện tại
+	    int stt = soThuTuMap.getOrDefault(formattedDate, 0) + 1;
+	    soThuTuMap.put(formattedDate, stt); 
+
+	    // Tạo mã khuyến mãi
+	    String maKhuyenMai = "KM" + formattedDate + String.format("%02d", stt);
+	    
+	    return maKhuyenMai;
+	}
 
 	
 	private void layDuLieuTrongBangKhuyenMai() {

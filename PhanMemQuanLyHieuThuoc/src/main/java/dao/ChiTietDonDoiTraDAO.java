@@ -2,9 +2,11 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.ChiTietDonDoiTra;
+import entity.SanPhamYTe;
 
 
 public class ChiTietDonDoiTraDAO {
@@ -20,7 +22,7 @@ public class ChiTietDonDoiTraDAO {
 	        ps.setString(4, chiTietDonDoiTra.getMaDonDoiTra().getMaDonDoiTra());    
 	        ps.setString(5, chiTietDonDoiTra.getMaSanPham().getMaSanPham());       
 	        ps.setString(6, chiTietDonDoiTra.getMaLoHang().getMaLo());            
-	        ps.setString(7, chiTietDonDoiTra.getMaLoHangThayThe().getMaLo());     
+	        ps.setString(7, chiTietDonDoiTra.getMaLoHangThayThe() != null ? chiTietDonDoiTra.getMaLoHangThayThe().getMaLo() : null);     
 
 	        int rowsAffected = ps.executeUpdate(); 
 	        return rowsAffected > 0;              
@@ -44,6 +46,9 @@ public class ChiTietDonDoiTraDAO {
 	        return false; 
 	    }
 	}
+	
+	
+
 
 
 }

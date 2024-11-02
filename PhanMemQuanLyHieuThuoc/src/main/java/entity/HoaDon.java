@@ -34,6 +34,17 @@ public class HoaDon {
 		setChiTietHoaDon(chiTietHoaDon);
 	}
 	
+	public HoaDon(KhachHang kh, String mahd, BigDecimal thanhTien) {
+		this.khachHang = kh;
+		this.maHoaDon = mahd;
+		this.thanhTien = thanhTien;
+		
+	}
+
+	public HoaDon() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getMaHoaDon() {
 		return maHoaDon;
 	}

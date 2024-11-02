@@ -1,7 +1,6 @@
 /META-INF/
-/customDataType/
 /entity/
-/component/
-/userInterface/
-/controller/
 /dao/
+/controller/
+/userInterface/
+/component/

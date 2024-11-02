@@ -30,6 +30,14 @@ public class ChiTietHoaDon {
 		setLoHangThayThe(loHangThayThe);
 	}
 	
+	
+	public ChiTietHoaDon(SanPhamYTe sanPhamYTe, int soLuong, BigDecimal tongGia) {
+	    super();
+	    this.sanPhamYTe = sanPhamYTe;
+	    this.soLuong = soLuong;
+	    this.giaBan = tongGia;
+	}
+
 	public String getMaChiTietHoaDon() {
 		return maChiTietHoaDon;
 	}

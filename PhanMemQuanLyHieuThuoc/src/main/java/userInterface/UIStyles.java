@@ -23,6 +23,10 @@ public class UIStyles {
 	public static final int NavBarHeight = TopSectionHeight-LabelBarHeight;	
 	public static final int MainSectionHeight = ApplicationHeight - TopSectionHeight;
 	
+	
+	public static final Font LabelFontBoldGreen = new Font("Tahoma", Font.BOLD, 22);
+    public static final Color LabelFontColorGreen = Color.decode("#15C91B");
+	
 	public static final ButtonStyle LabelBarButtonStyle = new ButtonStyle(
 			220, NavBarHeight, 18, Color.black, Color.decode("#E1E1E1"), Color.decode("#dadada"), Color.decode("#cdcdcd")
 		);

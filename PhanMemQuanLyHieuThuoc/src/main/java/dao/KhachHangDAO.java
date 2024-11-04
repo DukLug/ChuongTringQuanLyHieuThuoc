@@ -1,16 +1,20 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.openxmlformats.schemas.drawingml.x2006.main.STTextIndent;
+
 import connectDB.ConnectDB;
 import entity.KhachHang;
-
+import entity.KhuyenMai;
 import entity.NhaCungCap;
+import entity.NhanVien;
 
 public class KhachHangDAO {
 
@@ -21,8 +25,6 @@ public class KhachHangDAO {
 	public static Object[][] getAllKhachHang() {
 	    dsKH = new ArrayList<>();
 
-	    
-	
 	    try {
 	        ConnectDB.getInstance();
 	        Connection con = ConnectDB.getConnection();
@@ -83,8 +85,6 @@ public class KhachHangDAO {
 			stmt.setString(4, kh.getCccd());
 			stmt.setString(5, kh.getDiaChi());
 			stmt.setInt(6, kh.getDiemTichLuy());
-
-
 			
 			n = stmt.executeUpdate();
 			
@@ -136,8 +136,28 @@ public class KhachHangDAO {
 		
 		return n > 0;
 	}
-	
-	
 
-  
+	public ArrayList<KhachHang> timTheoSDT(String SDT) {
+	    ArrayList<KhachHang> khachHangCanTim = new ArrayList<KhachHang>();
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE Sdt = ?");
+	        ps.setString(1, SDT);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            String ma = rs.getString("MaKhachHang");
+	            String ten = rs.getString("HoTen");
+	            String sdt = rs.getString("Sdt");
+	            String cccd = rs.getString("Cccd");
+	            String diaChi = rs.getString("DiaChi");
+	            int dtl = rs.getInt("DiemTichLuy");
+	            KhachHang khachHang = new KhachHang(ma, ten, sdt, cccd, diaChi, dtl);
+	           
+	            khachHangCanTim.add(khachHang);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return khachHangCanTim;
+	}
+
 }

@@ -1,5 +1,16 @@
+/connectDB/
+/userInterface/
 /META-INF/
+<<<<<<< HEAD
 /userInterface/
 /functionalClass/
 /entity/
 /controller/
+=======
+/controller/
+/dao/
+/entity/
+/testEntity/
+/component/
+/customDataType/
+>>>>>>> ecabccdc3065504f9a4e320b845a23174ca6d551

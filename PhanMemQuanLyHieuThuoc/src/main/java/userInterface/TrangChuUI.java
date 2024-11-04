@@ -101,10 +101,10 @@ public class TrangChuUI extends JFrame {
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Sản phẩm", "Nhập hàng"},
+        		new String[]{"Sản phẩm", "TestSanPham"},
         		new CustomButtonFunction[] {
         			()->taiTrang(new SanPhamYTeUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new TestSanPhamUI())
         		}
         		));
         

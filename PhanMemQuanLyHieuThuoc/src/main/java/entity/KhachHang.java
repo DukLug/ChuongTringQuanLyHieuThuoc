@@ -30,6 +30,12 @@ public class KhachHang {
 		this.maKhachHang = maKhachHang;
 	}
 
+	public KhachHang(String tenKhachHang, String sdt, int diemTichLuy) {
+		this.hoTen = tenKhachHang;
+		this.sdt = sdt;
+		this.diemTichLuy = diemTichLuy;
+	}
+
 	public String getMaKhachHang() {
 		return maKhachHang;
 	}

@@ -131,6 +131,13 @@ public class ChiTietDonDoiTra {
 				+ giaBan + ", maDonDoiTra=" + maDonDoiTra + ", maSanPham=" + maSanPham + ", maLoHang=" + maLoHang
 				+ ", maLoHangThayThe=" + maLoHangThayThe + "]";
 	}
+
+
+	public void setMaChiTietDoiTra(String maChiTietDoiTra) {
+		this.maChiTietDonDoiTra = maChiTietDoiTra;
+		
+	}
+
 	
 	
 	

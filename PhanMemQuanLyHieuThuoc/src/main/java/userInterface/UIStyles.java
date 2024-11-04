@@ -5,7 +5,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon
 ;
 import javax.swing.ImageIcon;
@@ -23,10 +27,15 @@ public class UIStyles {
 	public static final int NavBarHeight = TopSectionHeight-LabelBarHeight;	
 	public static final int MainSectionHeight = ApplicationHeight - TopSectionHeight;
 	
+	public static Font DefaultFont = (new JLabel()).getFont();
+	public static final Font BoldFont = new Font("Tahoma", Font.BOLD, 20);	
+	public static final Font TitleFont = new Font("Tahoma", Font.BOLD, 30);	
 	
 	public static final Font LabelFontBoldGreen = new Font("Tahoma", Font.BOLD, 22);
     public static final Color LabelFontColorGreen = Color.decode("#15C91B");
 	
+	public static final Color BackgroundColor = new Color(232, 234, 236);
+    
 	public static final ButtonStyle LabelBarButtonStyle = new ButtonStyle(
 			220, NavBarHeight, 18, Color.black, Color.decode("#E1E1E1"), Color.decode("#dadada"), Color.decode("#cdcdcd")
 		);
@@ -77,33 +86,48 @@ public class UIStyles {
 	public static final ImageIcon PolicyIcon  = getIconFromPath("resources/PolicyIcon.png", 42, 42);
 	public static final ImageIcon ReturnIcon  = getIconFromPath("resources/ReturnIcon.png", 30, 30);
 	public static final ImageIcon SellIcon  = getIconFromPath("resources/SellIcon.png", 30, 30);
-	public static final ImageIcon MoneyIcon  = getIconFromPath("resources/MoneyIcon.png", 30, 30);
-	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 30, 30);
-	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 30, 30);
-	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 30, 30);
+	public static final ImageIcon MoneyIcon  = getIconFromPath("resources/MoneyIcon.png", 150, 150);
+	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 150, 150);
+	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 150, 150);
+	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 150, 150);
 	public static final ImageIcon Find  = getIconFromPath("resources/find.png", 30, 30);
 	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
 	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);
 	public static final ImageIcon More  = getIconFromPath("resources/more.png", 20, 20);
 	public static final ImageIcon Trash  = getIconFromPath("resources/trash.png", 30, 30);
 	public static final ImageIcon BarCode  = getIconFromPath("resources/barCode.png", 30, 30);
-	public static final Color BackgroundColor = new Color(232, 234, 236);
 	public static final ImageIcon FindIcon  = getIconFromPath("resources/find.png", 50, 50);
 	
-	public static final Font FontBold = new Font("Tahoma", Font.BOLD, 20);
+	public static final ImageIcon ProductImage  = getIconFromPath("data/HinhAnh/1001690721764.png", 250, 250);
 	
-	public static Font DefaultFont = (new JLabel()).getFont();
+
 	public static final CustomTableRowStyle NhanVienTableHeaderStyle = new CustomTableRowStyle(
 			Color.decode("#DEF0DF"), Color.black, new Font(DefaultFont.getName(), Font.BOLD, 20), 50, false);
 	public static final CustomTableRowStyle NhanVienTableRowStyle = new CustomTableRowStyle(
 			Color.white, Color.black, new Font(DefaultFont.getName(), Font.PLAIN, 20), 50, false);
 	
-	private static ImageIcon getIconFromPath(String path, int width, int height) {
-		ImageIcon imageIcon = new ImageIcon(path); 
-		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); 
-		return new ImageIcon(newimg);
-	}
+    private static ImageIcon getIconFromPath(String path, int width, int height) {
+        // Check if the file exists
+        File file = new File(path);
+        if (!file.exists()) {
+            System.err.println("Error: File not found at path: " + path);
+            return null;
+        }
+
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            if (bufferedImage == null) {
+                System.err.println("Error: Unable to read image file at path: " + path);
+                return null;
+            }
+
+            Image scaledImage = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	
 	public static void setPlaceholder(JTextField textField, String placeholder) {
         // Đặt placeholder

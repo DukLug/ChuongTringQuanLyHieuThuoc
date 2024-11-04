@@ -45,15 +45,18 @@ public class HoaDon {
 		setKhachHang(khachHang);
 	}
 	
-//	public HoaDon(String maHoaDon, Date ngayTao, BigDecimal thanhTien, NhanVien nhanVien,
-//			KhuyenMai khuyenMai, KhachHang khachHang, ArrayList<ChiTietHoaDon> chiTietHoaDon) {
-//		
-//	}
-	
-//	public HoaDon(String maHD, String loaiHD, String ngayTao2, int soLuong, BigDecimal thanhTien2,
-//			BigDecimal phiTraHang, BigDecimal thucThu) {
-//		// TODO Auto-generated constructor stub
-//	}
+
+	public HoaDon(KhachHang kh, String mahd, BigDecimal thanhTien) {
+		this.khachHang = kh;
+		this.maHoaDon = mahd;
+		this.thanhTien = thanhTien;
+		
+	}
+
+	public HoaDon() {
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public String getMaHoaDon() {
 		return maHoaDon;

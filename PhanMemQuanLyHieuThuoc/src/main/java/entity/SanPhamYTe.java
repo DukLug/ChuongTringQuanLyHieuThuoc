@@ -67,6 +67,17 @@ public class SanPhamYTe {
 
 
 
+	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.giaBan = giaBanSanPham;
+		this.donViTinh = donViTinh;
+	}
+
+
+	
+
+
 	public String getMaSanPham() {
 		return maSanPham;
 	}

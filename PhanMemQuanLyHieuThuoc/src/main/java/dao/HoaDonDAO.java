@@ -166,4 +166,47 @@ public class HoaDonDAO {
 	    }
 	    return data;
 	}
+
+
+	public static Object[][] layDataHD(int ngay, int thang, int nam, String nv) {
+	    Object[][] data = null;
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT * FROM HoaDon WHERE (DAY(NgayTao) = ? OR ? = '') AND (MONTH(NgayTao) = ? OR ? = '') AND (YEAR(NgayTao) = ? OR ? = '') AND (MaNhanVien = ? OR ? = '') ORDER BY MaNhanVien ASC, NgayTao ASC";
+	        
+	        PreparedStatement statement = con.prepareStatement(sql);
+	        statement = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+	        statement.setInt(1, ngay);
+	        statement.setString(2, (ngay == 0) ? "" : String.valueOf(ngay));
+	        statement.setInt(3, thang);
+	        statement.setString(4, (thang == 0) ? "" : String.valueOf(thang));
+	        statement.setInt(5, nam);
+	        statement.setString(6, (nam == 0) ? "" : String.valueOf(nam));
+	        statement.setString(7, nv);
+	        statement.setString(8, (nv == null) ? "" : nv);
+	        ResultSet rs = statement.executeQuery();
+	        
+	        rs.last();
+	        int rowCount = rs.getRow();
+	        rs.beforeFirst();
+	        
+	        data = new Object[rowCount][5];
+	        
+	        int i = 0;
+	        while (rs.next()) {
+	            data[i][0] = rs.getString("MaHoaDon");
+	            data[i][1] = rs.getBigDecimal("ThanhTien");
+	            data[i][2] = rs.getDate("NgayTao");
+	            data[i][3] = rs.getString("MaNhanVien");
+	            data[i][4] = rs.getString("MaKhachHang");
+	            i++;
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return data;
+	}
 }

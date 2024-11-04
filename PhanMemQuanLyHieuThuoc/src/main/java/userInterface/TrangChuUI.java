@@ -75,7 +75,7 @@ public class TrangChuUI extends JFrame {
         labelBarEast.setLayout(new BoxLayout(labelBarEast, BoxLayout.X_AXIS));
         labelBarEast.add(new CustomButton("About", UIStyles.LabelBarButtonStyle, UIStyles.AboutIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
         labelBarEast.add(new CustomButton("Help", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
-        labelBarEast.add(new CustomButton("Cá nhândsfassdfsdfsdffsaf", UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
+        labelBarEast.add(new CustomButton("Hứa Lập Quốc", UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
         
         //lbaelBarEast.add(new )
         labelBar.setLayout(new BorderLayout());

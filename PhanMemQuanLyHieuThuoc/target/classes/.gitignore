@@ -1,4 +1,5 @@
-/controller/
-/dao/
-/userInterface/
 /META-INF/
+/userInterface/
+/functionalClass/
+/entity/
+/controller/

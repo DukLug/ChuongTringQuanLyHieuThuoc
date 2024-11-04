@@ -535,7 +535,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 
 	public void layToanBoDanhSach() {
 		ArrayList<NhanVien> dsNhanVien = nhanVienCTR.layDanhSachTatCaNhanVien();
-		Object[][] data = new Object[dsNhanVien.size()][8]; // 8 cột tương ứng với các trường
+		Object[][] data = new Object[dsNhanVien.size()][8]; 
 
 		for (int i = 0; i < dsNhanVien.size(); i++) {
 		    NhanVien nv = dsNhanVien.get(i);

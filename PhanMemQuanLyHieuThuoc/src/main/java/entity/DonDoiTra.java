@@ -93,5 +93,9 @@ public class DonDoiTra {
 				+ ", maNhanVien=" + maNhanVien + ", maKhuyenMai=" + maKhuyenMai + ", maKhachhang=" + maKhachhang
 				+ ", maHoaDon=" + maHoaDon + "]";
 	}
+	public void setMaDonDoiTra(String phatSinhMaDonDoiTra) {
+		this.maDonDoiTra = phatSinhMaDonDoiTra;
+		
+	}
 	
 }

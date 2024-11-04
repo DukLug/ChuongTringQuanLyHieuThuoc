@@ -104,7 +104,7 @@ public class BanHangUI_dau extends JPanel implements ActionListener {
 		
 		btnThemKH = new CustomButton("Thêm KH", UIStyles.NavBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThemKH.setBounds(358, 61, 160, 35);
-		btnThemKH.setFont(UIStyles.FontBold);
+		btnThemKH.setFont(UIStyles.BoldFont);
 		panelKhachHang.add(btnThemKH);
 		
 		JLabel lblNewLabel = new JLabel("Tên KH:");

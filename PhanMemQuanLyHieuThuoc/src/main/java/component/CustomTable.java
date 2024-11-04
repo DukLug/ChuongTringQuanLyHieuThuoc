@@ -52,6 +52,7 @@ public class CustomTable extends JTable {
                 }
             }
         });
+        setDefaultEditor(Integer.class, new DefaultCellEditor(new JTextField()));
         
     }
 
@@ -80,21 +81,19 @@ public class CustomTable extends JTable {
     
 
     public void setData(Object[][] newData) {
-        // Kiểm tra nếu dữ liệu mới không khớp với số lượng cột hiện tại
         if (newData.length > 0 && newData[0].length != this.getColumnCount()) {
             throw new IllegalArgumentException("New data row length does not match the number of columns");
         }
 
-        // Cập nhật dữ liệu bảng
-        for (int i = 0; i < newData.length; i++) {
-            for (int j = 0; j < newData[i].length; j++) {
-                this.setValueAt(newData[i][j], i, j);
-            }
+
+        DefaultTableModel model = (DefaultTableModel) this.getModel();
+        model.setRowCount(0);
+
+        for (Object[] row : newData) {
+            model.addRow(row);
         }
 
-        // Thông báo cho bảng rằng dữ liệu đã thay đổi để bảng có thể vẽ lại
-        ((AbstractTableModel) this.getModel()).fireTableDataChanged();
-
+        model.fireTableDataChanged();
     }
     
     public void clearData() {
@@ -237,4 +236,24 @@ public class CustomTable extends JTable {
             this.centerAlignment = centerAlignment;
         }
     }
+
+
+
+    public Object[][] getData() {
+        DefaultTableModel model = (DefaultTableModel) this.getModel(); 
+        int rowCount = model.getRowCount(); 
+        int columnCount = model.getColumnCount();
+
+        Object[][] data = new Object[rowCount][columnCount]; 
+
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                data[i][j] = model.getValueAt(i, j); 
+            }
+        }
+
+        return data; 
+    }
+    
+    
 }

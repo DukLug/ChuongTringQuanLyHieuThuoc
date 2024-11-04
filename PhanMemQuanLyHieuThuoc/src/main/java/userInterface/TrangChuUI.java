@@ -75,7 +75,7 @@ public class TrangChuUI extends JFrame {
         labelBarEast.setLayout(new BoxLayout(labelBarEast, BoxLayout.X_AXIS));
         labelBarEast.add(new CustomButton("About", UIStyles.LabelBarButtonStyle, UIStyles.AboutIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
         labelBarEast.add(new CustomButton("Help", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
-        labelBarEast.add(new CustomButton("Cá nhândsfassdfsdfsdffsaf", UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
+        labelBarEast.add(new CustomButton("Hứa Lập Quốc", UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
         
         //lbaelBarEast.add(new )
         labelBar.setLayout(new BorderLayout());
@@ -152,24 +152,24 @@ public class TrangChuUI extends JFrame {
         			()->taiTrang(new BCCuoiNgayUI()),
         			()->taiTrang(new BCBanHangUI()),
         			()->taiTrang(new BCHangHoaUI()),
-        			()->taiTrang(new BCNhanVienUI()),
+        			()->taiTrang(new ThongKeUI()),
         			()->taiTrang(new BCNhaCungCapUI())
         		}
         		));
 		
-		navBarWest.add(new CustomComboBox(
-        		"Thống kê", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.AnalysingIcon,
-        		CustomButtonIconSide.LEFT,
-        		0,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new ThongKeUI()),
-        			()->taiTrang(new NhanVienUI())
-        		}
-        		));
+//		navBarWest.add(new CustomComboBox(
+//        		"Thống kê", 
+//        		UIStyles.NavBarButtonStyle, 
+//        		UIStyles.AnalysingIcon,
+//        		CustomButtonIconSide.LEFT,
+//        		0,
+//        		UIStyles.NavBarDropBoxItemHeight,
+//        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
+//        		new CustomButtonFunction[] {
+//        			()->taiTrang(new ThongKeUI()),
+//        			()->taiTrang(new NhanVienUI())
+//        		}
+//        		));
 
 		navBarWest.add(new CustomButton("Chính sách", UIStyles.NavBarButtonStyle, UIStyles.PolicyIcon,CustomButtonIconSide.LEFT,()->taiTrang(new KhuyenMaiUI())));
 		

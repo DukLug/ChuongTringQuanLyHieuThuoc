@@ -31,6 +31,10 @@
 	    <artifactId>json</artifactId>
 	    <version>20210307</version>
 	</dependency>
-
+	<dependency>
+    <groupId>com.twelvemonkeys.imageio</groupId>
+    <artifactId>imageio-jpeg</artifactId>
+    <version>3.9.4</version> <!-- Use the latest version available -->
+</dependency>
   </dependencies>
 </project>

@@ -9,6 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import connectDB.ConnectDB;
+import entity.HoaDon;
+import entity.KhachHang;
+
+
+
 
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDon;
@@ -25,7 +31,49 @@ public class HoaDonDAO {
 	
 	public static ArrayList<HoaDon> dsHoaDon;
 	private static ArrayList<HoaDon> dsHoaDon2;
+	public String getMaKhachHangByMaHoaDon(String maHoaDon) {
+        String maKhachHang = null;
+        String sql = "SELECT maKhachHang FROM HoaDon WHERE MaHoaDon = ?";
 
+        try (PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, maHoaDon);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                maKhachHang = rs.getString("maKhachHang");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return maKhachHang;
+    }
+	public HoaDon layThongTinKhachHangTheoMaHoaDon(String maHoaDon) {
+	    HoaDon chiTietHoaDon = null ;
+	    String sql = "	select kh.HoTen, kh.Sdt, kh.DiemTichLuy, hd.MaHoaDon, hd.ThanhTien from HoaDon hd join KhachHang kh on hd.MaKhachHang = kh.MaKhachHang where MaHoaDon = ? ";
+
+	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+	        ps.setString(1, maHoaDon); 
+	        ResultSet rs = ps.executeQuery();
+	        
+	        while (rs.next()) {
+	           String hoten = rs.getString("HoTen");
+	           String sdt = rs.getString("Sdt");
+	           int diemTichLuy = rs.getInt("DiemTichLuy");
+	           String mahd = rs.getString("MaHoaDon");
+	           BigDecimal thanhTien = rs.getBigDecimal("ThanhTien");
+	           
+	           KhachHang kh = new KhachHang(hoten, sdt, diemTichLuy);
+	           
+	           chiTietHoaDon = new HoaDon(kh,mahd,thanhTien);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return chiTietHoaDon;
+	}
 	public static Object[][] layDanhSachHoaDon() {
 		dsHoaDon = new ArrayList<>();
 

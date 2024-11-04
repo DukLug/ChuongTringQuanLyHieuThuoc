@@ -545,18 +545,7 @@ public class DoiTraUI extends JPanel{
 	    lblNgayLap.setText(tgHienTai.format(formatter));
 
 	}
-	
-	private void quayLai() {
-		
-	}
-	
-	
-	
 
-
-
-
-	
 	
 	// tìm hóa đơn cần đổi trả
 	private void timChiTietHoaDonTheoMa(String maHD) {
@@ -575,6 +564,7 @@ public class DoiTraUI extends JPanel{
 		     
 		}
 		tableTraHang.setData(data);
+		capNhatTienTraKhach();
 		
 		txtTimTheoMaHoaDon.setText(null);
 		 } else {
@@ -642,19 +632,40 @@ public class DoiTraUI extends JPanel{
 	
 	
 	// phát sinh mã chi tiết đơn đổi trả
-	 public String phatSinhMaChiTietDoiTra(String maDonDoiTra) {
-	      
-	        String ddMMYYYYXXXX = maDonDoiTra.substring(2, 14);
-	        String prefix = "CTDDT" + ddMMYYYYXXXX; 
+	public String phatSinhMaChiTietDoiTra(String maDonDoiTra) {
+	    
+	    String ddMMYYYYXXXX = maDonDoiTra.substring(2, 14);
+	    String prefix = "CTDDT" + ddMMYYYYXXXX;
 
-	        int stt = soThuTuMap.getOrDefault(maDonDoiTra, 0);
-	        stt = (stt + 1) % 100; 
-	        soThuTuMap.put(maDonDoiTra, stt); 
-
-	       
-	        String maChiTietDoiTra = prefix + String.format("%02d", stt); 
-	        return maChiTietDoiTra;
+	    if (!ddMMYYYYXXXX.equals(lastDate)) {
+	        soThuTuMap.clear();
+	        soThuTuMap.put(ddMMYYYYXXXX, 0);
+	        lastDate = ddMMYYYYXXXX;
 	    }
+
+	  
+	    int stt = soThuTuMap.get(ddMMYYYYXXXX) + 1;
+	    soThuTuMap.put(ddMMYYYYXXXX, stt);
+
+	 
+	    String maChiTietDoiTra = prefix + String.format("%02d", stt);
+
+	   
+	    while (checkIfChiTietKeyExists(maChiTietDoiTra)) {
+	        stt++;
+	        soThuTuMap.put(ddMMYYYYXXXX, stt);
+	        maChiTietDoiTra = prefix + String.format("%02d", stt);
+	    }
+
+	    return maChiTietDoiTra;
+	}
+
+	
+	private boolean checkIfChiTietKeyExists(String maChiTietDoiTra) {
+	    ChiTietDonDoiTraDAO chiTietDonDoiTraDAO = new ChiTietDonDoiTraDAO();
+	    return chiTietDonDoiTraDAO.checkMaChiTietDoiTraExists(maChiTietDoiTra);
+	}
+
 	 
 	// phát sinh mã đơn đổi trả
 	 public String phatSinhMaDonDoiTra() {
@@ -673,7 +684,7 @@ public class DoiTraUI extends JPanel{
 
 		    String maDonDoiTra = "DDT" + formattedDate + String.format("%04d", stt);
 		    
-		    // Kiểm tra xem mã đã tồn tại trong cơ sở dữ liệu hay chưa
+		    
 		    while (checkIfKeyExists(maDonDoiTra)) {
 		        stt++; 
 		        soThuTuMap.put(formattedDate, stt);
@@ -683,7 +694,7 @@ public class DoiTraUI extends JPanel{
 		    return maDonDoiTra;
 		}
 
-		// Phương thức kiểm tra xem mã đã tồn tại trong cơ sở dữ liệu chưa
+	// Phương thức kiểm tra xem mã đã tồn tại trong cơ sở dữ liệu chưa
 		private boolean checkIfKeyExists(String maDonDoiTra) {
 		    
 		    DonDoiTraDAO donDoiTraDAO = new DonDoiTraDAO();
@@ -709,7 +720,6 @@ public class DoiTraUI extends JPanel{
 	}
 	
 	private void capNhatTienTraKhach() {
-	    // Tính tổng tiền trong bảng DoiHang
 	    BigDecimal tongTienDoiHang = BigDecimal.ZERO;
 	    Object[][] currentData = tableDoiHang.getData();
 
@@ -780,29 +790,16 @@ public class DoiTraUI extends JPanel{
 		    KhachHang kh = getSelectedKhachHang(txtmaHoaDon.getText()); 
 		    HoaDon hd = getSelectedHoaDon(); 
 
-		    // Kiểm tra tính hợp lệ của nhân viên, khách hàng và hóa đơn
+		    
 		    if (nv == null || kh == null || hd == null) {
 		        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên, khách hàng, và hóa đơn hợp lệ.");
-		        return null; 
+		         
 		    }
 
-		    // Tạo đối tượng DonDoiTra
+		  
 		    DonDoiTra donDoiTra = new DonDoiTra(maDonDoiTra, ngayDoiTra, tienHoan, nv, km, kh, hd);
 
-		    if (donDoiTraDAO != null) {
-		        boolean kq = donDoiTraDAO.themDonDoiTra(donDoiTra); 
-		        if (kq) {
-		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thành công!");
-		            LamMoi(); 
-		            return donDoiTra; 
-		        } else {
-		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thất bại!");
-		            return null; 
-		        }
-		    } else {
-		        JOptionPane.showMessageDialog(this, "Đối tượng DonDoiTraDAO chưa được khởi tạo!");
-		        return null;
-		    }
+		   return donDoiTra;
 		}
 
 
@@ -834,7 +831,7 @@ public class DoiTraUI extends JPanel{
 	
 
 		
-		private void ThemChiTietDonDoiTra() {
+		private void ThemChiTietDonDoiTra(String maDonDoiTra) {
 			System.out.println("Bắt đầu thêm chi tiết đơn đổi trả...");
 			
 		    Object[][] dataDoiHang = tableDoiHang.getData();
@@ -855,20 +852,19 @@ public class DoiTraUI extends JPanel{
 		        SanPhamYTe maSP = new SanPhamYTe(maSanPham);
 		        int soLuong = (int) row[4];
 		        BigDecimal tongTien = (BigDecimal) row[5];
-		        String maDonDoiTra = phatSinhMaDonDoiTra();
-		        DonDoiTra maDoiTra = new DonDoiTra(maDonDoiTra);
+		       
+		       // DonDoiTra maDonDoiTra = getSelectmaDonDoiTra();
 		        
 		        String maLo = LoHangDAO.maLoTheoSanPham(maSanPham);
 		        LoHang maLoHang = new LoHang(maLo);
 		        
 		        String maLoThayThe = null;
 		        LoHang maLohayThe = new LoHang(maLoThayThe);
-		        
-		        //kt 
+		    
 	
 		       
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien, maDoiTra, maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 		        
 		       
@@ -896,8 +892,8 @@ public class DoiTraUI extends JPanel{
 		        SanPhamYTe maSP = new SanPhamYTe(maSanPham);
 		        int soLuong = (int) row[4];
 		        BigDecimal tongTien = (BigDecimal) row[5];
-		        String maDonDoiTra = phatSinhMaDonDoiTra();
-		        DonDoiTra maDoiTra = new DonDoiTra(maDonDoiTra);
+		        //String maDonDoiTra = phatSinhMaDonDoiTra();
+		        //DonDoiTra maDoiTra = new DonDoiTra(maDonDoiTra);
 		        
 		        String maLo = LoHangDAO.maLoTheoSanPham(maSanPham);
 		        LoHang maLoHang = new LoHang(maLo);
@@ -905,15 +901,9 @@ public class DoiTraUI extends JPanel{
 		        String maLoThayThe = null;
 		        LoHang maLohayThe = new LoHang(maLoThayThe);
 		        
-		        // Kiểm tra giá trị của các biến
-		        System.out.println("Mã chi tiết đổi trả: " + maChitietDoiTra);
-		        System.out.println("Mã sản phẩm: " + maSanPham);
-		        System.out.println("Số lượng: " + soLuong);
-		        System.out.println("Tổng tiền: " + tongTien);
-		        System.out.println("Mã đơn đổi trả: " + maDonDoiTra);
-		        System.out.println("Mã lô: " + maLo);
+		     
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien, maDoiTra, maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien, new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 		        
 		       
@@ -928,21 +918,30 @@ public class DoiTraUI extends JPanel{
 		    }
 		}
 
+//		private DonDoiTra getSelectmaDonDoiTra() {
+//			String maDoiTra = phatSinhMaDonDoiTra();
+//			return new DonDoiTra(maDoiTra);
+//		}
 
 		
 		
 	
 	
 	private void thanhToan() {
-	 
-	 taoDonDoiTra();
-	 if(phatSinhMaDonDoiTra() != null) {
-		 System.out.println("Tạo đơn đổi trả ok");
-		 ThemChiTietDonDoiTra();
-	 }else {
-		 System.out.println("?????");
-	 }
-	    	
+		DonDoiTra donDoiTra = taoDonDoiTra();
+		 if (donDoiTraDAO != null) {
+		        boolean kq = donDoiTraDAO.themDonDoiTra(donDoiTra); 
+		        if (kq) {
+		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thành công!");
+		            String maDonDoiTra = donDoiTraDAO.maDonDoiTra(donDoiTra.getMaDonDoiTra());
+		            ThemChiTietDonDoiTra(maDonDoiTra);
+		            LamMoi();
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Tạo đơn đổi trả thất bại!");
+		        }
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Đối tượng DonDoiTraDAO chưa được khởi tạo!");
+		    }
 	  
 	}
 

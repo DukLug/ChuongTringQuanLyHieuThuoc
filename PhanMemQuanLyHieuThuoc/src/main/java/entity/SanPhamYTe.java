@@ -32,7 +32,7 @@ public class SanPhamYTe {
 	private String dangBaoChe;
 	private String nhaSanXuat;
 
-	public SanPhamYTe(String maSanPham, String ten, Date nsx, Date hsd, String nuocSX, TrangThaiSanPham trangThaiSanPham2, String ghiChu2, String moTa2, float thue2, String thanhPhan2, BigDecimal giaBan2, NhaCungCap ncc, String donViTinh2, LoaiSanPham loai, String dangBaoChe2) {
+	public SanPhamYTe(String maSanPham) {
 		super();
 		this.maSanPham = maSanPham;
 	}

@@ -249,6 +249,7 @@ public class CustomTable extends JTable {
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 data[i][j] = model.getValueAt(i, j); 
+                
             }
         }
 

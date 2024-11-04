@@ -130,6 +130,23 @@ public class DonDoiTraDAO {
 		   }
 		
 
-	
+
+		    public String maDonDoiTra(String maDonDoiTra) {
+		    	 String sql = "SELECT MaDonDoiTra FROM DonDoiTra WHERE MaDonDoiTra = ?";
+		         try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+		             ps.setString(1, maDonDoiTra);
+		             ResultSet resultSet = ps.executeQuery();
+		             
+		             // Kiểm tra kết quả
+		             if (resultSet.next()) {
+		                 return resultSet.getString("MaDonDoiTra");
+		             }
+		         } catch (SQLException e) {
+		             e.printStackTrace();
+		         }
+		         return null; // Trả về null nếu không tìm thấy
+		    }
+	 
+	 
 
 }

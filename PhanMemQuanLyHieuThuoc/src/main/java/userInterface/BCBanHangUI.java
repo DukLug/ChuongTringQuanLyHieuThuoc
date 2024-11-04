@@ -101,12 +101,12 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 
         JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.white);
-		panel_1.setBounds(0, 0, 1100, UIStyles.MainSectionHeight);
+		panel_1.setBounds(0, 0, 1020, UIStyles.MainSectionHeight);
 		panelTong.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(50, 80, 1000, 273);
+		panel_3.setBounds(10, 90, 1000, 273);
 		panel_1.add(panel_3);
 		panel_3.setLayout(new BorderLayout());
 
@@ -286,15 +286,15 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 		panel_1.add(loc);
 		
 		JPanel panelRight = new JPanel();
-		panelRight.setBackground(Color.red);
-		panelRight.setBounds(1100, 80, 800, UIStyles.MainSectionHeight);
+		panelRight.setBackground(Color.white);
+		panelRight.setBounds(1000, 80, 920, UIStyles.MainSectionHeight);
 		panelRight.setLayout(null);
 
 
 		JFreeChart barChart = createChart();
 		ChartPanel chartPanel = new ChartPanel(barChart);
 
-		chartPanel.setBounds(50, 50, 700, 700); 
+		chartPanel.setBounds(30, 20, 880, 700); 
 		panelRight.add(chartPanel);
 		
 

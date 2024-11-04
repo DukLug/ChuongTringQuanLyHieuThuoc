@@ -152,24 +152,24 @@ public class TrangChuUI extends JFrame {
         			()->taiTrang(new BCCuoiNgayUI()),
         			()->taiTrang(new BCBanHangUI()),
         			()->taiTrang(new BCHangHoaUI()),
-        			()->taiTrang(new BCNhanVienUI()),
+        			()->taiTrang(new ThongKeUI()),
         			()->taiTrang(new BCNhaCungCapUI())
         		}
         		));
 		
-		navBarWest.add(new CustomComboBox(
-        		"Thống kê", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.AnalysingIcon,
-        		CustomButtonIconSide.LEFT,
-        		0,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new ThongKeUI()),
-        			()->taiTrang(new NhanVienUI())
-        		}
-        		));
+//		navBarWest.add(new CustomComboBox(
+//        		"Thống kê", 
+//        		UIStyles.NavBarButtonStyle, 
+//        		UIStyles.AnalysingIcon,
+//        		CustomButtonIconSide.LEFT,
+//        		0,
+//        		UIStyles.NavBarDropBoxItemHeight,
+//        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
+//        		new CustomButtonFunction[] {
+//        			()->taiTrang(new ThongKeUI()),
+//        			()->taiTrang(new NhanVienUI())
+//        		}
+//        		));
 
 		navBarWest.add(new CustomButton("Chính sách", UIStyles.NavBarButtonStyle, UIStyles.PolicyIcon,CustomButtonIconSide.LEFT,()->taiTrang(new KhuyenMaiUI())));
 		

@@ -30,8 +30,8 @@ public class SanPhamYTe {
 	private String yeuCauKeDon;
 	private String dangBaoChe;
 	private String nhaSanXuat;
-	
-	public SanPhamYTe(String maSanPham) {
+
+	public SanPhamYTe(String maSanPham, String ten, Date nsx, Date hsd, String nuocSX, TrangThaiSanPham trangThaiSanPham2, String ghiChu2, String moTa2, float thue2, String thanhPhan2, BigDecimal giaBan2, NhaCungCap ncc, String donViTinh2, LoaiSanPham loai, String dangBaoChe2) {
 		super();
 		this.maSanPham = maSanPham;
 	}
@@ -64,6 +64,26 @@ public class SanPhamYTe {
 		setNhaSanXuat(nhaSanXuat);
 	}
 
+	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
+			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, double thue, String thanhPhan,
+			BigDecimal giaBan, NhaCungCap nhaCungCap, DonViTinh donViTinh, LoaiSanPham loaiSanPham, String dangBaoChe) {
+		super();
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.ngaySanXuat = ngaySanXuat;
+		this.hanSuDung = hanSuDung;
+		this.nuocSanXuat = nuocSanXuat;
+		this.trangThaiSanPham = trangThaiSanPham;
+		this.ghiChu = ghiChu;
+		this.moTa = moTa;
+		Thue = thue;
+		this.thanhPhan = thanhPhan;
+		this.giaBan = giaBan;
+		this.nhaCungCap = nhaCungCap;
+		this.donViTinh = donViTinh;
+		this.loaiSanPham = loaiSanPham;
+		this.dangBaoChe = dangBaoChe;
+	}
 
 
 

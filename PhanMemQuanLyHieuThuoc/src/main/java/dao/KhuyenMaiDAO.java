@@ -256,4 +256,30 @@ public class KhuyenMaiDAO {
 		}
 	    return maKhuyenMaiCuoi;
 	}
+	
+	public ArrayList<KhuyenMai> timKhuyenMaiTheoDieuKien1(String DieuKien) {
+	    ArrayList<KhuyenMai> khuyenMaiTheoDieuKien = new ArrayList<>();
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
+	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ?;"
+	        );
+	        ps.setString(1,DieuKien);  
+	        ResultSet rs = ps.executeQuery();
+	        
+	        while (rs.next()) {
+	            String maKhuyenMai = rs.getString("MaKhuyenMai");
+	            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
+	            Date ngayketThuc = rs.getDate("NgayKetThuc");
+	            String dieuKien = rs.getString("DieuKien");
+	            double chietKhau = rs.getDouble("ChietKhau");
+	            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
+	            
+	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv);
+	            khuyenMaiTheoDieuKien.add(kmTheoNgay);
+	        }
+	    } catch (Exception e) {
+	        return null;
+	    }
+	    return khuyenMaiTheoDieuKien;
+	}
 }

@@ -30,6 +30,23 @@ public class ChiTietHoaDon {
 		setLoHangThayThe(loHangThayThe);
 	}
 	
+
+	public ChiTietHoaDon(String maChiTietHoaDon, int soLuong, BigDecimal giaBan) {
+		super();
+		this.maChiTietHoaDon = maChiTietHoaDon;
+		setSoLuong(soLuong);
+		setGiaBan(giaBan);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ChiTietHoaDon(SanPhamYTe sanPhamYTe, int soLuong, BigDecimal tongGia) {
+	    super();
+	    this.sanPhamYTe = sanPhamYTe;
+	    this.soLuong = soLuong;
+	    this.giaBan = tongGia;
+
+	}
+
 	public String getMaChiTietHoaDon() {
 		return maChiTietHoaDon;
 	}

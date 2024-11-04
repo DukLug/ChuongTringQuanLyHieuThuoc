@@ -102,6 +102,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	public NhanVienUI() {
 		 try {
 		 	ConnectDB.getInstance().connect();
+		 	System.out.println("Thành công");
 		 }catch (Exception e) {
 		 	e.printStackTrace();
 		 }
@@ -228,7 +229,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		gbc.insets = new Insets(20, 20, 20, 20); 
 		
 		// JLabel tiêu đề "Danh sách nhân viên"
-		JLabel lblDanhSachNV = new JLabel("Danh sách nhân viên");
+		JLabel lblDanhSachNV = new JLabel("Quản lý nhân viên");
 		lblDanhSachNV.setFont(new Font("Tahoma", Font.BOLD, 35));
 		
 		// Thiết lập vị trí của lblDanhSachNV
@@ -534,7 +535,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 
 	public void layToanBoDanhSach() {
 		ArrayList<NhanVien> dsNhanVien = nhanVienCTR.layDanhSachTatCaNhanVien();
-		Object[][] data = new Object[dsNhanVien.size()][8]; // 8 cột tương ứng với các trường
+		Object[][] data = new Object[dsNhanVien.size()][8]; 
 
 		for (int i = 0; i < dsNhanVien.size(); i++) {
 		    NhanVien nv = dsNhanVien.get(i);
@@ -548,7 +549,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		    data[i][7] = nv.getTrangThaiLamViec(); 
 		}
 
-		tableNhanVien.setData(data); 
+		tableNhanVien.capNhatDuLieu(data); 
 	   
 	}
 	private void capNhatBangNhanVien(ArrayList<NhanVien> dsNhanVien) {

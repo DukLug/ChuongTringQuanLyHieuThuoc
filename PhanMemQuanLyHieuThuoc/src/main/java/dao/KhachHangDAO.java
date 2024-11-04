@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.KhachHang;
+
 import entity.NhaCungCap;
 
 public class KhachHangDAO {
@@ -17,8 +18,9 @@ public class KhachHangDAO {
 	
 	static ArrayList<KhachHang> dsKH;
 	
-	public static Object[][] getAllNhaCungCap() {
-	    ArrayList<KhachHang> dsNCC = new ArrayList<>();
+	public static Object[][] getAllKhachHang() {
+	    dsKH = new ArrayList<>();
+
 	    
 	
 	    try {
@@ -35,11 +37,12 @@ public class KhachHangDAO {
 	            String maKH = rs.getString(1);
 	            String tenKH = rs.getString(2);
 	            String sdt = rs.getString(3);
-	            String diaChi = rs.getString(4);
-	            int diemTichLuy = rs.getInt(5);
-	            String cccd = rs.getString(6);
-	            
-	            KhachHang kh = new KhachHang(maKH, tenKH, sdt, diaChi, diemTichLuy, cccd);
+	            String cccd = rs.getString(4);
+	            String diaChi = rs.getString(5);
+	            int diemTichLuy = rs.getInt(6);
+
+	            KhachHang kh = new KhachHang(maKH, tenKH, sdt, cccd, diaChi, diemTichLuy);
+
 	            dsKH.add(kh);
 	        }
 	        
@@ -48,15 +51,17 @@ public class KhachHangDAO {
 	    }
 	    
 	    // Chuyển ArrayList thành mảng Object[][]
-	    Object[][] data = new Object[dsKH.size()][5];
+	    Object[][] data = new Object[dsKH.size()][6];
+
 	    for (int i = 0; i < dsKH.size(); i++) {
 	        KhachHang kh = dsKH.get(i);
 	        data[i][0] = kh.getMaKhachHang();
 	        data[i][1] = kh.getHoTen();
 	        data[i][2] = kh.getSdt();
-	        data[i][3] = kh.getDiaChi();
-	        data[i][4] = kh.getDiemTichLuy();
-	        data[i][5] = kh.getCccd();
+	        data[i][3] = kh.getCccd();
+	        data[i][4] = kh.getDiaChi();
+	        data[i][5] = kh.getDiemTichLuy();
+
 	    }
 	    
 	    return data;
@@ -71,13 +76,15 @@ public class KhachHangDAO {
 		int n = 0;
 		
 		try {
-			stmt = con.prepareStatement("insert into " + "NhaCungCap values(?, ?, ?, ?, ?)");
+			stmt = con.prepareStatement("insert into " + "KhachHang values(?, ?, ?, ?, ?, ?)");
 			stmt.setString(1, kh.getMaKhachHang());
 			stmt.setString(2, kh.getHoTen());
 			stmt.setString(3, kh.getSdt());
-			stmt.setString(4, kh.getDiaChi());
-			stmt.setInt(5, kh.getDiemTichLuy());
-			stmt.setString(6, kh.getCccd());
+			stmt.setString(4, kh.getCccd());
+			stmt.setString(5, kh.getDiaChi());
+			stmt.setInt(6, kh.getDiemTichLuy());
+
+
 			
 			n = stmt.executeUpdate();
 			
@@ -104,14 +111,15 @@ public class KhachHangDAO {
 		int n = 0;
 		
 		try {
-			stmt = con.prepareStatement("update KhachHang set HoTen = ?, Sdt = ?, DiaChi = ?, DiemTichLuy = ?, Cccd = ? WHERE MaKhachHang = ?");
-			stmt.setString(1, kh.getMaKhachHang());
-			stmt.setString(2, kh.getHoTen());
-			stmt.setString(3, kh.getSdt());
+			stmt = con.prepareStatement("update KhachHang set HoTen = ?, Sdt = ?, Cccd = ?, DiaChi = ?, DiemTichLuy = ? WHERE MaKhachHang = ?");
+			stmt.setString(1, kh.getHoTen());
+			stmt.setString(2, kh.getSdt());
+			stmt.setString(3, kh.getCccd());
 			stmt.setString(4, kh.getDiaChi());
 			stmt.setInt(5, kh.getDiemTichLuy());
-			stmt.setString(6, kh.getCccd());
-			
+			stmt.setString(6, kh.getMaKhachHang());
+	
+
 			n = stmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -130,5 +138,6 @@ public class KhachHangDAO {
 	}
 	
 	
-	
+
+  
 }

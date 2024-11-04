@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import dao.SanPhamYTeDAO;
 import entity.SanPhamYTe;
+import userInterface.BanHangUI_dau;
 import userInterface.BanHangUI;
+
 import userInterface.SanPhamYTeUI;
 
 public class SanPhamCTR {
@@ -13,15 +15,16 @@ public class SanPhamCTR {
 		
 	}
 	
-	public static void kiemTraTonKho(BanHangUI banHangUI) {
+	public static void kiemTraTonKho(BanHangUI_dau banHangUI) {
 		
 	}
 	
-	public static void capNhatTonKho(BanHangUI banHangUI) {
+	public static void capNhatTonKho(BanHangUI_dau banHangUI) {
 		
 	}
 	
-	public static void capNhatSoLuong(BanHangUI banHangUI) {
+	public static void capNhatSoLuong(BanHangUI_dau banHangUI) {
+
 		
 	}
 	
@@ -30,7 +33,7 @@ public class SanPhamCTR {
 		
 		for(SanPhamYTe sp : dssp) {
 			String maVach = sp.getMaVach();
-			if(maVach == maVachCanTim) {
+			if(maVach.equals(maVachCanTim)) {
 				return sp;
 			}
 		}

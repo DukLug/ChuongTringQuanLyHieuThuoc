@@ -42,7 +42,7 @@ public class ThongKeUI extends JPanel {
         setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
         this.setBackground(Color.white);
         
-        contentPane = new JPanel();  // Sửa lại để sử dụng thuộc tính của lớp
+        contentPane = new JPanel();  
         contentPane.setBackground((new Color(232, 234, 236)));
         contentPane.setBounds(0, 0, 1800, 850);
         add(contentPane);

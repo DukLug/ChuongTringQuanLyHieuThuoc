@@ -29,7 +29,7 @@ public class UIStyles {
 	
 	public static Font DefaultFont = (new JLabel()).getFont();
 	public static final Font BoldFont = new Font("Tahoma", Font.BOLD, 20);	
-	public static final Font TitleFont = new Font("Tahoma", Font.BOLD, 30);	
+	public static final Font TitleFont = new Font("Tahoma", Font.BOLD, 26);	
 	
 	public static final Font LabelFontBoldGreen = new Font("Tahoma", Font.BOLD, 22);
     public static final Color LabelFontColorGreen = Color.decode("#15C91B");
@@ -86,10 +86,10 @@ public class UIStyles {
 	public static final ImageIcon PolicyIcon  = getIconFromPath("resources/PolicyIcon.png", 42, 42);
 	public static final ImageIcon ReturnIcon  = getIconFromPath("resources/ReturnIcon.png", 30, 30);
 	public static final ImageIcon SellIcon  = getIconFromPath("resources/SellIcon.png", 30, 30);
-	public static final ImageIcon MoneyIcon  = getIconFromPath("resources/MoneyIcon.png", 150, 150);
-	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 150, 150);
-	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 150, 150);
-	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 150, 150);
+	public static final ImageIcon MoneyIcon  = getIconFromPath("resources/MoneyIcon.png", 100, 100);
+	public static final ImageIcon ReturnProductIcon  = getIconFromPath("resources/ReturnProductIcon.png", 100, 100);
+	public static final ImageIcon IncreaseIcon  = getIconFromPath("resources/IncreaseIcon.png", 100, 100);
+	public static final ImageIcon DecreaseIcon  = getIconFromPath("resources/DecreaseIcon.png", 100, 100);
 	public static final ImageIcon Find  = getIconFromPath("resources/find.png", 30, 30);
 	public static final ImageIcon Add  = getIconFromPath("resources/add.png", 30, 30);
 	public static final ImageIcon Update  = getIconFromPath("resources/update.png", 30, 30);

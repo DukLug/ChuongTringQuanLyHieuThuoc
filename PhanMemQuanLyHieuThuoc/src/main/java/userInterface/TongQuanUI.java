@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Label;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -11,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -18,11 +22,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import component.CustomButton;
+import component.CustomItem;
+import component.CustomItemList;
 import component.CustomTable;
+import component.RoundedBorder;
+import controller.SanPhamCTR;
 import entity.SanPhamYTe;
+import functionalClass.ImageLoader;
+import testEntity.Thuoc;
+import component.CustomButton.ButtonStyle;
 import component.CustomButton.CustomButtonIconSide;
 
 public class TongQuanUI extends JPanel{
@@ -32,25 +44,29 @@ public class TongQuanUI extends JPanel{
 	public JLabel duLieuThongKeCungKy;
 	public ArrayList<SanPhamYTe> dsBanChay;
 	
+	public CustomItemList sanPhamBanChayList;
+	
 	//style properties
 	private int padding =  20;
 	private int gap = 20;
 	private int centerPanelWidth = (int)((UIStyles.ApplicationWidth - 2 * padding) * 0.7);
-	private int leftPanelWidth = (int)((UIStyles.ApplicationWidth - 2 * padding) * 0.3);
+	private int rightPanelWidth = (int)((UIStyles.ApplicationWidth - 2 * padding) * 0.3);
 	private int bigPanelHeight = UIStyles.ApplicationHeight - padding * 2;
 	private int centerPanelComponentWidth;
-	private int duLieuPanelGap = 30;
+	private int duLieuPanelGap = 40;
+	private int labelMargin = 20;
 	public TongQuanUI() {
 		super();
 		setStyle();
 		taoHinh();
+		capNhatDanhSachBanChay(SanPhamCTR.layDanhSachTatCaSanPham());
 	}
 	
 	private void setStyle() {
 		padding =  20;
 		gap = 20;
 		centerPanelWidth = (int)((UIStyles.ApplicationWidth - 2 * padding) * 0.7);
-		leftPanelWidth = UIStyles.ApplicationWidth - 2 * padding - centerPanelWidth;
+		rightPanelWidth = UIStyles.ApplicationWidth - 2 * padding - centerPanelWidth;
 		bigPanelHeight = UIStyles.ApplicationHeight - padding * 2;
 		centerPanelComponentWidth = centerPanelWidth - gap;
 	}
@@ -77,8 +93,8 @@ public class TongQuanUI extends JPanel{
 		
 		//Right Panel
 	    JPanel rightPanel = new JPanel();
-	    rightPanel.setPreferredSize(new Dimension(leftPanelWidth, bigPanelHeight));
-	    rightPanel.setMinimumSize(new Dimension(leftPanelWidth, bigPanelHeight));
+	    rightPanel.setPreferredSize(new Dimension(rightPanelWidth, bigPanelHeight));
+	    rightPanel.setMinimumSize(new Dimension(rightPanelWidth, bigPanelHeight));
 	    rightPanel.setBackground(Color.white);
 	    
 	    //Center Panel
@@ -95,9 +111,10 @@ public class TongQuanUI extends JPanel{
 	    todayResultPanel.setMinimumSize(new Dimension(centerPanelComponentWidth, todayResultPanelHeight));
 	    todayResultPanel.setBackground(Color.white);
 	    
-	    JLabel todayResultPanelTitle = new JLabel("Kết quả hôm nay");
+	    JLabel todayResultPanelTitle = new JLabel("KẾT QUẢ HÔM NAY");
 	    todayResultPanelTitle.setFont(UIStyles.TitleFont);
 	    todayResultPanelTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    todayResultPanelTitle.setBorder(BorderFactory.createMatteBorder(labelMargin, labelMargin, labelMargin, labelMargin, Color.white));
 	    
 	    JPanel duLieuPanel = new JPanel();
 	    duLieuPanel.setPreferredSize(new Dimension(centerPanelComponentWidth, todayResultPanelHeight - 100));
@@ -182,7 +199,7 @@ public class TongQuanUI extends JPanel{
 	    duLieuPanel.add(thongKeCungKy);
 	    
 	    todayResultPanel.setLayout(new BorderLayout());
-	    todayResultPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+	    todayResultPanel.setBorder(BorderFactory.createMatteBorder(0, 0, gap, 0, UIStyles.BackgroundColor));
 	    todayResultPanel.add(todayResultPanelTitle, BorderLayout.NORTH);
 	    todayResultPanel.add(duLieuPanel, BorderLayout.CENTER);	    
 	    
@@ -192,20 +209,112 @@ public class TongQuanUI extends JPanel{
 	    unknownPanel.setBackground(Color.white);
 	    
 	    
-	    //san pham ban chay panel
-	    JPanel sanPhamBanChayPanel = new JPanel();
-	    JLabel anhThuoc = new JLabel(UIStyles.ProductImage);
+	    //san pham ban chay 
+	    JLabel sanPhamBanChayLabel = new JLabel("SẢN PHẨM BÁN CHẠY", SwingConstants.CENTER);
+	    sanPhamBanChayLabel.setFont(UIStyles.TitleFont);
+	    sanPhamBanChayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    sanPhamBanChayLabel.setBorder(BorderFactory.createEmptyBorder(labelMargin, labelMargin, labelMargin, labelMargin));
 	    
-	    rightPanel.add(anhThuoc);
+	    sanPhamBanChayList = new CustomItemList(
+	            500, 
+	            700, 
+	            100, 
+	            50, 
+	            Color.white, 
+	            new int[]{100, 400}, 
+	            new ArrayList<CustomItem>()
+	        );
+	    
+	    rightPanel.setBackground(Color.white);
+	    rightPanel.setLayout(new BorderLayout());
+	    rightPanel.add(sanPhamBanChayLabel, BorderLayout.NORTH);
+	    rightPanel.add(sanPhamBanChayList, BorderLayout.CENTER);
 	    
 	    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+	    centerPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, gap, UIStyles.BackgroundColor));
 	    centerPanel.add(todayResultPanel);
-	    centerPanel.add(Box.createRigidArea(new Dimension(centerPanelWidth - gap, gap)));
 	    centerPanel.add(unknownPanel);
+	    centerPanel.setBackground(Color.white);
 	    
 	    this.add(rightPanel, BorderLayout.EAST);
 	    this.add(centerPanel, BorderLayout.CENTER);
 	    
+	}
+
+	private void capNhatDanhSachBanChay(ArrayList<SanPhamYTe> dsBanChay) {
+		for(int i = 0; i < 20; i++) {
+			sanPhamBanChayList.addItem(new SanPhamBanChayRow(dsBanChay.get(i)));
+		}
+	}
+	
+	public static class SanPhamBanChayRow extends CustomItem{
+		//Item, ItemList chỉ phụ trách thể hiện thông tin, thông tin lưu ở các class con giống như NhapHangRow này
+		//Các thuộc tính style, code thẳng vào, phải có static, cop về chỉnh lại cũng được
+		private static int prefWidth = 500;
+		private static int prefHeight = 100;
+		private static Font font = UIStyles.DefaultFont;
+		private static Color backgroundColor = Color.white;
+		private static int infoMargin = 5;
+		private static Font titleFont = new Font("Tahoma", Font.BOLD, 18);	
+		private static Font priceFont = new Font("Tahoma", Font.BOLD, 16);	
+		//Rounded border phức tạp, có thể phá panel bên trong, bán kính càng lớn càng dễ hỏng
+		private static Border border = BorderFactory.createEmptyBorder();
+		//Chú ý nên match với lúc tạo ItemList
+		private static int[] cellsWidth = new int[] {100, 400};
+		
+		//cells
+		private JComponent[] cells;
+		
+		//Du lieu item
+		public SanPhamYTe sanPham;	
+		
+		//Các cell thêm vào đây rồi set phía dưới giống các ui, để public để sau đó lấy dữ liệu, set dữ liệu
+		public JLabel tenSanPham;
+		public JLabel giaSanPham;
+		
+		//Thêm nội dung cho các trường đã khai báo ở trên vào constructor, có stt mới thêm stt vào, không thì chỉ cần data
+		public SanPhamBanChayRow(SanPhamYTe sanPham) {
+			//Tạo item rỗng, trên cop thì ở đây  cop
+			super(prefWidth, prefHeight, backgroundColor, border, cellsWidth);
+			
+			//Set dữ liệu
+			this.sanPham = sanPham;
+
+			JPanel cellImage = new JPanel();
+			Image img = sanPham.getHinhAnh().getScaledInstance(100, 100,  Image.SCALE_SMOOTH);
+			JLabel hinhAnh = new JLabel(new ImageIcon(img));
+			cellImage.add(hinhAnh);
+			cellImage.setBackground(backgroundColor);
+			
+			JPanel cellInfo = new JPanel();
+			//cellImage.setPreferredSize(new Dimension(prefWidth, prefHeight));
+			tenSanPham = new JLabel("<html>"+ sanPham.getTenSanPham() +"</html>");
+			tenSanPham.setFont(titleFont);
+			
+			giaSanPham = new JLabel(sanPham.getGiaBan().toString() + " đ");
+			giaSanPham.setFont(priceFont);
+			
+			cellInfo.setBackground(backgroundColor);
+			cellInfo.setLayout(new BorderLayout());
+			cellInfo.setBorder(BorderFactory.createEmptyBorder(infoMargin, infoMargin, infoMargin, infoMargin));
+			cellInfo.add(tenSanPham, BorderLayout.CENTER);
+			cellInfo.add(giaSanPham, BorderLayout.SOUTH);
+			
+
+			//Thêm cells vào Item
+			cells = new JComponent[] {
+					cellImage, cellInfo
+			};
+			
+			super.addCells(cells);
+		}
+		
+
+		public void layThongTin() {
+			System.out.println(this.sanPham);
+		}
+		
+
 	}
 	
 

@@ -1,5 +1,2 @@
 /META-INF/
-/userInterface/
-/functionalClass/
-/entity/
-/controller/
+/connectDB/

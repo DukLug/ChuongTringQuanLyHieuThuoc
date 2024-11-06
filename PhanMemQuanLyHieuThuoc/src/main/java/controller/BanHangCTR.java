@@ -42,15 +42,7 @@ public class BanHangCTR {
 
 	}
 	
-	public SanPhamYTe timSPTheoMaVach(String ma) {
-		dsSP = sp_dao.timTheoMaVach(ma);
-		
-		for (SanPhamYTe sp : dsSP) 
-			if (sp.getMaSanPham().equalsIgnoreCase(ma))
-				return sp;
-		
-		return null;
-	}
+
 	
 	public BigDecimal tinhTongTienTungSP(BigDecimal giaBan, String sl) {
 		BigDecimal soLuong = new BigDecimal(sl);

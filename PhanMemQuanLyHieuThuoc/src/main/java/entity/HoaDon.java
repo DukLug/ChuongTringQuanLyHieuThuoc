@@ -33,7 +33,31 @@ public class HoaDon {
 		setKhachHang(khachHang);
 		setChiTietHoaDon(chiTietHoaDon);
 	}
+	public HoaDon(String maHoaDon, Date ngayTao, int diemSuDung, BigDecimal thanhTien, NhanVien nhanVien,
+			KhuyenMai khuyenMai, KhachHang khachHang) {
+		super();
+		this.maHoaDon = maHoaDon;
+		setNgayTao(ngayTao);
+		setDiemSuDung(diemSuDung);
+		setThanhTien(thanhTien);
+		setNhanVien(nhanVien);
+		setKhuyenMai(khuyenMai);
+		setKhachHang(khachHang);
+	}
 	
+
+	public HoaDon(KhachHang kh, String mahd, BigDecimal thanhTien) {
+		this.khachHang = kh;
+		this.maHoaDon = mahd;
+		this.thanhTien = thanhTien;
+		
+	}
+
+	public HoaDon() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public String getMaHoaDon() {
 		return maHoaDon;
 	}
@@ -59,9 +83,9 @@ public class HoaDon {
 		return chiTietHoaDon;
 	}
 	public void setNgayTao(Date ngayTao) {
-		if(ngayTao != Date.valueOf(LocalDate.now())) {
-			throw new IllegalArgumentException("Đã cố gắng đặt ngày tạo bằng : " + ngayTao + " .Ngày tạo phải trùng với ngày hiện tại");
-		}
+//		if(ngayTao != Date.valueOf(LocalDate.now())) {
+//			throw new IllegalArgumentException("Đã cố gắng đặt ngày tạo bằng : " + ngayTao + " .Ngày tạo phải trùng với ngày hiện tại");
+//		}
 		this.ngayTao = ngayTao;
 	}
 	public void setDiemSuDung(int diemSuDung) {

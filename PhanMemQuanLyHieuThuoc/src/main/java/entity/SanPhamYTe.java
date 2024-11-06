@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import customDataType.DonViTinh;
 import customDataType.TrangThaiSanPham;
+import functionalClass.ImageLoader;
 
 
 public class SanPhamYTe {
@@ -31,7 +32,7 @@ public class SanPhamYTe {
 	private String dangBaoChe;
 	private String nhaSanXuat;
 
-	public SanPhamYTe(String maSanPham, String ten, Date nsx, Date hsd, String nuocSX, TrangThaiSanPham trangThaiSanPham2, String ghiChu2, String moTa2, float thue2, String thanhPhan2, BigDecimal giaBan2, NhaCungCap ncc, String donViTinh2, LoaiSanPham loai, String dangBaoChe2) {
+	public SanPhamYTe(String maSanPham) {
 		super();
 		this.maSanPham = maSanPham;
 	}
@@ -52,7 +53,7 @@ public class SanPhamYTe {
 		setGhiChu(ghiChu);
 		setMoTa(moTa);
 		setThue(thue);
-		setHinhAnh(hinhAnh);
+		this.hinhAnh = ImageLoader.taiHinhAnh(maVach);
 		setThanhPhan(thanhPhan);
 		setGiaBan(giaBan);
 		setNhaCungCap(nhaCungCap);
@@ -85,6 +86,17 @@ public class SanPhamYTe {
 		this.dangBaoChe = dangBaoChe;
 	}
 
+
+
+	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.giaBan = giaBanSanPham;
+		this.donViTinh = donViTinh;
+	}
+
+
+	
 
 
 	public String getMaSanPham() {

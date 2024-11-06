@@ -32,7 +32,7 @@ public class SanPhamCTR {
 		
 		for(SanPhamYTe sp : dssp) {
 			String maVach = sp.getMaVach();
-			if(maVach == maVachCanTim) {
+			if(maVach.equals(maVachCanTim)) {
 				return sp;
 			}
 		}

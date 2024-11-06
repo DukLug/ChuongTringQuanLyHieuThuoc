@@ -136,7 +136,7 @@ public class KhachHangDAO {
 		
 		return n > 0;
 	}
-	
+
 	public ArrayList<KhachHang> timTheoSDT(String SDT) {
 	    ArrayList<KhachHang> khachHangCanTim = new ArrayList<KhachHang>();
 	    try {

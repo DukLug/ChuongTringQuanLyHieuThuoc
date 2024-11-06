@@ -35,6 +35,7 @@ import component.CustomItem;
 import component.CustomItemList;
 import component.RoundedBorder;
 import controller.BanHangCTR;
+import controller.SanPhamCTR;
 import component.CustomButton.CustomButtonIconSide;
 import customDataType.DonViTinh;
 import customDataType.LoaiHoaDon;
@@ -128,7 +129,7 @@ public class BanHangUI extends JPanel implements ActionListener    {
 		
 		btnThemKH = new CustomButton("Thêm KH", UIStyles.NavBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
 		btnThemKH.setBounds(358, 61, 160, 35);
-		btnThemKH.setFont(UIStyles.FontBold);
+		btnThemKH.setFont(UIStyles.BoldFont);
 		panelKhachHang.add(btnThemKH);
 		
 		JLabel lblNewLabel = new JLabel("Tên KH:");
@@ -429,7 +430,7 @@ public class BanHangUI extends JPanel implements ActionListener    {
 		
 		if (o.equals(txtTimSP) || o.equals(btnThemSP) ) {
 			thongTinCanTim = txtTimSP.getText().trim();
-			sp = bh_ctr.timSPTheoMaVach(thongTinCanTim);
+			sp = SanPhamCTR.timSanPhamTheoMaVach(thongTinCanTim);
 			
 			if (sp == null) {
 				thongBaoLoi(txtTimSP, "Sản phẩm không tồn tại");

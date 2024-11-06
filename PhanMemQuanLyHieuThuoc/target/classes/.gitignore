@@ -1,9 +1,3 @@
-/connectDB/
-/userInterface/
-/META-INF/
 /controller/
 /dao/
-/entity/
-/testEntity/
-/component/
-/customDataType/
+/userInterface/

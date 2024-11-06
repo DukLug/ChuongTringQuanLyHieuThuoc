@@ -256,5 +256,24 @@ public class CustomTable extends JTable {
         return data; 
     }
     
+    public Object[][] getDataStart1() {
+        DefaultTableModel model = (DefaultTableModel) this.getModel(); 
+        int rowCount = model.getRowCount(); 
+        int columnCount = model.getColumnCount();
+
+        Object[][] data = new Object[rowCount][columnCount-1]; 
+
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 1; j < columnCount; j++) {
+                data[i][j-1] = model.getValueAt(i, j); 
+                
+            }
+        }
+
+        return data; 
+    }
+    
+ 
+    
     
 }

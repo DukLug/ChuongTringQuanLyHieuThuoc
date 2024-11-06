@@ -99,6 +99,12 @@ public class SanPhamYTe {
 	
 
 
+	public SanPhamYTe() {
+		
+	}
+
+
+
 	public String getMaSanPham() {
 		return maSanPham;
 	}

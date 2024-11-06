@@ -1,12 +1,7 @@
 /META-INF/
-<<<<<<< HEAD
-/connectDB/
-=======
-/dao/
 /userInterface/
-<<<<<<< HEAD
-/component/
->>>>>>> bc835a09b43456b7ed948963776a696941febbb1
 /entity/
-=======
->>>>>>> 86e48e6986341caeebed11e5b56c21c596246f44
+/dao/
+/controller/
+/connectDB/
+/component/

@@ -159,5 +159,27 @@ public class KhachHangDAO {
 	    }
 	    return khachHangCanTim;
 	}
+	
+	// lấy tên và sdt khách hàng theo mã đoiỉ trả
+	public KhachHang layThongTinKhachHangTheoMaDonDoiTra(String maDonDoiTra) {
+	    KhachHang khachHang = null;
+	    String sql = "SELECT kh.HoTen, kh.Sdt FROM DonDoiTra ddt " +
+	                 "JOIN KhachHang kh ON ddt.MaKhachHang = kh.MaKhachHang " +
+	                 "WHERE ddt.MaDonDoiTra = ?";
+
+	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+	        ps.setString(1, maDonDoiTra);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                String hoTen = rs.getString("HoTen");
+	                String sdt = rs.getString("Sdt");
+	                khachHang = new KhachHang(hoTen, sdt); 
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return khachHang;
+	}
 
 }

@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import component.CustomItem;
 import component.CustomItemList;
+import dao.HoaDonDAO;
 import dao.KhachHangDAO;
 import dao.KhuyenMaiDAO;
 import dao.SanPhamYTeDAO;
+import entity.HoaDon;
 import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.SanPhamYTe;
@@ -20,6 +22,7 @@ public class BanHangCTR {
 	private KhachHangDAO kh_dao = new KhachHangDAO();
 	private SanPhamYTeDAO sp_dao = new SanPhamYTeDAO();
 	private KhuyenMaiDAO km_dao = new KhuyenMaiDAO();
+	private HoaDonDAO hd_dao = new HoaDonDAO();
 	private ArrayList<KhachHang> dsKH;
 	private ArrayList<SanPhamYTe> dsSP;
 	private ArrayList<KhuyenMai> dsKM;
@@ -86,7 +89,7 @@ public class BanHangCTR {
 	            chietKhau = km.getChietKhau();
 	        }
 	    }
-	    System.out.println(chietKhau);
+	    
 	    BigDecimal tienKhuyenMai = tongTienHD.multiply(BigDecimal.valueOf(chietKhau));
 
 	    return tienKhuyenMai;
@@ -114,4 +117,5 @@ public class BanHangCTR {
 	    
 	    return danhSachChietKhau;
 	}
+	
 }

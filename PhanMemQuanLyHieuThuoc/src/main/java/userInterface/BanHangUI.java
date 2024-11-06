@@ -460,6 +460,10 @@ public class BanHangUI extends JPanel implements ActionListener    {
 				txtKhachPhaiTra.setText(formatDecimal(tienKhachPhaiTra));
 			}
 		}
+		
+		if (o.equals(btnTaoHD)) {
+			
+		}
 	}
 	
 	private void layThoiGianHienTai() {

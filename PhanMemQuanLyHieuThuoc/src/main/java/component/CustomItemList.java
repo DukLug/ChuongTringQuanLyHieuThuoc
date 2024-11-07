@@ -103,17 +103,37 @@ public class CustomItemList extends JPanel {
     	
     }
     
-    public ArrayList<CustomItem> getItemList(){
-    	return itemList;
+    public ArrayList<CustomItem> getItemList() {
+        return itemList;
     }
-    
+
     public void updateList(ArrayList<CustomItem> newItemList) {
-    	panel.removeAll();
-    	itemList = new ArrayList<CustomItem>();
-    	for(int i = 0; i< newItemList.size(); i++) {
-    		addItem(newItemList.get(i));
-    		
-    	}
+        panel.removeAll();
+        itemList = new ArrayList<>();
+        for (CustomItem item : newItemList) {
+            addItem(item);
+        }
+    }
+
+    public void removeItem(CustomItem item) {
+        if (itemList.contains(item)) {
+            panel.remove(item);
+            itemList.remove(item);
+            panel.revalidate();
+            panel.repaint();
+        }
+    }
+
+    public void removeItemAt(int index) {
+        if (index >= 0 && index < itemList.size()) {
+            CustomItem item = itemList.get(index);
+            panel.remove(item);
+            itemList.remove(index);
+            panel.revalidate();
+            panel.repaint();
+        } else {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
     }
     
 

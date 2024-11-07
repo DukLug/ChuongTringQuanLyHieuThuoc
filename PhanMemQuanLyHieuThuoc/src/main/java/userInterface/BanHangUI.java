@@ -376,7 +376,7 @@ public class BanHangUI extends JPanel implements ActionListener    {
 		banHangList = new CustomItemList(
 				1255, 549,  100, 50, Color.white, 
 				new int[]{30, 400, 150, 150, 150, 200, 100}, 
-				Color.blue,  50, 
+				Color.LIGHT_GRAY,  50, 
 				new String[]{"","Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá Bán", "Tổng tiền", ""}, 
 				new Font("Arial", Font.BOLD, 20), 
 				new ArrayList<CustomItem>()
@@ -461,6 +461,9 @@ public class BanHangUI extends JPanel implements ActionListener    {
 				txtKhachPhaiTra.setText(formatDecimal(tienKhachPhaiTra));
 			}
 		}
+		
+		if (o.equals(btnLamMoi))
+			xoaTrang();
 	}
 	
 	private void layThoiGianHienTai() {
@@ -498,6 +501,23 @@ public class BanHangUI extends JPanel implements ActionListener    {
 		list.updateList(newItems);
 	}
 	
+	private void xoaTrang() {
+		txtCCCD.setText("");
+		txtDTL.setText("");
+		txtGhiChu.setText("");
+		txtGiamGia.setText("");
+		txtKhachDua.setText("");
+		txtKhachPhaiTra.setText("");
+		txtTenKH.setText("");
+		txtKhachPhaiTra.setText("");
+		txtTenKH.setText("");
+		txtTimSDT.setText("");
+		txtTimSP.setText("");
+		txtTongTienHD.setText("");
+		comboBoxChietKhau.setSelectedIndex(-1);
+		comboBoxLoaiHD.setSelectedIndex(-1);
+		
+	}
 
 	public static class BanHangRow extends CustomItem implements ActionListener{
 		private static int prefWidth = 1250;

@@ -151,11 +151,11 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 		lblNewLabel_1_4.setBounds(0, 512, 128, 51);
 		panel_1.add(lblNewLabel_1_4);
 
-		JLabel lblNewLabel_1_5 = new JLabel("Số thẻ :");
-		lblNewLabel_1_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel_1_5.setBounds(474, 512, 164, 51);
-		panel_1.add(lblNewLabel_1_5);
+//		JLabel lblNewLabel_1_5 = new JLabel("Số thẻ :");
+//		lblNewLabel_1_5.setHorizontalAlignment(SwingConstants.RIGHT);
+//		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.BOLD, 18));
+//		lblNewLabel_1_5.setBounds(474, 512, 164, 51);
+//		panel_1.add(lblNewLabel_1_5);
 
 		mahd = new JTextField();
 		mahd.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -192,12 +192,12 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 		ngayban.setBounds(150, 520, 253, 40);
 		panel_1.add(ngayban);
 
-		maban = new JTextField();
-		maban.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		maban.setEditable(false);
-		maban.setColumns(10);
-		maban.setBounds(660, 520, 253, 40);
-		panel_1.add(maban);
+//		maban = new JTextField();
+//		maban.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//		maban.setEditable(false);
+//		maban.setColumns(10);
+//		maban.setBounds(660, 520, 253, 40);
+//		panel_1.add(maban);
 
 		JLabel lblNewLabel_1_6 = new JLabel("Ngày bán :");
 		lblNewLabel_1_6.setHorizontalAlignment(SwingConstants.RIGHT);

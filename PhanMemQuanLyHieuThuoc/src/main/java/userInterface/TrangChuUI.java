@@ -29,6 +29,8 @@ import application.*;
 
 
 public class TrangChuUI extends JFrame {		
+	public static TrangChuUI singleton;
+	
 	public JPanel panel;
 	
 	public JPanel topSection;
@@ -47,6 +49,8 @@ public class TrangChuUI extends JFrame {
 		super();
         lapFrame(toanManHinh);
         uiHistory = new Stack<JPanel>();
+        
+        singleton = this;
 	}
 	
 	public void lapFrame(boolean toanManHinh) {

@@ -49,7 +49,7 @@ public class PhanMemQuanLyHieuThuoc {
 		   GlobalExceptionHandler.registerExceptionHandler();
 	   }
 		System.setProperty("sun.java2d.uiScale", "1.0");
-		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc.xlsx");
+		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
         TrangChuUI trangChuUI = new TrangChuUI(false);
         //TestSearch();
         
@@ -124,10 +124,10 @@ public class PhanMemQuanLyHieuThuoc {
         searchFields.add(TrangThaiLamViec.DaNghiViec); 
 
         ArrayList<SearchTool.SearchCondition> conditions = new ArrayList<>();
-        conditions.add(SearchTool.SearchCondition.NONCONTIDION); 
-        conditions.add(SearchTool.SearchCondition.NONCONTIDION); 
+        conditions.add(SearchTool.SearchCondition.NONCONDITION); 
+        conditions.add(SearchTool.SearchCondition.NONCONDITION); 
         conditions.add(SearchTool.SearchCondition.MATCH); 
-        conditions.add(SearchTool.SearchCondition.NONCONTIDION); 
+        conditions.add(SearchTool.SearchCondition.NONCONDITION); 
 
         ArrayList<Object> result = SearchTool.search(dataToSearch, TestNguoi.class, searchFields, conditions);
 

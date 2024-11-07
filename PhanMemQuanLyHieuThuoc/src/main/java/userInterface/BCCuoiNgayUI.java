@@ -77,7 +77,7 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
         panelTong.add(panel);
         panel.setLayout(null);
 
-        JLabel lblKhachHang = new JLabel("BÁO CÁO CUỐI NGÀY");
+        JLabel lblKhachHang = new JLabel("BÁO CÁO THU CHI");
         lblKhachHang.setBounds(819, 20, 258, 29);
         lblKhachHang.setHorizontalAlignment(SwingConstants.CENTER);
         lblKhachHang.setFont(new Font("Tahoma", Font.BOLD, 24));

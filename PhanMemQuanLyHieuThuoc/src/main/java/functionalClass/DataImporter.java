@@ -1,6 +1,7 @@
 package functionalClass;
 
 import javax.swing.*;
+import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,8 @@ import java.util.Map;
 
 import customDataType.DonViTinh;
 import customDataType.TrangThaiSanPham;
+import dao.LoaiSanPhamDAO;
+import dao.NhaCungCapDAO;
 import entity.LoaiSanPham;
 import entity.NhaCungCap;
 import entity.SanPhamYTe;
@@ -23,84 +26,99 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class DataImporter {
 	
 	public static ArrayList<SanPhamYTe> importDataFromXLSXQuickly(String file) {
-        String filePath = file; // Open file chooser to select the file
-        if (filePath == null) {
-            System.out.println("No file selected.");
-            return new ArrayList<>(); // Return an empty list if no file is selected
-        }
+	    ArrayList<NhaCungCap> nccList = NhaCungCapDAO.layDanhSachTatCaNhaCungCap();
+	    ArrayList<LoaiSanPham> loaiSanPhamList = LoaiSanPhamDAO.layDanhSachTatCaLoaiSanPham();
+	    
+	    String filePath = file; // Open file chooser to select the file
+	    if (filePath == null) {
+	        System.out.println("No file selected.");
+	        return new ArrayList<>(); // Return an empty list if no file is selected
+	    }
 
-        ArrayList<SanPhamYTe> sanPhamList = new ArrayList<>();
+	    ArrayList<SanPhamYTe> sanPhamList = new ArrayList<>();
+	    Random random = new Random();
+	    
+	    // Initialize the starting product code
+	    int productCodeCounter = 0; // Start from 000000
 
-        try (FileInputStream fis = new FileInputStream(new File(filePath));
-             Workbook workbook = new XSSFWorkbook(fis)) {
+	    try (FileInputStream fis = new FileInputStream(new File(filePath));
+	         Workbook workbook = new XSSFWorkbook(fis)) {
 
-            Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
-            Map<String, Integer> columnMapping = new HashMap<>();
-            boolean isFirstRow = true;
+	        Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+	        Map<String, Integer> columnMapping = new HashMap<>();
+	        boolean isFirstRow = true;
 
-            for (Row row : sheet) {
-                if (isFirstRow) {
-                    // Populate the column mapping from the header row
-                    for (Cell cell : row) {
-                        columnMapping.put(getCellValue(cell), cell.getColumnIndex());
-                    }
-                    isFirstRow = false;
-                    continue; // Skip header row
-                }
+	        for (Row row : sheet) {
+	            if (isFirstRow) {
+	                // Populate the column mapping from the header row
+	                for (Cell cell : row) {
+	                    columnMapping.put(getCellValue(cell), cell.getColumnIndex());
+	                }
+	                isFirstRow = false;
+	                continue; // Skip header row
+	            }
 
-                // Extract values from the row using column names
-                String maSanPham = getCellValue(row.getCell(columnMapping.get("Mã sản phẩm"))) + "SP_HEHE";
-                String tenSanPham = getCellValue(row.getCell(columnMapping.get("Tên sản phẩm")));
-                Date ngaySanXuat = Date.valueOf(LocalDate.of(2000, 12, 20));
-                Date hanSuDung = Date.valueOf(LocalDate.of(2030, 12, 20));
-                String nuocSanXuat = getCellValue(row.getCell(columnMapping.get("Nước sản xuất")));
-                TrangThaiSanPham trangThaiSanPham = TrangThaiSanPham.KhongCoDuLieu;
-                String ghiChu = getCellValue(row.getCell(columnMapping.get("Ghi chú")));
-                String moTa = getCellValue(row.getCell(columnMapping.get("Mô tả")));
-                double thue = 0.0f;
-                BufferedImage hinhAnh = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
-                String thanhPhan = getCellValue(row.getCell(columnMapping.get("Thành phần")));
-                String giaBanStr = getCellValue(row.getCell(columnMapping.get("Giá bán")));
-                BigDecimal giaBan = parseBigDecimal(giaBanStr);
-                NhaCungCap nhaCungCap = new NhaCungCap("NCCKHONGTONTAI");
-                DonViTinh donViTinh = DonViTinh.KhongCoDuLieu;
-                LoaiSanPham loaiSanPham = new LoaiSanPham("LSPKHONGTONTAI");
-                String maVach = getCellValue(row.getCell(columnMapping.get("Mã vạch")));
-                String yeuCauKeDon = getCellValue(row.getCell(columnMapping.get("Yêu cầu kê đơn")));
-                String dangBaoChe = getCellValue(row.getCell(columnMapping.get("Dạng bào chế")));
-                String nhaSanXuat = getCellValue(row.getCell(columnMapping.get("Nhà sản xuất")));
+	            // Generate the product code sequentially
+	            String maSanPham = "SP" + String.format("%06d", productCodeCounter); // Format product code with leading zeros
+	            productCodeCounter++; // Increment the product code for the next product
+	            
+	            String tenSanPham = getCellValue(row.getCell(columnMapping.get("Tên sản phẩm")));
+	            Date ngaySanXuat = Date.valueOf(LocalDate.of(2000, 12, 20));
+	            Date hanSuDung = Date.valueOf(LocalDate.of(2030, 12, 20));
+	            String nuocSanXuat = getCellValue(row.getCell(columnMapping.get("Nước sản xuất")));
+	         // Randomly choose TrangThaiSanPham
+	            TrangThaiSanPham trangThaiSanPham = TrangThaiSanPham.values()[random.nextInt(TrangThaiSanPham.values().length)];
 
-                // Construct SanPhamYTe object
-                SanPhamYTe sanPham = new SanPhamYTe(
-                    maSanPham,
-                    tenSanPham,
-                    ngaySanXuat,
-                    hanSuDung,
-                    nuocSanXuat,
-                    trangThaiSanPham,
-                    ghiChu,
-                    moTa,
-                    thue,
-                    hinhAnh,
-                    thanhPhan,
-                    giaBan,
-                    nhaCungCap,
-                    donViTinh,
-                    loaiSanPham,
-                    maVach,
-                    yeuCauKeDon,
-                    dangBaoChe,
-                    nhaSanXuat
-                );
+	            String ghiChu = getCellValue(row.getCell(columnMapping.get("Ghi chú")));
+	            String moTa = getCellValue(row.getCell(columnMapping.get("Mô tả")));
+	            double thue = 0.0f;
+	            BufferedImage hinhAnh = new BufferedImage(50, 50, BufferedImage.TYPE_4BYTE_ABGR);
+	            String thanhPhan = getCellValue(row.getCell(columnMapping.get("Thành phần")));
+	            String giaBanStr = getCellValue(row.getCell(columnMapping.get("Giá bán")));
+	            BigDecimal giaBan = parseBigDecimal(giaBanStr);
+	            
+	            // Randomly choose NhaCungCap, LoaiSanPham, and DonViTinh
+	            NhaCungCap nhaCungCap = nccList.get(random.nextInt(nccList.size()));
+	            LoaiSanPham loaiSanPham = loaiSanPhamList.get(random.nextInt(loaiSanPhamList.size()));
+	            
+	            // Randomly select a DonViTinh enum value
+	            DonViTinh donViTinh = DonViTinh.values()[random.nextInt(DonViTinh.values().length)];
+	            
+	            String maVach = getCellValue(row.getCell(columnMapping.get("Mã vạch")));
+	            String yeuCauKeDon = getCellValue(row.getCell(columnMapping.get("Yêu cầu kê đơn")));
+	            String dangBaoChe = getCellValue(row.getCell(columnMapping.get("Dạng bào chế")));
 
-                sanPhamList.add(sanPham);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	            // Construct SanPhamYTe object
+	            SanPhamYTe sanPham = new SanPhamYTe(
+	                maSanPham,
+	                tenSanPham,
+	                ngaySanXuat,
+	                hanSuDung,
+	                nuocSanXuat,
+	                trangThaiSanPham,
+	                ghiChu,
+	                moTa,
+	                dangBaoChe,
+	                thue,
+	                thanhPhan,
+	                donViTinh, // Enum for DonViTinh
+	                nhaCungCap,
+	                loaiSanPham,
+	                giaBan,
+	                maVach,
+	                yeuCauKeDon,
+	                hinhAnh
+	            );
 
-        return sanPhamList;
-    }
+	            sanPhamList.add(sanPham);
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return sanPhamList;
+	}
+
     
 	
     public static ArrayList<SanPhamYTe> importDataFromXLSX() {
@@ -135,7 +153,7 @@ public class DataImporter {
                 Date ngaySanXuat = Date.valueOf(LocalDate.of(2000, 12, 20));
                 Date hanSuDung = Date.valueOf(LocalDate.of(2030, 12, 20));
                 String nuocSanXuat = getCellValue(row.getCell(columnMapping.get("Nước sản xuất")));
-                TrangThaiSanPham trangThaiSanPham = TrangThaiSanPham.KhongCoDuLieu;
+                TrangThaiSanPham trangThaiSanPham = TrangThaiSanPham.DangBan;
                 String ghiChu = getCellValue(row.getCell(columnMapping.get("Ghi chú")));
                 String moTa = getCellValue(row.getCell(columnMapping.get("Mô tả")));
                 double thue = 0.0f;
@@ -144,35 +162,55 @@ public class DataImporter {
                 String giaBanStr = getCellValue(row.getCell(columnMapping.get("Giá bán")));
                 BigDecimal giaBan = parseBigDecimal(giaBanStr);
                 NhaCungCap nhaCungCap = new NhaCungCap("NCCKHONGTONTAI");
-                DonViTinh donViTinh = DonViTinh.KhongCoDuLieu;
+                DonViTinh donViTinh = DonViTinh.Hop;
                 LoaiSanPham loaiSanPham = new LoaiSanPham("LSPKHONGTONTAI");
                 String maVach = getCellValue(row.getCell(columnMapping.get("Mã vạch")));
                 String yeuCauKeDon = getCellValue(row.getCell(columnMapping.get("Yêu cầu kê đơn")));
                 String dangBaoChe = getCellValue(row.getCell(columnMapping.get("Dạng bào chế")));
                 String nhaSanXuat = getCellValue(row.getCell(columnMapping.get("Nhà sản xuất")));
 
-                // Construct SanPhamYTe object
+             // Construct SanPhamYTe object
                 SanPhamYTe sanPham = new SanPhamYTe(
-                    maSanPham,
-                    tenSanPham,
-                    ngaySanXuat,
-                    hanSuDung,
-                    nuocSanXuat,
-                    trangThaiSanPham,
-                    ghiChu,
-                    moTa,
-                    thue,
-                    hinhAnh,
-                    thanhPhan,
-                    giaBan,
-                    nhaCungCap,
-                    donViTinh,
-                    loaiSanPham,
-                    maVach,
-                    yeuCauKeDon,
-                    dangBaoChe,
-                    nhaSanXuat
+//                		private String maSanPham;
+                		maSanPham,
+//                		private String tenSanPham;
+                		tenSanPham,
+//                		private Date ngaySanXuat;
+                		ngaySanXuat,
+//                		private Date hanSuDung;
+                		hanSuDung,
+//                		private String nuocSanXuat;
+                		nuocSanXuat,
+//                		private TrangThaiSanPham trangThaiSanPham;
+                		trangThaiSanPham,
+//                		private String ghiChu;
+                		ghiChu,
+//                		private String moTa;
+                		moTa,
+//                		private String dangBaoChe;
+                		dangBaoChe,
+//                		private double Thue;
+                		thue,
+//                		private String thanhPhan;
+                		thanhPhan,
+//                		private DonViTinh donViTinh;
+                		donViTinh,
+//                		private NhaCungCap nhaCungCap;
+                		nhaCungCap,
+//                		private LoaiSanPham loaiSanPham;
+                		loaiSanPham,
+//                		private BigDecimal giaBan;
+                		giaBan,
+//
+//                		private String maVach;
+                		maVach,
+//                		private String yeuCauKeDon;
+                		yeuCauKeDon,
+//                		private BufferedImage hinhAnh;
+                		hinhAnh
+
                 );
+
 
                 sanPhamList.add(sanPham);
             }

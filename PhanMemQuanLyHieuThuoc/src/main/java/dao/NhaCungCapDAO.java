@@ -125,6 +125,36 @@ public class NhaCungCapDAO {
 		return n > 0;
 	}
 	
-	
+	public static ArrayList<NhaCungCap> layDanhSachTatCaNhaCungCap() {
+	    dsNCC = new ArrayList<>();
+
+	    
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT * FROM NhaCungCap";
+	        Statement statement = con.createStatement();
+	        
+	        // Thực thi câu lệnh SQL và trả về ResultSet
+	        ResultSet rs = statement.executeQuery(sql);
+	        
+	        // Duyệt qua các kết quả trả về
+	        while (rs.next()) {
+	            String maNCC = rs.getString(1);
+	            String tenNCC = rs.getString(2);
+	            String sdt = rs.getString(3);
+	            String email = rs.getString(4);
+	            String diaChi = rs.getString(5);
+	            
+	            NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, sdt, email, diaChi);
+	            dsNCC.add(ncc);
+	        }
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return dsNCC;
+	}
 	
 }

@@ -22,6 +22,8 @@ import java.util.Random;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import connectDB.ConnectDB;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import customDataType.ChucVu;
 import customDataType.TrangThaiLamViec;
 import dao.SanPhamYTeDAO;
 import entity.NhanVien;
+import entity.SanPhamYTe;
 import functionalClass.DataImporter;
 import functionalClass.GlobalExceptionHandler;
 import functionalClass.SearchTool;
@@ -49,8 +52,13 @@ public class PhanMemQuanLyHieuThuoc {
 		   GlobalExceptionHandler.registerExceptionHandler();
 	   }
 		System.setProperty("sun.java2d.uiScale", "1.0");
-		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
-        TrangChuUI trangChuUI = new TrangChuUI(false);
+		
+		napDuLieu();
+		
+		SanPhamYTeDAO.sanPhamYTe = SanPhamYTeDAO.layDanhSachTatCaSanPham();
+        
+		
+		TrangChuUI trangChuUI = new TrangChuUI(false);
         //TestSearch();
         
    }
@@ -137,6 +145,30 @@ public class PhanMemQuanLyHieuThuoc {
             System.out.println(nguoi.toString());
         }
 
+	}
+	
+	
+	private static void napDuLieu( ) {
+		try (Connection conn = ConnectDB.getConnection()) {
+            // Create a statement
+            Statement stmt = conn.createStatement();
+            
+            // SQL query to delete all rows from SanPhamYTe
+            String sql = "DELETE FROM SanPhamYTe;";
+            
+            // Execute the query
+            int rowsAffected = stmt.executeUpdate(sql);
+            System.out.println("Rows affected: " + rowsAffected);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
+		ArrayList<SanPhamYTe> ds = SanPhamYTeDAO.sanPhamYTe;
+		for(SanPhamYTe sp : ds) {
+			SanPhamYTeDAO.insertSanPhamYTe(sp);
+		}
+		
 	}
 
 }

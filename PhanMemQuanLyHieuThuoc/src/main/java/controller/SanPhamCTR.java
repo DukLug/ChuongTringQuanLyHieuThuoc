@@ -37,25 +37,37 @@ public class SanPhamCTR {
 	}
 	
 	public static SanPhamYTe timSanPhamTheoMaVach(String maVachCanTim) {
-		ArrayList<SanPhamYTe>  dssp = SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe1();
+		ArrayList<SanPhamYTe>  dssp = SanPhamYTeDAO.layDanhSachTatCaSanPham();
 		
 		for(SanPhamYTe sp : dssp) {
-			String maVach = sp.getMaSanPham();
+			String maVach = sp.getMaVach();
 			if(maVach.equalsIgnoreCase(maVachCanTim)) {
 				return sp;
 			}
 		}
 		return null;
 	}
+	public static SanPhamYTe timSanPhamTheoMaSanPham(String maSPCanTim) {
+		ArrayList<SanPhamYTe>  dssp = SanPhamYTeDAO.layDanhSachTatCaSanPham();
+		
+		for(SanPhamYTe sp : dssp) {
+			String maVach = sp.getMaSanPham();
+			if(maVach.equalsIgnoreCase(maSPCanTim)) {
+				return sp;
+			}
+		}
+		return null;
+	}
+	
 	
 	public static ArrayList<SanPhamYTe> layDanhSachTatCaSanPham() {
-		return SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe();
+		return SanPhamYTeDAO.layDanhSachTatCaSanPham();
 	}
 	
 	public static  ArrayList<SanPhamYTe> timSanPham(ArrayList<Object> searchFields, ArrayList<SearchCondition> conditions) {
 	    // Sample data
 	    ArrayList<Object> dataToSearch = new ArrayList<Object>();
-	    for(SanPhamYTe sp : SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe()) {
+	    for(SanPhamYTe sp : SanPhamYTeDAO.layDanhSachTatCaSanPham()) {
 	    	dataToSearch.add(sp);
 	    }
 

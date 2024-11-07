@@ -44,6 +44,7 @@ import component.CustomTable;
 import component.RoundedBorder;
 import controller.SanPhamCTR;
 import dao.KhuyenMaiDAO;
+import dao.SanPhamYTeDAO;
 import entity.KhuyenMai;
 import entity.SanPhamYTe;
 import functionalClass.ImageLoader;
@@ -76,7 +77,7 @@ public class TongQuanUI extends JPanel{
 		super();
 		setStyle();
 		taoHinh();
-		capNhatDanhSachBanChay(SanPhamCTR.layDanhSachTatCaSanPham());
+		capNhatDanhSachBanChay(SanPhamYTeDAO.sanPhamYTe);
 		
 	}
 	
@@ -312,7 +313,7 @@ public class TongQuanUI extends JPanel{
 
 
 	private void capNhatDanhSachBanChay(ArrayList<SanPhamYTe> dsBanChay) {
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < dsBanChay.size()%20; i++) {
 			sanPhamBanChayList.addItem(new SanPhamBanChayRow(dsBanChay.get(i)));
 		}
 	}

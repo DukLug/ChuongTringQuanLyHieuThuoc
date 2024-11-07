@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTFirstSliceAng;
+
 import component.CustomButton.ButtonStyle;
 import component.CustomTable.CustomTableRowStyle;
 
@@ -58,16 +60,22 @@ public class UIStyles {
 			160, NavBarHeight, 25, Color.WHITE, Color.decode("#7A7A7A"), Color.decode("#7A7A7A"), Color.decode("#5E5E5E")
 		);
 	
-
 	public static final ButtonStyle TimButtonStyle = new ButtonStyle(
 			160, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
 		);
+	
 	public static final ButtonStyle ThemButtonStyle = new ButtonStyle(
 			200, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
 		);
-		public static final ButtonStyle CapNhatButtonStyle = new ButtonStyle(
+	
+	public static final ButtonStyle CapNhatButtonStyle = new ButtonStyle(
 			200, NavBarHeight, 18, Color.white, Color.decode("#15C91B"), Color.decode("#14c41a"), Color.decode("#0eb813")
 		);
+	
+	public static final ButtonStyle XoaSanPhamButtonStyle = new ButtonStyle(
+			30, NavBarHeight, 30, Color.black, Color.white, Color.white, Color.white
+		);
+	
 	public static final int NavBarDropBoxItemHeight = NavBarHeight - 30;
 	
 	public static final Color MainSectionBackgroundColor = Color.gray;
@@ -97,7 +105,7 @@ public class UIStyles {
 	public static final ImageIcon Trash  = getIconFromPath("resources/trash.png", 30, 30);
 	public static final ImageIcon BarCode  = getIconFromPath("resources/barCode.png", 30, 30);
 	public static final ImageIcon FindIcon  = getIconFromPath("resources/find.png", 50, 50);
-	
+	public static final ImageIcon Delete  = getIconFromPath("resources/delete.png", 25, 25);
 	public static final ImageIcon ProductImage  = getIconFromPath("data/HinhAnh/1001690721764.png", 250, 250);
 	
 

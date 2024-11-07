@@ -20,24 +20,23 @@ public class SanPhamYTe {
 	private TrangThaiSanPham trangThaiSanPham;
 	private String ghiChu;
 	private String moTa;
+	private String dangBaoChe;
 	private double Thue;
 	private BufferedImage hinhAnh;
 	private String thanhPhan;
-	private BigDecimal giaBan;
-	private NhaCungCap nhaCungCap;
 	private DonViTinh donViTinh;
+	private NhaCungCap nhaCungCap;
 	private LoaiSanPham loaiSanPham;
+	private BigDecimal giaBan;
 	private String maVach;
 	private String yeuCauKeDon;
-	private String dangBaoChe;
+	
 	private String nhaSanXuat;
 
 	public SanPhamYTe(String maSanPham) {
 		super();
 		this.maSanPham = maSanPham;
 	}
-	
-	
 
 	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
 			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, double thue, BufferedImage hinhAnh,
@@ -65,9 +64,16 @@ public class SanPhamYTe {
 		setNhaSanXuat(nhaSanXuat);
 	}
 
+	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.giaBan = giaBanSanPham;
+		this.donViTinh = donViTinh;
+	}
+
 	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
-			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, double thue, String thanhPhan,
-			BigDecimal giaBan, NhaCungCap nhaCungCap, DonViTinh donViTinh, LoaiSanPham loaiSanPham, String dangBaoChe) {
+			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, String dangBaoChe, double thue,
+			String thanhPhan, DonViTinh donViTinh, NhaCungCap nhaCungCap, LoaiSanPham loaiSanPham, BigDecimal giaBan) {
 		super();
 		this.maSanPham = maSanPham;
 		this.tenSanPham = tenSanPham;
@@ -77,27 +83,14 @@ public class SanPhamYTe {
 		this.trangThaiSanPham = trangThaiSanPham;
 		this.ghiChu = ghiChu;
 		this.moTa = moTa;
+		this.dangBaoChe = dangBaoChe;
 		Thue = thue;
 		this.thanhPhan = thanhPhan;
-		this.giaBan = giaBan;
+		this.donViTinh = donViTinh;
 		this.nhaCungCap = nhaCungCap;
-		this.donViTinh = donViTinh;
 		this.loaiSanPham = loaiSanPham;
-		this.dangBaoChe = dangBaoChe;
+		this.giaBan = giaBan;
 	}
-
-
-
-	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
-		this.maSanPham = maSanPham;
-		this.tenSanPham = tenSanPham;
-		this.giaBan = giaBanSanPham;
-		this.donViTinh = donViTinh;
-	}
-
-
-	
-
 
 	public String getMaSanPham() {
 		return maSanPham;

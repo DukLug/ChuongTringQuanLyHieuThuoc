@@ -45,7 +45,7 @@ public class PhanMemQuanLyHieuThuoc {
 	public static ArrayList<Thuoc> thuocList;
 
    public static void main(String[] args) {
-	   if(HienLoi) {
+	   if(HienLoi) { 
 		   GlobalExceptionHandler.registerExceptionHandler();
 	   }
 		System.setProperty("sun.java2d.uiScale", "1.0");

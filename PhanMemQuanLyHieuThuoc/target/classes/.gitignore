@@ -1,3 +1,10 @@
 /controller/
 /dao/
 /userInterface/
+/connectDB/
+/META-INF/
+/testEntity/
+/application/
+/entity/
+/customDataType/
+/functionalClass/

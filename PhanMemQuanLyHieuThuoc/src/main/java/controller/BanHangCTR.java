@@ -56,7 +56,7 @@ public class BanHangCTR {
 			if (item instanceof BanHangRow) {
 				BanHangRow row = (BanHangRow) item; // Chuyển đổi item thành BanHangRow
 	            Thuoc sp = row.getSanPhamYTe();
-	            
+	          
 	            BigDecimal soLuong = new BigDecimal(sp.soLuong);
 	            BigDecimal tongTienSP = soLuong.multiply(sp.giaBan);
 	            tongTien = tongTien.add(tongTienSP);
@@ -96,7 +96,7 @@ public class BanHangCTR {
 	    ArrayList<Integer> danhSachChietKhau = new ArrayList<>();
 	    
 	    KhachHang kh = timKHTheoSDT(sdt);
-	    
+	
 	    if (kh.getDiemTichLuy() > 1000) {
 	        danhSachChietKhau.add(10000);
 	        danhSachChietKhau.add(0);

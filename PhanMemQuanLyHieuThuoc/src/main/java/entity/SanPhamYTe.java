@@ -22,26 +22,27 @@ public class SanPhamYTe {
 	private String moTa;
 	private String dangBaoChe;
 	private double Thue;
-	private BufferedImage hinhAnh;
 	private String thanhPhan;
 	private DonViTinh donViTinh;
 	private NhaCungCap nhaCungCap;
 	private LoaiSanPham loaiSanPham;
 	private BigDecimal giaBan;
+
+
 	private String maVach;
 	private String yeuCauKeDon;
-	
-	private String nhaSanXuat;
+	private BufferedImage hinhAnh;
 
 	public SanPhamYTe(String maSanPham) {
 		super();
 		this.maSanPham = maSanPham;
 	}
+	
 
 	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
-			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, double thue, BufferedImage hinhAnh,
-			String thanhPhan, BigDecimal giaBan, NhaCungCap nhaCungCap, DonViTinh donViTinh, LoaiSanPham loaiSanPham,
-			String maVach, String yeuCauKeDon, String dangBaoChe, String nhaSanXuat) {
+			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, String dangBaoChe, double thue,
+			String thanhPhan, DonViTinh donViTinh, NhaCungCap nhaCungCap, LoaiSanPham loaiSanPham, BigDecimal giaBan,
+			String maVach, String yeuCauKeDon, BufferedImage hinhAnh) {
 		super();
 		this.maSanPham = maSanPham;
 		setTenSanPham(tenSanPham);
@@ -61,8 +62,10 @@ public class SanPhamYTe {
 		setMaVach(maVach);
 		setYeuCauKeDon(yeuCauKeDon);
 		setDangBaoChe(dangBaoChe);
-		setNhaSanXuat(nhaSanXuat);
 	}
+
+
+
 
 	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
 		this.maSanPham = maSanPham;
@@ -278,13 +281,6 @@ public class SanPhamYTe {
 		this.dangBaoChe = dangBaoChe;
 	}
 
-	public String getNhaSanXuat() {
-		return nhaSanXuat;
-	}
-
-	public void setNhaSanXuat(String nhaSanXuat) {
-		this.nhaSanXuat = nhaSanXuat;
-	}
 
 	@Override
 	public int hashCode() {
@@ -307,10 +303,12 @@ public class SanPhamYTe {
 	public String toString() {
 		return "SanPhamYTe [maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", ngaySanXuat=" + ngaySanXuat
 				+ ", hanSuDung=" + hanSuDung + ", nuocSanXuat=" + nuocSanXuat + ", trangThaiSanPham=" + trangThaiSanPham
-				+ ", ghiChu=" + ghiChu + ", moTa=" + moTa + ", Thue=" + Thue + ", hinhAnh=" + hinhAnh + ", thanhPhan="
-				+ thanhPhan + ", giaBan=" + giaBan + ", nhaCungCap=" + nhaCungCap + ", donViTinh=" + donViTinh
-				+ ", loaiSanPham=" + loaiSanPham + ", maVach=" + maVach + ", yeuCauKeDon=" + yeuCauKeDon
-				+ ", dangBaoChe=" + dangBaoChe + ", nhaSanXuat=" + nhaSanXuat + "]";
+				+ ", ghiChu=" + ghiChu + ", moTa=" + moTa + ", dangBaoChe=" + dangBaoChe + ", Thue=" + Thue
+				+ ", thanhPhan=" + thanhPhan + ", donViTinh=" + donViTinh + ", nhaCungCap=" + nhaCungCap
+				+ ", loaiSanPham=" + loaiSanPham + ", giaBan=" + giaBan + ", maVach=" + maVach + ", yeuCauKeDon="
+				+ yeuCauKeDon + ", hinhAnh=" + hinhAnh + "]";
 	}
+
+
 	
 }

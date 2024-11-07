@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 
 import component.CustomButton;
 import component.CustomTable;
+import controller.SanPhamCTR;
 import dao.SanPhamYTeDAO;
 import component.CustomButton.CustomButtonIconSide;
 import entity.SanPhamYTe;
@@ -18,7 +19,7 @@ import functionalClass.DataImporter;
 
 public class TestSanPhamUI extends JPanel{
 	
-	private ArrayList<SanPhamYTe> danhSachSanPham = SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe();
+	private ArrayList<SanPhamYTe> danhSachSanPham = SanPhamCTR.layDanhSachTatCaSanPham();
 	private String[][] duLieuBang = new String[][] {};
 	private String[] tenCot = new String[] {"Mã vạch", "Tên", "Nước sản xuất", "Giá"};
 	
@@ -81,8 +82,8 @@ public class TestSanPhamUI extends JPanel{
 		System.out.println(danhSachSanPham.getFirst().toString());
 	}
 	private void taiDuLieu() {
-		danhSachSanPham = DataImporter.importDataFromXLSX();
-		chuanBiDuLieu();
-		bangSanPham.capNhatDuLieu(duLieuBang);
+//		danhSachSanPham = DataImporter.importDataFromXLSX();
+//		chuanBiDuLieu();
+//		bangSanPham.capNhatDuLieu(duLieuBang);
 	}
 }

@@ -26,7 +26,9 @@ import component.CustomItem;
 import component.CustomItemList;
 import component.CustomButton.CustomButtonIconSide;
 import controller.SanPhamCTR;
+import dao.SanPhamYTeDAO;
 import entity.SanPhamYTe;
+import functionalClass.DataImporter;
 import functionalClass.SearchTool;
 
 public class SanPhamYTeUI extends JPanel {
@@ -137,6 +139,7 @@ public class SanPhamYTeUI extends JPanel {
     	}
     	
     	capNhatBangSanPham(dsSanPham);
+    	SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
     }
     
     private void timSanPham() {

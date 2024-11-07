@@ -1,5 +1,4 @@
-﻿﻿create database NhaThuocLuongTam
-use NhaThuocLuongTam
+﻿
 -- Table: LoaiSanPham
 CREATE TABLE LoaiSanPham (
     MaLoai NVARCHAR(6) NOT NULL PRIMARY KEY,
@@ -30,9 +29,10 @@ CREATE TABLE SanPhamYTe (
 	DonViTinh NVARCHAR(20) NOT NULL ,--CHECK (DonViTinh IN ('Hộp', 'Vỉ', 'Viên'))
 	MaNhaCungCap NVARCHAR(9) NOT NULL,
     MaLoai NVARCHAR(6) NOT NULL,
+
     GiaBan DECIMAL(19,4) NOT NULL CHECK (GiaBan > 0),
 	MaVach NVARCHAR(13) NOT NULL,
-	YeuCauKeDon BIT NOT NULL,
+	YeuCauKeDon NVARCHAR(50) NOT NULL,
     FOREIGN KEY (MaLoai) REFERENCES LoaiSanPham(MaLoai),
 	FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap) 
 );
@@ -209,6 +209,7 @@ VALUES
 ('NCC000009', N'Nhà cung cấp Vật tư Y tế Thành Đạt', '0912345680', 'thanhdat@yte.vn', N'Số 951, Đường YZA, Quận 9, TP. Đà Nẵng'),
 ('NCC000010', N'Thực phẩm chức năng Hồng Phát', '0908765432', 'hongphat@tpcn.com', N'Số 852, Đường BCD, Quận 10, TP.HCM');
 
+
 -- sản phẩm y tế
 INSERT INTO SanPhamYTe (MaSanPham, TenSanPham, NgaySanXuat, HanSuDung, NuocSanXuat, TrangThai, GhiChu, MoTa, DangBaoChe, Thue, ThanhPhan, DonViTinh, MaNhaCungCap, MaLoai, GiaBan, MaVach, YeuCauKeDon)
 VALUES
@@ -309,7 +310,7 @@ VALUES
 ('SP000086', N'Aripiprazole', '2023-02-10', '2025-02-10', N'Mỹ', N'Đang bán', N'Uống 1 lần/ngày', N'Điều trị rối loạn tâm thần', N'Viên nén', 0.05, N'Aripiprazole', N'Viên', 'NCC000006', 'LSP009', 240000, N'1234567890123', 0),
 ('SP000087', N'Gabapentin', '2023-05-08', '2025-05-08', N'Nhật Bản', N'Đang bán', N'Uống 1 lần/ngày', N'Giảm đau', N'Viên nén', 0.06, N'Gabapentin', N'Viên', 'NCC000007', 'LSP009', 180000, N'1234567890123', 0),
 ('SP000088', N'Lithium', '2023-04-15', '2025-04-15', N'Hàn Quốc', N'Đang bán', N'Uống 1 lần/ngày', N'Điều trị rối loạn tâm thần', N'Viên nén', 0.07, N'Lithium', N'Viên', 'NCC000008','LSP009', 220000, N'1234567890123', 0),
-('SP000089', N'Trazodone', '2023-03-12', '2025-03-12', N'Việt Nam', N'Đang bán', N'Uống 1 lần/ngày', N'Chống trầm cảm', N'Viên nén', 0.05, N'Trazodone', N'Viên', 'NCC000009', 'LSP009', 200000, N'1234567890123', 0),
+('SP000089', N'Trazodone', '2023-03-12', '2025-03-12', N'Việt Nam', N'Đang bán', N'Uống 1 lần/ngày', N'Chống trầm cảm', N'Viên nén', 0.05, N'Trazodone', N'Viên', 'NCC000009', 'LSP009', 200000, N'1234567890123', 0)
 ('SP000090', N'Clonazepam', '2023-02-20', '2025-02-20', N'Mỹ', N'Đang bán', N'Uống 1 lần/ngày', N'Giảm lo âu', N'Viên nén', 0.06, N'Clonazepam', N'Viên', 'NCC000010', 'LSP009', 250000, N'1234567890123', 0);
 
 -- nhân viên

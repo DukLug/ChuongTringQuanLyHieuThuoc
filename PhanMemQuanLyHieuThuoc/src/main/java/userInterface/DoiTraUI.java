@@ -46,6 +46,7 @@ import component.CustomPanel;
 import component.CustomTable;
 import controller.ChiTietHoaDonCTR;
 import controller.HoaDonCTR;
+import controller.SanPhamCTR;
 import customDataType.DonViTinh;
 import dao.ChiTietDonDoiTraDAO;
 import dao.DonDoiTraDAO;
@@ -807,7 +808,8 @@ public class DoiTraUI extends JPanel{
 	
 	private void themSanPhamVaoChiTietDoiTra(String maSP) {
 	    SanPhamYTeDAO spDao = new SanPhamYTeDAO();
-	    ArrayList<SanPhamYTe> dsSP = spDao.timSanPhamTheoMaTrongDDT(maSP);
+	    ArrayList<SanPhamYTe> dsSP = new ArrayList<SanPhamYTe>();
+	    dsSP.add(SanPhamCTR.timSanPhamTheoMaSanPham(maSP));
 	    
 	    if (dsSP != null && !dsSP.isEmpty()) {
 	        SanPhamYTe spYTe = dsSP.get(0); 

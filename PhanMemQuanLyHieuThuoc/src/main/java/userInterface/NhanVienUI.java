@@ -93,6 +93,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		private NhanVienDAO nhanVienDAO;
 		private JFrame frameThem;
 		private JTextField txtCCCD;
+		private JButton btnxoaTrang;
 	
 
 		
@@ -310,7 +311,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
 
 	private JFrame formThongTinNhanVien(boolean trangThai) {
 
-		frameThem = new JFrame(trangThai? "Cập Nhật Nhân Viên":"Thêm Nhân Viên");
+		frameThem = new JFrame();
 
 		frameThem.setSize(1000, 700); // Đặt kích thước cửa sổ
 		frameThem.setResizable(false);
@@ -438,8 +439,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		// Button "Thêm"
 		 btnAction = new JButton(trangThai ? "Cập nhật" : "Thêm");
 		 btnAction.setFont(new Font("Tahoma", Font.BOLD, 18));
-		 btnAction.setBounds(400, 550, 150, 40);
+		 btnAction.setBounds(200, 550, 150, 40);
 		 
+		 // button xóa trắng
 		// Thiết lập màu sắc
 		 btnAction.setForeground(Color.white); // Màu chữ
 		 btnAction.setBackground(new Color(50,250,50)); // Màu nền mặc định
@@ -459,10 +461,31 @@ public class NhanVienUI extends JPanel implements ActionListener {
 		btnHuy.setBackground(new Color(50,250,50)); // Màu nền mặc định
 		btnHuy.setOpaque(true); // Bắt buộc màu nền hiển thị
 		btnHuy.setBorderPainted(false); // Tắt viền nút nếu cần
-
-
-
+		
 		panelThem.add(btnHuy);
+		// button xóa trắng
+		btnxoaTrang = new JButton("Xóa trắng");
+		btnxoaTrang.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnxoaTrang.setBounds(400, 550, 150, 40);
+		btnxoaTrang.setForeground(Color.white); // Màu chữ
+		btnxoaTrang.setBackground(new Color(50,250,50)); // Màu nền mặc định
+		btnxoaTrang.setOpaque(true); // Bắt buộc màu nền hiển thị
+		btnxoaTrang.setBorderPainted(false); // Tắt viền nút nếu cần
+
+		panelThem.add(btnxoaTrang);
+		
+		btnxoaTrang.addActionListener(e -> {
+	        
+	        txtHoTen.setText("");
+	        txtSDT.setText("");
+	        txtCCCD.setText("");
+	       jdcNgaySinh.setDate(null);
+	        cbGioiTinh.setSelectedIndex(-1);
+	        cbChucVu.setSelectedIndex(-1);
+	        
+	    });
+		
+		btnxoaTrang.setVisible(!trangThai);
 		
 		btnAction.addActionListener(e -> {
 	        if (!trangThai) {
@@ -478,7 +501,11 @@ public class NhanVienUI extends JPanel implements ActionListener {
 			SwingUtilities.getWindowAncestor(panelThem).dispose();
 		    
 		});
-
+		txtHoTen.addActionListener(this);
+		txtSDT.addActionListener(this);
+		txtCCCD.addActionListener(this);
+		
+		txtHoTen.requestFocus();
 
 	    return frameThem;
 	}
@@ -670,8 +697,13 @@ public class NhanVienUI extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-	 	}
+		Object o = e.getSource();
+		if(o.equals(txtHoTen)) {
+			txtSDT.requestFocus();
+		}else if(o.equals(txtSDT)) {
+			txtCCCD.requestFocus();
+		}
+	 }
 
 	
 		

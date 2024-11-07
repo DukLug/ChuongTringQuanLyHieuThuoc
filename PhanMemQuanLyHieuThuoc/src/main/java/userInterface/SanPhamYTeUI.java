@@ -236,7 +236,7 @@ public class SanPhamYTeUI extends JPanel {
     public static class SanPhamRow extends CustomItem {
         private static final int prefWidth = 1300;
         private static final int prefHeight = 500;
-        private static final Color backgroundColor = Color.WHITE;
+        private static final Color backgroundColor = UIStyles.BackgroundColor;
         private static final Border border = BorderFactory.createEmptyBorder();
         private static final int[] cellsWidth = {300, 25, 300, 25, 300, 25, 300, 0};
 

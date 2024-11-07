@@ -1,25 +1,17 @@
 package dao;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import connectDB.ConnectDB;
+import entity.HoaDon;
+import entity.KhachHang;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import connectDB.ConnectDB;
-import entity.HoaDon;
-import entity.KhachHang;
-
-
-
-
-import connectDB.ConnectDB;
-import entity.ChiTietHoaDon;
-import entity.HoaDon;
-import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.NhanVien;
 
@@ -51,7 +43,7 @@ public class HoaDonDAO {
     }
 	public HoaDon layThongTinKhachHangTheoMaHoaDon(String maHoaDon) {
 	    HoaDon chiTietHoaDon = null ;
-	    String sql = "	select kh.HoTen, kh.Sdt, kh.DiemTichLuy, hd.MaHoaDon, hd.ThanhTien from HoaDon hd join KhachHang kh on hd.MaKhachHang = kh.MaKhachHang where MaHoaDon = ? ";
+	    String sql = "	select kh.HoTen, kh.Sdt, hd.MaHoaDon, hd.ThanhTien from HoaDon hd join KhachHang kh on hd.MaKhachHang = kh.MaKhachHang where MaHoaDon = ? ";
 
 	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
 	        ps.setString(1, maHoaDon); 
@@ -60,11 +52,10 @@ public class HoaDonDAO {
 	        while (rs.next()) {
 	           String hoten = rs.getString("HoTen");
 	           String sdt = rs.getString("Sdt");
-	           int diemTichLuy = rs.getInt("DiemTichLuy");
 	           String mahd = rs.getString("MaHoaDon");
 	           BigDecimal thanhTien = rs.getBigDecimal("ThanhTien");
 	           
-	           KhachHang kh = new KhachHang(hoten, sdt, diemTichLuy);
+	           KhachHang kh = new KhachHang(hoten, sdt);
 	           
 	           chiTietHoaDon = new HoaDon(kh,mahd,thanhTien);
 	        }
@@ -208,5 +199,71 @@ public class HoaDonDAO {
 	        e.printStackTrace();
 	    }
 	    return data;
+	}
+	
+
+	
+	// lấy 10 hóa đơn theo ngày gần nhất
+	public ArrayList<HoaDon> getHoaDon() {
+	    ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+	    String sql = "SELECT top 10 * FROM HoaDon";
+
+	    try (PreparedStatement stmt = ConnectDB.getConnection().prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        while (rs.next()) {
+	            String maHD = rs.getString("MaHoaDon");
+	            Date ngayTao = rs.getDate("NgayTao");
+	            int diemichLuy = rs.getInt("DiemSuDung");
+	            BigDecimal thanhTien = rs.getBigDecimal("ThanhTien");
+	            String maNV = rs.getString("MaNhanVien");
+	            NhanVien nv = new NhanVien(maNV);
+	            String maKhuyenMai = rs.getString("MaKhuyenMai");
+	            KhuyenMai km = new KhuyenMai(maKhuyenMai);
+	            String maKH = rs.getString("MaKhachHang");
+	            KhachHang kh = new KhachHang(maKH);
+	            
+	            HoaDon hd = new HoaDon(maHD, ngayTao, diemichLuy, thanhTien, nv, km, kh);
+	            danhSachHoaDon.add(hd);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return danhSachHoaDon;
+	}
+	public static boolean them(HoaDon hd) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		int n = 0;
+		
+		try {
+			stmt = con.prepareStatement("insert into " + "HoaDon values(?, ?, ?, ?, ?, ?, ?)");
+			stmt.setString(1, hd.getMaHoaDon());
+			stmt.setDate(2, hd.getNgayTao());
+			stmt.setInt(3, hd.getDiemSuDung());
+			stmt.setBigDecimal(4, hd.getThanhTien());
+			stmt.setString(5, hd.getNhanVien().getMaNhanVien());
+			stmt.setString(5, hd.getKhuyenMai().getMaKhuyenMai());
+			stmt.setString(6, hd.getKhachHang().getMaKhachHang());
+			
+			n = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return n > 0;
 	}
 }

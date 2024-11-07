@@ -36,10 +36,14 @@ public class ConnectDB {
 	}
 
 	public static Connection getConnection() {
-		if (con == null) {
-			connect();
-		}
-		return con;
+	    try {
+	        if (con == null || con.isClosed()) { 
+	            connect();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return con;
 	}
 	
 }

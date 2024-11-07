@@ -303,7 +303,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	 
 	 private JFrame formThongTinKhuyenMai(boolean trangThai) {
 			
-		 	frameThem = new JFrame(trangThai? "Cập Nhật Khuyến Mãi":"Thêm Khuyến Mãi");
+		 	frameThem = new JFrame();
 			frameThem.setSize(1000, 700); // Đặt kích thước cửa sổ
 			frameThem.setResizable(false);
 			frameThem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	

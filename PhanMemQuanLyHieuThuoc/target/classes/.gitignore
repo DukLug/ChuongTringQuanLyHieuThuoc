@@ -1,15 +1,28 @@
+<<<<<<< HEAD
 /META-INF/
-<<<<<<< HEAD
-/connectDB/
-=======
-/dao/
 /userInterface/
-<<<<<<< HEAD
-/component/
->>>>>>> bc835a09b43456b7ed948963776a696941febbb1
 /entity/
+<<<<<<< HEAD
 =======
 >>>>>>> 86e48e6986341caeebed11e5b56c21c596246f44
 /functionalClass/
 /application/
 /controller/
+=======
+/dao/
+/controller/
+/connectDB/
+/component/
+>>>>>>> bd1630a02dae7cd8a2da3cb75fbb9d6dffb39af8
+=======
+/controller/
+/dao/
+/userInterface/
+/connectDB/
+/META-INF/
+/testEntity/
+/application/
+/entity/
+/customDataType/
+/functionalClass/
+>>>>>>> 5220e4d4f403bf86321f7477a7a99eb8cca76e2a

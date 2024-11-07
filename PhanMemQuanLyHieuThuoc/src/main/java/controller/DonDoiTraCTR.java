@@ -2,6 +2,7 @@ package controller;
 
 import connectDB.ConnectDB;
 import dao.DonDoiTraDAO;
+import entity.DonDoiTra;
 
 
 public class DonDoiTraCTR {
@@ -11,6 +12,12 @@ public class DonDoiTraCTR {
 	public static void ketNoiDatabase() {
 		// TODO Auto-generated method stub
 		ConnectDB.getInstance().connect();	
+	}
+
+	private DonDoiTraDAO doiTraDAO;
+	
+	public DonDoiTraCTR() {
+		doiTraDAO = new DonDoiTraDAO();
 	}
 
 	public static Object[][] layDataHDDoiTra() {
@@ -31,6 +38,12 @@ public class DonDoiTraCTR {
 	    
 	    return dataBCDoiTraCuoiNgay; // Trả về mảng báo cáo
 	}
+	
+	 public DonDoiTra layThongTinDonDoiTraTheoMa(String maDonDoiTra) {
+		 return doiTraDAO.layThongTinDonDoiTraTheoMa(maDonDoiTra);
+	 }
+
+
 
 
 }

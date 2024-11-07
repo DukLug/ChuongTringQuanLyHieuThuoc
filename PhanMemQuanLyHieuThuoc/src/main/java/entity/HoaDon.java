@@ -139,6 +139,11 @@ public class HoaDon {
 		HoaDon other = (HoaDon) obj;
 		return Objects.equals(maHoaDon, other.maHoaDon);
 	}
+
+	public void setMaHoaDon(String maHoaDon) {
+		this.maHoaDon = maHoaDon;
+		
+	}
 	
 	
 	

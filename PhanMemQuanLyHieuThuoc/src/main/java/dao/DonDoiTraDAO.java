@@ -69,27 +69,46 @@ public class DonDoiTraDAO {
 	}
 
 	// thêm đơn đổi trả
-	 public boolean themDonDoiTra(DonDoiTra donDoiTra) {
-	        String sql = "INSERT INTO DonDoiTra (MaDonDoiTra, NgayDoiTra, TienHoan, MaNhanVien, MaKhuyenMai, MaKhachHang, MaHoaDon) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public boolean themDonDoiTra(DonDoiTra donDoiTra) {
+	    String sql = "INSERT INTO DonDoiTra (MaDonDoiTra, NgayDoiTra, TienHoan, MaNhanVien, MaKhuyenMai, MaKhachHang, MaHoaDon) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    
+	    try (Connection conn = ConnectDB.getConnection()) {
+	        if (donDoiTra.getMaKhuyenMai() != null) {
+	            String checkMaKhuyenMaiSql = "SELECT 1 FROM KhuyenMai WHERE MaKhuyenMai = ?";
+	            try (PreparedStatement checkStmt = conn.prepareStatement(checkMaKhuyenMaiSql)) {
+	                checkStmt.setString(1, donDoiTra.getMaKhuyenMai().getMaKhuyenMai());
+	                try (ResultSet rs = checkStmt.executeQuery()) {
+	                    if (!rs.next()) {
+	                        donDoiTra.setMaKhuyenMai(null);
+	                    }
+	                }
+	            }
+	        }
 	        
-	        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+	        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 	            ps.setString(1, donDoiTra.getMaDonDoiTra()); 
 	            ps.setDate(2, new Date(donDoiTra.getNgayDoiTra().getTime()));
 	            ps.setBigDecimal(3, donDoiTra.getTienHoan());
 	            ps.setString(4, donDoiTra.getMaNhanVien().getMaNhanVien());
-	            ps.setString(5, donDoiTra.getMaKhuyenMai().getMaKhuyenMai());
+	            
+	            if (donDoiTra.getMaKhuyenMai() != null) {
+	                ps.setString(5, donDoiTra.getMaKhuyenMai().getMaKhuyenMai());
+	            } else {
+	                ps.setNull(5, java.sql.Types.VARCHAR);
+	            }
+	            
 	            ps.setString(6, donDoiTra.getMaKhachhang().getMaKhachHang());
 	            ps.setString(7, donDoiTra.getMaHoaDon().getMaHoaDon());
 
 	            int rowsAffected = ps.executeUpdate(); 
 	            return rowsAffected > 0; 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return false; 
 	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; 
 	    }
-	 
-	 
+	}
+
 	 
 	 
 	 // xóa đơn đổi trả
@@ -146,6 +165,44 @@ public class DonDoiTraDAO {
 		         }
 		         return null; // Trả về null nếu không tìm thấy
 		    }
+		    
+			 // lấy thông tin đơn đổi trả theo mã đơn đổi trả
+		   
+		    public DonDoiTra layThongTinDonDoiTraTheoMa(String maDonDoiTra) {
+		        DonDoiTra donDoiTra = null;
+		        String sql = "select * from DonDoiTra where MaDonDoiTra =  ?";
+
+		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+		            ps.setString(1, maDonDoiTra);
+		            try (ResultSet rs = ps.executeQuery()) {
+		                if (rs.next()) {
+		                    String ma = rs.getString("MaDonDoiTra");
+		                    Date ngayDoiTra = rs.getDate("NgayDoiTra"); 
+		                    BigDecimal tienHoan = rs.getBigDecimal("TienHoan");
+		                    String maNV = rs.getString("MaNhanVien");
+		                    NhanVien nv = new NhanVien(maNV);
+		                    String maKM = rs.getString("MaKhuyenMai");
+		                    KhuyenMai km = new KhuyenMai(maKM);
+		                    String maKH = rs.getString("MaKhachHang");
+		                    KhachHang kh = new KhachHang(maKH);
+		                    String maHD = rs.getString("MaHoaDon");
+		                    HoaDon hd = new HoaDon(maHD);
+		               
+		                    
+		                    donDoiTra = new DonDoiTra(maDonDoiTra, ngayDoiTra, tienHoan, nv, km, kh, hd);
+		                }
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		        return donDoiTra;
+		    }
+		    
+		    
+		
+		 
+		   
+		    
 	 
 	 
 

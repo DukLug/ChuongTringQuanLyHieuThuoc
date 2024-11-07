@@ -282,4 +282,6 @@ public class KhuyenMaiDAO {
 	    }
 	    return khuyenMaiTheoDieuKien;
 	}
+	
+
 }

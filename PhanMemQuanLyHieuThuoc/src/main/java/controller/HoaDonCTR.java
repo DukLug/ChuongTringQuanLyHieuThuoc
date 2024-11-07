@@ -1,5 +1,6 @@
 package controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +16,13 @@ public class HoaDonCTR {
 	private static Object[][] dataHD;
 	public static void ketNoiDatabase() {
 		ConnectDB.getInstance().connect();	
+	}
+
+
+	private HoaDonDAO hdDAO;
+	
+	public HoaDonCTR(){
+		hdDAO = new HoaDonDAO();
 	}
 
 	public static Object[][] layDataHDBan() {
@@ -53,6 +61,10 @@ public class HoaDonCTR {
         return dataHD;
 	}
 	
+	
+	public ArrayList<HoaDon> layDanhSachHoaDon(){
+		return hdDAO.getHoaDon();
+	}
 
 	
 	

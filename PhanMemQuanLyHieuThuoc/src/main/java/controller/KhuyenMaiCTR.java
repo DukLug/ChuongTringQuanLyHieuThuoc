@@ -59,5 +59,10 @@ public class KhuyenMaiCTR {
     	return km_dao.capNhatKuyenMai(newkm);
     }
     
+    // tìm khuyến mãi theo điều kiện trong hóa đơn
+    public ArrayList<KhuyenMai> timKhuyenMaiTheoDieuKien1(String DieuKien){
+    	return km_dao.timKhuyenMaiTheoDieuKien1(DieuKien);
+    }
+    
 
 }

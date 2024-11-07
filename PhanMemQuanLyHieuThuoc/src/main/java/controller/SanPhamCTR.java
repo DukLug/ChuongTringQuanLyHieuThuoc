@@ -37,11 +37,11 @@ public class SanPhamCTR {
 	}
 	
 	public static SanPhamYTe timSanPhamTheoMaVach(String maVachCanTim) {
-		ArrayList<SanPhamYTe>  dssp = SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe();
+		ArrayList<SanPhamYTe>  dssp = SanPhamYTeDAO.layDanhSachTatCaSanPhamYTe1();
 		
 		for(SanPhamYTe sp : dssp) {
-			String maVach = sp.getMaVach();
-			if(maVach.equals(maVachCanTim)) {
+			String maVach = sp.getMaSanPham();
+			if(maVach.equalsIgnoreCase(maVachCanTim)) {
 				return sp;
 			}
 		}

@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import component.CustomItem;
 import component.CustomItemList;
+import dao.HoaDonDAO;
 import dao.KhachHangDAO;
 import dao.KhuyenMaiDAO;
 import dao.SanPhamYTeDAO;
+import entity.HoaDon;
 import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.SanPhamYTe;
@@ -20,6 +22,7 @@ public class BanHangCTR {
 	private KhachHangDAO kh_dao = new KhachHangDAO();
 	private SanPhamYTeDAO sp_dao = new SanPhamYTeDAO();
 	private KhuyenMaiDAO km_dao = new KhuyenMaiDAO();
+	private HoaDonDAO hd_dao = new HoaDonDAO();
 	private ArrayList<KhachHang> dsKH;
 	private ArrayList<SanPhamYTe> dsSP;
 	private ArrayList<KhuyenMai> dsKM;
@@ -53,7 +56,7 @@ public class BanHangCTR {
 			if (item instanceof BanHangRow) {
 				BanHangRow row = (BanHangRow) item; // Chuyển đổi item thành BanHangRow
 	            Thuoc sp = row.getSanPhamYTe();
-	            
+	          
 	            BigDecimal soLuong = new BigDecimal(sp.soLuong);
 	            BigDecimal tongTienSP = soLuong.multiply(sp.giaBan);
 	            tongTien = tongTien.add(tongTienSP);
@@ -78,7 +81,7 @@ public class BanHangCTR {
 	            chietKhau = km.getChietKhau();
 	        }
 	    }
-	    System.out.println(chietKhau);
+	    
 	    BigDecimal tienKhuyenMai = tongTienHD.multiply(BigDecimal.valueOf(chietKhau));
 
 	    return tienKhuyenMai;
@@ -93,7 +96,7 @@ public class BanHangCTR {
 	    ArrayList<Integer> danhSachChietKhau = new ArrayList<>();
 	    
 	    KhachHang kh = timKHTheoSDT(sdt);
-	    
+	
 	    if (kh.getDiemTichLuy() > 1000) {
 	        danhSachChietKhau.add(10000);
 	        danhSachChietKhau.add(0);
@@ -106,4 +109,5 @@ public class BanHangCTR {
 	    
 	    return danhSachChietKhau;
 	}
+	
 }

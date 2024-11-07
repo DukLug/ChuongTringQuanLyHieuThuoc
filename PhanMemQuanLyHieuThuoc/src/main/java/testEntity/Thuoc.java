@@ -6,20 +6,21 @@ import customDataType.DonViTinh;
 
 public class Thuoc {
 	public String maThuoc;
+	public String maVach;
 	public String tenThuoc;
 	public DonViTinh donViTinh;
 	public int soLuong;
 	public BigDecimal giaBan;
-	
+
 	public Thuoc(String maThuoc, String tenThuoc, DonViTinh donViTinh, int soLuong) {
 		this.maThuoc = maThuoc;
 		this.tenThuoc = tenThuoc;
 		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 	}
-
-	public Thuoc(String tenThuoc, DonViTinh donViTinh, int soLuong, BigDecimal giaBan) {
-		super();
+	
+	public Thuoc(String maThuoc, String tenThuoc, DonViTinh donViTinh, int soLuong, BigDecimal giaBan) {
+		this.maThuoc = maThuoc;
 		this.tenThuoc = tenThuoc;
 		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;

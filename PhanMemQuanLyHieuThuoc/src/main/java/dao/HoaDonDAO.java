@@ -1,25 +1,17 @@
 package dao;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import connectDB.ConnectDB;
+import entity.HoaDon;
+import entity.KhachHang;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import connectDB.ConnectDB;
-import entity.HoaDon;
-import entity.KhachHang;
-
-
-
-
-import connectDB.ConnectDB;
-import entity.ChiTietHoaDon;
-import entity.HoaDon;
-import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.NhanVien;
 
@@ -209,6 +201,7 @@ public class HoaDonDAO {
 	    return data;
 	}
 	
+
 	
 	// lấy 10 hóa đơn theo ngày gần nhất
 	public ArrayList<HoaDon> getHoaDon() {
@@ -239,5 +232,38 @@ public class HoaDonDAO {
 	    }
 
 	    return danhSachHoaDon;
+	}
+	public static boolean them(HoaDon hd) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		int n = 0;
+		
+		try {
+			stmt = con.prepareStatement("insert into " + "HoaDon values(?, ?, ?, ?, ?, ?, ?)");
+			stmt.setString(1, hd.getMaHoaDon());
+			stmt.setDate(2, hd.getNgayTao());
+			stmt.setInt(3, hd.getDiemSuDung());
+			stmt.setBigDecimal(4, hd.getThanhTien());
+			stmt.setString(5, hd.getNhanVien().getMaNhanVien());
+			stmt.setString(5, hd.getKhuyenMai().getMaKhuyenMai());
+			stmt.setString(6, hd.getKhachHang().getMaKhachHang());
+			
+			n = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return n > 0;
 	}
 }

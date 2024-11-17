@@ -160,6 +160,45 @@ public class KhachHangDAO {
 	    return khachHangCanTim;
 	}
 	
+	public ArrayList<KhachHang> timTheoMa(String ma) {
+	    ArrayList<KhachHang> khachHangCanTim = new ArrayList<KhachHang>();
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE MaKhachHang = ?");
+	        ps.setString(1, ma);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            String maKH = rs.getString("MaKhachHang");
+	            String ten = rs.getString("HoTen");
+	            String sdt = rs.getString("Sdt");
+	            String cccd = rs.getString("Cccd");
+	            String diaChi = rs.getString("DiaChi");
+	            int dtl = rs.getInt("DiemTichLuy");
+	            KhachHang khachHang = new KhachHang(maKH, ten, sdt, cccd, diaChi, dtl);
+	           
+	            khachHangCanTim.add(khachHang);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return khachHangCanTim;
+	}
+	
+	public boolean capNhatDTL(KhachHang kh, int DTL) {
+	    int n = 0;
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("UPDATE KhachHang SET DiemTichLuy = DiemTichLuy + ? WHERE MaKhachHang = ?");
+	        ps.setInt(1, DTL);  
+	        ps.setString(2, kh.getMaKhachHang()); 
+
+	        n = ps.executeUpdate();  
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return n > 0;
+	}
+
+	
 	// lấy tên và sdt khách hàng theo mã đoiỉ trả
 	public KhachHang layThongTinKhachHangTheoMaDonDoiTra(String maDonDoiTra) {
 	    KhachHang khachHang = null;

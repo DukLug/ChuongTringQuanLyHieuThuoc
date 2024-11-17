@@ -23,6 +23,7 @@ public class HoaDonDAO {
 	
 	public static ArrayList<HoaDon> dsHoaDon;
 	private static ArrayList<HoaDon> dsHoaDon2;
+	
 	public String getMaKhachHangByMaHoaDon(String maHoaDon) {
         String maKhachHang = null;
         String sql = "SELECT maKhachHang FROM HoaDon WHERE MaHoaDon = ?";
@@ -41,6 +42,7 @@ public class HoaDonDAO {
 
         return maKhachHang;
     }
+	
 	public HoaDon layThongTinKhachHangTheoMaHoaDon(String maHoaDon) {
 	    HoaDon chiTietHoaDon = null ;
 	    String sql = "	select kh.HoTen, kh.Sdt, hd.MaHoaDon, hd.ThanhTien from HoaDon hd join KhachHang kh on hd.MaKhachHang = kh.MaKhachHang where MaHoaDon = ? ";
@@ -65,6 +67,7 @@ public class HoaDonDAO {
 	    
 	    return chiTietHoaDon;
 	}
+	
 	public static Object[][] layDanhSachHoaDon() {
 		dsHoaDon = new ArrayList<>();
 
@@ -109,7 +112,7 @@ public class HoaDonDAO {
 	
 	}
 
-	public static Object[][] layDanhSachHoaDonBanHangTheoNgay() {
+	public Object[][] layDanhSachHoaDonBanHangTheoNgay() {
 	    dsHoaDon2 = new ArrayList<>();
 
 	    try {
@@ -233,7 +236,7 @@ public class HoaDonDAO {
 
 	    return danhSachHoaDon;
 	}
-	public static boolean them(HoaDon hd) {
+	public boolean them(HoaDon hd) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stmt = null;
@@ -247,8 +250,14 @@ public class HoaDonDAO {
 			stmt.setInt(3, hd.getDiemSuDung());
 			stmt.setBigDecimal(4, hd.getThanhTien());
 			stmt.setString(5, hd.getNhanVien().getMaNhanVien());
-			stmt.setString(5, hd.getKhuyenMai().getMaKhuyenMai());
-			stmt.setString(6, hd.getKhachHang().getMaKhachHang());
+			
+			if (hd.getKhuyenMai().getMaKhuyenMai() != null) {
+				stmt.setString(6, hd.getKhuyenMai().getMaKhuyenMai());
+            } else {
+            	stmt.setNull(6, java.sql.Types.VARCHAR);
+            }
+			
+			stmt.setString(7, hd.getKhachHang().getMaKhachHang());
 			
 			n = stmt.executeUpdate();
 			

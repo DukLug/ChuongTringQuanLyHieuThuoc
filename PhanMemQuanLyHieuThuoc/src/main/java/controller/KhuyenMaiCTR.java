@@ -4,7 +4,9 @@ package controller;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import dao.KhachHangDAO;
 import dao.KhuyenMaiDAO;
+import entity.KhachHang;
 import entity.KhuyenMai;
 
 
@@ -19,7 +21,6 @@ public class KhuyenMaiCTR {
     // lấy danh sách khuyến mãi
     public ArrayList<KhuyenMai> layDanhSachTatCaKhuyenMai(){
     	return km_dao.layDanhSachTatCaKhuyenMai();
-    	
     }
     
     // tìm khuyến mãi theo mã khuyến mãi
@@ -63,6 +64,5 @@ public class KhuyenMaiCTR {
     public ArrayList<KhuyenMai> timKhuyenMaiTheoDieuKien1(String DieuKien){
     	return km_dao.timKhuyenMaiTheoDieuKien1(DieuKien);
     }
-    
 
 }

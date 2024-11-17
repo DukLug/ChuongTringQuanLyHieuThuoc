@@ -69,8 +69,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 	public void taoHinh() {
 		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
 		this.setBackground(Color.WHITE);
-		
-setLayout(null);
+		setLayout(null);
 		
 		JPanel panelTong = new JPanel();
 		panelTong.setBackground(UIStyles.BackgroundColor);

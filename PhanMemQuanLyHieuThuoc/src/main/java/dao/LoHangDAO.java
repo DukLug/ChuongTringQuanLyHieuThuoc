@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
+import entity.KhachHang;
 import entity.LoHang;
 
 public class LoHangDAO {
@@ -34,4 +35,18 @@ public class LoHangDAO {
 	    return maLo; 
 	}
 
+	public boolean capNhatSoLuongSP(String maSanPham, int soLuongDaBan) {
+	    int n = 0;
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("UPDATE LoHang SET SoLuong = SoLuong - ? WHERE MaSanPham = ?");
+	        ps.setInt(1, soLuongDaBan);  
+	        ps.setString(2, maSanPham); 
+
+	        n = ps.executeUpdate();  
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return n > 0;
+	}
 }

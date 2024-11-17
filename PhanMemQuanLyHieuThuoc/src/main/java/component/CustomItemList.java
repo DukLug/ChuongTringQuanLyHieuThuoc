@@ -1,8 +1,11 @@
 package component;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -136,5 +139,11 @@ public class CustomItemList extends JPanel {
         }
     }
     
-
+    public void removeAllItems() {
+        itemList.clear();  // Xóa toàn bộ phần tử trong danh sách itemList
+        
+        panel.removeAll();  
+        panel.revalidate();  
+        panel.repaint();  
+    }
 }

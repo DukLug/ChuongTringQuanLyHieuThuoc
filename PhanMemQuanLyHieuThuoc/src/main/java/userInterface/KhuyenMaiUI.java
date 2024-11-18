@@ -71,6 +71,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	private JSpinner spChietKhau;
 	private JFrame frameThem;
 	private String lastFormattedDate = "";
+	private JButton btnxoaTrang;
 
 	
 	 private static HashMap<String, Integer> soThuTuMap = new HashMap<>();
@@ -304,7 +305,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	 private JFrame formThongTinKhuyenMai(boolean trangThai) {
 			
 		 	frameThem = new JFrame();
-			frameThem.setSize(1000, 700); // Đặt kích thước cửa sổ
+			frameThem.setSize(1000, 600); 
 			frameThem.setResizable(false);
 			frameThem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 			frameThem.setLocationRelativeTo(null); // Đặt cửa sổ ở giữa màn hình
@@ -379,7 +380,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			lblChietKhau.setBounds(100, 300, 150, 30);
 			panelThem.add(lblChietKhau);
 			
-			SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 0.9, 0.1); // Giá trị khởi tạo, min, max, step
+			SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 0.9, 0.01); // Giá trị khởi tạo, min, max, step
 		    spChietKhau = new JSpinner(model);
 		    spChietKhau.setBounds(400, 300, 300, 30);
 		    panelThem.add(spChietKhau);
@@ -400,7 +401,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			// Button "Thêm"
 			 btnAction = new JButton(trangThai ? "Cập nhật" : "Thêm");
 			 btnAction.setFont(new Font("Tahoma", Font.BOLD, 18));
-			 btnAction.setBounds(400, 550, 150, 40);
+			 btnAction.setBounds(200, 450, 150, 40);
 			 
 			// Thiết lập màu sắc
 			 btnAction.setForeground(Color.white); // Màu chữ
@@ -409,6 +410,25 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			 btnAction.setBorderPainted(false); // Tắt viền nút nếu cần
 
 			
+			// button xóa trắng
+				btnxoaTrang = new JButton("Xóa trắng");
+				btnxoaTrang.setFont(new Font("Tahoma", Font.BOLD, 18));
+				btnxoaTrang.setBounds(400, 450, 150, 40);
+				btnxoaTrang.setForeground(Color.white); // Màu chữ
+				btnxoaTrang.setBackground(new Color(50,250,50)); // Màu nền mặc định
+				btnxoaTrang.setOpaque(true); // Bắt buộc màu nền hiển thị
+				btnxoaTrang.setBorderPainted(false); // Tắt viền nút nếu cần
+				btnxoaTrang.setVisible(!trangThai);
+				panelThem.add(btnxoaTrang);
+				
+				btnxoaTrang.addActionListener(e -> {
+			        
+			       jdcNgayKM.setDate(null);
+			       jdcNgayKT.setDate(null);
+			       cbDieuKien.setSelectedIndex(-1);
+			       spChietKhau.setValue(0);
+			        
+			    });
 
 			// Thêm nút vào panel
 			panelThem.add(btnAction);
@@ -416,13 +436,13 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			// Button "Hủy"
 			btnHuy = new JButton("Hủy");
 			btnHuy.setFont(new Font("Tahoma", Font.BOLD, 18));
-			btnHuy.setBounds(600, 550, 150, 40);
+			btnHuy.setBounds(600, 450, 150, 40);
 			btnHuy.setForeground(Color.white); // Màu chữ
 			btnHuy.setBackground(new Color(50,250,50)); // Màu nền mặc định
 			btnHuy.setOpaque(true); // Bắt buộc màu nền hiển thị
 			btnHuy.setBorderPainted(false); // Tắt viền nút nếu cần
 
-
+			
 
 			panelThem.add(btnHuy);
 			
@@ -529,6 +549,10 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	
 	// thêm khuyến mãi
 	private void ThemKhuyenMai() {
+		 if(!valid()) {
+			  return;
+			  
+		  }
 		NhanVienDAO nv_dao = new NhanVienDAO();
 	    String maKM = phatSinhMaKhuyenMai();
 	    Date ngayKhuyenMai = new Date(jdcNgayKM.getDate().getTime());
@@ -602,17 +626,17 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 	    String formattedDate = sdf.format(currentDate);
 
-	    // Kiểm tra ngày hiện tại và reset nếu cần thiết
+	    
 	    if (!formattedDate.equals(lastFormattedDate)) {
-	        soThuTuMap.clear(); // Xóa map để bắt đầu lại số thứ tự
-	        lastFormattedDate = formattedDate; // Cập nhật ngày hiện tại
+	        soThuTuMap.clear(); 
+	        lastFormattedDate = formattedDate; 
 	    }
 
 	    // Tăng số thứ tự cho ngày hiện tại
 	    int stt = soThuTuMap.getOrDefault(formattedDate, 0) + 1;
 	    soThuTuMap.put(formattedDate, stt); 
 
-	    // Tạo mã khuyến mãi
+	    
 	    String maKhuyenMai = "KM" + formattedDate + String.format("%02d", stt);
 	    
 	    return maKhuyenMai;
@@ -644,6 +668,10 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	}
 	
 	private void capNhatKhuyenMai() {
+		 if(!valid()) {
+			  return;
+			  
+		  }
 	    String maKM = txtMaKM.getText();
 	    Date ngayBatDau = new Date(jdcNgayKM.getDate().getTime());
 	    Date ngayKetThuc = new Date(jdcNgayKT.getDate().getTime());
@@ -667,6 +695,55 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    }
 	}
 
+	private boolean valid() {
+	    // Kiểm tra ngày bắt đầu khuyến mãi
+	    if (jdcNgayKM.getDate() == null) {
+	        JOptionPane.showMessageDialog(frameThem, "Vui lòng chọn ngày khuyến mãi!");
+	        return false;
+	    }
+	    Date ngayBatDau = new Date(jdcNgayKM.getDate().getTime());
+	    Date ngayHienTai = new Date(System.currentTimeMillis());
+	    if (ngayBatDau.before(ngayHienTai)) {
+	        JOptionPane.showMessageDialog(frameThem, "Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại!");
+	        return false;
+	    }
+
+	    if (jdcNgayKT.getDate() == null) {
+	        JOptionPane.showMessageDialog(frameThem, "Vui lòng chọn ngày kết thúc!");
+	        return false;
+	    }
+	    Date ngayKetThuc = new Date(jdcNgayKT.getDate().getTime());
+	    if (!ngayKetThuc.after(ngayBatDau)) {
+	        JOptionPane.showMessageDialog(frameThem, "Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+	        return false;
+	    }
+
+	    String dieuKien = cbDieuKien.getSelectedItem().toString();
+	    try {
+	        int dieuKienValue = Integer.parseInt(dieuKien);
+	        if (dieuKienValue <= 0) {
+	            JOptionPane.showMessageDialog(frameThem, "Điều kiện khuyến mãi phải là số lớn hơn 0!");
+	            return false;
+	        }
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(frameThem, "Điều kiện khuyến mãi phải là số hợp lệ!");
+	        return false;
+	    }
+
+	    double chietKhau = (double) spChietKhau.getValue();
+	    if (chietKhau <= 0 || chietKhau >= 1) {
+	        JOptionPane.showMessageDialog(frameThem, "Chiết khấu phải lớn hơn 0 và nhỏ hơn 1!");
+	        return false;
+	    }
+	    
+	    String maNV = txtMaNV.getText();
+	    if (maNV.trim().isEmpty()) {
+	        JOptionPane.showMessageDialog(frameThem, "Vui lòng nhập mã nhân viên!");
+	        return false;
+	    }
+
+	    return true;
+	}
 
 	
 	@Override

@@ -37,7 +37,7 @@ public class HoaDonDoiTraUI extends JFrame {
 	
 	
 
-	public HoaDonDoiTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, Object[][] dataDoiHang, String tienTra, String phitrahang, String tienMua, String giamGia, String tongTien, String tienKhachDua, String tienTraKhach ) {
+	public  HoaDonDoiTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, Object[][] dataDoiHang, String tienTra, String phitrahang, String tienMua, String giamGia, String tongTien, String tienKhachDua, String tienTraKhach ) {
 		
 
 		
@@ -213,13 +213,6 @@ public class HoaDonDoiTraUI extends JFrame {
 		textTienTraKhach.setText(tienTraKhach);
 		panel.add(textTienTraKhach);
 		
-
-	
-
-		
-		
-		
-
 	}
 	
 

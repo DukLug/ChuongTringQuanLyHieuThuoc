@@ -111,6 +111,8 @@ public class DoiTraUI extends JPanel{
 	private JLabel lblTienKhachTra;
 	private JLabel lblTienTraKhach;
 	private JPanel panelTong;
+	
+	private DecimalFormat df = new DecimalFormat("#.0000");
 
 	
 
@@ -778,12 +780,12 @@ public class DoiTraUI extends JPanel{
 	   
 	    BigDecimal phiTraHang = tinhPhiTraHang(tongTienHangTra);
 	    
-	    txtPhiTraHang.setText(phiTraHang.toString());
+	    txtPhiTraHang.setText(df.format(phiTraHang));
 	    
 	    BigDecimal tongHangTraSauPhi = tongTienHangTra.subtract(phiTraHang);
 
 	    
-	    txtTienTraHang.setText(tongHangTraSauPhi.toString());
+	    txtTienTraHang.setText(df.format(tongHangTraSauPhi));
 	}
 	
 	
@@ -964,7 +966,7 @@ public class DoiTraUI extends JPanel{
 
 	    
 	   tienTraKhach = tongTienDoiHang;
-	   txtTongTienHang.setText(tienTraKhach.toString());
+	   txtTongTienHang.setText(df.format(tienTraKhach));
 	   
 	   // Tìm khuyến mãi và áp dụng chiết khấu
 	    KhuyenMai khuyenMaiApDung = layMaKhuyenMai(tienTraKhach);
@@ -973,10 +975,10 @@ public class DoiTraUI extends JPanel{
 	        BigDecimal chietKhau = BigDecimal.valueOf(khuyenMaiApDung.getChietKhau());
 	        BigDecimal tongTienSauChietKhau = tienTraKhach.subtract(tienTraKhach.multiply(chietKhau));
 
-	        txtTongTienMua.setText(tongTienSauChietKhau.toString());
+	        txtTongTienMua.setText(df.format(tongTienSauChietKhau));
 	       
 	    } else {
-	    	 txtTongTienMua.setText(tienTraKhach.toString());
+	    	 txtTongTienMua.setText(df.format(tienTraKhach));
 	        
 	    }
 	   
@@ -1221,17 +1223,18 @@ public class DoiTraUI extends JPanel{
 
 		    // Tính tổng hóa đơn
 		    BigDecimal tongHoaDon = tongTienTraKhach.subtract(tongTienMuaHang);
+		    
 
 		    if (tongHoaDon.compareTo(BigDecimal.ZERO) < 0) {
 		        
 		        lblTienTraKhach.setText("Khách cần trả:"); 
-		        txtTongHoaDon.setText(tongHoaDon.abs().toString()); 
+		        txtTongHoaDon.setText(df.format(tongHoaDon.abs())); 
 
 		        txtKhachTra.setEnabled(true);
 		        txtKhachTra.requestFocus();
 		    } else {
 		        lblTienTraKhach.setText("Tiền trả khách:"); 
-		        txtTongHoaDon.setText(tongHoaDon.toString()); 
+		        txtTongHoaDon.setText(df.format(tongHoaDon)); 
 
 		        txtKhachTra.setEnabled(false);
 		    }
@@ -1279,9 +1282,8 @@ public class DoiTraUI extends JPanel{
 		            }
 
 		            BigDecimal tienTraKhach = tienKhachDuaDecimal.subtract(tongTienDecimal);
-		            DecimalFormat df = new DecimalFormat("#.0000");  
-		            String formattedTienTraKhach = df.format(tienTraKhach); 
-		            String tienTra = formattedTienTraKhach;
+		             
+		            String tienTra = df.format(tienTraKhach);
 
 		            HoaDonDoiTraUI hddoiTra = new HoaDonDoiTraUI(donDoiTra,dataTraHang, dataDoiHang, tienTraHang, phitrahang, tienMua, giamGia, tongTien, tienKhachDua, tienTra);
 		            hddoiTra.setVisible(true);

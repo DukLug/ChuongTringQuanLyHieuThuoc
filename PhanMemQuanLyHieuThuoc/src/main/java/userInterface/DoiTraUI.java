@@ -95,6 +95,7 @@ public class DoiTraUI extends JPanel{
 	private CustomTable tableDoiHang;
 	private DonDoiTraDAO donDoiTraDAO;
 	private BigDecimal tienTraKhach;
+	private BigDecimal tienGiamGia;
 	
 	private String lastDate = "";
 	private Map<String, Integer> soThuTuMap = new HashMap<>();
@@ -439,11 +440,13 @@ public class DoiTraUI extends JPanel{
 		        tableTraHang.addMouseListener(new MouseAdapter() {
 		            @Override
 		            public void mouseClicked(MouseEvent e) {
+		            	DefaultTableModel model = (DefaultTableModel) tableTraHang.getModel();
+		            	 
 		                int row = tableTraHang.rowAtPoint(e.getPoint());
 		                int col = tableTraHang.columnAtPoint(e.getPoint());
 		                
 		                if (col == 0) {
-		                	DefaultTableModel model = (DefaultTableModel) tableTraHang.getModel();
+		 
 		                	 int confirm = JOptionPane.showConfirmDialog(null, 
 		                             "Bạn có chắc chắn muốn xóa sản phẩm này?", 
 		                             "Xác nhận xóa", 
@@ -452,6 +455,10 @@ public class DoiTraUI extends JPanel{
 		                         
 		                         if (confirm == JOptionPane.YES_OPTION) {
 		                             model.removeRow(row); 
+		                             if (model.getRowCount() == 0) {
+		    		                     LamMoi();
+		    		                     return;
+		    		                 }
 		                             capNhatTongHangTra();
 		                             capNhatTongGiaTra();
 		                             tinhTongHoaDon();
@@ -461,7 +468,6 @@ public class DoiTraUI extends JPanel{
 		                }
 
 		                if (col == 4) {  
-		                    DefaultTableModel model = (DefaultTableModel) tableTraHang.getModel();
 		                    
 		                    int currentQuantity = (int) model.getValueAt(row, 4);
 		                    
@@ -973,7 +979,9 @@ public class DoiTraUI extends JPanel{
 
 	    if (khuyenMaiApDung != null) {
 	        BigDecimal chietKhau = BigDecimal.valueOf(khuyenMaiApDung.getChietKhau());
-	        BigDecimal tongTienSauChietKhau = tienTraKhach.subtract(tienTraKhach.multiply(chietKhau));
+	        tienGiamGia = tienTraKhach.multiply(chietKhau);
+	        
+	        BigDecimal tongTienSauChietKhau = tienTraKhach.subtract(tienGiamGia);
 
 	        txtTongTienMua.setText(df.format(tongTienSauChietKhau));
 	       
@@ -1234,16 +1242,52 @@ public class DoiTraUI extends JPanel{
 		        txtKhachTra.requestFocus();
 		    } else {
 		        lblTienTraKhach.setText("Tiền trả khách:"); 
-		        txtTongHoaDon.setText(df.format(tongHoaDon)); 
+		        txtTongHoaDon.setText(df.format(tongHoaDon.abs())); 
 
 		        txtKhachTra.setEnabled(false);
 		    }
 		}
 
 	
+	// kiểm tra tiền khách đưa
+	private boolean Valid() {
+		String tienKhachDua = txtKhachTra.getText();
+		    try {
+		        if (tienKhachDua == null || tienKhachDua.trim().isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Số tiền khách đưa không được để trống.");
+		            return false;
+		        }
+
+		        BigDecimal tien = new BigDecimal(tienKhachDua);
+
+		        if (tien.compareTo(BigDecimal.ZERO) <= 0) {
+		            JOptionPane.showMessageDialog(null, "Số tiền khách đưa phải lớn hơn 0.");
+		            return false;
+		        }
+
+		        // Giới hạn số tiền tối đa (ví dụ: 1 tỷ)
+		        BigDecimal maxAmount = new BigDecimal("1000000000");
+		        if (tien.compareTo(maxAmount) > 0) {
+		            JOptionPane.showMessageDialog(null, "Số tiền khách đưa quá lớn. Vui lòng kiểm tra lại.");
+		            return false;
+		        }
+
+		        return true;
+		    } catch (NumberFormatException ex) {
+		        JOptionPane.showMessageDialog(null, "Số tiền khách đưa phải là số hợp lệ.");
+		        return false;
+		    }
+		}
+
 	
 
 		private void thanhToan() {
+			
+			 if(!Valid()) {
+				  return;
+				  
+			  }
+			 
 		    DonDoiTra donDoiTra = taoDonDoiTra();
 		    
 		    if (donDoiTra != null && donDoiTraDAO != null) {
@@ -1261,10 +1305,11 @@ public class DoiTraUI extends JPanel{
 		            String tienTraHang = txtTongGiaGoc.getText();
 		            String phitrahang = txtPhiTraHang.getText();
 		            String tienMua = txtTongTienHang.getText();
-		            String giamGia = txtGiamGia.getText();
+		           
 		            String tienKhachDua = txtKhachTra.getText();
 		            String tongTien = txtTongHoaDon.getText();
 
+		            String giamGia = (tienGiamGia != null) ? tienGiamGia.toString() : "0";
 		            
 		            BigDecimal tienKhachDuaDecimal = BigDecimal.ZERO;
 		            BigDecimal tongTienDecimal = BigDecimal.ZERO;
@@ -1280,12 +1325,32 @@ public class DoiTraUI extends JPanel{
 		            } catch (NumberFormatException e) {
 		                System.out.println("Giá trị tổng tiền không hợp lệ: " + tongTien);
 		            }
-
+		            
 		            BigDecimal tienTraKhach = tienKhachDuaDecimal.subtract(tongTienDecimal);
 		             
 		            String tienTra = df.format(tienTraKhach);
 
 		            HoaDonDoiTraUI hddoiTra = new HoaDonDoiTraUI(donDoiTra,dataTraHang, dataDoiHang, tienTraHang, phitrahang, tienMua, giamGia, tongTien, tienKhachDua, tienTra);
+		            HoaDonTraUI hdonTra = new HoaDonTraUI(donDoiTra, dataTraHang, tienTraHang, phitrahang, tongTien);
+		            
+		            if(dataDoiHang.length <=0) {
+		            	hdonTra.setVisible(true);
+		            	
+		            	int askPrint = JOptionPane.showConfirmDialog(this, 
+		  		                "Bạn có muốn in hóa đơn không?", "In Vé", 
+		  		                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		  		            if (askPrint == JOptionPane.YES_OPTION) {
+		  		                BufferedImage bff = ScreenshotHelper.captureComponent(hdonTra);
+		  		                ScreenshotHelper.printImage(bff);
+		  		              hdonTra.setVisible(false); 
+		  		            } else {
+		  		            	hdonTra.setVisible(false);
+		  		            }
+		            	
+		            	
+		            }else {
+		            
 		            hddoiTra.setVisible(true);
 
 		            int askPrint = JOptionPane.showConfirmDialog(this, 
@@ -1300,7 +1365,7 @@ public class DoiTraUI extends JPanel{
 		                hddoiTra.setVisible(false);
 		            }
 
-		         
+		            }
 		            LamMoi();
 
 		        } else {

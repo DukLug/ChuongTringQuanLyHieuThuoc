@@ -47,7 +47,7 @@ import entity.NhanVien;
 
 
 
-public class BCBanHangUI extends JPanel implements ActionListener, MouseListener {
+public class BCBanHangUI2 extends JPanel implements ActionListener, MouseListener {
 	
 
 	/**
@@ -75,7 +75,7 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 	private Object[][] filteredData;
 
 	
-	public BCBanHangUI() {
+	public BCBanHangUI2() {
 		super();
 		taoHinh();
 		
@@ -313,11 +313,17 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 
 
 
+	private JFreeChart createChart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	private void filltercbb(int ngay, int thang, int nam, String nv) {
 		 Object[][] allData = HoaDonDAO.layDataHD(ngay, thang, nam, nv);
-		    
-		   tableHoaDon.capNhatDuLieu(allData);
 		
+		   tableHoaDon.capNhatDuLieu(allData);
+		  
 		   updateChart(allData);
 		   
 	}
@@ -491,63 +497,63 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 //	    chartPanel.setChart(newChart); 
 //	}
 //	
-	
-	
-	private JFreeChart createDefaultChart() {
-         // Tạo dataset mặc định
-         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-         dataset.addValue(0, "Thông báo", "Không có dữ liệu");
-
-         // Tạo biểu đồ
-         JFreeChart barChart = ChartFactory.createBarChart(
-             "Doanh Thu", // Tiêu đề biểu đồ
-             "Thời Gian", // Nhãn trục X
-             "Doanh Thu", // Nhãn trục Y
-             dataset
-         );
-
-         // Cấu hình biểu đồ
-         CategoryPlot plot = barChart.getCategoryPlot();
-         BarRenderer renderer = new BarRenderer();
-         renderer.setMaximumBarWidth(0.05);
-         plot.setRenderer(renderer);
-
-         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-         yAxis.setTickUnit(new NumberTickUnit(50000)); // Đặt khoảng cách giữa các tick là 1 triệu
-         NumberFormat customFormat = new DecimalFormat("###,###");
-         yAxis.setNumberFormatOverride(customFormat);
-
-         return barChart;
-     }
-	
-	private JFreeChart createChart() {
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "BIỂU ĐỒ DOANH THU",
-                "Thời gian",
-                "Doanh thu",
-                createDataset(),
-                PlotOrientation.VERTICAL,
-                false,  
-                true,   
-                false 
-        );
-        return barChart;
-    }
-	private CategoryDataset createDataset() {
-	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	    
-	    for (Object[] row : data) {
-            if (row != null) {
-                String time = row[2] != null ? row[2].toString() : "Không xác định";
-                BigDecimal doanhThu = (BigDecimal) row[1];
-                dataset.addValue(doanhThu, "Doanh Thu", time);
-            }
-        }
-	    
-
-
-	    return dataset; 
-	}
+//	
+//	
+//	private JFreeChart createDefaultChart() {
+//         // Tạo dataset mặc định
+//         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//         dataset.addValue(0, "Thông báo", "Không có dữ liệu");
+//
+//         // Tạo biểu đồ
+//         JFreeChart barChart = ChartFactory.createBarChart(
+//             "Doanh Thu", // Tiêu đề biểu đồ
+//             "Thời Gian", // Nhãn trục X
+//             "Doanh Thu", // Nhãn trục Y
+//             dataset
+//         );
+//
+//         // Cấu hình biểu đồ
+//         CategoryPlot plot = barChart.getCategoryPlot();
+//         BarRenderer renderer = new BarRenderer();
+//         renderer.setMaximumBarWidth(0.05);
+//         plot.setRenderer(renderer);
+//
+//         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//         yAxis.setTickUnit(new NumberTickUnit(50000)); // Đặt khoảng cách giữa các tick là 1 triệu
+//         NumberFormat customFormat = new DecimalFormat("###,###");
+//         yAxis.setNumberFormatOverride(customFormat);
+//
+//         return barChart;
+//     }
+//	
+//	private JFreeChart createChart() {
+//        JFreeChart barChart = ChartFactory.createBarChart(
+//                "BIỂU ĐỒ DOANH THU",
+//                "Thời gian",
+//                "Doanh thu",
+//                createDataset(),
+//                PlotOrientation.VERTICAL,
+//                false,  
+//                true,   
+//                false 
+//        );
+//        return barChart;
+//    }
+//	private CategoryDataset createDataset() {
+//	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//	    
+//	    for (Object[] row : data) {
+//            if (row != null) {
+//                String time = row[2] != null ? row[2].toString() : "Không xác định";
+//                BigDecimal doanhThu = (BigDecimal) row[1];
+//                dataset.addValue(doanhThu, "Doanh Thu", time);
+//            }
+//        }
+//	    
+//
+//
+//	    return dataset; 
+//	}
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub

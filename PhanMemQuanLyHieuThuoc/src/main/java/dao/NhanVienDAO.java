@@ -259,5 +259,36 @@ private ArrayList<NhanVien> dsNhanVien;
 	    return maNhanVienCuoi;
 
 	}
+	
+	// thống kê nhân viên
+	public ArrayList<Object[]> thongKeDoanhThu() {
+	    ArrayList<Object[]> thongKeList = new ArrayList<>();
+	    String sql = "SELECT nv.MaNhanVien, nv.HoTen, " +
+	             "COUNT(ct.MaChiTietHoaDon) AS SoLuongDaBan, " +
+	             "SUM(ct.TongTien) AS DoanhThu " +
+	             "FROM NhanVien nv " +
+	             "JOIN HoaDon hd ON nv.MaNhanVien = hd.MaNhanVien " +
+	             "JOIN ChiTietHoaDon ct ON hd.MaHoaDon = ct.MaHoaDon " +
+	             "JOIN SanPhamYTe sp ON ct.MaSanPham = sp.MaSanPham " +
+	             "GROUP BY nv.MaNhanVien, nv.HoTen;";
+
+	    
+	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+	        while (rs.next()) {
+	            String maNhanVien = rs.getString("MaNhanVien");
+	            String hoTen = rs.getString("HoTen");
+	            int soLuongDaBan = rs.getInt("SoLuongDaBan");
+	            double doanhThu = rs.getDouble("DoanhThu");
+	            
+	            thongKeList.add(new Object[]{maNhanVien, hoTen, soLuongDaBan, doanhThu});
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return thongKeList;
+	}
+
 
 }

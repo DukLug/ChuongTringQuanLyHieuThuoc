@@ -269,7 +269,8 @@ public class BanHangCTR {
 	}
     
     public boolean themChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-    	return cthd_dao.themChiTietHoadon(chiTietHoaDon);
+//    	return cthd_dao.themChiTietHoadon(chiTietHoaDon);
+    	return true;
     }
 
 	public String timMaLoTheoMaSP(String maSP) {

@@ -333,7 +333,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 		if (o.equals(btnThem)) {
 			if (kiemTraDuLieu()) {
 				kh = layThongTin();
-				System.out.println(kh);
+			
 				if (KhachHangCTR.kiemTraTrung(kh.getMaKhachHang())) {
 					JOptionPane.showMessageDialog(this, "Mã khách hàng bị trùng");
 					return;
@@ -343,6 +343,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
 					data = KhachHangCTR.layData();
 					tableKH.capNhatDuLieu(data);
+					xoaTrang();
 				}
 				else
 					JOptionPane.showMessageDialog(this, "Thêm không thành công");
@@ -357,6 +358,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
 					data = KhachHangCTR.layData();
 					tableKH.capNhatDuLieu(data);
+					xoaTrang();
 				} else
 					JOptionPane.showMessageDialog(this, "Cập nhật không thành công");
 			}

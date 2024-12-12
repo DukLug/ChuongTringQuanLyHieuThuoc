@@ -7,42 +7,16 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Random;
-
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import connectDB.ConnectDB;
 import controller.LoaiSanPhamCTR;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import customDataType.ChucVu;
 import customDataType.TrangThaiLamViec;
-import dao.SanPhamYTeDAO;
-import entity.NhanVien;
-import entity.SanPhamYTe;
-import functionalClass.DataImporter;
 import functionalClass.GlobalExceptionHandler;
 import functionalClass.SearchTool;
 import testEntity.TestNguoi;
 import testEntity.Thuoc;
 import userInterface.*;
-import userInterface.NhapHangUI.NhapHangRow;
 
 public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = false;

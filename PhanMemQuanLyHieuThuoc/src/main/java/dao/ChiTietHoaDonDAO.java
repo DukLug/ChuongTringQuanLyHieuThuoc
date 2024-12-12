@@ -73,45 +73,46 @@ public class ChiTietHoaDonDAO {
 //		}
 		
 		// lấy danh sách các cgi tiet doi tra
-//		public ArrayList<ChiTietHoaDon> layDSCTHD() {
-//		    ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<>();
-//		    try {
-//		        ConnectDB.getInstance();
-//		        Connection con = ConnectDB.getConnection();
-//		        String sql = "SELECT * FROM ChiTietHoaDon";
-//		        Statement statement = con.createStatement();
-//		        
-//		        // Thực thi câu lệnh SQL và trả về ResultSet
-//		        ResultSet rs = statement.executeQuery(sql);
-//		        
-//		        // Duyệt qua các kết quả trả về
-//		        while (rs.next()) {
-//		            String maCTHD = rs.getString(1);
-//		            int soLuong = rs.getInt(2);
-//		            BigDecimal tongTien = rs.getBigDecimal(3);
-//		            String maHD = rs.getString(4);
-//		            HoaDon hoaDon = new HoaDon(maHD);
-//		            
-//		            String maSP = rs.getString(5);
-//		            SanPhamYTe sanPham = new SanPhamYTe(maSP);
-//		            
-//		            String maLo = rs.getString(6);
-//					LoHang LoHang = new LoHang(maLo);
-//					
-//					String maLoThayThe = rs.getString(7);
-//					LoHang LohayThe = new LoHang(maLoThayThe);
-//
-//					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hoaDon, sanPham, LoHang, LohayThe);
-//
-//		            dsCTHD.add(chiTietHoaDon);
-//		        }
-//		        
-//		    } catch (SQLException e) {
-//		        e.printStackTrace();
-//		    }
-//		    
-//		    return dsCTHD;
-//		}
+		public ArrayList<ChiTietHoaDon> layDSCTHD() {
+		    ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<>();
+		    try {
+		        ConnectDB.getInstance();
+		        Connection con = ConnectDB.getConnection();
+		        String sql = "SELECT * FROM ChiTietHoaDon";
+		        Statement statement = con.createStatement();
+		        
+		        // Thực thi câu lệnh SQL và trả về ResultSet
+		        ResultSet rs = statement.executeQuery(sql);
+		        
+		        // Duyệt qua các kết quả trả về
+		        while (rs.next()) {
+		            String maCTHD = rs.getString(1);
+		            int soLuong = rs.getInt(2);
+		            BigDecimal tongTien = rs.getBigDecimal(3);
+		            String maHD = rs.getString(4);
+		            HoaDon hoaDon = new HoaDon(maHD);
+		            
+		            String maSP = rs.getString(5);
+		            SanPhamYTe sanPham = new SanPhamYTe(maSP);
+		            
+		            String maLo = rs.getString(6);
+					LoHang LoHang = new LoHang(maLo);
+					
+					String maLoThayThe = rs.getString(7);
+					LoHang LohayThe = new LoHang(maLoThayThe);
+
+//					 = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hoaDon, sanPham, LoHang, LohayThe);
+					 ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, soLuong, soLuong, tongTien, hoaDon, sanPham, LoHang, LohayThe);
+
+		            dsCTHD.add(chiTietHoaDon);
+		        }
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return dsCTHD;
+		}
 		
 
 }

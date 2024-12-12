@@ -643,7 +643,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			
 			if (phanPhanTramKM == 0) {
 				Object[][] dsKM = bh_ctr.timDSKhuyenMai(tongTienHD);
-				maKM = (String) dsKM[0][0];
+//				maKM = (String) dsKM[0][0];
 			}
 				
 			Object selectedValue = comboBoxChietKhau.getSelectedItem();

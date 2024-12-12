@@ -201,6 +201,9 @@ public class BanHangCTR {
 	    return data;
 	}
 
+	public BigDecimal tinhTienTraKhach(BigDecimal tienKhachDua, BigDecimal tienPhaiTra) {
+		return tienKhachDua.subtract(tienPhaiTra);
+	}
 
 	public BigDecimal tinhTienKhachPhaiTra(BigDecimal tongTienHD, BigDecimal tienKhuyenMai, BigDecimal tienChietKhau) {
 	    return tongTienHD.subtract(tienKhuyenMai).subtract(tienChietKhau);

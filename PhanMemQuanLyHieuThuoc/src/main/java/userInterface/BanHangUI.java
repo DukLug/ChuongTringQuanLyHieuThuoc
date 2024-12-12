@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SortOrder;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -272,7 +274,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		txtKhachDua = new JTextField();
 		txtKhachDua.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtKhachDua.setDisabledTextColor(Color.BLACK);
-		txtKhachDua.setEnabled(false);
 		txtKhachDua.setColumns(10);
 		txtKhachDua.setBounds(187, 165, 288, 30);
 		txtKhachDua.setBorder(new LineBorder(Color.BLACK, 1)); 
@@ -564,22 +565,41 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 				
 			String tenKh = txtTenKH.getText().trim();
 			String sdtKH = txtSDT.getText().trim();
-			int diemTicLuy = 0;
-			String ma = kh_ctr.taoMa();
+			
+			kh = bh_ctr.timKHTheoSDT(sdtKH);
+			
+			if (kh == null) {	
+				int diemTicLuy = 0;
+				String ma = kh_ctr.taoMa();
 
-		
-			KhachHang khachHangMoi = new KhachHang(ma, tenKh, sdtKH, diemTicLuy);
+				KhachHang khachHangMoi = new KhachHang(ma, tenKh, sdtKH, diemTicLuy);
 				
-			if (bh_ctr.themKH(khachHangMoi)) {
-				kh = bh_ctr.timKHTheoSDT(sdtKH);
-					
-				chckbxKhachLe.setSelected(false);
-				txtTenKH.setText(kh.getHoTen());
-				txtCCCD.setText(kh.getCccd());
-				txtDTL.setText(Integer.toString(kh.getDiemTichLuy()));
-				txtSDT.setText(kh.getSdt());
-	
-				tinhChietKhau(sdtKH);
+				if (bh_ctr.themKH(khachHangMoi)) {
+					chckbxKhachLe.setSelected(false);
+					txtTenKH.setText(khachHangMoi.getHoTen());
+					txtCCCD.setText(khachHangMoi.getCccd());
+					txtDTL.setText(Integer.toString(khachHangMoi.getDiemTichLuy()));
+					txtSDT.setText(khachHangMoi.getSdt());
+		
+					tinhChietKhau(sdtKH);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "Khách hàng đã tồn tại");
+				return;
+			}
+			
+
+		}
+		
+		if (o.equals(txtKhachDua)) {
+			if (o.equals(txtKhachDua)) {
+			    BigDecimal tienKhachPhaiTra = bh_ctr.removeFormatting(txtKhachPhaiTra.getText().trim());
+			    BigDecimal tienKhachDua = new BigDecimal(txtKhachDua.getText().trim());
+
+			    BigDecimal tienThua = bh_ctr.tinhTienTraKhach(tienKhachDua, tienKhachPhaiTra);
+			    
+			    txtTienThua.setText(bh_ctr.formatDecimal(tienThua));
 			}
 
 		}
@@ -587,64 +607,65 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		// thêm hóa đơn
 		if (o.equals(btnTaoHD)) {
 			
-			kiemTraSLTon(banHangList);
-			
-			if (!chckbxKhachLe.isSelected() || txtSDT.getText().trim() == null) {
-				JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
-				return;
-			}
-			
-			String maHD = bh_ctr.taoMaHoaDon();
-			LocalDate localDate = LocalDate.now(); // Lấy ngày hiện tại
-			Date ngayTao = Date.valueOf(localDate);
-			int dtl = bh_ctr.tinhSoDTLDaDung(tienChietKhau);
-			BigDecimal thanhTien = tienKhachPhaiTra;
-			NhanVien nhanVien = new NhanVien("NV000001");
-			KhachHang khachHang = new KhachHang(kh.getMaKhachHang());
-			KhuyenMai khuyenMai = new KhuyenMai(maKM);
-			int diemDaDung = bh_ctr.tinhSoDTLDaDung(tienChietKhau);
-			LoaiHoaDon loaiHD = (LoaiHoaDon) comboBoxLoaiHD.getSelectedItem();
-			
-			HoaDon hoaDon = new HoaDon(maHD, ngayTao, dtl, thanhTien, nhanVien, khuyenMai, khachHang, loaiHD);
-			
-			if (bh_ctr.themHD(hoaDon)) {
-	
-				bh_ctr.capNhatDTL(khachHang, diemDaDung, thanhTien);
+			if (kiemTraSLTon(banHangList)) {
 				
-				for (CustomItem item : banHangList.getItemList()) {
-			        if (item instanceof BanHangRow) {
-			            BanHangRow row = (BanHangRow) item;
-			            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
-
-			            String maCTHD = bh_ctr.taoMaChiTietHoaDon(hoaDon.getMaHoaDon());
-						BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(sanPham.giaBanDonViTinh1, sanPham.giaBanDonViTinh2, sanPham.giaBanDonViTinh3, 
-								sanPham.soLuongDVT1 + "", sanPham.soLuongDVT2 + "", sanPham.soLuongDVT3 + "");
-						HoaDon hd = new HoaDon(maHD);
-						String maSP = sanPham.maThuoc;
-						SanPhamYTe sanPhamYTe = new SanPhamYTe(maSP);
-						
-						String maLo = bh_ctr.timMaLoTheoMaSP(maSP);
-						LoHang LoHang = new LoHang(maLo);
-						
-						String maLoThayThe = null;
-						LoHang LohayThe = new LoHang(maLoThayThe);
-
-						ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3,
-								tongTien, hd, sanPhamYTe, LoHang, LohayThe);
-						
-						if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)) 
-							continue;
-			        }
+				if (!chckbxKhachLe.isSelected() || txtSDT.getText().trim() == null) {
+					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+					return;
 				}
 				
-				JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
-			}
+				String maHD = bh_ctr.taoMaHoaDon();
+				LocalDate localDate = LocalDate.now(); // Lấy ngày hiện tại
+				Date ngayTao = Date.valueOf(localDate);
+				int dtl = bh_ctr.tinhSoDTLDaDung(tienChietKhau);
+				BigDecimal thanhTien = tienKhachPhaiTra;
+				NhanVien nhanVien = new NhanVien("NV000001");
+				KhachHang khachHang = new KhachHang(kh.getMaKhachHang());
+				KhuyenMai khuyenMai = new KhuyenMai(maKM);
+				int diemDaDung = bh_ctr.tinhSoDTLDaDung(tienChietKhau);
+				LoaiHoaDon loaiHD = (LoaiHoaDon) comboBoxLoaiHD.getSelectedItem();
 				
-			else
-				JOptionPane.showMessageDialog(this, "Thêm HD không thành công");
+				HoaDon hoaDon = new HoaDon(maHD, ngayTao, dtl, thanhTien, nhanVien, khuyenMai, khachHang, loaiHD);
+				
+				if (bh_ctr.themHD(hoaDon)) {
+		
+					bh_ctr.capNhatDTL(khachHang, diemDaDung, thanhTien);
+					
+					for (CustomItem item : banHangList.getItemList()) {
+				        if (item instanceof BanHangRow) {
+				            BanHangRow row = (BanHangRow) item;
+				            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
 
-			xoaTrangTTKH();
-			lamMoi();
+				            String maCTHD = bh_ctr.taoMaChiTietHoaDon(hoaDon.getMaHoaDon());
+							BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(sanPham.giaBanDonViTinh1, sanPham.giaBanDonViTinh2, sanPham.giaBanDonViTinh3, 
+									sanPham.soLuongDVT1 + "", sanPham.soLuongDVT2 + "", sanPham.soLuongDVT3 + "");
+							HoaDon hd = new HoaDon(maHD);
+							String maSP = sanPham.maThuoc;
+							SanPhamYTe sanPhamYTe = new SanPhamYTe(maSP);
+							
+							String maLo = bh_ctr.timMaLoTheoMaSP(maSP);
+							LoHang LoHang = new LoHang(maLo);
+							
+							String maLoThayThe = null;
+							LoHang LohayThe = new LoHang(maLoThayThe);
+
+							ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3,
+									tongTien, hd, sanPhamYTe, LoHang, LohayThe);
+							
+							if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)) 
+								continue;
+				        }
+					}
+					
+					JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
+				}
+					
+				else
+					JOptionPane.showMessageDialog(this, "Thêm HD không thành công");
+
+				xoaTrangTTKH();
+				lamMoi();
+			}
 			
 		}
 		
@@ -682,6 +703,9 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			
 			tienKhachPhaiTra = bh_ctr.tinhTienKhachPhaiTra(tongTienHD, tienKhuyenMai, tienChietKhau);
 			txtKhachPhaiTra.setText(bh_ctr.formatDecimal(tienKhachPhaiTra));
+			
+			txtKhachDua.setText(bh_ctr.formatDecimal(tienKhachPhaiTra));
+			txtTienThua.setText(bh_ctr.formatDecimal(new BigDecimal(0)));
 		}
 		else {
 			lamMoi();
@@ -757,17 +781,25 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		private JLabel lblSTT;
 		private int STT;
 		private CustomButton btnGiam1;
-		private JTextField txtSLBan1;
+		private static JTextField txtSLBan1;
 		private CustomButton btnTang1;
 		private JLabel lblDVT1;
 		private CustomButton btnGiam2;
-		private JTextField txtSLBan2;
+		private static JTextField txtSLBan2;
 		private CustomButton btnTang2;
 		private JLabel lblDVT2;
 		private CustomButton btnGiam3;
-		private JTextField txtSLBan3;
+		private static JTextField txtSLBan3;
 		private CustomButton btnTang3;
 		private JLabel lblDVT3;
+		private int thayDoi1_1;
+		
+		private int thayDoi1 = 0;
+		private int thayDoi2 = 0;
+		private int thayDoi3 = 0;
+		private int thayDoi2_2;
+		private int thayDoi3_3;
+			
 		
 		public BanHangRow(int stt, Thuoc thuoc) {
 			super(prefWidth, prefHeight, backgroundColor, border, cellsWidth);
@@ -821,7 +853,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		    cell3.add(txtSLBan1);
 		    cell3.add(btnTang1);
 		    cell3.add(lblDVT1);
-
 		    
 		    // cột 4: 
 		    JPanel cell4 = new JPanel();
@@ -927,9 +958,74 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		    
 		    btnXoa.addActionListener(this);
 		    
-		    txtSLBan1.addActionListener(this);
-		    txtSLBan2.addActionListener(this);
-		    txtSLBan3.addActionListener(this);
+//		    txtSLBan1.addActionListener(this);
+//		    txtSLBan2.addActionListener(this);
+//		    txtSLBan3.addActionListener(this);
+		    
+		    txtSLBan1.addActionListener(e -> {
+		        String soLuongText = txtSLBan1.getText().trim();
+		        
+		        if(kiemTraSLNhapVao(soLuongText)) {
+//		        	thayDoi1_1 = 0;  
+//		            thayDoi2_2 = 0;
+//		            thayDoi3_3 = 0;
+//		            
+		        	int soLuong = Integer.parseInt(soLuongText);
+//		            thayDoi1_1 = soLuong - thuoc.soLuongDVT1;  
+//		            thayDoi2_2 = 0;
+//		            thayDoi3_3 = 0;
+//		            System.out.println(thayDoi1);
+//		            System.out.println(thayDoi1_1 + ", " + thayDoi2_2 + ", " + thayDoi3_3);
+//		            capNhatSL(thayDoi1_1, thayDoi2_2, thayDoi3_3);
+		        	thuoc.soLuongDVT1 = soLuong;
+		        	txtSLBan1.setText(soLuongText);
+		        	tinhCacLoaiTienCuaHD();
+		        	BigDecimal tongTien1 = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+				    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
+			        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien1));
+		        } else {
+		        	JOptionPane.showMessageDialog(this, "Chỉ nhập số");
+		        	txtSLBan1.setText(String.valueOf(thuoc.soLuongDVT1));
+		        }
+	            
+		        
+		    });
+		    
+		    txtSLBan2.addActionListener(e -> {
+		        String soLuongText = txtSLBan2.getText().trim();
+		        
+		        if(kiemTraSLNhapVao(soLuongText)) {
+		        	int soLuong = Integer.parseInt(soLuongText);
+		        	thuoc.soLuongDVT2 = soLuong;
+		        	tinhCacLoaiTienCuaHD();
+		        	BigDecimal tongTien1 = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+				    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
+			        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien1));
+		        } else {
+		        	JOptionPane.showMessageDialog(this, "Chỉ nhập số");
+		        	txtSLBan2.setText(String.valueOf(thuoc.soLuongDVT2));
+		        }
+	            
+		        
+		    });
+		    
+		    txtSLBan3.addActionListener(e -> {
+		        String soLuongText = txtSLBan3.getText().trim();
+		        
+		        if(kiemTraSLNhapVao(soLuongText)) {
+		        	int soLuong = Integer.parseInt(soLuongText);
+		        	thuoc.soLuongDVT3 = soLuong;
+		        	tinhCacLoaiTienCuaHD();
+		        	BigDecimal tongTien1 = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+				    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
+			        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien1));
+		        } else {
+		        	JOptionPane.showMessageDialog(this, "Chỉ nhập số");
+		        	txtSLBan3.setText(String.valueOf(thuoc.soLuongDVT3));
+		        }
+	            
+		        
+		    });
 		}
 		
 		public void capNhatSoLuong(int thayDoi1, int thayDoi2, int thayDoi3) {
@@ -968,20 +1064,22 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		        this.STT = stt;  // Cập nhật STT
 		        lblSTT.setText(String.valueOf(stt));  // Cập nhật lại giá trị STT trên giao diện
 		    }
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object o = e.getSource();
 			
-			int thayDoi1 = 0;
-			int thayDoi2 = 0;
-			int thayDoi3 = 0;
+			
 			
 			int SLSP1 = Integer.parseInt(txtSLBan1.getText());
 			int SLSP2 = Integer.parseInt(txtSLBan2.getText());
 			int SLSP3 = Integer.parseInt(txtSLBan3.getText());
 			
 			if (banHangList.getItemList().size() >= 1) {
+				thayDoi1 = 0;
+				thayDoi2 = 0;
+				thayDoi3 = 0;
+				
 				if (o.equals(btnTang1)) {
 			        thayDoi1 = 1; 
 			    }
@@ -1053,6 +1151,28 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			    
 			} 
 		}
+		
+//		private void capNhatSL(int thayDoi1_1, int thayDoi2_2, int thayDoi3_3) {
+//			 	capNhatSoLuong(thayDoi1_1, thayDoi2_2, thayDoi3_3); 
+//             
+////				int SLSP1 = Integer.parseInt(txtSLBan1.getText());
+////				int SLSP2 = Integer.parseInt(txtSLBan2.getText());
+////				int SLSP3 = Integer.parseInt(txtSLBan3.getText());
+//				
+////		        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+////			    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
+////		        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien));
+//		        
+////		        SLSP1 = thuoc.soLuongDVT1;
+////		        SLSP2 = thuoc.soLuongDVT2;
+////		        SLSP3 = thuoc.soLuongDVT3;
+//		        
+//		        tinhCacLoaiTienCuaHD();
+//		}
+		
+		private boolean kiemTraSLNhapVao(String soLuong) {
+		    return soLuong.matches("\\d+");  // Kiểm tra chuỗi có chứa chỉ các chữ số
+		}
 
 		private void capNhatBang(CustomItemList list) {
 		    ArrayList<CustomItem> bang = new ArrayList<>();
@@ -1104,7 +1224,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 
 	}
 	
-	private void kiemTraSLTon(CustomItemList banHangList) {
+	private boolean kiemTraSLTon(CustomItemList banHangList) {
 		for (CustomItem item : banHangList.getItemList()) {
 	        if (item instanceof BanHangRow) {
 	            BanHangRow row = (BanHangRow) item;
@@ -1114,18 +1234,23 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	            
 	            if (loHang.getSoLuongDonViTinh1() < sanPham.soLuongDVT1) {
 	                JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT1) chi còn " + loHang.getSoLuongDonViTinh1());
-	                return;
+//	                sanPham.soLuongDVT1 = loHang.getSoLuongDonViTinh1();
+	                return false;
 	            }
 	            if (loHang.getSoLuongDonViTinh2() < sanPham.soLuongDVT2) {
 	            	 JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT2) chi còn " + loHang.getSoLuongDonViTinh2());
-	                return;
+//	            	 sanPham.soLuongDVT2 = loHang.getSoLuongDonViTinh2();
+	                return false;
 	            }
-	            if (loHang.getSoLuongDonViTinh3() < sanPham.soLuongDVT3) {
+	            if ((loHang.getSoLuongDonViTinh3() < sanPham.soLuongDVT3) ) {
 	            	 JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT3) chi còn " + loHang.getSoLuongDonViTinh3());
-	                return;
+//	            	 sanPham.soLuongDVT3 = loHang.getSoLuongDonViTinh3();
+	                return false;
 	            }
 	        }
 		}
+		
+		return true;
 	}
 	
 	private void layThoiGianHienTai() {

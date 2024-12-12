@@ -146,7 +146,35 @@ private ArrayList<NhanVien> dsNhanVien;
 		    }
 		return dsNhanVien;
 	}
-	
+	// tìm nhân viên theo mã nhân viên
+		public static ArrayList<NhanVien> timNhanVienTheoMaStatic(String maNhanVien) {
+			ArrayList<NhanVien> dsNhanVien = new ArrayList<>();
+			 try {
+			        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where MaNhanVien = ?");
+			        ps.setString(1, maNhanVien);
+			        ResultSet rs = ps.executeQuery();
+			        while (rs.next()) {
+
+			            String maNV1 = rs.getString("MaNhanVien");
+
+			            String hoTen = rs.getString("HoTen");
+			            String sdt = rs.getString("Sdt");
+			            String cccd = rs.getString("Cccd");
+			            Date ngaySinh = rs.getDate("NgaySinh");
+
+			            GioiTinh gioiTinh = GioiTinh.fromString(rs.getString("GioiTinh"));
+			            TrangThaiLamViec trangThai = TrangThaiLamViec.fromString(rs.getString("TrangThaiLamViec"));
+			            ChucVu chucVu = ChucVu.fromString(rs.getString("ChucVu"));
+
+			            NhanVien nv = new NhanVien(maNV1, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
+			            dsNhanVien.add(nv);
+			        }
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			    }
+			return dsNhanVien;
+		}
 	public NhanVien layNhanVienTheoMa(String maNhanVien) {
 	    NhanVien nv = null;
 

@@ -60,7 +60,7 @@ public class TaiKhoan {
 			throw new  IllegalArgumentException("Mật khẩu không được null");
 		if (matKhau.isEmpty())
 			throw new  IllegalArgumentException("Mật khẩu không được rỗng");
-		if (matKhau.matches("^[a-zA-Z]+@[0-9]{4}$") == false)
+		if (matKhau.matches("^[a-zA-Z0-9]{6,}$") == false)
 			throw new  IllegalArgumentException("Sai mật khẩu");
 		
 		this.matKhau = matKhau;

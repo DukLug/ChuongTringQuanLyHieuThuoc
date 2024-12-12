@@ -2,15 +2,21 @@ package userInterface;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -39,6 +45,10 @@ public class LoHangUI extends JPanel {
     
     private CustomTable bangLoHang;
     
+    // Biến để theo dõi chế độ Hủy Hàng
+    private boolean huyHangMode = false;
+    CustomButton huyHangBTN = new CustomButton("Hủy Hàng", UIStyles.DoiTraButtonStyle,() -> batDauHuyHang()); 
+    
     public LoHangUI() {
         super();
         
@@ -49,8 +59,14 @@ public class LoHangUI extends JPanel {
     
     public void taoHinh() {
         setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
-        this.setBackground(Color.LIGHT_GRAY);
-        this.add(new JLabel("Quản Lý Lô Hàng"));
+        this.setBackground(UIStyles.BackgroundColor);
+        
+        // JLabel tiêu đề "Danh sách nhân viên"
+        JPanel titlePanel = new JPanel();
+     	JLabel lblTitle= new JLabel("Quản lý lô hàng");
+     	lblTitle.setFont(new Font("Tahoma", Font.BOLD, 35));
+     	titlePanel.add(lblTitle);
+     	titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         // Create custom table
         bangLoHang = new CustomTable(duLieuBang, tenCot, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
@@ -60,11 +76,162 @@ public class LoHangUI extends JPanel {
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(bangLoHang);
         scrollPane.setPreferredSize(new Dimension(1800, 600));
-        add(scrollPane);
         
-        JScrollBar sb = scrollPane.getVerticalScrollBar();
-        add(new CustomButton("Thêm Lô Hàng", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, 
-                CustomButtonIconSide.LEFT, () -> themLoHang()));
+
+        
+        add(titlePanel);
+        add(scrollPane);
+        // Thêm nút Thêm Lô Hàng
+        add(new CustomButton("Thêm Lô Hàng", UIStyles.BanHangButtonStyle, 
+                () -> themLoHang()));
+        
+        // Thêm nút Hủy Hàng
+        add(huyHangBTN);
+        
+        // Sự kiện click chuột trên bảng
+        bangLoHang.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (huyHangMode) {
+                    int selectedRow = bangLoHang.getSelectedRow();
+                    if (selectedRow != -1) {
+                        hienThiChinhSuaLoHang(selectedRow);
+                    }
+                }
+            }
+        });
+    }
+    
+    // Phương thức bắt đầu chế độ Hủy Hàng
+    private void batDauHuyHang() {
+        huyHangMode = !huyHangMode;
+        if (huyHangMode) {
+            JOptionPane.showMessageDialog(this, 
+                "Chế độ Hủy Hàng đã bật. Chọn lô hàng để điều chỉnh số lượng.", 
+                "Hủy Hàng", 
+                JOptionPane.INFORMATION_MESSAGE);
+            huyHangBTN.setText("Hoàn thành");
+            
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Chế độ Hủy Hàng đã tắt.", 
+                "Hủy Hàng", 
+                JOptionPane.INFORMATION_MESSAGE);
+            huyHangBTN.setText("Hủy Hàng");
+        }
+    }
+    
+    // Phương thức hiển thị dialog chỉnh sửa lô hàng
+    private void hienThiChinhSuaLoHang(int rowIndex) {
+        LoHang loHang = danhSachLoHang.get(rowIndex);
+        
+        // Tạo dialog để chỉnh sửa
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Điều Chỉnh Số Lượng Lô Hàng");
+        dialog.setSize(400, 300);
+        dialog.setModal(true);
+        dialog.setLocationRelativeTo(null);
+        
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        // Hiển thị thông tin hiện tại
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Mã Lô: " + loHang.getMaLo()), gbc);
+        
+        gbc.gridy = 1;
+        panel.add(new JLabel("Sản Phẩm: " + loHang.getSanPham().getTenSanPham()), gbc);
+        
+        // Số lượng hiện tại
+        gbc.gridy = 2;
+        panel.add(new JLabel("Số Lượng Hiện Tại:"), gbc);
+        gbc.gridx = 1;
+        panel.add(new JLabel(
+            "ĐVT1: " + loHang.getSoLuongDonViTinh1() + 
+            ", ĐVT2: " + loHang.getSoLuongDonViTinh2() + 
+            ", ĐVT3: " + loHang.getSoLuongDonViTinh3()
+        ), gbc);
+        
+        // Nhập số lượng mới
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Số Lượng ĐVT1 Mới:"), gbc);
+        gbc.gridx = 1;
+        JTextField txtSoLuongDVT1 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh1()), 10);
+        panel.add(txtSoLuongDVT1, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(new JLabel("Số Lượng ĐVT2 Mới:"), gbc);
+        gbc.gridx = 1;
+        JTextField txtSoLuongDVT2 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh2()), 10);
+        panel.add(txtSoLuongDVT2, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panel.add(new JLabel("Số Lượng ĐVT3 Mới:"), gbc);
+        gbc.gridx = 1;
+        JTextField txtSoLuongDVT3 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh3()), 10);
+        panel.add(txtSoLuongDVT3, gbc);
+        
+        // Nút Cập Nhật
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        JButton btnCapNhat = new JButton("Cập Nhật");
+        btnCapNhat.addActionListener(e -> {
+            try {
+                // Kiểm tra và chuyển đổi số lượng
+                int soLuongDVT1 = Integer.parseInt(txtSoLuongDVT1.getText().trim());
+                int soLuongDVT2 = Integer.parseInt(txtSoLuongDVT2.getText().trim());
+                int soLuongDVT3 = Integer.parseInt(txtSoLuongDVT3.getText().trim());
+                
+                // Kiểm tra số lượng không âm
+                if (soLuongDVT1 < 0 || soLuongDVT2 < 0 || soLuongDVT3 < 0) {
+                    throw new IllegalArgumentException("Số lượng không được âm");
+                }
+                
+                // Cập nhật lô hàng
+                loHang.setSoLuongDonViTinh1(soLuongDVT1);
+                loHang.setSoLuongDonViTinh2(soLuongDVT2);
+                loHang.setSoLuongDonViTinh3(soLuongDVT3);
+                
+                // Gọi phương thức cập nhật từ KhoCTR
+                boolean capNhatThanhCong = KhoCTR.capNhatLoHang(loHang);
+                
+                if (capNhatThanhCong) {
+                    JOptionPane.showMessageDialog(dialog, 
+                        "Cập nhật lô hàng thành công!", 
+                        "Thành Công", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                    
+                    // Làm mới danh sách và bảng
+                    refreshDanhSachLoHang();
+                    dialog.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(dialog, 
+                        "Cập nhật lô hàng thất bại!", 
+                        "Lỗi", 
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, 
+                    "Vui lòng nhập số lượng hợp lệ!", 
+                    "Lỗi Nhập Liệu", 
+                    JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(dialog, 
+                    ex.getMessage(), 
+                    "Lỗi", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        panel.add(btnCapNhat, gbc);
+        
+        dialog.add(panel);
+        dialog.setVisible(true);
     }
     
     private void chuanBiDuLieu() {
@@ -82,8 +249,10 @@ public class LoHangUI extends JPanel {
                 String.valueOf(loHang.getSoLuongDonViTinh2()),
                 String.valueOf(loHang.getSoLuongDonViTinh3()),
                 loHang.getViTri() != null ? loHang.getViTri() : "Chưa xác định",
-                loHang.getSanPham() != null ? loHang.getSanPham().getTenSanPham() : "Không có sản phẩm"
+                loHang.getSanPham() != null ? SanPhamCTR.timSanPhamTheoMaSanPham( loHang.getSanPham().getMaSanPham()).getTenSanPham() : "Không có sản phẩm"
+                	
             };
+            
         }
     }
     

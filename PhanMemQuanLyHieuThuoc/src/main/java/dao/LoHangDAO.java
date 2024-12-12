@@ -48,6 +48,9 @@ public class LoHangDAO {
                     viTri, sanPham, chiTietDonNhap);
                 
                 dsLoHang.add(loHang);
+                loHang.setSoLuongDonViTinh1(soLuongDonViTinh1);
+                loHang.setSoLuongDonViTinh2(soLuongDonViTinh2);
+                loHang.setSoLuongDonViTinh3(soLuongDonViTinh3);
             }
         } catch (SQLException e) {
             e.printStackTrace();

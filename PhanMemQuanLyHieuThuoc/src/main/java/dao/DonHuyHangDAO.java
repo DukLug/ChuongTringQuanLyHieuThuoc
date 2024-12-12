@@ -27,15 +27,15 @@ public class DonHuyHangDAO {
             ResultSet rs = statement.executeQuery(sql);
             
             while (rs.next()) {
-                String maDonHuyHang = rs.getString("MaDonHuyHang");
+                String maDonHuyHang = rs.getNString("MaDonHuyHang");
                 java.sql.Date ngayHuy = rs.getDate("NgayHuy");
                 int soLuongDonViTinh1 = rs.getInt("SoLuongDonViTinh1");
                 int soLuongDonViTinh2 = rs.getInt("SoLuongDonViTinh2");
                 int soLuongDonViTinh3 = rs.getInt("SoLuongDonViTinh3");
                 
                 // Fetch related LoHang and NhanVien
-                String maLoHang = rs.getString("MaLoHang");
-                String maNhanVien = rs.getString("MaNhanVien");
+                String maLoHang = rs.getNString("MaLoHang");
+                String maNhanVien = rs.getNString("MaNhanVien");
                 
                 LoHang loHang = new LoHang(maLoHang);
                 NhanVien nhanVien = new NhanVien(maNhanVien);
@@ -61,13 +61,13 @@ public class DonHuyHangDAO {
         int n = 0;
         try {
             stmt = con.prepareStatement("INSERT INTO DonHuyHang VALUES(?, ?, ?, ?, ?, ?, ?)");
-            stmt.setString(1, donHuyHang.getMaDonHuyHang());
+            stmt.setNString(1, donHuyHang.getMaDonHuyHang());
             stmt.setDate(2, donHuyHang.getNgayHuy());
             stmt.setInt(3, donHuyHang.getSoLuongDonViTinh1());
             stmt.setInt(4, donHuyHang.getSoLuongDonViTinh2());
             stmt.setInt(5, donHuyHang.getSoLuongDonViTinh3());
-            stmt.setString(6, donHuyHang.getLoHang().getMaLo());
-            stmt.setString(7, donHuyHang.getNhanVien().getMaNhanVien());
+            stmt.setNString(6, donHuyHang.getLoHang().getMaLo());
+            stmt.setNString(7, donHuyHang.getNhanVien().getMaNhanVien());
             
             n = stmt.executeUpdate();
         } catch (Exception e) {
@@ -137,8 +137,8 @@ public class DonHuyHangDAO {
                 int soLuongDonViTinh2 = rs.getInt("SoLuongDonViTinh2");
                 int soLuongDonViTinh3 = rs.getInt("SoLuongDonViTinh3");
                 
-                String maLoHang = rs.getString("MaLoHang");
-                String maNhanVien = rs.getString("MaNhanVien");
+                String maLoHang = rs.getNString("MaLoHang");
+                String maNhanVien = rs.getNString("MaNhanVien");
                 
                 LoHang loHang = new LoHang(maLoHang);
                 NhanVien nhanVien = new NhanVien(maNhanVien);

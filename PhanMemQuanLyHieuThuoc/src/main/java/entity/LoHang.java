@@ -35,7 +35,7 @@ public class LoHang {
 		setNgaySanXuat(ngaySanXuat);
 		setHanSuDung(hanSuDung);
 		setGiaNhap(giaNhap);
-		
+		System.out.println(soLuongDonViTinh1);
 		setSoLuongDonViTinh1(soLuongDonViTinh1);
 		setSoLuongDonViTinh2(soLuongDonViTinh2);
 		setSoLuongDonViTinh3(soLuongDonViTinh3);

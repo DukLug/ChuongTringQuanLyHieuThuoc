@@ -15,11 +15,11 @@ import functionalClass.SearchTool;
 import functionalClass.SearchTool.SearchCondition;
 import userInterface.BanHangUI;
 
-import userInterface.SanPhamYTeUI;
+import userInterface.TaiKhoanUI;
 
 public class SanPhamCTR {
 	
-	public static void themSanPham(SanPhamYTeUI sanPhamUI) {
+	public static void themSanPham(TaiKhoanUI sanPhamUI) {
 		
 	}
 	
@@ -87,6 +87,16 @@ public class SanPhamCTR {
 	
 	public static String layMa() {
 		return "";
+	}
+	
+	public static void capNhatNgungBan(SanPhamYTe sanPham) {
+		sanPham.setTrangThaiSanPham(TrangThaiSanPham.NgungBan);
+		SanPhamYTeDAO.updateSanPhamYTe(sanPham);
+	}
+	
+	public static void capNhatBan(SanPhamYTe sanPham) {
+		sanPham.setTrangThaiSanPham(TrangThaiSanPham.DangBan);
+		SanPhamYTeDAO.updateSanPhamYTe(sanPham);
 	}
 
 }

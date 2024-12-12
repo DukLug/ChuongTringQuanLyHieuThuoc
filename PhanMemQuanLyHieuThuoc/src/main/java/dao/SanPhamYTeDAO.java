@@ -120,24 +120,24 @@ public class SanPhamYTeDAO {
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                LoaiSanPham loai = new LoaiSanPham(rs.getString("MaLoai"));
-                NhaCungCap ncc = new NhaCungCap(rs.getString("MaNhaCungCap")); 
+                LoaiSanPham loai = new LoaiSanPham(rs.getNString("MaLoai"));
+                NhaCungCap ncc = new NhaCungCap(rs.getNString("MaNhaCungCap")); 
                 
                 sanPhamYTe = new SanPhamYTe(
-                    rs.getString("MaSanPham"),
-                    rs.getString("TenSanPham"),
+                    rs.getNString("MaSanPham"),
+                    rs.getNString("TenSanPham"),
                     
-                    rs.getString("NuocSanXuat"),
+                    rs.getNString("NuocSanXuat"),
                     TrangThaiSanPham.valueOf(rs.getString("TrangThai")),
-                    rs.getString("GhiChu"),
-                    rs.getString("MoTa"),
-                    rs.getString("DangBaoChe"),
+                    rs.getNString("GhiChu"),
+                    rs.getNString("MoTa"),
+                    rs.getNString("DangBaoChe"),
                     rs.getDouble("Thue"),
-                    rs.getString("ThanhPhan"),
+                    rs.getNString("ThanhPhan"),
                     
-                    DonViTinh.valueOf(rs.getString("DonViTinh1")),
-                    rs.getString("DonViTinh2") != null ? DonViTinh.valueOf(rs.getString("DonViTinh2")) : null,
-                    rs.getString("DonViTinh3") != null ? DonViTinh.valueOf(rs.getString("DonViTinh3")) : null,
+                    DonViTinh.valueOf(rs.getNString("DonViTinh1")),
+                    rs.getNString("DonViTinh2") != null ? DonViTinh.valueOf(rs.getNString("DonViTinh2")) : null,
+                    rs.getNString("DonViTinh3") != null ? DonViTinh.valueOf(rs.getNString("DonViTinh3")) : null,
                     
                     rs.getBigDecimal("GiaVonDonViTinh1"),
                     rs.getBigDecimal("GiaBanDonViTinh2"),
@@ -148,8 +148,8 @@ public class SanPhamYTeDAO {
                     
                     ncc,
                     loai,
-                    rs.getString("MaVach"),
-                    rs.getString("YeuCauKeDon"),
+                    rs.getNString("MaVach"),
+                    rs.getNString("YeuCauKeDon"),
                     null,
                     null
                 );
@@ -173,18 +173,18 @@ public class SanPhamYTeDAO {
         try (Connection conn = ConnectDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
-            ps.setString(1, sanPhamYTe.getTenSanPham());
-            ps.setString(2, sanPhamYTe.getNuocSanXuat());
-            ps.setString(3, sanPhamYTe.getTrangThaiSanPham().toString());
-            ps.setString(4, sanPhamYTe.getGhiChu());
-            ps.setString(5, sanPhamYTe.getMoTa());
-            ps.setString(6, sanPhamYTe.getDangBaoChe());
+            ps.setNString(1, sanPhamYTe.getTenSanPham());
+            ps.setNString(2, sanPhamYTe.getNuocSanXuat());
+            ps.setNString(3, sanPhamYTe.getTrangThaiSanPham().toString());
+            ps.setNString(4, sanPhamYTe.getGhiChu());
+            ps.setNString(5, sanPhamYTe.getMoTa());
+            ps.setNString(6, sanPhamYTe.getDangBaoChe());
             ps.setDouble(7, sanPhamYTe.getThue());
-            ps.setString(8, sanPhamYTe.getThanhPhan());
+            ps.setNString(8, sanPhamYTe.getThanhPhan());
             
-            ps.setString(9, sanPhamYTe.getDonViTinh1() != null ? sanPhamYTe.getDonViTinh1().toString() : null);
-            ps.setString(10, sanPhamYTe.getDonViTinh2() != null ? sanPhamYTe.getDonViTinh2().toString() : null);
-            ps.setString(11, sanPhamYTe.getDonViTinh3() != null ? sanPhamYTe.getDonViTinh3().toString() : null);
+            ps.setNString(9, sanPhamYTe.getDonViTinh1() != null ? sanPhamYTe.getDonViTinh1().toString() : null);
+            ps.setNString(10, sanPhamYTe.getDonViTinh2() != null ? sanPhamYTe.getDonViTinh2().toString() : null);
+            ps.setNString(11, sanPhamYTe.getDonViTinh3() != null ? sanPhamYTe.getDonViTinh3().toString() : null);
             
             ps.setBigDecimal(12, sanPhamYTe.getGiaBanDonViTinh1());
             ps.setBigDecimal(13, sanPhamYTe.getGiaBanDonViTinh2());
@@ -193,12 +193,12 @@ public class SanPhamYTeDAO {
             ps.setInt(15, sanPhamYTe.getGiaTriQuyDoi2());
             ps.setInt(16, sanPhamYTe.getGiaTriQuyDoi3());
             
-            ps.setString(17, sanPhamYTe.getNhaCungCap().getMaNhaCungCap());
-            ps.setString(18, sanPhamYTe.getLoaiSanPham().getMaLoai());
-            ps.setString(19, sanPhamYTe.getMaVach());
-            ps.setString(20, sanPhamYTe.getYeuCauKeDon());
+            ps.setNString(17, sanPhamYTe.getNhaCungCap().getMaNhaCungCap());
+            ps.setNString(18, sanPhamYTe.getLoaiSanPham().getMaLoai());
+            ps.setNString(19, sanPhamYTe.getMaVach());
+            ps.setNString(20, sanPhamYTe.getYeuCauKeDon());
             
-            ps.setString(21, sanPhamYTe.getMaSanPham());
+            ps.setNString(21, sanPhamYTe.getMaSanPham());
             
             return ps.executeUpdate() > 0;
             

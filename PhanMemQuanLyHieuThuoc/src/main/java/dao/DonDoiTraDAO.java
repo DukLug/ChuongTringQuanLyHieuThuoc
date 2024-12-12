@@ -41,10 +41,10 @@ public class DonDoiTraDAO {
 				String maHoaDon = rs.getString(1);
 				Date ngayDoiTra = rs.getDate(2);
 				BigDecimal tienHoan = rs.getBigDecimal(3);
-				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
-				KhuyenMai km = new KhuyenMai(rs.getString("MaKhuyenMai"));
-				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"));
-				HoaDon hd = new HoaDon(rs.getString("MaHoaDon"));
+				NhanVien nv = new NhanVien(rs.getNString("MaNhanVien"));
+				KhuyenMai km = new KhuyenMai(rs.getNString("MaKhuyenMai"));
+				KhachHang kh = new KhachHang(rs.getNString("MaKhachHang"));
+				HoaDon hd = new HoaDon(rs.getNString("MaHoaDon"));
 				DonDoiTra ddt = new DonDoiTra(maHoaDon, ngayDoiTra, tienHoan, nv, km, kh, hd);
 				dsHoaDonDoiTra.add(ddt);
 			}
@@ -134,7 +134,7 @@ public class DonDoiTraDAO {
 
 		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
 		             
-		            ps.setString(1, maDonDoiTra);
+		            ps.setNString(1, maDonDoiTra);
 		            ResultSet rs = ps.executeQuery();
 
 		            if (rs.next()) {
@@ -153,12 +153,12 @@ public class DonDoiTraDAO {
 		    public String maDonDoiTra(String maDonDoiTra) {
 		    	 String sql = "SELECT MaDonDoiTra FROM DonDoiTra WHERE MaDonDoiTra = ?";
 		         try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
-		             ps.setString(1, maDonDoiTra);
+		             ps.setNString(1, maDonDoiTra);
 		             ResultSet resultSet = ps.executeQuery();
 		             
 		             // Kiểm tra kết quả
 		             if (resultSet.next()) {
-		                 return resultSet.getString("MaDonDoiTra");
+		                 return resultSet.getNString("MaDonDoiTra");
 		             }
 		         } catch (SQLException e) {
 		             e.printStackTrace();
@@ -173,19 +173,19 @@ public class DonDoiTraDAO {
 		        String sql = "select * from DonDoiTra where MaDonDoiTra =  ?";
 
 		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
-		            ps.setString(1, maDonDoiTra);
+		            ps.setNString(1, maDonDoiTra);
 		            try (ResultSet rs = ps.executeQuery()) {
 		                if (rs.next()) {
-		                    String ma = rs.getString("MaDonDoiTra");
+		                    String ma = rs.getNString("MaDonDoiTra");
 		                    Date ngayDoiTra = rs.getDate("NgayDoiTra"); 
 		                    BigDecimal tienHoan = rs.getBigDecimal("TienHoan");
-		                    String maNV = rs.getString("MaNhanVien");
+		                    String maNV = rs.getNString("MaNhanVien");
 		                    NhanVien nv = new NhanVien(maNV);
-		                    String maKM = rs.getString("MaKhuyenMai");
+		                    String maKM = rs.getNString("MaKhuyenMai");
 		                    KhuyenMai km = new KhuyenMai(maKM);
-		                    String maKH = rs.getString("MaKhachHang");
+		                    String maKH = rs.getNString("MaKhachHang");
 		                    KhachHang kh = new KhachHang(maKH);
-		                    String maHD = rs.getString("MaHoaDon");
+		                    String maHD = rs.getNString("MaHoaDon");
 		                    HoaDon hd = new HoaDon(maHD);
 		               
 		                    

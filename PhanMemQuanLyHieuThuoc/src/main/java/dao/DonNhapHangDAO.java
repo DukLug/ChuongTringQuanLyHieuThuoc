@@ -26,11 +26,11 @@ public class DonNhapHangDAO {
             ResultSet rs = statement.executeQuery(sql);
             
             while (rs.next()) {
-                String maDonNhap = rs.getString("MaDonNhap");
+                String maDonNhap = rs.getNString("MaDonNhap");
                 java.sql.Date ngayNhap = rs.getDate("NgayNhap");
                 
                 // Fetch related NhanVien
-                String maNhanVien = rs.getString("MaNhanVien");
+                String maNhanVien = rs.getNString("MaNhanVien");
                 NhanVien nhanVien = new NhanVien(maNhanVien);
                 
                 DonNhapHang donNhapHang = new DonNhapHang(

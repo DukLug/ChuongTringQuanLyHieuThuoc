@@ -24,8 +24,8 @@ public class ChiTietHoaDonDAO {
 	        ResultSet rs = ps.executeQuery();
 	        
 	        while (rs.next()) {
-	            String maSanPham = rs.getString("MaSanPham");
-	            String tenSanPham = rs.getString("TenSanPham");
+	            String maSanPham = rs.getNString("MaSanPham");
+	            String tenSanPham = rs.getNString("TenSanPham");
 	            BigDecimal giaBanSanPham = rs.getBigDecimal("GiaBan");
 	            DonViTinh donViTinh = DonViTinh.fromString(rs.getString("DonViTinh"));
 	            int soLuong = rs.getInt("SoLuong");

@@ -20,6 +20,7 @@ import java.sql.Date;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -408,7 +409,10 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		// phần bảng
 		banHangList = new CustomItemList(
-				1255, 604,  100, 50, Color.white, 
+// ************************************************************************************
+//				1255, 604,  100, 50, Color.white, 
+// ************************************************************************************
+				1255, 549,  10, 50, Color.white, 
 				new int[]{30, 400, 150, 150, 150, 200, 100}, 
 				Color.LIGHT_GRAY,  50, 
 				new String[]{"","Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá Bán", "Tổng tiền", ""}, 
@@ -514,7 +518,11 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 				
 				// Nếu không tìm thấy, thêm mới vào danh sách
 	            int stt = banHangList.getItemList().size() + 1;
-	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh(), 1, sp.getGiaBan()))); // 1: số lượng mặc định khi chọn
+// ************************************************************************************
+//	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh(), 1, sp.getGiaBan()))); // 1: số lượng mặc định khi chọn
+// ************************************************************************************
+	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh1(), 1, sp.getGiaBanDonViTinh1()))); // 1: số lượng mặc định khi chọn
+				
 				tinhChietKhau(sdt);
 			}
 			
@@ -592,14 +600,15 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 						
 						String maLoThayThe = null;
 						LoHang LohayThe = new LoHang(maLoThayThe);
+// ************************************************************************************
+//						ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hd, sanPhamYTe, LoHang, LohayThe);
 						
-						ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hd, sanPhamYTe, LoHang, LohayThe);
-						
-						if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) 
-								&& bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuong))
-							JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
-						else
-							JOptionPane.showMessageDialog(this, "Thêm không thành công");
+//						if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) 
+//								&& bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuong))
+//							JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
+//						else
+//							JOptionPane.showMessageDialog(this, "Thêm không thành công");
+// ************************************************************************************
 			        }
 				}
 			}
@@ -703,8 +712,13 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	public static class BanHangRow extends CustomItem implements ActionListener{
 		private static int prefWidth = 1250;
 		private static int prefHeight = 100;
-		private static Color backgroundColor = Color.white;
-		private static Border border = new RoundedBorder(Color.BLUE, 3, 20);
+// ************************************************************************************
+//		private static Color backgroundColor = Color.white;
+//		private static Border border = new RoundedBorder(Color.BLUE, 3, 20);
+// ************************************************************************************
+		private static Font font = UIStyles.DefaultFont;
+		private static Color backgroundColor = Color.red;
+		private static Border border = BorderFactory.createEmptyBorder();
 		private BanHangCTR bh_ctr = new BanHangCTR();
 	
 		private static int[] cellsWidth = new int[] {30, 400, 150, 150, 150, 200, 100};

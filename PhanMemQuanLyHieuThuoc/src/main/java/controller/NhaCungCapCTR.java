@@ -75,6 +75,9 @@ public class NhaCungCapCTR {
 	}
 	
 	public static NhaCungCap timKiemTheoMa(String thongTin) {
+		if(danhSach==null) {
+			layData();
+		}
 	    for (Object[] row : danhSach) {
 	        String maNCC = ((String) row[0]);
 	        if (maNCC.equalsIgnoreCase(thongTin)) {
@@ -97,6 +100,10 @@ public class NhaCungCapCTR {
 	    }
 	    return false; 
 
+	}
+	
+	public static ArrayList<NhaCungCap> layDanhSachTatCaNhaCungCap(){
+		return NhaCungCapDAO.layDanhSachTatCaNhaCungCap();
 	}
 
 }

@@ -26,7 +26,9 @@ import component.CustomItem;
 import component.CustomItemList;
 import component.CustomButton.CustomButtonIconSide;
 import controller.SanPhamCTR;
+import dao.SanPhamYTeDAO;
 import entity.SanPhamYTe;
+import functionalClass.DataImporter;
 import functionalClass.SearchTool;
 
 public class SanPhamYTeUI extends JPanel {
@@ -70,7 +72,7 @@ public class SanPhamYTeUI extends JPanel {
         //them button panel
         JPanel themButtonPanel = new JPanel();
         themButtonPanel.setLayout(new BorderLayout());
-        themButtonPanel.add(new CustomButton("Thêm sản phẩm",UIStyles.ThemButtonStyle,UIStyles.Add,CustomButtonIconSide.LEFT,()->thuCapNhat()), BorderLayout.EAST);
+        themButtonPanel.add(new CustomButton("Thêm sản phẩm",UIStyles.ThemButtonStyle,UIStyles.Add,CustomButtonIconSide.LEFT,()->TrangChuUI.singleton.taiTrang(new ThemSanPhamUI())), BorderLayout.EAST);
         themButtonPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 35));
         themButtonPanel.setBackground(UIStyles.BackgroundColor);
         
@@ -92,7 +94,7 @@ public class SanPhamYTeUI extends JPanel {
         //Bang san pham
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
-        
+       
         
         dsSanPham = SanPhamCTR.layDanhSachTatCaSanPham();
         sanPhamYTeList = new CustomItemList(
@@ -104,7 +106,7 @@ public class SanPhamYTeUI extends JPanel {
         centerPanel.add(themButtonPanel, BorderLayout.NORTH);
         centerPanel.add(timKiemPanel, BorderLayout.WEST);
         centerPanel.add(sanPhamYTeList,BorderLayout.CENTER);
-        
+        sanPhamYTeList.setBackground(Color.red);
         
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(centerPanel, BorderLayout.CENTER);
@@ -128,17 +130,6 @@ public class SanPhamYTeUI extends JPanel {
         return bang;
     }
     
-    private void thuCapNhat() {
-    	dsSanPham = new ArrayList<SanPhamYTe>();
-    	ArrayList<SanPhamYTe> dsTong = SanPhamCTR.layDanhSachTatCaSanPham();
-    	 
-    	for(int i = 0; i < dsTong.size()/2; i++) {
-    		dsSanPham.add(dsTong.get(i));
-    	}
-    	
-    	capNhatBangSanPham(dsSanPham);
-    }
-    
     private void timSanPham() {
 	    ArrayList<Object> searchFields = new ArrayList<>();
 	    ArrayList<SearchTool.SearchCondition> conditions = new ArrayList<>();
@@ -147,7 +138,7 @@ public class SanPhamYTeUI extends JPanel {
 	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
 //	    private String tenSanPham;
 	    searchFields.add(tenTextField.getText()); 
-	    conditions.add(SearchTool.SearchCondition.INCLUDE); 
+	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
 //	    private Date ngaySanXuat;
 	    searchFields.add(null); 
 	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
@@ -191,12 +182,6 @@ public class SanPhamYTeUI extends JPanel {
 	    searchFields.add(null); 
 	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
 //		private String yeuCauKeDon;
-	    searchFields.add(null); 
-	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
-//		private String dangBaoChe;
-	    searchFields.add(null); 
-	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
-//		private String nhaSanXuat;
 	    searchFields.add(null); 
 	    conditions.add(SearchTool.SearchCondition.NONCONDITION); 
 	    
@@ -249,8 +234,8 @@ public class SanPhamYTeUI extends JPanel {
             
             cells = new JComponent[8];
             for (int i = 0; i < cells.length; i+=2) {
-                cells[i] = sanPham[i/2] != null ? new SanPhamCell(sanPham[i/2]) : new JPanel(); 
-                cells[i+1] = new JPanel();
+                cells[i] = sanPham[i/2] != null ? new SanPhamCell(sanPham[i/2]) : new CustomItem(); 
+                cells[i+1] = new CustomItem();
             }
             super.addCells(cells);
         }

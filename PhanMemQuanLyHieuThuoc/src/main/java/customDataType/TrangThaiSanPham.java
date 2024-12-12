@@ -1,7 +1,7 @@
 package customDataType;
 
 public enum TrangThaiSanPham {
-	KhongCoDuLieu("Không có dữ liệu"),
+	//KhongCoDuLieu("Không có dữ liệu"),
     DangBan("Đang bán"),
     NgungBan("Ngưng bán"),
     HetHang("Hết hàng");
@@ -25,6 +25,7 @@ public enum TrangThaiSanPham {
                 return ttsp;
             }
         }
-        throw new IllegalArgumentException("Trạng thái sản phẩm không hợp lệ");
+        return TrangThaiSanPham.NgungBan;
+       // throw new IllegalArgumentException("Trạng thái sản phẩm không hợp lệ");
     }
 }

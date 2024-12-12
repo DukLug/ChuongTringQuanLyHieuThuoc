@@ -46,6 +46,7 @@ import component.CustomPanel;
 import component.CustomTable;
 import controller.ChiTietHoaDonCTR;
 import controller.HoaDonCTR;
+import controller.SanPhamCTR;
 import customDataType.DonViTinh;
 import dao.ChiTietDonDoiTraDAO;
 import dao.DonDoiTraDAO;
@@ -482,7 +483,7 @@ public class DoiTraUI extends JPanel{
 		                        }
 //		                        
 		                        ChiTietHoaDon chiTietHoaDon = dsChiTietHoaDon.get(0); 
-		                        int maxQuantity = chiTietHoaDon.getSoLuong(); 
+		                        int maxQuantity = chiTietHoaDon.getSoLuongDonViTinh1(); 
 		                        
 		                        if (newQuantity > maxQuantity) {
 		                           
@@ -712,7 +713,7 @@ public class DoiTraUI extends JPanel{
 	        for (ChiTietHoaDon chiTietHoaDon : dsChiTietHoaDon) {
 	            SanPhamYTe spYTe = chiTietHoaDon.getSanPhamYTe();
 	            boolean exists = false;
-	            int maxQuantity = chiTietHoaDon.getSoLuong(); 
+	            int maxQuantity = chiTietHoaDon.getSoLuongDonViTinh1(); 
 
 	            for (int i = 0; i < currentData.length; i++) {
 	                if (currentData[i][0].equals(spYTe.getMaSanPham())) {
@@ -739,8 +740,8 @@ public class DoiTraUI extends JPanel{
 
 	                newData[currentData.length][0] = spYTe.getMaSanPham();
 	                newData[currentData.length][1] = spYTe.getTenSanPham();
-	                newData[currentData.length][2] = spYTe.getGiaBan();
-	                newData[currentData.length][3] = spYTe.getDonViTinh();
+	                newData[currentData.length][2] = spYTe.getGiaBanDonViTinh1();
+	                newData[currentData.length][3] = spYTe.getDonViTinh1();
 	                newData[currentData.length][4] = Math.min(1, maxQuantity);  
 	                newData[currentData.length][5] = tinhGiaBan(spYTe, (int) newData[currentData.length][4]);
 
@@ -807,7 +808,8 @@ public class DoiTraUI extends JPanel{
 	
 	private void themSanPhamVaoChiTietDoiTra(String maSP) {
 	    SanPhamYTeDAO spDao = new SanPhamYTeDAO();
-	    ArrayList<SanPhamYTe> dsSP = spDao.timSanPhamTheoMaTrongDDT(maSP);
+	    ArrayList<SanPhamYTe> dsSP = new ArrayList<SanPhamYTe>();
+	    dsSP.add(SanPhamCTR.timSanPhamTheoMaSanPham(maSP));
 	    
 	    if (dsSP != null && !dsSP.isEmpty()) {
 	        SanPhamYTe spYTe = dsSP.get(0); 
@@ -832,8 +834,8 @@ public class DoiTraUI extends JPanel{
 
 	            newData[currentData.length][0] = spYTe.getMaSanPham();
 	            newData[currentData.length][1] = spYTe.getTenSanPham();
-	            newData[currentData.length][2] = spYTe.getGiaBan();
-	            newData[currentData.length][3] = spYTe.getDonViTinh();
+	            newData[currentData.length][2] = spYTe.getGiaBanDonViTinh1();
+	            newData[currentData.length][3] = spYTe.getDonViTinh1();
 	            newData[currentData.length][4] = 1;
 	            newData[currentData.length][5] = tinhGiaBan(spYTe, 1); 
 
@@ -857,7 +859,7 @@ public class DoiTraUI extends JPanel{
 	// tính tiền tổng tiền
 	private BigDecimal tinhGiaBan(SanPhamYTe spYTe, int soLuong) {
 	    
-	    return spYTe.getGiaBan().multiply(new BigDecimal(soLuong));
+	    return spYTe.getGiaBanDonViTinh1().multiply(new BigDecimal(soLuong));
 	}
 	
 	
@@ -1106,7 +1108,7 @@ public class DoiTraUI extends JPanel{
 		        String maChitietDoiTra = phatSinhMaChiTietDoiTra(phatSinhMaDonDoiTra());
 		        String maSanPham = (String) row[0];
 		        SanPhamYTe maSP = new SanPhamYTe(maSanPham);
-		        int soLuong = (int) row[4];
+		        int soLuongDonViTinh1 = (int) row[4];
 		        BigDecimal tongTien = (BigDecimal) row[5];
 		       
 		       // DonDoiTra maDonDoiTra = getSelectmaDonDoiTra();
@@ -1120,7 +1122,7 @@ public class DoiTraUI extends JPanel{
 	
 		       
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuongDonViTinh1, 0, 0, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 
 		      
@@ -1162,7 +1164,7 @@ public class DoiTraUI extends JPanel{
 		        
 		     
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien, new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, 0, 0, tongTien, new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 		      
 		        

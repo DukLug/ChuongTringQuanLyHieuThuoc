@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /application/
 /component/
 /connectDB/
@@ -9,3 +10,12 @@
 /testEntity/
 /userInterface/
 /META-INF/
+=======
+/META-INF/
+/entity/
+/dao/
+/functionalClass/
+/userInterface/
+/application/
+/controller/
+>>>>>>> main

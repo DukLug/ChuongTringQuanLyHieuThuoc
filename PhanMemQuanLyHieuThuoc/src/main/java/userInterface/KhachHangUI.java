@@ -394,7 +394,7 @@ setLayout(null);
 		txtCCCD.setText("");
 	}
 	
-private KhachHang layThongTin() {
+	private KhachHang layThongTin() {
  		
  		String ma = txtMaKH.getText();
  		if (ma == null || ma.isEmpty())

@@ -18,6 +18,12 @@ public class KhachHangCTR {
 		ConnectDB.getInstance().connect();
 //		System.out.println("Connect!!");
 	}
+
+	private KhachHangDAO kh_dao;
+	
+	public KhachHangCTR() {
+		kh_dao = new KhachHangDAO();
+	}
 	
 	public static Object[][] layData() {
 	    danhSach = KhachHangDAO.getAllKhachHang();
@@ -112,5 +118,9 @@ public class KhachHangCTR {
 		    
 		// Chuyển danh sách kết quả thành mảng hai chiều
 		return ketQua.toArray(new Object[0][0]);
+	}
+	
+	public KhachHang layThongTinKhachHangTheoMaDonDoiTra(String maDonDoiTra) {
+		return kh_dao.layThongTinKhachHangTheoMaDonDoiTra(maDonDoiTra);
 	}
 }

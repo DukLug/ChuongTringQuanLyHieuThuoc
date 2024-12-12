@@ -29,6 +29,8 @@ import application.*;
 
 
 public class TrangChuUI extends JFrame {		
+	public static TrangChuUI singleton;
+	
 	public JPanel panel;
 	
 	public JPanel topSection;
@@ -47,6 +49,8 @@ public class TrangChuUI extends JFrame {
 		super();
         lapFrame(toanManHinh);
         uiHistory = new Stack<JPanel>();
+        
+        singleton = this;
 	}
 	
 	public void lapFrame(boolean toanManHinh) {
@@ -95,53 +99,53 @@ public class TrangChuUI extends JFrame {
 		navBarWest.setLayout(new BoxLayout(navBarWest, BoxLayout.X_AXIS));	
 		navBarWest.add(new CustomButton("Tổng quan", UIStyles.NavBarButtonStyle, UIStyles.HomeIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new TongQuanUI())));
 		navBarWest.add(new CustomComboBox(
-        		"Hàng Hóa", 
+        		"Quản Lý", 
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ProductIcon,
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Sản phẩm", "Nhập hàng"},
+        		new String[]{"Sản phẩm", "TestSanPham", "Lô hàng", "Khách hàng", "Nhà cung cấp"},
         		new CustomButtonFunction[] {
         			()->taiTrang(new SanPhamYTeUI()),
-        			()->taiTrang(new NhapHangUI())
+        			()->taiTrang(new TestSanPhamUI()),
+        			()->taiTrang(new LoHangUI()),
+        			()->taiTrang(new KhachHangUI()),
+        			()->taiTrang(new NhaCungCapUI()),
         		}
         		));
         
 		navBarWest.add(new CustomComboBox(
-        		"Giao dịch", 
+        		"Thống kê", 
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.TransferIcon,
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Nhập hàng", "Hủy hàng", "Hóa đơn"},
+        		new String[]{"Hóa đơn"},
         		new CustomButtonFunction[] {
-        			()->taiTrang(new NhapHangUI()),
-        			()->taiTrang(new HuyHangUI()),
 					()->taiTrang(new HoaDonUI())
         		}
         		));
 		
 		navBarWest.add(new CustomComboBox(
-        		"Đối tác", 
+        		"Quản lý nâng cao", 
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ContactIcon,
         		CustomButtonIconSide.LEFT,
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Khách hàng", "Nhà cung cấp"},
+        		new String[]{"Khuyến mãi", "Nhân viên", "Tài khoản"},
         		
         		new CustomButtonFunction[] {
-        			()->taiTrang(new KhachHangUI()),
-        			()->taiTrang(new NhaCungCapUI())
+        			()->taiTrang(new KhuyenMaiUI()),
+        			()->taiTrang(new NhanVienUI()),
+        			()->taiTrang(new DanhSachTaiKhoanUI())
         		}
         		));
-		
-		navBarWest.add(new CustomButton("Nhân viên", UIStyles.NavBarButtonStyle, UIStyles.EmployeeIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new NhanVienUI())));
-        
+		        
 		navBarWest.add(new CustomComboBox(
-        		"Báo cáo", 
+        		"Thống kê nâng cao", 
         		UIStyles.NavBarButtonStyle, 
         		UIStyles.ReportIcon,
         		CustomButtonIconSide.LEFT,
@@ -152,27 +156,11 @@ public class TrangChuUI extends JFrame {
         			()->taiTrang(new BCCuoiNgayUI()),
         			()->taiTrang(new BCBanHangUI()),
         			()->taiTrang(new BCHangHoaUI()),
-        			()->taiTrang(new BCNhanVienUI()),
+        			()->taiTrang(new ThongKeUI()),
         			()->taiTrang(new BCNhaCungCapUI())
         		}
         		));
-		
-		navBarWest.add(new CustomComboBox(
-        		"Thống kê", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.AnalysingIcon,
-        		CustomButtonIconSide.LEFT,
-        		0,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Thống kê theo nhân viên", "Thống kê sản phẩm"},
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new ThongKeUI()),
-        			()->taiTrang(new NhanVienUI())
-        		}
-        		));
-
-		navBarWest.add(new CustomButton("Chính sách", UIStyles.NavBarButtonStyle, UIStyles.PolicyIcon,CustomButtonIconSide.LEFT,()->taiTrang(new KhuyenMaiUI())));
-		
+				
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
         navBarEast.add(new CustomButton("Bán hàng", UIStyles.BanHangButtonStyle, UIStyles.SellIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new BanHangUI())));

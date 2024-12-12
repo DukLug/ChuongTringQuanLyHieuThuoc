@@ -1,6 +1,7 @@
 package userInterface;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -8,6 +9,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.image.BufferedImage;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -25,12 +27,24 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.GanttRenderer;
+import org.jfree.data.gantt.Task;
+import org.jfree.data.gantt.TaskSeries;
+import org.jfree.data.gantt.TaskSeriesCollection;
+import org.jfree.data.time.SimpleTimePeriod;
+
 import component.CustomButton;
 import component.CustomItem;
 import component.CustomItemList;
 import component.CustomTable;
 import component.RoundedBorder;
 import controller.SanPhamCTR;
+import dao.KhuyenMaiDAO;
+import entity.KhuyenMai;
 import entity.SanPhamYTe;
 import functionalClass.ImageLoader;
 import testEntity.Thuoc;
@@ -46,6 +60,9 @@ public class TongQuanUI extends JPanel{
 	
 	public CustomItemList sanPhamBanChayList;
 	
+	//Quy
+	private KhuyenMaiDAO thongKe = null;
+	
 	//style properties
 	private int padding =  20;
 	private int gap = 20;
@@ -60,6 +77,7 @@ public class TongQuanUI extends JPanel{
 		setStyle();
 		taoHinh();
 		capNhatDanhSachBanChay(SanPhamCTR.layDanhSachTatCaSanPham());
+		
 	}
 	
 	private void setStyle() {
@@ -72,6 +90,7 @@ public class TongQuanUI extends JPanel{
 	}
 
 	public void taoHinh() {
+		this.thongKe = new KhuyenMaiDAO();
 		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
 		this.setBackground(UIStyles.BackgroundColor);
 		this.add(new JLabel("TongQuanUI"));
@@ -207,8 +226,14 @@ public class TongQuanUI extends JPanel{
 	    JPanel unknownPanel = new JPanel();
 	    unknownPanel.setPreferredSize(new Dimension(centerPanelComponentWidth, bigPanelHeight - todayResultPanelHeight));
 	    unknownPanel.setBackground(Color.white);
-	    
-	    
+	    JLabel ThongKeLabel = new JLabel("BIỂU ĐỒ THEO DÕI THỜI GIAN KHUYẾN MÃI", SwingConstants.CENTER);
+	    ThongKeLabel.setFont(UIStyles.TitleFont);
+	    ThongKeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	    unknownPanel.add(ThongKeLabel);
+	    JPanel bieuDo = new JPanel();
+	    unknownPanel.add(bieuDo);
+	    setDataToChart2(bieuDo);
+	    unknownPanel.setLayout(new BoxLayout(unknownPanel, BoxLayout.Y_AXIS));
 	    //san pham ban chay 
 	    JLabel sanPhamBanChayLabel = new JLabel("SẢN PHẨM BÁN CHẠY", SwingConstants.CENTER);
 	    sanPhamBanChayLabel.setFont(UIStyles.TitleFont);
@@ -240,6 +265,51 @@ public class TongQuanUI extends JPanel{
 	    this.add(centerPanel, BorderLayout.CENTER);
 	    
 	}
+	
+	public void setDataToChart2(JPanel jpnItem) {
+		
+	    ArrayList<KhuyenMai> listItem = thongKe.layDanhSachTatCaKhuyenMai();
+
+
+	    TaskSeriesCollection ds = new TaskSeriesCollection();
+	    JFreeChart ganttChart = ChartFactory.createGanttChart(
+	            null,
+	            "Khuyến mãi", "Thời gian", ds, true, false, false
+	    );
+
+	    TaskSeries taskSeries;
+	    Task task;
+
+	    if (listItem != null) {
+	        int limit = Math.min(5, listItem.size()); // Giới hạn số lượng phần tử là 5
+	        for (int i = 0; i < limit; i++) {
+	            KhuyenMai item = listItem.get(i);
+	            taskSeries = new TaskSeries(item.getMaKhuyenMai());
+	            task = new Task(item.getMaKhuyenMai(),
+	                    new SimpleTimePeriod(
+	                        new Date(item.getNgayKhuyenMai().getTime()),
+	                        new Date(item.getNgayKetThuc().getTime())
+	                    )
+	            );	            
+	            taskSeries.add(task);
+	            ds.add(taskSeries);
+	        }
+	    }
+	    CategoryPlot plot = (CategoryPlot) ganttChart.getPlot();
+	    GanttRenderer renderer = new GanttRenderer();
+	    renderer.setMaximumBarWidth(0.3); // Tăng giá trị để các thanh dày hơn
+	    plot.setRenderer(renderer); 
+//	    ganttChart.getTitle().setFont(UIStyles.TitleFont); // font title
+	    ChartPanel chartPanel = new ChartPanel(ganttChart);
+	    chartPanel.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
+
+	    jpnItem.removeAll();
+	    jpnItem.setLayout(new CardLayout());
+	    jpnItem.add(chartPanel);
+	    jpnItem.validate();
+	    jpnItem.repaint();
+	}
+
 
 	private void capNhatDanhSachBanChay(ArrayList<SanPhamYTe> dsBanChay) {
 		for(int i = 0; i < 20; i++) {

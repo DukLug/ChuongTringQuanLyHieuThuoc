@@ -20,24 +20,23 @@ public class SanPhamYTe {
 	private TrangThaiSanPham trangThaiSanPham;
 	private String ghiChu;
 	private String moTa;
+	private String dangBaoChe;
 	private double Thue;
 	private BufferedImage hinhAnh;
 	private String thanhPhan;
-	private BigDecimal giaBan;
-	private NhaCungCap nhaCungCap;
 	private DonViTinh donViTinh;
+	private NhaCungCap nhaCungCap;
 	private LoaiSanPham loaiSanPham;
+	private BigDecimal giaBan;
 	private String maVach;
 	private String yeuCauKeDon;
-	private String dangBaoChe;
-	private String nhaSanXuat;
 	
+	private String nhaSanXuat;
+
 	public SanPhamYTe(String maSanPham) {
 		super();
 		this.maSanPham = maSanPham;
 	}
-	
-	
 
 	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
 			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, double thue, BufferedImage hinhAnh,
@@ -65,9 +64,6 @@ public class SanPhamYTe {
 		setNhaSanXuat(nhaSanXuat);
 	}
 
-
-
-
 	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaBanSanPham, DonViTinh donViTinh) {
 		this.maSanPham = maSanPham;
 		this.tenSanPham = tenSanPham;
@@ -75,8 +71,26 @@ public class SanPhamYTe {
 		this.donViTinh = donViTinh;
 	}
 
-
-	
+	public SanPhamYTe(String maSanPham, String tenSanPham, Date ngaySanXuat, Date hanSuDung, String nuocSanXuat,
+			TrangThaiSanPham trangThaiSanPham, String ghiChu, String moTa, String dangBaoChe, double thue,
+			String thanhPhan, DonViTinh donViTinh, NhaCungCap nhaCungCap, LoaiSanPham loaiSanPham, BigDecimal giaBan) {
+		super();
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.ngaySanXuat = ngaySanXuat;
+		this.hanSuDung = hanSuDung;
+		this.nuocSanXuat = nuocSanXuat;
+		this.trangThaiSanPham = trangThaiSanPham;
+		this.ghiChu = ghiChu;
+		this.moTa = moTa;
+		this.dangBaoChe = dangBaoChe;
+		Thue = thue;
+		this.thanhPhan = thanhPhan;
+		this.donViTinh = donViTinh;
+		this.nhaCungCap = nhaCungCap;
+		this.loaiSanPham = loaiSanPham;
+		this.giaBan = giaBan;
+	}
 
 
 	public String getMaSanPham() {

@@ -30,10 +30,9 @@ public class KhachHang {
 		this.maKhachHang = maKhachHang;
 	}
 
-	public KhachHang(String tenKhachHang, String sdt, int diemTichLuy) {
+	public KhachHang(String tenKhachHang, String sdt) {
 		this.hoTen = tenKhachHang;
 		this.sdt = sdt;
-		this.diemTichLuy = diemTichLuy;
 	}
 
 	public String getMaKhachHang() {

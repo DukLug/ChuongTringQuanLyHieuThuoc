@@ -1,5 +1,6 @@
 package controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,13 +13,17 @@ public class HoaDonCTR {
 
 	private static Object[][] danhSach;
 	private static Object[][] dataBCCuoiNgay;
+	private static Object[][] dataHD;
 	public static void ketNoiDatabase() {
-		// TODO Auto-generated method stub
 		ConnectDB.getInstance().connect();	
 	}
 
-//		String [] headers = {"Mã hóa đơn","Loại hóa đơn", "Thời gian", "Số lượng", "Doanh thu", "Phí trả hàng", "Thực thu"};
-//		0,;oai, 1,soluong, 3,phitrahang, thucthu
+
+	private HoaDonDAO hdDAO;
+	
+	public HoaDonCTR(){
+		hdDAO = new HoaDonDAO();
+	}
 
 	public static Object[][] layDataHDBan() {
 //        danhSach = HoaDonDAO.layDanhSachHoaDonBanHangTheoNgay();
@@ -37,7 +42,29 @@ public class HoaDonCTR {
 		
         return dataBCCuoiNgay;
     }
+
+	public static Object[][] layDataHD() {
+		danhSach = HoaDonDAO.layDanhSachHoaDon();
+//		String[] headers = { "Mã hóa đơn", "Tổng tiền", "Ngày Bán", "Mã Nhân Viên", "Mã Khách Hàng" };
+//
+		dataHD = new Object[danhSach.length][5];
+        for (int i =0; i < danhSach.length; i++) {
+        	dataHD[i][0] = danhSach[i][0]; // Mã
+        	dataHD[i][1] = danhSach[i][3];// ngày
+        	dataHD[i][2] = danhSach[i][1];// doanhthu
+        	dataHD[i][3] = danhSach[i][4];
+        	dataHD[i][4] = danhSach[i][6];
+
+        }
+        
+		
+        return dataHD;
+	}
 	
+	
+	public ArrayList<HoaDon> layDanhSachHoaDon(){
+		return hdDAO.getHoaDon();
+	}
 
 	
 	

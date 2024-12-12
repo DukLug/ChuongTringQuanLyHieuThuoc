@@ -1409,6 +1409,7 @@ public class DoiTraUI extends JPanel{
 
 		        txtKhachTra.setEnabled(true);
 		        txtKhachTra.requestFocus();
+		        
 		    } else {
 		        lblTienTraKhach.setText("Tiền trả khách:"); 
 		        txtTongHoaDon.setText(df.format(tongHoaDon.abs())); 
@@ -1466,10 +1467,7 @@ public class DoiTraUI extends JPanel{
 
 		private void thanhToan() {
 			
-//			 if(!Valid()) {
-//				  return;
-//				  
-//			  }
+
 			 
 		    DonDoiTra donDoiTra = taoDonDoiTra();
 		    
@@ -1511,7 +1509,39 @@ public class DoiTraUI extends JPanel{
 		            
 		            BigDecimal tienTraKhach = tienKhachDuaDecimal.subtract(tongTienDecimal);
 		            
-		            if(tienTraKhach.compareTo(BigDecimal.ZERO) <= 0) {
+		            
+		            String tienTraHangText = txtTienTraHang.getText();
+				    String tongTienMuaText = txtTongTienMua.getText();
+
+				    BigDecimal tongTienTraKhach;
+				    BigDecimal tongTienMuaHang;
+
+				   
+				    if (tienTraHangText.isEmpty()) {
+				        tongTienTraKhach = BigDecimal.ZERO;
+				    } else {
+				        try {
+				            tongTienTraKhach = new BigDecimal(tienTraHangText);
+				        } catch (NumberFormatException e) {
+				            JOptionPane.showMessageDialog(this, "Giá trị tiền trả hàng không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				            return; 
+				        }
+				    }
+
+				    if (tongTienMuaText.isEmpty()) {
+				    
+				        tongTienMuaHang = BigDecimal.ZERO;
+				    } else {
+				        try {
+				            tongTienMuaHang = new BigDecimal(tongTienMuaText);
+				        } catch (NumberFormatException e) {
+				            JOptionPane.showMessageDialog(this, "Giá trị tổng tiền mua không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				            return; 
+				        }
+				    }
+
+				    BigDecimal tongHoaDon = tongTienTraKhach.subtract(tongTienMuaHang);
+		            if(tongHoaDon.compareTo(BigDecimal.ZERO) <= 0) {
 		                if (!Valid()) {
 		                    return; 
 		                }

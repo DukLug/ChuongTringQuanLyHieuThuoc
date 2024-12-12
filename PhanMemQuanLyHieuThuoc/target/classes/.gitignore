@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /application/
 /component/
@@ -50,3 +51,9 @@
 =======
 >>>>>>> main
 >>>>>>> 497a51e422283770c080a420749fb288b1df7296
+=======
+/META-INF/
+/userInterface/
+/controller/
+/dao/
+>>>>>>> a083e933f2365ba5ba31a0359c8cd1ffb8f81278

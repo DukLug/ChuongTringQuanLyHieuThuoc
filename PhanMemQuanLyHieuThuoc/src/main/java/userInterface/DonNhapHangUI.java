@@ -91,8 +91,8 @@ public class DonNhapHangUI extends JPanel {
 
         // Create custom table for ChiTietDonNhap
         JPanel panelChiTiet = new JPanel();
-        panelChiTiet.setPreferredSize(new Dimension(900, 650));
-        panelChiTiet.setMinimumSize(new Dimension(900, 650));
+        panelChiTiet.setPreferredSize(new Dimension(920, 650));
+        panelChiTiet.setMinimumSize(new Dimension(920, 650));
         //panelChiTiet.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelChiTiet.setBorder(new TitledBorder(
                 new LineBorder(Color.BLACK, 1), 
@@ -103,10 +103,10 @@ public class DonNhapHangUI extends JPanel {
                 Color.BLACK
             ));
         bangChiTietDonNhap = new CustomTable(duLieuBangCTDN, tenCotCTDN, UIStyles.NhanVienTableHeaderStyle,
-                UIStyles.NhanVienTableRowStyle, 20, new int[] {250, 150, 150, 150, 200});
+                UIStyles.NhanVienTableRowStyle, 20, new int[] {200, 200, 200, 200, 150});
 
         JScrollPane scrollPaneCTDN = new JScrollPane(bangChiTietDonNhap);
-        scrollPaneCTDN.setPreferredSize(new Dimension(850, 600));
+        scrollPaneCTDN.setPreferredSize(new Dimension(900, 600));
         
         panelChiTiet.add(scrollPaneCTDN);
         

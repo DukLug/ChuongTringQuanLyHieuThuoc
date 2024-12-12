@@ -108,7 +108,7 @@ public class TrangChuUI extends JFrame {
         		new String[]{"Sản phẩm", "Lô hàng", "Khách hàng", "Nhà cung cấp"},
         		new CustomButtonFunction[] {
 
-        			()->taiTrang(new SanPhamUI()),
+        			()->taiTrang(new SanPhamYTeUI()),
 
         			()->taiTrang(new LoHangUI()),
         			()->taiTrang(new KhachHangUI()),

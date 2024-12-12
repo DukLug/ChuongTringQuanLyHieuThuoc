@@ -89,15 +89,11 @@ public class SanPhamCTR {
 		return "";
 	}
 
-	public static void capNhatNgungBan(SanPhamYTe sanPham) {
-		sanPham.setTrangThaiSanPham(TrangThaiSanPham.NgungBan);
+	public static void capNhatTrangThai(SanPhamYTe sanPham, TrangThaiSanPham tt) {
+		sanPham.setTrangThaiSanPham(tt);
 		SanPhamYTeDAO.updateSanPhamYTe(sanPham);
 	}
 	
-	public static void capNhatBan(SanPhamYTe sanPham) {
-		sanPham.setTrangThaiSanPham(TrangThaiSanPham.DangBan);
-		SanPhamYTeDAO.updateSanPhamYTe(sanPham);
-	}
 
 }
 

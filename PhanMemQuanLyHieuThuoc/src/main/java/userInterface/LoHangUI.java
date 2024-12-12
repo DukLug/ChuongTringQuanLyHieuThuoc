@@ -36,14 +36,21 @@ public class LoHangUI extends JPanel {
         JLabel lblTitle = new JLabel("Quản lý lô hàng");
         lblTitle.setFont(new Font("Tahoma", Font.BOLD, 35));
         titlePanel.add(lblTitle);
-        titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        titlePanel.setBorder(new EmptyBorder(10, 20, 10, 20));
         this.add(titlePanel, BorderLayout.NORTH);
 
         // Bảng ở trung tâm
+        JPanel center = new JPanel();
+        center.setMaximumSize(new Dimension(1300, 700));
+        center.setPreferredSize(new Dimension(1300, 700));
+        center.setLayout(new BorderLayout());
+        center.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         bangLoHang = new CustomTable(new String[][]{}, tenCot, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
                 new int[]{200, 200, 200, 150, 100, 100, 100, 150, 300});
         JScrollPane scrollPane = new JScrollPane(bangLoHang);
-        this.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setMaximumSize(new Dimension(1300, 700));
+        center.add(scrollPane, BorderLayout.CENTER);
+        this.add(center, BorderLayout.CENTER);
 
         // Form tìm kiếm ở phía Tây
         JPanel searchPanel = new JPanel(new GridBagLayout());
@@ -102,7 +109,7 @@ public class LoHangUI extends JPanel {
                     String.valueOf(loHang.getSoLuongDonViTinh2()),
                     String.valueOf(loHang.getSoLuongDonViTinh3()),
                     loHang.getViTri(),
-                    loHang.getSanPham().getTenSanPham()
+                    SanPhamCTR.timSanPhamTheoMaSanPham(loHang.getSanPham().getMaSanPham()).getTenSanPham(),
             };
         }
     }
@@ -129,18 +136,29 @@ public class LoHangUI extends JPanel {
                 ketQuaTimKiem.add(sp);
             }
         }
-        //for(int i = 0; )
-        // Cập nhật bảng với kết quả tìm kiếm
-        duLieuBang = new String[ketQuaTimKiem.size()][tenCot.length];
-        for(int i = 0; i < ketQuaTimKiem.size(); i++) {
+        ArrayList<LoHang> loHangPhuHop = new ArrayList<LoHang>();
+        for(int i = 0; i<danhSachLoHang.size(); i++) {
+        	SanPhamYTe sp =SanPhamCTR.timSanPhamTheoMaSanPham(danhSachLoHang.get(i).getSanPham().getMaSanPham());
+        	if(ketQuaTimKiem.contains(sp)) {
+        		loHangPhuHop.add(danhSachLoHang.get(i));
+        	}
         	
-            SanPhamYTe sp = ketQuaTimKiem.get(i);
+        }
+        // Cập nhật bảng với kết quả tìm kiếm
+        duLieuBang = new String[loHangPhuHop.size()][tenCot.length];
+        for(int i = 0; i < loHangPhuHop.size(); i++) {
+        	
+        	LoHang lh = loHangPhuHop.get(i);
             duLieuBang[i] = new String[] {
-                sp.getMaVach(),
-                sp.getTenSanPham(),
-                sp.getNuocSanXuat(),
-                sp.getGiaBanDonViTinh1().toString() + "đ",
-                LoaiSanPhamCTR.timTheoMa(sp.getLoaiSanPham().getMaLoai()).getTenLoai(),
+                lh.getMaLo(),
+                lh.getNgaySanXuat().toString(),
+                lh.getHanSuDung().toString(),
+                lh.getGiaNhap().toString() + "đ",
+                lh.getSoLuongDonViTinh1()+"",
+                lh.getSoLuongDonViTinh2()+"",
+                lh.getSoLuongDonViTinh3()+"",
+                lh.getViTri(),
+                SanPhamCTR.timSanPhamTheoMaSanPham(lh.getSanPham().getMaSanPham()).getTenSanPham(),
             };
         }
         bangLoHang.capNhatDuLieu(duLieuBang);

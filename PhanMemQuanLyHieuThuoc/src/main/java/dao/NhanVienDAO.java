@@ -73,6 +73,31 @@ private ArrayList<NhanVien> dsNhanVien;
 		    }
 		    return dsNhanVien;
 		}
+		
+		// Lấy toàn bộ bảng nhân viên
+				public static ArrayList<NhanVien> layDanhSachTatCaNhanVienStatic() {
+					
+					ArrayList<NhanVien> dsNhanVien = new ArrayList<NhanVien>();
+				    try {
+				        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien");
+				        ResultSet rs = ps.executeQuery();
+				        while (rs.next()) {
+				            String maNhanVien = rs.getString("MaNhanVien");
+				            String hoTen = rs.getString("HoTen");
+				            String sdt = rs.getString("Sdt");
+				            String cccd = rs.getString("Cccd");
+				            Date ngaySinh = rs.getDate("NgaySinh");
+				            GioiTinh gioiTinh = GioiTinh.fromString(rs.getNString("GioiTinh"));
+				            TrangThaiLamViec trangThai = TrangThaiLamViec.fromString(rs.getNString("TrangThaiLamViec"));
+				            ChucVu chucVu = ChucVu.fromString(rs.getNString("ChucVu"));
+				            NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+				            dsNhanVien.add(nv);
+				        }
+				    } catch (Exception e) {
+				        e.printStackTrace();
+				    }
+				    return dsNhanVien;
+				}
 
 	// thêm nhân viên
 	public boolean themNhanVien(NhanVien newNhanVien) {
@@ -146,7 +171,35 @@ private ArrayList<NhanVien> dsNhanVien;
 		    }
 		return dsNhanVien;
 	}
-	
+	// tìm nhân viên theo mã nhân viên
+		public static ArrayList<NhanVien> timNhanVienTheoMaStatic(String maNhanVien) {
+			ArrayList<NhanVien> dsNhanVien = new ArrayList<>();
+			 try {
+			        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien where MaNhanVien = ?");
+			        ps.setString(1, maNhanVien);
+			        ResultSet rs = ps.executeQuery();
+			        while (rs.next()) {
+
+			            String maNV1 = rs.getString("MaNhanVien");
+
+			            String hoTen = rs.getString("HoTen");
+			            String sdt = rs.getString("Sdt");
+			            String cccd = rs.getString("Cccd");
+			            Date ngaySinh = rs.getDate("NgaySinh");
+
+			            GioiTinh gioiTinh = GioiTinh.fromString(rs.getString("GioiTinh"));
+			            TrangThaiLamViec trangThai = TrangThaiLamViec.fromString(rs.getString("TrangThaiLamViec"));
+			            ChucVu chucVu = ChucVu.fromString(rs.getString("ChucVu"));
+
+			            NhanVien nv = new NhanVien(maNV1, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+
+			            dsNhanVien.add(nv);
+			        }
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			    }
+			return dsNhanVien;
+		}
 	public NhanVien layNhanVienTheoMa(String maNhanVien) {
 	    NhanVien nv = null;
 
@@ -259,5 +312,36 @@ private ArrayList<NhanVien> dsNhanVien;
 	    return maNhanVienCuoi;
 
 	}
+	
+	// thống kê nhân viên
+	public ArrayList<Object[]> thongKeDoanhThu() {
+	    ArrayList<Object[]> thongKeList = new ArrayList<>();
+	    String sql = "SELECT nv.MaNhanVien, nv.HoTen, " +
+	             "COUNT(ct.MaChiTietHoaDon) AS SoLuongDaBan, " +
+	             "SUM(ct.TongTien) AS DoanhThu " +
+	             "FROM NhanVien nv " +
+	             "JOIN HoaDon hd ON nv.MaNhanVien = hd.MaNhanVien " +
+	             "JOIN ChiTietHoaDon ct ON hd.MaHoaDon = ct.MaHoaDon " +
+	             "JOIN SanPhamYTe sp ON ct.MaSanPham = sp.MaSanPham " +
+	             "GROUP BY nv.MaNhanVien, nv.HoTen;";
+
+	    
+	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+	        while (rs.next()) {
+	            String maNhanVien = rs.getString("MaNhanVien");
+	            String hoTen = rs.getString("HoTen");
+	            int soLuongDaBan = rs.getInt("SoLuongDaBan");
+	            double doanhThu = rs.getDouble("DoanhThu");
+	            
+	            thongKeList.add(new Object[]{maNhanVien, hoTen, soLuongDaBan, doanhThu});
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return thongKeList;
+	}
+
 
 }

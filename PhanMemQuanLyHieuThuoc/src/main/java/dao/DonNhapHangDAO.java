@@ -26,6 +26,7 @@ public class DonNhapHangDAO {
             ResultSet rs = statement.executeQuery(sql);
             
             while (rs.next()) {
+
                 String maDonNhap = rs.getString("MaDonNhap");
                 java.sql.Date ngayNhap = rs.getDate("NgayNhap");
                 

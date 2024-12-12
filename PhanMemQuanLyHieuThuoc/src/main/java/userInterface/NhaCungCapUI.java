@@ -274,6 +274,7 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
 					data = NhaCungCapCTR.layData();
 					tableNCC.capNhatDuLieu(data);
+					xoaTrang();
 				}
 				else
 					JOptionPane.showMessageDialog(this, "Thêm không thành công");
@@ -283,13 +284,21 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		else if (o.equals(btnCapNhat)) {
 			if (kiemTraDuLieu()) {
 				ncc = layThongTin();
-				if (NhaCungCapCTR.capNhatNCC(ncc)) {
-					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-					data = NhaCungCapCTR.layData();
-					tableNCC.capNhatDuLieu(data);
-				}
-				else
-					JOptionPane.showMessageDialog(this, "Cập nhật không thành công");
+				
+				int option = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn cập nhật?",
+                        "Xác nhận", JOptionPane.YES_NO_OPTION);
+
+				if (option == JOptionPane.YES_OPTION) {
+					if (NhaCungCapCTR.capNhatNCC(ncc)) {
+						JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+						data = NhaCungCapCTR.layData();
+						tableNCC.capNhatDuLieu(data);
+						xoaTrang();
+					}
+					else
+						JOptionPane.showMessageDialog(this, "Cập nhật không thành công");
+				} 
+				
 			}
 
 		}
@@ -297,12 +306,16 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		else if (o.equals(txtTim)) { 
 	        String thongTin = txtTim.getText().trim();
 	        data = NhaCungCapCTR.timKiem(thongTin);
-	        tableNCC.capNhatDuLieu(data);;
+	        if (data.length == 0)
+	        	JOptionPane.showMessageDialog(this, "Không tìm thấy nhà cung cấp");
+	      
+	       	tableNCC.capNhatDuLieu(data);;
 	    }
 		
 		else if (chckbxHienDS.isSelected()) {
 			data = NhaCungCapCTR.layData();
 			tableNCC.capNhatDuLieu(data);
+			xoaTrang();
 		}
 
 	}
@@ -338,6 +351,11 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 		
 		if (!(ten.length() > 0)) {
 			thongBaoLoi(txtTen, "Tên nhà cung cấp không được để trống");
+			return false;
+		}
+		
+		if (!(sdt.length() > 0)) {
+			thongBaoLoi(txtTen, "Số điện thoại nhà cung cấp không được để trống");
 			return false;
 		}
 		

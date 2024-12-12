@@ -27,7 +27,7 @@ public class HoaDonCTR {
 
 	public static Object[][] layDataHDBan() {
 //        danhSach = HoaDonDAO.layDanhSachHoaDonBanHangTheoNgay();
-        danhSach = HoaDonDAO.layDanhSachHoaDon();
+        danhSach = HoaDonDAO.layDanhSachHoaDonCuoiNgay();
         
         dataBCCuoiNgay = new Object[danhSach.length][6];
         for (int i =0; i < danhSach.length; i++) {
@@ -44,6 +44,25 @@ public class HoaDonCTR {
     }
 
 	public static Object[][] layDataHD() {
+		danhSach = HoaDonDAO.layDanhSachHoaDonCuoiNgay();
+//		String[] headers = { "Mã hóa đơn", "Tổng tiền", "Ngày Bán", "Mã Nhân Viên", "Mã Khách Hàng" };
+//
+		dataHD = new Object[danhSach.length][5];
+        for (int i =0; i < danhSach.length; i++) {
+        	dataHD[i][0] = danhSach[i][0]; // Mã
+        	dataHD[i][1] = danhSach[i][3];// ngày
+        	dataHD[i][2] = danhSach[i][1];// doanhthu
+        	dataHD[i][3] = danhSach[i][4];
+        	dataHD[i][4] = danhSach[i][6];
+
+        }
+        
+		
+        return dataHD;
+	}
+	
+	
+	public static Object[][] layDataHD2() {
 		danhSach = HoaDonDAO.layDanhSachHoaDon();
 //		String[] headers = { "Mã hóa đơn", "Tổng tiền", "Ngày Bán", "Mã Nhân Viên", "Mã Khách Hàng" };
 //

@@ -29,8 +29,9 @@ public class KhuyenMaiDAO {
 				String dieuKhien = rs.getString("DieuKien");
 				double chietKhau = rs.getDouble("ChietKhau");
 				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
+				int soLuong = rs.getInt("SoLuongGioiHan");
 				
-				KhuyenMai km = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv);
+				KhuyenMai km = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv,soLuong);
 				dsKhuyenMai.add(km);
 			}
 		} catch (Exception e) {
@@ -43,13 +44,14 @@ public class KhuyenMaiDAO {
 	public boolean themKhuyenMai(KhuyenMai newKhuyenMai) {
 		try {
 			PreparedStatement ps = ConnectDB.getConnection()
-					.prepareStatement("Insert into KhuyenMai values(?,?,?,?,?,?)");
+					.prepareStatement("Insert into KhuyenMai values(?,?,?,?,?,?,?)");
 			ps.setString(1, newKhuyenMai.getMaKhuyenMai());
 			ps.setDate(2, new Date(newKhuyenMai.getNgayKhuyenMai().getTime()));
 			ps.setDate(3, new Date(newKhuyenMai.getNgayKetThuc().getTime()));
 			ps.setString(4, newKhuyenMai.getDieuKien());
-			ps.setDouble(5, newKhuyenMai.getChietKhau());
-			ps.setString(6,newKhuyenMai.getMaNhanVien().getMaNhanVien());
+			ps.setInt(5, newKhuyenMai.getSoLuongGioiHan());
+			ps.setDouble(6, newKhuyenMai.getChietKhau());
+			ps.setString(7,newKhuyenMai.getMaNhanVien().getMaNhanVien());
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,13 +63,14 @@ public class KhuyenMaiDAO {
 	public boolean capNhatKuyenMai(KhuyenMai km) {
 		try {
 			PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-					"Update KhuyenMai set NgayBatDau=?,NgayKetThuc=?,DieuKien=?,ChietKhau=?,MaNhanVien=? Where MaKhuyenMai=?");
+					"Update KhuyenMai set NgayBatDau=?,NgayKetThuc=?,DieuKien=?, SoLuongGioiHan=?, ChietKhau=?,MaNhanVien=? Where MaKhuyenMai=?");
 			ps.setDate(1, new Date(km.getNgayKhuyenMai().getTime()));
 			ps.setDate(2, new Date(km.getNgayKetThuc().getTime()));
 			ps.setString(3, km.getDieuKien());
 			ps.setDouble(4, km.getChietKhau());
-			ps.setString(5, km.getMaNhanVien().getMaNhanVien());
-			ps.setString(6, km.getMaKhuyenMai());
+			ps.setInt(5, km.getSoLuongGioiHan());
+			ps.setString(6, km.getMaNhanVien().getMaNhanVien());
+			ps.setString(7, km.getMaKhuyenMai());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,9 +90,10 @@ public class KhuyenMaiDAO {
 				Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 				Date ngayKetThuc= rs.getDate("NgayKetThuc");
 				String dieuKhien = rs.getString("DieuKien");
+				int soLuong = rs.getInt("SoLuongGioiHan");
 				double chietKhau = rs.getDouble("ChietKhau");
 				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
-				KhuyenMai kmCanTim = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv); 
+				KhuyenMai kmCanTim = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv,soLuong); 
 				khuyenMaiCanTim.add(kmCanTim);
 			}
 		} catch (Exception e) {
@@ -112,11 +116,12 @@ public class KhuyenMaiDAO {
 	            String maKhuyenMai = rs.getString("MaKhuyenMai");
 	            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 	            Date ngayKetThuc = rs.getDate("NgayKetThuc");
+	            int soLuong = rs.getInt("SoLuongGioiHan");;
 	            String dieuKhien = rs.getString("DieuKien");
 	            double chietKhau = rs.getDouble("ChietKhau");
 	            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 	            
-	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv);
+	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayKetThuc, dieuKhien, chietKhau, nv, soLuong);
 	            khuyenMaiTheoNgay.add(kmTheoNgay);
 	        }
 	    } catch (Exception e) {
@@ -140,10 +145,11 @@ public class KhuyenMaiDAO {
 		            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 		            Date ngayketThuc = rs.getDate("NgayKetThuc");
 		            String dieuKhien = rs.getString("DieuKien");
+		            int soLuong = rs.getInt("SoLuongGioiHan");
 		            double chietKhau = rs.getDouble("ChietKhau");
 		            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 		            
-		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKhien, chietKhau, nv);
+		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKhien, chietKhau, nv, soLuong);
 		            khuyenMaiTheoNgay.add(kmTheoNgay);
 		        }
 		    } catch (Exception e) {
@@ -191,10 +197,11 @@ public class KhuyenMaiDAO {
 		            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 		            Date ngayketThuc = rs.getDate("NgayKetThuc");
 		            String dieuKien = rs.getString("DieuKien");
+		            int soLuong = rs.getInt("SoLuongGioiHan");
 		            double chietKhau = rs.getDouble("ChietKhau");
 		            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 		            
-		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv);
+		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv,soLuong);
 		            khuyenMaiTheoDieuKien.add(kmTheoNgay);
 		        }
 		    } catch (Exception e) {
@@ -219,10 +226,11 @@ public class KhuyenMaiDAO {
 		            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 		            Date ngayketThuc = rs.getDate("NgayKetThuc");
 		            String dieuKien = rs.getString("DieuKien");
+		            int soLuong = rs.getInt("SoLuongGioiHan");
 		            double chietKhau = rs.getDouble("ChietKhau");
 		            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 		            
-		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv);
+		            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv, soLuong);
 		            khuyenMaiTheoDieuKien.add(kmTheoNgay);
 		        }
 		    } catch (Exception e) {
@@ -261,7 +269,7 @@ public class KhuyenMaiDAO {
 	    ArrayList<KhuyenMai> khuyenMaiTheoDieuKien = new ArrayList<>();
 	    try {
 	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ?;"
+	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ? and NgayKetThuc < GETDATE() and SoLuongGioiHan > 0;"
 	        );
 	        ps.setString(1,DieuKien);  
 	        ResultSet rs = ps.executeQuery();
@@ -271,10 +279,13 @@ public class KhuyenMaiDAO {
 	            Date ngayKhuyenMai = rs.getDate("NgayBatDau");
 	            Date ngayketThuc = rs.getDate("NgayKetThuc");
 	            String dieuKien = rs.getString("DieuKien");
+	            int soLuong = rs.getInt("SoLuongGioiHan");
 	            double chietKhau = rs.getDouble("ChietKhau");
+	            //int soLuong = rs.getInt("SoLuongGioiHan");
+	            		
 	            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 	            
-	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv);
+	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv,soLuong);
 	            khuyenMaiTheoDieuKien.add(kmTheoNgay);
 	        }
 	    } catch (Exception e) {

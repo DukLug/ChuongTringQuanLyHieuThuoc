@@ -157,11 +157,6 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
         lblTongThucThu.setBounds(1500, 780, 400, 30);
   
 
-        
-//        labelNgayBan = new JLabel("Ngày bán:");
-//        labelNgayBan.setBounds(10, 8, 116, 30);
-//        panelNgayBan.add(labelNgayBan);
-//        labelNgayBan.setFont(new Font("Tahoma", Font.BOLD, 20));
 
         panelTong.add(lblTongHoaDon);
         panelTong.add(lblTongDoanhThu);
@@ -172,123 +167,9 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
     }
 
 
-
-//public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListener {
-//
-//    private static final long serialVersionUID = 1L;
-//    private HoaDonDAO hoaDonDao;
-//    private HoaDonCTR hoaDonCTR;
-//    private CustomTable tableCuoiNgay;
-//    private Object[][] data = new Object[0][0];
-//    private JComponent lblNgayLap;
-//    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//    private JLabel labelNgayBan;
-//    private JButton btnXuatFile;
-//    private String[] headers = {"Mã hóa đơn", "Ngày Bán", "Doanh thu", "Loại hóa đơn", "Phí trả hàng", "Thực thu"};
-//
-//    public BCCuoiNgayUI() {
-//        super();
-//        hoaDonCTR = new HoaDonCTR();
-//        hoaDonDao = new HoaDonDAO();
-//        taoHinh();
-//        layThoiGianHienTai();
-//    }
-//
-//    private void taoHinh() {
-//        setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
-//        this.setBackground(Color.white);
-//        setLayout(null);
-//
-//        JPanel panelTong = new JPanel();
-//        panelTong.setBackground(UIStyles.BackgroundColor);
-//        panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
-//        add(panelTong);
-//        panelTong.setLayout(null);
-//
-//        JPanel panel = new JPanel();
-//        panel.setBounds(0, 0, 1800, 120);
-//        panelTong.add(panel);
-//        panel.setLayout(null);
-//
-//        JLabel lblKhachHang = new JLabel("BÁO CÁO CUỐI NGÀY");
-//        lblKhachHang.setBounds(819, 20, 258, 29);
-//        lblKhachHang.setHorizontalAlignment(SwingConstants.CENTER);
-//        lblKhachHang.setFont(new Font("Tahoma", Font.BOLD, 24));
-//        panel.add(lblKhachHang);
-//
-//        JPanel panelNgayBan = new JPanel();
-//        panelNgayBan.setBounds(761, 63, 378, 47);
-//        panel.add(panelNgayBan);
-//        panelNgayBan.setLayout(null);
-//
-//        labelNgayBan = new JLabel("Ngày bán:");
-//        labelNgayBan.setBounds(10, 8, 116, 30);
-//        panelNgayBan.add(labelNgayBan);
-//        labelNgayBan.setFont(new Font("Tahoma", Font.BOLD, 20));
-//
-//        lblNgayLap = new JLabel();
-//        lblNgayLap.setForeground(Color.BLACK);
-//        lblNgayLap.setFont(new Font("Tahoma", Font.BOLD, 20)); 
-//        lblNgayLap.setBounds(150, 8, 306, 30); 
-//        panelNgayBan.add(lblNgayLap);
-//
-//        
-//        CustomButton btnXuatFile = new CustomButton("Xuất file", UIStyles.BanHangButtonStyle, UIStyles.ReportIcon, CustomButtonIconSide.LEFT);
-//        btnXuatFile.setBounds(1600, 20, 150, 40);
-//        panel.add(btnXuatFile);
-//        
-//        
-//        
-//
-//        JTable table = new JTable();
-//        Object[][] data = new Object[0][headers.length];
-//        
-//        tableCuoiNgay = new CustomTable(data, headers, UIStyles.NhanVienTableHeaderStyle,
-//                UIStyles.NhanVienTableRowStyle, 20);
-//        JScrollPane scrollPane = new JScrollPane(tableCuoiNgay);
-//        scrollPane.setPreferredSize(new Dimension(1800, 600)); 
-//        panelTong.add(scrollPane);
-//        scrollPane.setBounds(55, 149, 1800, 600);
-////        data = HoaDonCTR.layDataHDBan();
-////        data = DonDoiTraCTR.layDataHDDoiTra();
-////        tableCuoiNgay.capNhatDuLieu(data);
-//        
-//        Object[][] dataHoaDon = HoaDonCTR.layDataHDBan();
-//
-//        CustomTable table1 = new CustomTable(dataHoaDon, headers, 
-//                                              UIStyles.NhanVienTableHeaderStyle, 
-//                                              UIStyles.NhanVienTableRowStyle, 
-//                                              20);
-//
-//        data = layDataKetHop();
-//        tableCuoiNgay.capNhatDuLieu(data);
-//        
-//        int tongHoaDon = data.length;
-//        BigDecimal tongDoanhThu = BigDecimal.ZERO;
-//        BigDecimal tongPhiTra = BigDecimal.ZERO;
-//        BigDecimal tongThucThu = BigDecimal.ZERO;
-//
-//        for (Object[] hang : data) {
-//            if (hang.length > 0) {
-//                BigDecimal doanhThu = (hang[4] instanceof BigDecimal) ? (BigDecimal) hang[4] : BigDecimal.ZERO;
-//                BigDecimal phiTra = (hang[5] instanceof BigDecimal) ? (BigDecimal) hang[5] : BigDecimal.ZERO;
-//
-//                tongDoanhThu = tongDoanhThu.add(doanhThu);
-//                tongPhiTra = tongPhiTra.add(phiTra);
-//                tongThucThu = tongThucThu.add(doanhThu.subtract(phiTra));
-//            }
-//        }
-//
-//        JLabel lblTongHoaDon = new JLabel("Tổng số hóa đơn: " + tongHoaDon);
-//        JLabel lblTongDoanhThu = new JLabel("Tổng doanh thu: " + tongDoanhThu.toString());
-//        JLabel lblTongPhiTra = new JLabel("Tổng phí trả: " + tongPhiTra.toString());
-//        JLabel lblTongThucThu = new JLabel("Tổng thực thu: " + tongThucThu.toString());
-//        
-//        btnXuatFile.addActionListener(this);
-//    }
     public Object[][] layDataKetHop() {
         Object[][] dataHoaDon = HoaDonCTR.layDataHDBan();
-        Object[][] dataDonDoiTra = DonDoiTraCTR.layDataHDDoiTra();
+        Object[][] dataDonDoiTra = DonDoiTraCTR.layDataHDDoiTraCuoiNgay();
 
         int totalRows = (dataHoaDon != null ? dataHoaDon.length : 0) + 
                         (dataDonDoiTra != null ? dataDonDoiTra.length : 0);

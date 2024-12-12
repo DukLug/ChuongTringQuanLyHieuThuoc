@@ -530,28 +530,32 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    if (!maNV.isEmpty()) {
 	        danhSachNhanVien = nhanVienCTR.timKiemTheoMaNV(maNV);
 	        if (!danhSachNhanVien.isEmpty()) {
-	            capNhatBangNhanVien(danhSachNhanVien);
+	        	LamMoi();
+	        	capNhatBangNhanVien(danhSachNhanVien);
 	            return; 
 	        }
 	    }
 
 	    if (!hoten.isEmpty()) {
 	        ArrayList<NhanVien> danhSachTheoTen = nhanVienCTR.timKiemTheoHoTen(hoten);
+	        LamMoi();
 	        danhSachNhanVien.addAll(danhSachTheoTen);
 	    }
 
 	   
 	    if (!sdt.isEmpty()) {
 	        ArrayList<NhanVien> danhSachTheoSDT = nhanVienCTR.timKiemTheoSDT(sdt);
+	        LamMoi();
 	        danhSachNhanVien.addAll(danhSachTheoSDT);
 	    }
 
 	   
 	    if (danhSachNhanVien.isEmpty()) {
 	        JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên với các tiêu chí đã nhập.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	        LamMoi();
 	        layToanBoDanhSach();
 	    } else {
-	        
+	    	LamMoi();
 	        capNhatBangNhanVien(danhSachNhanVien);
 	    }
 	}
@@ -616,6 +620,10 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	
 
 	private void ThemNhanVien(){
+		  if(!valid()) {
+			  return;
+			  
+		  }
 		// thêm nhân viên
     	String maNV = phatSinhMaNhanVien();
     	String hoTen = txtHoTen.getText();
@@ -626,6 +634,7 @@ public class NhanVienUI extends JPanel implements ActionListener {
         ChucVu chucVu = (ChucVu) cbChucVu.getSelectedItem(); 
         GioiTinh gioiTinh = (GioiTinh) cbGioiTinh.getSelectedItem();
         NhanVien nv = new NhanVien(maNV, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangthai);
+      
          boolean kq = nhanVienCTR.themNhanVien(nv);
          if (kq) {
              JOptionPane.showMessageDialog(frameThem, "Thêm nhân viên thành công!");
@@ -637,6 +646,10 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	}
 	
 	private void capNhatNhanVien() {
+		 if(!valid()) {
+			  return;
+			  
+		  }
 	    String maNV = txtMaNV.getText();
 	    String hoTen = txtHoTen.getText();
 	    String sdt = txtSDT.getText();
@@ -646,11 +659,9 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    ChucVu chucVu = (ChucVu) cbChucVu.getSelectedItem();
 	    TrangThaiLamViec trangThaiLamViec = (TrangThaiLamViec) cbTrangThaiLamViec.getSelectedItem();
 
-
-	    // Tạo đối tượng nhân viên mới để cập nhật
 	    NhanVien nv = new NhanVien(maNV, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThaiLamViec);
 
-	    // Cập nhật thông tin nhân viên trong cơ sở dữ liệu
+	    
 	    boolean kq = nhanVienCTR.capNhatNhanVien(nv); 
 
 	    if (kq) {
@@ -693,6 +704,67 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    } else {
 	        JOptionPane.showMessageDialog(null, "Vui lòng chọn một nhân viên để cập nhật.", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	    }
+	}
+	
+	private boolean valid() {
+	    String tenNV = txtHoTen.getText().trim();
+	    String sdtNV = txtSDT.getText().trim();
+	    String cccdNV = txtCCCD.getText().trim();
+	    if (jdcNgaySinh.getDate() == null) {
+	        JOptionPane.showMessageDialog(frameThem, "Vui lòng chọn ngày sinh!");
+	        return false;
+	    }
+	    Date ngaySinhNV = new Date (jdcNgaySinh.getDate().getTime());
+	    String chucVu = cbChucVu.getSelectedItem() != null ? cbChucVu.getSelectedItem().toString().trim() : "";
+	    String gioiTinh = cbGioiTinh.getSelectedItem() != null ? cbGioiTinh.getSelectedItem().toString().trim() : "";
+	    
+
+	    
+	    if (tenNV.isEmpty() || sdtNV.isEmpty() || cccdNV.isEmpty() || ngaySinhNV == null || chucVu.isEmpty() || gioiTinh.isEmpty()) {
+	        JOptionPane.showMessageDialog(frameThem, "Vui lòng nhập đầy đủ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+	        return false;
+	    }
+
+	    
+	    if (!tenNV.matches("^[\\p{Lu}][\\p{L}]*([\\s][\\p{Lu}][\\p{L}]*)*$")) {
+	        JOptionPane.showMessageDialog(frameThem, "Họ tên phải viết hoa chữ cái đầu mỗi từ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+	        txtHoTen.requestFocus();
+	        return false;
+	    }	
+
+	    
+	    if (!sdtNV.matches("0\\d{9}")) {
+	        JOptionPane.showMessageDialog(frameThem, "Số điện thoại phải gồm đúng 10 chữ số và bắt đầu bằng số 0!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+	        txtSDT.requestFocus();
+	        return false;
+	    }
+
+	    
+	    if (!cccdNV.matches("\\d{12}")) {
+	        JOptionPane.showMessageDialog(frameThem, "CCCD phải gồm đúng 12 chữ số!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+	        txtCCCD.requestFocus();
+	        return false;
+	    }
+
+	    
+	    Date now = new Date(System.currentTimeMillis());
+	    long ageInMillis = now.getTime() - ngaySinhNV.getTime();
+	    int age = (int) (ageInMillis / (1000L * 60 * 60 * 24 * 365));
+	    if (age < 18) {
+	        JOptionPane.showMessageDialog(frameThem, "Nhân viên phải từ 18 tuổi trở lên!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+	        return false;
+	    }
+
+	    return true; 
+	}
+	
+	
+	private void LamMoi() {
+		  
+	    txtTimTheoMa.setText("");
+	    txtTimTheoSDT.setText("");
+	    txtTimTheoTen.setText("");
+		
 	}
 
 	@Override

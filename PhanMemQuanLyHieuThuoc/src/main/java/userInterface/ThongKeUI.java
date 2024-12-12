@@ -127,10 +127,14 @@ public class ThongKeUI extends JPanel {
         lblNewLabel_2_1_1.setBounds(38, 120, 59, 29);
         panel_1_1.add(lblNewLabel_2_1_1);
         
+        
+        
         textField_3 = new JTextField();
         textField_3.setColumns(10);
         textField_3.setBounds(96, 120, 172, 29);
         panel_1_1.add(textField_3);
+        
+        
         
         JButton btnNewButton_1 = new JButton("Xuất File");
         btnNewButton_1.setBackground(new Color(50,205,50));
@@ -150,31 +154,31 @@ public class ThongKeUI extends JPanel {
         panelBang.setBounds(550, 45, 1100,750);
         contentPane.add(panelBang);
 
-        
-        Object[][] data = {
-        	    {"John Doe", 5, 1000.0, 200.0, 800.0},
-        	    {"Jane Smith", 3, 600.0, 100.0, 500.0},
-        	    {"Mike Johnson", 4, 800.0, 150.0, 650.0},
-        	    {"Emily Davis", 2, 400.0, 50.0, 350.0}
-        	};
+//        
+//        Object[][] data = {
+//        	    {"John Doe", 5, 1000.0, 200.0, 800.0},
+//        	    {"Jane Smith", 3, 600.0, 100.0, 500.0},
+//        	    {"Mike Johnson", 4, 800.0, 150.0, 650.0},
+//        	    {"Emily Davis", 2, 400.0, 50.0, 350.0}
+//        	};
+//
+//        
+//        String[] header = {"Tên nhân viên", "Số lượng đơn", "Doanh thu", "Giá trị trả", "Doanh thu thuần"};
 
         
-        String[] header = {"Tên nhân viên", "Số lượng đơn", "Doanh thu", "Giá trị trả", "Doanh thu thuần"};
+//        CustomTable table = new CustomTable(data, header, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
 
         
-        CustomTable table = new CustomTable(data, header, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
-
-        
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(885, 711)); // Kích thước của JScrollPane
-        scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
-
-        // Thêm JScrollPane vào panelBang
-        panelBang.setLayout(new BorderLayout()); // Đảm bảo panelBang có layout
-        panelBang.add(scrollPane, BorderLayout.CENTER);
-
-        // Kiểm tra JScrollBar nếu cần
-        JScrollBar sb = scrollPane.getVerticalScrollBar();
+//        JScrollPane scrollPane = new JScrollPane(table);
+//        scrollPane.setPreferredSize(new Dimension(885, 711)); // Kích thước của JScrollPane
+//        scrollPane.setBorder(new LineBorder(Color.GRAY, 1, true));
+//
+//        // Thêm JScrollPane vào panelBang
+//        panelBang.setLayout(new BorderLayout()); // Đảm bảo panelBang có layout
+//        panelBang.add(scrollPane, BorderLayout.CENTER);
+//
+//        // Kiểm tra JScrollBar nếu cần
+//        JScrollBar sb = scrollPane.getVerticalScrollBar();
 
     
     }

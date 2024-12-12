@@ -37,7 +37,7 @@ public class HoaDonDoiTraUI extends JFrame {
 	
 	
 
-	public HoaDonDoiTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, Object[][] dataDoiHang, String tienTra, String phitrahang, String tienMua, String giamGia, String tongTien, String tienKhachDua, String tienTraKhach ) {
+	public  HoaDonDoiTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, Object[][] dataDoiHang, String tienTra, String phitrahang, String tienMua, String giamGia, String tongTien, String tienKhachDua, String tienTraKhach,String ghiChu ) {
 		
 
 		
@@ -213,13 +213,15 @@ public class HoaDonDoiTraUI extends JFrame {
 		textTienTraKhach.setText(tienTraKhach);
 		panel.add(textTienTraKhach);
 		
+		JLabel lblNewLabel_16 = new JLabel("ghi chú");
+		lblNewLabel_16.setBounds(10, 690, 135, 31);
+		panel.add(lblNewLabel_16);
 
-	
-
+		JLabel textghiChu = new JLabel("");
+		textghiChu.setBounds(129, 690, 224, 31);
+		textghiChu.setText(ghiChu);
+		panel.add(textghiChu);
 		
-		
-		
-
 	}
 	
 

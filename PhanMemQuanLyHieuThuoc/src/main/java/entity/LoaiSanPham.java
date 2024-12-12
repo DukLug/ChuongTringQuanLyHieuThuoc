@@ -60,7 +60,6 @@ public class LoaiSanPham {
 		return "LoaiSanPham [maLoai=" + maLoai + ", tenLoai=" + tenLoai + "]";
 	}
 
-	
 
 
 }

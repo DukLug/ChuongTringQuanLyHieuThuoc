@@ -72,7 +72,9 @@ public class SearchTool {
     }
 
     public enum SearchCondition {
+
         NONCONDITION, MATCH, INCLUDE, NONINCLUDE;
+
     }
 
     public static class Limit<T> {

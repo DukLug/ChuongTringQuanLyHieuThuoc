@@ -30,7 +30,9 @@ public class TaiKhoanDAO {
                 String matKhau = rs.getString("MatKhau");
                 String trangThaiStr = rs.getNString("TrangThai");
                 
-                TrangThaiTaiKhoan trangThai = TrangThaiTaiKhoan.valueOf(trangThaiStr);
+
+                TrangThaiTaiKhoan trangThai = TrangThaiTaiKhoan.fromString(trangThaiStr);
+
                 
                 TaiKhoan taiKhoan = new TaiKhoan(maTaiKhoan, tenDangNhap, matKhau, trangThai);
                 dsTaiKhoan.add(taiKhoan);
@@ -145,7 +147,7 @@ public class TaiKhoanDAO {
                 String matKhau = rs.getString("MatKhau");
                 String trangThaiStr = rs.getNString("TrangThai");
                 
-                TrangThaiTaiKhoan trangThai = TrangThaiTaiKhoan.valueOf(trangThaiStr);
+                TrangThaiTaiKhoan trangThai = TrangThaiTaiKhoan.fromString(trangThaiStr);
                 
                 taiKhoan = new TaiKhoan(maTaiKhoan, tenDangNhap, matKhau, trangThai);
             }

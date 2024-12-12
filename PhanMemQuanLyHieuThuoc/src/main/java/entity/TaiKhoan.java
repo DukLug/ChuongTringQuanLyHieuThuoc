@@ -49,8 +49,8 @@ public class TaiKhoan {
 			throw new  IllegalArgumentException("Tên đăng nhập không được null");
 		if (tenDangNhap.isEmpty())
 			throw new  IllegalArgumentException("Tên đăng nhập không được rỗng");
-		if (tenDangNhap.length() < 1 || tenDangNhap.length() > 50)
-			throw new  IllegalArgumentException("Tên đăng nhập tối thiểu 1 ký tự và tối đa 50 ký tự");
+		if (tenDangNhap.length() < 1 || tenDangNhap.length() > 20)
+			throw new  IllegalArgumentException("Tên đăng nhập tối thiểu 1 ký tự và tối đa 20 ký tự");
 		
 		this.tenDangNhap = tenDangNhap;
 	}
@@ -60,8 +60,8 @@ public class TaiKhoan {
 			throw new  IllegalArgumentException("Mật khẩu không được null");
 		if (matKhau.isEmpty())
 			throw new  IllegalArgumentException("Mật khẩu không được rỗng");
-		if (matKhau.matches("^[a-zA-Z]+@[0-9]{4}$") == false)
-			throw new  IllegalArgumentException("Sai mật khẩu");
+		if (matKhau.length() < 1 || matKhau.length() > 20)
+			throw new  IllegalArgumentException("Mật khẩu 1 ký tự và tối đa 20 ký tự");
 		
 		this.matKhau = matKhau;
 	}

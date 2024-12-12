@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,11 @@ import javax.swing.SwingConstants;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -118,7 +124,7 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 		JScrollPane scrollPane = new JScrollPane(tableHoaDon);
 		panel_3.add(scrollPane, BorderLayout.CENTER);
 
-		data = HoaDonCTR.layDataHD();
+		data = HoaDonCTR.layDataHD2();
 		tableHoaDon.capNhatDuLieu(data);
 
 		JLabel lblNewLabel_1 = new JLabel("Mã hóa đơn :");
@@ -315,14 +321,7 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 		   updateChart(allData);
 		   
 	}
-//	  filteredData = allData;
-	   
 
-	   
-//	   updateChart(filteredData);
-//	   System.out.println(Arrays.deepToString((Object[]) filteredData));//		    tableHoaDon.capNhatDuLieu(filteredData);
-	   
-//	   updateChart(filteredData);
 
 	private void docDuLieuDatacbb() {
 		List<NhanVien> list = nv_dao.layDanhSachTatCaNhanVien();
@@ -350,38 +349,176 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
 	    }
 	}
 
-
 	public void updateChart(Object[][] data) {
-		 if (chartPanel == null) {
-		        System.err.println("");
-		        return; // Không làm gì nếu chartPanel chưa được khởi tạo
-		    }
-		 if (data == null || data.length == 0) {
-		        System.err.println("");
-		        return; 
-		    }
-	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-
-	    for (Object[] row : data) {
-	        String year = row[2].toString(); // Năm
-	        Number revenue = (Number) row[1]; // Doanh thu
-	        dataset.addValue(revenue, "Doanh thu", year); 
-	    }
-
-	    JFreeChart newChart = ChartFactory.createBarChart(
-	            "BIỂU ĐỒ DOANH THU",
-	            "Thời gian",
-	            "Doanh thu",
-	            dataset,
-	            PlotOrientation.VERTICAL,
-	            false,
-	            true,
-	            false
-	    );
-
-	    chartPanel.setChart(newChart); 
+//	    if (chartPanel == null) {
+//	        System.err.println("Chart panel is not initialized");
+//	        return; // Không làm gì nếu chartPanel chưa được khởi tạo
+//	    }
+//	    
+//	    if (data == null || data.length == 0) {
+//	        // Nếu không có dữ liệu, có thể hiển thị biểu đồ mặc định
+//	        JFreeChart defaultChart = createDefaultChart();
+//	        chartPanel.setChart(defaultChart);
+//	        return; 
+//	    }
+//	    
+//	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//	    for (Object[] row : data) {
+//	        if (row != null) {
+//	            String time = row[2] != null ? row[2].toString() : "Không xác định";
+//	            BigDecimal doanhThu = (BigDecimal) row[1];
+//	            dataset.addValue(doanhThu, "Doanh Thu", time);
+//	        }
+//	    }
+//
+//	    JFreeChart newChart = ChartFactory.createBarChart(
+//	            "BIỂU ĐỒ DOANH THU",
+//	            "Thời gian",
+//	            "Doanh thu",
+//	            dataset,
+//	            PlotOrientation.VERTICAL,
+//	            false,
+//	            true,
+//	            false
+//	    );
+//	    
+//	    // Cấu hình biểu đồ
+//	    CategoryPlot plot = newChart.getCategoryPlot();
+//	    BarRenderer renderer = new BarRenderer();
+//	    renderer.setMaximumBarWidth(0.05); // Điều chỉnh chiều rộng cột
+//	    plot.setRenderer(renderer);
+//
+//	    NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//	    yAxis.setTickUnit(new NumberTickUnit(50000));
+//	    NumberFormat customFormat = new DecimalFormat("###,###");
+//	    yAxis.setNumberFormatOverride(customFormat);
+//
+//	    // Cập nhật chartPanel
+//	    chartPanel.setChart(newChart); 
+//
+//	    // Đảm bảo panel được cập nhật lại
+//	    chartPanel.revalidate(); 
+//	    chartPanel.repaint();
 	}
+
+
+//	public void updateChart(Object[][] data) {
+//		 if (chartPanel == null) {
+//		        System.err.println("");
+//		        return; // Không làm gì nếu chartPanel chưa được khởi tạo
+//		    }
+//		 if (data == null || data.length == 0) {
+//		        System.err.println("");
+//		        return; 
+//		    }
+//	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//	    for (Object[] row : data) {
+//            if (row != null) {
+//                String time = row[2] != null ? row[2].toString() : "Không xác định";
+//                BigDecimal doanhThu = (BigDecimal) row[1];
+//                dataset.addValue(doanhThu, "Doanh Thu", time);
+//            }
+//        }
+//
+//
+//	    JFreeChart newChart = ChartFactory.createBarChart(
+//	            "BIỂU ĐỒ DOANH THU",
+//	            "Thời gian",
+//	            "Doanh thu",
+//	            dataset,
+//	            PlotOrientation.VERTICAL,
+//	            false,
+//	            true,
+//	            false
+//	    );
+//
+//	    chartPanel.setChart(newChart); 
+//	}
+//
+//	public void updateChart(Object[][] data) {
+//	    if (chartPanel == null) {
+//	        System.err.println("Chart panel is not initialized");
+//	        return; // Không làm gì nếu chartPanel chưa được khởi tạo
+//	    }
+//	    
+//	    if (data == null || data.length == 0) {
+//	        // Nếu không có dữ liệu, có thể hiển thị biểu đồ mặc định
+//	        JFreeChart defaultChart = createDefaultChart();
+//	        chartPanel.setChart(defaultChart);
+//	        return; 
+//	    }
+//	    
+//	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//	    for (Object[] row : data) {
+//	        if (row != null) {
+//	            String time = row[2] != null ? row[2].toString() : "Không xác định";
+//	            BigDecimal doanhThu = (BigDecimal) row[1];
+//	            dataset.addValue(doanhThu, "Doanh Thu", time);
+//	        }
+//	    }
+//
+//	    JFreeChart newChart = ChartFactory.createBarChart(
+//	            "BIỂU ĐỒ DOANH THU",
+//	            "Thời gian",
+//	            "Doanh thu",
+//	            dataset,
+//	            PlotOrientation.VERTICAL,
+//	            false,
+//	            true,
+//	            false
+//	            
+//	            
+//	    );
+//	    // Cấu hình biểu đồ
+//        CategoryPlot plot = newChart.getCategoryPlot();
+//        BarRenderer renderer = new BarRenderer();
+//        renderer.setMaximumBarWidth(0.05); // Điều chỉnh chiều rộng cột
+//        plot.setRenderer(renderer);
+//
+//        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+//        yAxis.setTickUnit(new NumberTickUnit(50000));
+//        NumberFormat customFormat = new DecimalFormat("###,###");
+//        yAxis.setNumberFormatOverride(customFormat);
+//
+//        // Cập nhật panel biểu đồ
+//        chartPanel.removeAll();
+//        ChartPanel newChartPanel = new ChartPanel(newChart);
+//        newChartPanel.setPreferredSize(chartPanel.getSize());
+//        chartPanel.add(newChartPanel, BorderLayout.CENTER);
+//        chartPanel.revalidate(); // Yêu cầu cập nhật bố cục
+//        chartPanel.repaint();    // Vẽ lại panel
+//
+//	    chartPanel.setChart(newChart); 
+//	}
+//	
+	
+	
+	private JFreeChart createDefaultChart() {
+         // Tạo dataset mặc định
+         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+         dataset.addValue(0, "Thông báo", "Không có dữ liệu");
+
+         // Tạo biểu đồ
+         JFreeChart barChart = ChartFactory.createBarChart(
+             "Doanh Thu", // Tiêu đề biểu đồ
+             "Thời Gian", // Nhãn trục X
+             "Doanh Thu", // Nhãn trục Y
+             dataset
+         );
+
+         // Cấu hình biểu đồ
+         CategoryPlot plot = barChart.getCategoryPlot();
+         BarRenderer renderer = new BarRenderer();
+         renderer.setMaximumBarWidth(0.05);
+         plot.setRenderer(renderer);
+
+         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+         yAxis.setTickUnit(new NumberTickUnit(50000)); // Đặt khoảng cách giữa các tick là 1 triệu
+         NumberFormat customFormat = new DecimalFormat("###,###");
+         yAxis.setNumberFormatOverride(customFormat);
+
+         return barChart;
+     }
 	
 	private JFreeChart createChart() {
         JFreeChart barChart = ChartFactory.createBarChart(
@@ -398,14 +535,16 @@ public class BCBanHangUI extends JPanel implements ActionListener, MouseListener
     }
 	private CategoryDataset createDataset() {
 	    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	    
+	    for (Object[] row : data) {
+            if (row != null) {
+                String time = row[2] != null ? row[2].toString() : "Không xác định";
+                BigDecimal doanhThu = (BigDecimal) row[1];
+                dataset.addValue(doanhThu, "Doanh Thu", time);
+            }
+        }
+	    
 
-	    Object[][] allData = HoaDonDAO.layDataHD(0, 0, 0, ""); 
-
-	    for (Object[] row : allData) {
-	        String year = row[2].toString(); 
-	        Number revenue = (Number) row[1]; 
-	        dataset.addValue(revenue, "Doanh thu", year); 
-	    }
 
 	    return dataset; 
 	}

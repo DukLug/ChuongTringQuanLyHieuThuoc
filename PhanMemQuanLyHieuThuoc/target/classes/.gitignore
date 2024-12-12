@@ -1,7 +1,52 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/application/
+/component/
+/connectDB/
+/controller/
+/customDataType/
+/dao/
+/entity/
+/functionalClass/
+/testEntity/
+/userInterface/
 /META-INF/
+=======
+>>>>>>> 497a51e422283770c080a420749fb288b1df7296
+/META-INF/
+<<<<<<< HEAD
 /entity/
 /dao/
 /functionalClass/
 /userInterface/
+=======
+>>>>>>> 8fd7c92cd775585cb965319da19621a518c37e33
 /application/
+/component/
+/connectDB/
 /controller/
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/userInterface/
+/dao/
+/entity/
+/functionalClass/
+/controller/
+/application/
+/component/
+>>>>>>> 9360ced9bc447be755f16a9cad3ffde56a223716
+/customDataType/
+=======
+/customDataType/
+/dao/
+/entity/
+/functionalClass/
+/testEntity/
+/userInterface/
+/META-INF/
+>>>>>>> 8fd7c92cd775585cb965319da19621a518c37e33
+=======
+>>>>>>> main
+>>>>>>> 497a51e422283770c080a420749fb288b1df7296

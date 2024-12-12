@@ -130,3 +130,4 @@ public class LoaiSanPhamDAO {
         return loaiSanPham;
     }
 }
+

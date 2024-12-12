@@ -3,7 +3,7 @@ package customDataType;
 public enum TrangThaiTaiKhoan {
 	KhongCoDuLieu("Không có dữ liệu"),
 	HoatDong("Hoạt động"),
-	NgungHoatDong("Ngừng hoạt động");
+	NgungHoatDong("Ngưng hoạt động");
 	
 	private String trangThaiTaiKhoan;
 

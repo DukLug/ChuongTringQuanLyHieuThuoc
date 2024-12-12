@@ -41,10 +41,10 @@ public class DonDoiTraDAO {
 				String maHoaDon = rs.getString(1);
 				Date ngayDoiTra = rs.getDate(2);
 				BigDecimal tienHoan = rs.getBigDecimal(3);
-				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
-				KhuyenMai km = new KhuyenMai(rs.getString("MaKhuyenMai"));
-				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"));
-				HoaDon hd = new HoaDon(rs.getString("MaHoaDon"));
+				NhanVien nv = new NhanVien(rs.getNString("MaNhanVien"));
+				KhuyenMai km = new KhuyenMai(rs.getNString("MaKhuyenMai"));
+				KhachHang kh = new KhachHang(rs.getNString("MaKhachHang"));
+				HoaDon hd = new HoaDon(rs.getNString("MaHoaDon"));
 				DonDoiTra ddt = new DonDoiTra(maHoaDon, ngayDoiTra, tienHoan, nv, km, kh, hd);
 				dsHoaDonDoiTra.add(ddt);
 			}
@@ -125,7 +125,46 @@ public class DonDoiTraDAO {
 		        return false; 
 		    }
 		}
-	 
+	 public static Object[][] layDanhSachHoaDonDoiTraCuoiNgay() {
+			dsHoaDonDoiTra = new ArrayList<>();
+
+			try {
+				ConnectDB.getInstance();
+				Connection con = ConnectDB.getConnection();
+				String sql = "select * from DonDoiTra  WHERE CONVERT(DATE, ngayDoiTra) = CAST(GETDATE() AS DATE)";
+				Statement statement = con.createStatement();
+
+				ResultSet rs = statement.executeQuery(sql);
+				while (rs.next()) {
+					String maHoaDon = rs.getString(1);
+					Date ngayDoiTra = rs.getDate(2);
+					BigDecimal tienHoan = rs.getBigDecimal(3);
+					NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
+					KhuyenMai km = new KhuyenMai(rs.getString("MaKhuyenMai"));
+					KhachHang kh = new KhachHang(rs.getString("MaKhachHang"));
+					HoaDon hd = new HoaDon(rs.getString("MaHoaDon"));
+					DonDoiTra ddt = new DonDoiTra(maHoaDon, ngayDoiTra, tienHoan, nv, km, kh, hd);
+					dsHoaDonDoiTra.add(ddt);
+				}
+
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			Object[][] data = new Object[dsHoaDonDoiTra.size()][7];
+
+			for (int i = 0; i < dsHoaDonDoiTra.size(); i++) {
+				data[i][0] = dsHoaDonDoiTra.get(i).getMaDonDoiTra();
+				data[i][1] = dsHoaDonDoiTra.get(i).getNgayDoiTra();
+				data[i][2] = dsHoaDonDoiTra.get(i).getTienHoan();
+				data[i][3] = dsHoaDonDoiTra.get(i).getMaNhanVien().getMaNhanVien();
+				data[i][4] = dsHoaDonDoiTra.get(i).getMaKhuyenMai().getMaKhuyenMai();
+				data[i][5] = dsHoaDonDoiTra.get(i).getMaKhachhang().getMaKhachHang();
+				data[i][6] = dsHoaDonDoiTra.get(i).getMaHoaDon().getMaHoaDon();
+			}
+			return data;
+		
+		}
 	 
 		   
 		    public boolean checkMaDonDoiTraExists(String maDonDoiTra) {
@@ -134,7 +173,7 @@ public class DonDoiTraDAO {
 
 		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
 		             
-		            ps.setString(1, maDonDoiTra);
+		            ps.setNString(1, maDonDoiTra);
 		            ResultSet rs = ps.executeQuery();
 
 		            if (rs.next()) {
@@ -153,12 +192,12 @@ public class DonDoiTraDAO {
 		    public String maDonDoiTra(String maDonDoiTra) {
 		    	 String sql = "SELECT MaDonDoiTra FROM DonDoiTra WHERE MaDonDoiTra = ?";
 		         try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
-		             ps.setString(1, maDonDoiTra);
+		             ps.setNString(1, maDonDoiTra);
 		             ResultSet resultSet = ps.executeQuery();
 		             
 		             // Kiểm tra kết quả
 		             if (resultSet.next()) {
-		                 return resultSet.getString("MaDonDoiTra");
+		                 return resultSet.getNString("MaDonDoiTra");
 		             }
 		         } catch (SQLException e) {
 		             e.printStackTrace();
@@ -173,19 +212,19 @@ public class DonDoiTraDAO {
 		        String sql = "select * from DonDoiTra where MaDonDoiTra =  ?";
 
 		        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
-		            ps.setString(1, maDonDoiTra);
+		            ps.setNString(1, maDonDoiTra);
 		            try (ResultSet rs = ps.executeQuery()) {
 		                if (rs.next()) {
-		                    String ma = rs.getString("MaDonDoiTra");
+		                    String ma = rs.getNString("MaDonDoiTra");
 		                    Date ngayDoiTra = rs.getDate("NgayDoiTra"); 
 		                    BigDecimal tienHoan = rs.getBigDecimal("TienHoan");
-		                    String maNV = rs.getString("MaNhanVien");
+		                    String maNV = rs.getNString("MaNhanVien");
 		                    NhanVien nv = new NhanVien(maNV);
-		                    String maKM = rs.getString("MaKhuyenMai");
+		                    String maKM = rs.getNString("MaKhuyenMai");
 		                    KhuyenMai km = new KhuyenMai(maKM);
-		                    String maKH = rs.getString("MaKhachHang");
+		                    String maKH = rs.getNString("MaKhachHang");
 		                    KhachHang kh = new KhachHang(maKH);
-		                    String maHD = rs.getString("MaHoaDon");
+		                    String maHD = rs.getNString("MaHoaDon");
 		                    HoaDon hd = new HoaDon(maHD);
 		               
 		                    
@@ -199,10 +238,50 @@ public class DonDoiTraDAO {
 		    }
 		    
 		    
+
 		
-		 
-		   
+		 // tìm hóa đơn đổi trả bằng mã hóa đơn
+		    public boolean kiemTraHoaDonDaDoiTra(String maHoaDon) {
+		        try {
+		        	
+		        	 //đk 1 : vẫn trong thời gian đổi trả
+		            String query1 = "SELECT COUNT(*) FROM HoaDon hd WHERE hd.MaHoaDon = ? AND DATEDIFF(DAY, hd.NgayTao, GETDATE()) <= 3;";
+			           
+		            PreparedStatement ps1 = ConnectDB.getConnection().prepareStatement(query1);
+		            ps1.setString(1, maHoaDon);  
+		            
+		            
+		            ResultSet rs1 = ps1.executeQuery();
+		            if (rs1.next() && rs1.getInt(1) <= 0) {
+		                return true;  
+		            } 
+		        	
+		        	// đk1: chưa đổi trả lần nào
+		            String query2 = "SELECT COUNT(*) FROM DonDoiTra WHERE MaHoaDon = ?";
+		           
+		            PreparedStatement ps2 = ConnectDB.getConnection().prepareStatement(query2);
+		            ps2.setString(1, maHoaDon);  
+		            
+		            ResultSet rs2 = ps2.executeQuery();
+		            
+		            if (rs2.next()&& rs2.getInt(1) <= 0) {
+		                return false;  
+		            }else {
+		            	return true;
+		            }
+		            
+		           
+		            
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            return false;
+		        }
+		        
+		    }
+		    	
 		    
+		   
+		
 	 
 	 
 

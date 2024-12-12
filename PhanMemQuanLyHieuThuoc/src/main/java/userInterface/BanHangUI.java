@@ -765,5 +765,3 @@ public class BanHangUI extends JPanel implements ActionListener    {
 	
 	private static void quayLai() {}
 }
-
-

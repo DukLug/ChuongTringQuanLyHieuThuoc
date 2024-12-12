@@ -2,6 +2,7 @@ package userInterface;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -45,10 +48,11 @@ public class LoHangUI extends JPanel {
     
     private CustomTable bangLoHang;
     
+
     // Biến để theo dõi chế độ Hủy Hàng
     private boolean huyHangMode = false;
     CustomButton huyHangBTN = new CustomButton("Hủy Hàng", UIStyles.DoiTraButtonStyle,() -> batDauHuyHang()); 
-    
+
     public LoHangUI() {
         super();
         
@@ -59,6 +63,7 @@ public class LoHangUI extends JPanel {
     
     public void taoHinh() {
         setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
+
         this.setBackground(UIStyles.BackgroundColor);
         
         // JLabel tiêu đề "Danh sách nhân viên"
@@ -67,6 +72,7 @@ public class LoHangUI extends JPanel {
      	lblTitle.setFont(new Font("Tahoma", Font.BOLD, 35));
      	titlePanel.add(lblTitle);
      	titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         
         // Create custom table
         bangLoHang = new CustomTable(duLieuBang, tenCot, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20,
@@ -76,7 +82,7 @@ public class LoHangUI extends JPanel {
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(bangLoHang);
         scrollPane.setPreferredSize(new Dimension(1800, 600));
-        
+
 
         
         add(titlePanel);
@@ -232,6 +238,7 @@ public class LoHangUI extends JPanel {
         
         dialog.add(panel);
         dialog.setVisible(true);
+
     }
     
     private void chuanBiDuLieu() {
@@ -249,10 +256,12 @@ public class LoHangUI extends JPanel {
                 String.valueOf(loHang.getSoLuongDonViTinh2()),
                 String.valueOf(loHang.getSoLuongDonViTinh3()),
                 loHang.getViTri() != null ? loHang.getViTri() : "Chưa xác định",
+
                 loHang.getSanPham() != null ? SanPhamCTR.timSanPhamTheoMaSanPham( loHang.getSanPham().getMaSanPham()).getTenSanPham() : "Không có sản phẩm"
                 	
             };
             
+
         }
     }
     

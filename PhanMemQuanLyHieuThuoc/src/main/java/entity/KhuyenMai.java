@@ -10,7 +10,7 @@ public class KhuyenMai {
 	private String dieuKien;
 	private double chietKhau;
 	private NhanVien maNhanVien;
-	
+	private int soLuongGioiHan;
 	
 	public KhuyenMai() {
 		super();
@@ -21,7 +21,7 @@ public class KhuyenMai {
 	}
 
 	public KhuyenMai(String maKhuyenMai, Date ngayKhuyenMai, Date ngayKetThuc, String dieuKien, double chietKhau,
-			NhanVien maNhanVien) {
+			NhanVien maNhanVien, int soLuongGioiHan) {
 		super();
 		this.maKhuyenMai = maKhuyenMai;
 
@@ -30,6 +30,7 @@ public class KhuyenMai {
 		setDieuKien(dieuKien);
 		setChietKhau(chietKhau);
 		setMaNhanVien(maNhanVien);
+		setSoLuongGioiHan(soLuongGioiHan);
 
 	}
 
@@ -37,7 +38,16 @@ public class KhuyenMai {
 		return maKhuyenMai;
 	}
 
+	
 
+
+	public int getSoLuongGioiHan() {
+		return soLuongGioiHan;
+	}
+
+	public void setSoLuongGioiHan(int soLuongGioiHan) {
+		this.soLuongGioiHan = soLuongGioiHan;
+	}
 
 	public Date getNgayKhuyenMai() {
 		return ngayKhuyenMai;
@@ -45,16 +55,8 @@ public class KhuyenMai {
 
 	public void setNgayKhuyenMai(Date ngayKhuyenMai) {
 
-		try {
-	        Date currentDate = new Date(System.currentTimeMillis());
-	        if (!ngayKhuyenMai.after(currentDate)) {
 	            this.ngayKhuyenMai = ngayKhuyenMai;
-	        } else {
-	            throw new IllegalArgumentException("Ngày khuyến mãi phải bằng hoặc sau ngày hiện tại.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        System.out.println(e.getMessage());
-	    }
+	    
 	}
 
 	public Date getNgayKetThuc() {
@@ -63,19 +65,9 @@ public class KhuyenMai {
 
 	public void setNgayKetThuc(Date ngayKetThuc) {
 
-		try {
-	        if (this.ngayKhuyenMai != null) {
-	            if (ngayKetThuc.after(this.ngayKhuyenMai)) {
+		
 	                this.ngayKetThuc = ngayKetThuc;
-	            } else {
-	                throw new IllegalArgumentException("Ngày kết thúc phải sau ngày khuyến mãi.");
-	            }
-	        } else {
-	            throw new IllegalArgumentException("Ngày khuyến mãi chưa được thiết lập.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        System.out.println(e.getMessage());
-	    }
+	            
 
 	}
 
@@ -137,7 +129,9 @@ public class KhuyenMai {
 	public String toString() {
 		return "KhuyenMai [maKhuyenMai=" + maKhuyenMai + ", ngayKhuyenMai=" + ngayKhuyenMai + ", ngayKetThuc="
 				+ ngayKetThuc + ", dieuKien=" + dieuKien + ", chietKhau=" + chietKhau + ", maNhanVien=" + maNhanVien
-				+ "]";
+				+ ", soLuongGioiHan=" + soLuongGioiHan + "]";
 	}
+
+	
 
 }

@@ -390,8 +390,34 @@ public class SanPhamYTe {
 				+ ", giaTriQuyDoi2=" + giaTriQuyDoi2 + ", giaTriQuyDoi3=" + giaTriQuyDoi3 + ", nhaCungCap=" + nhaCungCap
 				+ ", loaiSanPham=" + loaiSanPham + ", maVach=" + maVach + ", yeuCauKeDon=" + yeuCauKeDon + ", hinhAnh="
 				+ hinhAnh + ", loHang=" + loHang + "]";
+
 	}
 
+	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaVonDonViTinh1, DonViTinh donViTinh1) {
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.giaBanDonViTinh1 = giaVonDonViTinh1;
+		this.donViTinh1= donViTinh1;
+		
+	}
+
+
+	public SanPhamYTe(String maSanPham, String tenSanPham, BigDecimal giaVonDonViTinh1, BigDecimal giaBanDonViTinh2,
+			BigDecimal giaBanDonViTinh3, DonViTinh donViTinh1, DonViTinh donViTinh2, DonViTinh donViTinh3) {
+		this.maSanPham = maSanPham;
+		this.tenSanPham = tenSanPham;
+		this.giaBanDonViTinh1 = giaVonDonViTinh1;
+		this.giaBanDonViTinh2= giaBanDonViTinh2;
+		this.giaBanDonViTinh3= giaBanDonViTinh3;
+		this.donViTinh1= donViTinh1;
+		this.donViTinh2= donViTinh2;
+		this.donViTinh3= donViTinh3;
+		
+
+	}
+
+
+	
 
 	
 

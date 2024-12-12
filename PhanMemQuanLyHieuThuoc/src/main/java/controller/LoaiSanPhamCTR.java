@@ -10,10 +10,11 @@ public class LoaiSanPhamCTR {
 		return LoaiSanPhamDAO.layDanhSachTatCaLoaiSanPham();
 	}
 	
+
 	public static LoaiSanPham timTheoMa(String ma) {
 		return LoaiSanPhamDAO.timLoaiSanPham(ma);
 	}
-	
+
 	public static String layMaMoi() {
 	    ArrayList<LoaiSanPham> dsLoaiSanPham = layDanhSachTatCaLoaiSanPham();
 	    int maxNumber = 0;
@@ -49,4 +50,6 @@ public class LoaiSanPhamCTR {
 		LoaiSanPhamDAO.layDanhSachTatCaLoaiSanPham();
 		
 	}
+
 }
+

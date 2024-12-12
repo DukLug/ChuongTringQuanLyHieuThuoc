@@ -1,8 +1,18 @@
 /META-INF/
+<<<<<<< HEAD
 /entity/
 /dao/
 /functionalClass/
 /userInterface/
 /application/
 /controller/
+=======
+/userInterface/
+/dao/
+/entity/
+/functionalClass/
+/controller/
+/application/
+/component/
+>>>>>>> 9360ced9bc447be755f16a9cad3ffde56a223716
 /customDataType/

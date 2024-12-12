@@ -1,5 +1,6 @@
 package controller;
 
+
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -8,12 +9,18 @@ import dao.DonNhapHangDAO;
 import dao.LoHangDAO;
 import entity.ChiTietDonNhap;
 import entity.DonNhapHang;
+
+import java.util.ArrayList;
+
+import dao.LoHangDAO;
+
 import entity.LoHang;
 
 public class KhoCTR {
 	public static ArrayList<LoHang> layDanhSachTatCaLoHang(){
 		return LoHangDAO.layDanhSachTatCaLoHang();
 	}
+
 	
 	public static ArrayList<DonNhapHang> layDanhSachTatCaDonNhap(){
 		return DonNhapHangDAO.layDanhSachTatCaDonNhapHang();
@@ -40,3 +47,4 @@ public class KhoCTR {
 		return LoHangDAO.capNhatLoHang(loHang);
 	}
 }
+

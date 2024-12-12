@@ -151,7 +151,27 @@ public class ChiTietHoaDon {
 				+ giaBan + ", hoaDon=" + hoaDon + ", sanPhamYTe=" + sanPhamYTe + ", loHang=" + loHang
 				+ ", loHangThayThe=" + loHangThayThe + "]";
 	}
+
+	
+	public ChiTietHoaDon(SanPhamYTe sanPhamYTe, int soLuongDonViTinh1, BigDecimal tongTien) {
+		this.sanPhamYTe= sanPhamYTe;
+		this.soLuongDonViTinh1= soLuongDonViTinh1;
+		this.giaBan= tongTien;
+		
+	}
+
+	public ChiTietHoaDon(SanPhamYTe sanPhamYTe, int soLuongDonViTinh1, int soLuongDonViTinh2, int soLuongDonViTinh3,
+			BigDecimal tongTien) {
+		this.sanPhamYTe= sanPhamYTe;
+		this.soLuongDonViTinh1= soLuongDonViTinh1;
+		this.soLuongDonViTinh2= soLuongDonViTinh2;
+		this.soLuongDonViTinh3= soLuongDonViTinh3;
+		this.giaBan= tongTien;
+	}
+
 	
 	
+
+
 	
 }

@@ -14,7 +14,9 @@ public class ChiTietHoaDonCTR {
     }
 
     // Hàm tìm chi tiết hóa đơn theo mã hóa đơn
+    
     public ArrayList<ChiTietHoaDon> timChiTietHoaDonTheoMaHoaDon(String maHoaDon) {
         return chiTietHoaDonDAO.timChiTietHoaDonTheoMaHoaDon(maHoaDon);
     }
+
 }

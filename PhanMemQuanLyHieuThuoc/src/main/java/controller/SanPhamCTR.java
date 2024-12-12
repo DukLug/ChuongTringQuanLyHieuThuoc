@@ -88,7 +88,7 @@ public class SanPhamCTR {
 	public static String layMa() {
 		return "";
 	}
-	
+
 	public static void capNhatNgungBan(SanPhamYTe sanPham) {
 		sanPham.setTrangThaiSanPham(TrangThaiSanPham.NgungBan);
 		SanPhamYTeDAO.updateSanPhamYTe(sanPham);
@@ -100,3 +100,6 @@ public class SanPhamCTR {
 	}
 
 }
+
+
+

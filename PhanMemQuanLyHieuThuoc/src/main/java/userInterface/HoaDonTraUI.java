@@ -23,7 +23,7 @@ import entity.KhachHang;
 
 
 
-public class HoaDonDoiTraUI extends JFrame {
+public class HoaDonTraUI extends JFrame {
 	private JPanel contentPane;
 	public DefaultTableModel modelTraHang;
 	private DonDoiTraCTR doiTraCTR;
@@ -32,12 +32,11 @@ public class HoaDonDoiTraUI extends JFrame {
 	private DonDoiTra ddt;
 	public JTable tableTraHangHoaDon;
 	public DefaultTableModel modelDoiHang;
-	private JTable tableDoiHangHoaDon;
 
 	
 	
 
-	public  HoaDonDoiTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, Object[][] dataDoiHang, String tienTra, String phitrahang, String tienMua, String giamGia, String tongTien, String tienKhachDua, String tienTraKhach,String ghiChu ) {
+	public  HoaDonTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, String tienTra, String phitrahang,  String tongTien,String ghiChu ) {
 		
 
 		
@@ -62,7 +61,7 @@ public class HoaDonDoiTraUI extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Hóa Đơn Đổi Trả");
+		JLabel lblNewLabel = new JLabel("Hóa Đơn Trả Hàng");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD , 20));
 		lblNewLabel.setBounds(300, 7, 200, 32);
 		panel.add(lblNewLabel);
@@ -129,98 +128,46 @@ public class HoaDonDoiTraUI extends JFrame {
 	        }
 		scrollPane_1.setViewportView(tableTraHangHoaDon);
 		
-		JLabel textDoiHang = new JLabel("");
-		textDoiHang.setBounds(300, 350, 137, 25);
-		textDoiHang.setFont(new Font("Tahoma", Font.BOLD , 20));
-		textDoiHang.setText("Đổi Hàng");
-		panel.add(textDoiHang);
-		
-		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 380, 750, 150);
-		panel.add(scrollPane_2);
 
-		String headCollum1[] = new String[]  {"Tên sản phẩm", "Giá bán", "Đơn vị tính", "số lượng","Tổng Tiền"};;
-		modelDoiHang = new DefaultTableModel(headCollum1, 0);
-		tableDoiHangHoaDon = new JTable(modelDoiHang);
-		 for (Object[] row : dataDoiHang) {
-			 modelDoiHang.addRow(row);
-	        }
-		scrollPane_2.setViewportView(tableDoiHangHoaDon);
-		
 		
 		JLabel lblNewLabel_9 = new JLabel("Tổng tiền trả");
-		lblNewLabel_9.setBounds(10, 550, 135, 31);
+		lblNewLabel_9.setBounds(10, 350, 135, 31);
 		panel.add(lblNewLabel_9);
 
 		JLabel textTongTienTra = new JLabel("");
-		textTongTienTra.setBounds(129, 550, 224, 31);
+		textTongTienTra.setBounds(129, 350, 224, 31);
 		textTongTienTra.setText(tienTra);
 		panel.add(textTongTienTra);
 		
 
 		JLabel lblNewLabel_10 = new JLabel("Phí trả hàng");
-		lblNewLabel_10.setBounds(10, 570, 135, 31);
+		lblNewLabel_10.setBounds(10, 370, 135, 31);
 		panel.add(lblNewLabel_10);
 
 		JLabel textPhiTraHang = new JLabel("");
-		textPhiTraHang.setBounds(129, 570, 224, 31);
+		textPhiTraHang.setBounds(129, 370, 224, 31);
 		textPhiTraHang.setText(phitrahang);
 		panel.add(textPhiTraHang);
 		
-		JLabel lblNewLabel_11 = new JLabel("Tổng tiền mua");
-		lblNewLabel_11.setBounds(10, 590, 135, 31);
-		panel.add(lblNewLabel_11);
-
-		JLabel textTongTienMua = new JLabel("");
-		textTongTienMua.setBounds(129, 590, 224, 31);
-		textTongTienMua.setText(tienMua);
-		panel.add(textTongTienMua);
 		
-		JLabel lblNewLabel_12 = new JLabel("Giảm giá");
-		lblNewLabel_12.setBounds(10, 610, 135, 31);
-		panel.add(lblNewLabel_12);
-
-		JLabel textGiamGia = new JLabel("");
-		textGiamGia.setBounds(129, 610, 224, 31);
-		textGiamGia.setText(giamGia);
-		panel.add(textGiamGia);
-		
-		JLabel lblNewLabel_13 = new JLabel("Tổng tiền");
-		lblNewLabel_13.setBounds(10, 630, 135, 31);
+		JLabel lblNewLabel_13 = new JLabel("Tiền trả khách");
+		lblNewLabel_13.setBounds(10, 390, 135, 31);
 		panel.add(lblNewLabel_13);
 
 		JLabel textTongTien = new JLabel("");
-		textTongTien.setBounds(129, 630, 224, 31);
+		textTongTien.setBounds(129, 390, 224, 31);
 		textTongTien.setText(tongTien);
 		panel.add(textTongTien);
 		
-		JLabel lblNewLabel_14 = new JLabel("Tiền khách đưa");
-		lblNewLabel_14.setBounds(10, 650, 135, 31);
+		JLabel lblNewLabel_14 = new JLabel("Ghi chú:");
+		lblNewLabel_14.setBounds(10, 410, 135, 31);
 		panel.add(lblNewLabel_14);
 
-		JLabel textTienKhachDua = new JLabel("");
-		textTienKhachDua.setBounds(129, 650, 224, 31);
-		textTienKhachDua.setText(tienKhachDua);
-		panel.add(textTienKhachDua);
-		
-		JLabel lblNewLabel_15 = new JLabel("Tiền trả khách");
-		lblNewLabel_15.setBounds(10, 670, 135, 31);
-		panel.add(lblNewLabel_15);
-
-		JLabel textTienTraKhach = new JLabel("");
-		textTienTraKhach.setBounds(129, 670, 224, 31);
-		textTienTraKhach.setText(tienTraKhach);
-		panel.add(textTienTraKhach);
-		
-		JLabel lblNewLabel_16 = new JLabel("ghi chú");
-		lblNewLabel_16.setBounds(10, 690, 135, 31);
-		panel.add(lblNewLabel_16);
-
 		JLabel textghiChu = new JLabel("");
-		textghiChu.setBounds(129, 690, 224, 31);
+		textghiChu.setBounds(129, 410, 224, 31);
 		textghiChu.setText(ghiChu);
 		panel.add(textghiChu);
+		
 		
 	}
 	

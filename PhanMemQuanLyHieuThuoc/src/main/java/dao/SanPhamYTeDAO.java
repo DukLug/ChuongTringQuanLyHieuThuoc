@@ -1,5 +1,8 @@
 package dao;
 
+
+import java.math.BigDecimal;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -120,6 +123,7 @@ public class SanPhamYTeDAO {
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
+
                 LoaiSanPham loai = new LoaiSanPham(rs.getNString("MaLoai"));
                 NhaCungCap ncc = new NhaCungCap(rs.getNString("MaNhaCungCap")); 
                 
@@ -138,6 +142,7 @@ public class SanPhamYTeDAO {
                     DonViTinh.valueOf(rs.getNString("DonViTinh1")),
                     rs.getNString("DonViTinh2") != null ? DonViTinh.valueOf(rs.getNString("DonViTinh2")) : null,
                     rs.getNString("DonViTinh3") != null ? DonViTinh.valueOf(rs.getNString("DonViTinh3")) : null,
+
                     
                     rs.getBigDecimal("GiaVonDonViTinh1"),
                     rs.getBigDecimal("GiaBanDonViTinh2"),
@@ -148,8 +153,10 @@ public class SanPhamYTeDAO {
                     
                     ncc,
                     loai,
+
                     rs.getNString("MaVach"),
                     rs.getNString("YeuCauKeDon"),
+
                     null,
                     null
                 );
@@ -173,6 +180,7 @@ public class SanPhamYTeDAO {
         try (Connection conn = ConnectDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
+
             ps.setNString(1, sanPhamYTe.getTenSanPham());
             ps.setNString(2, sanPhamYTe.getNuocSanXuat());
             ps.setNString(3, sanPhamYTe.getTrangThaiSanPham().toString());
@@ -185,6 +193,7 @@ public class SanPhamYTeDAO {
             ps.setNString(9, sanPhamYTe.getDonViTinh1() != null ? sanPhamYTe.getDonViTinh1().toString() : null);
             ps.setNString(10, sanPhamYTe.getDonViTinh2() != null ? sanPhamYTe.getDonViTinh2().toString() : null);
             ps.setNString(11, sanPhamYTe.getDonViTinh3() != null ? sanPhamYTe.getDonViTinh3().toString() : null);
+
             
             ps.setBigDecimal(12, sanPhamYTe.getGiaBanDonViTinh1());
             ps.setBigDecimal(13, sanPhamYTe.getGiaBanDonViTinh2());
@@ -193,13 +202,14 @@ public class SanPhamYTeDAO {
             ps.setInt(15, sanPhamYTe.getGiaTriQuyDoi2());
             ps.setInt(16, sanPhamYTe.getGiaTriQuyDoi3());
             
+
             ps.setNString(17, sanPhamYTe.getNhaCungCap().getMaNhaCungCap());
             ps.setNString(18, sanPhamYTe.getLoaiSanPham().getMaLoai());
             ps.setNString(19, sanPhamYTe.getMaVach());
             ps.setNString(20, sanPhamYTe.getYeuCauKeDon());
             
             ps.setNString(21, sanPhamYTe.getMaSanPham());
-            
+
             return ps.executeUpdate() > 0;
             
         } catch (SQLException e) {
@@ -222,4 +232,64 @@ public class SanPhamYTeDAO {
             return false;
         }
     }
+
+    
+ // tìm sản phẩm theo mã 
+ 	public ArrayList<SanPhamYTe> timSanPhamTheoMaTrongDDT(String maSP){
+ 		ArrayList<SanPhamYTe> spYTe= new ArrayList<SanPhamYTe>();
+ 		 try {
+ 		        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select MaSanPham, TenSanPham, GiaVonDonViTinh1 , DonViTinh1  from SanPhamYTe where MaSanPham = ?");
+ 		        ps.setString(1,maSP);
+ 		        ResultSet rs = ps.executeQuery();
+ 		        while (rs.next()) {
+ 		        	  String maSanPham = rs.getString("MaSanPham");
+ 		              String tenSanPham = rs.getString("TenSanPham");
+ 		              BigDecimal giaVonDonViTinh1 = rs.getBigDecimal("GiaVonDonViTinh1");
+ 		              DonViTinh donViTinh1 = DonViTinh.fromString(rs.getString("DonViTinh1"));
+ 		        
+ 		              SanPhamYTe sanPham = new SanPhamYTe(maSanPham, tenSanPham, giaVonDonViTinh1, donViTinh1);
+ 		              spYTe.add(sanPham);
+ 		        }
+ 		 }catch (SQLException e) {
+ 		        e.printStackTrace();}
+ 		 return spYTe;
+ 	}
+ 	
+ 	    
+ 	    // Hàm lấy giá bán theo đơn vị tính
+ 	    public BigDecimal getGiaBanTheoDonViTinh(String maSanPham, DonViTinh donViTinh) {
+ 	        String sql = "SELECT ";
+ 	        
+ 	        // Chọn giá bán tương ứng với đơn vị tính
+ 	        if (donViTinh == DonViTinh.Vien) {
+ 	            sql += "giaVonDonViTinh1";
+ 	        } else if (donViTinh == DonViTinh.Vi) {
+ 	            sql += "giaBanDonViTinh2";
+ 	        } else if (donViTinh == DonViTinh.Hop) {
+ 	            sql += "giaBanDonViTinh3";
+ 	        } else {
+ 	            throw new IllegalArgumentException("Đơn vị tính không hợp lệ");
+ 	        }
+ 	        
+ 	        sql += " FROM SanPhamYTe WHERE maSanPham = ?";
+ 	        
+ 	        // Thực thi truy vấn
+ 	        try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+ 	            
+ 	            // Gán giá trị cho tham số maSanPham
+ 	            ps.setString(1, maSanPham);
+ 	            
+ 	            // Thực thi truy vấn và lấy kết quả
+ 	            ResultSet rs = ps.executeQuery();
+ 	            if (rs.next()) {
+ 	                // Trả về giá bán tương ứng với đơn vị tính
+ 	                return rs.getBigDecimal(1);
+ 	            }
+ 	        } catch (SQLException e) {
+ 	            e.printStackTrace();
+ 	        }
+ 	        return null; // Trả về null nếu không tìm thấy sản phẩm
+ 	    }
+
+
 }

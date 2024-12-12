@@ -28,7 +28,8 @@ public class ChiTietDonDoiTra {
 
 
 
-	public ChiTietDonDoiTra(String maChiTietDonDoiTra, int soLuongDonViTinh1, int soLuongDonViTinh2, int soLuongDonViTinh3, BigDecimal giaBan, DonDoiTra maDonDoiTra,
+
+	public ChiTietDonDoiTra(String maChiTietDonDoiTra, int soLuongDonViTinh1, int soLuongDonViTinh2,  int soLuongDonViTinh3, BigDecimal giaBan, DonDoiTra maDonDoiTra,
 			SanPhamYTe maSanPham, LoHang maLoHang, LoHang maLoHangThayThe) {
 		super();
 		this.maChiTietDonDoiTra = maChiTietDonDoiTra;
@@ -50,47 +51,38 @@ public class ChiTietDonDoiTra {
 
 
 
+
+
+
+
 	public int getSoLuongDonViTinh1() {
 		return soLuongDonViTinh1;
 	}
+
+
 	public void setSoLuongDonViTinh1(int soLuongDonViTinh1) {
-		try {
-	        if (soLuongDonViTinh1 > 0) {
-	            this.soLuongDonViTinh1 = soLuongDonViTinh1;
-	        } else {
-	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        System.out.println(e.getMessage());
-	    }
+		this.soLuongDonViTinh1 = soLuongDonViTinh1;
 	}
+
+
 	public int getSoLuongDonViTinh2() {
 		return soLuongDonViTinh2;
 	}
+
+
 	public void setSoLuongDonViTinh2(int soLuongDonViTinh2) {
-		try {
-	        if (soLuongDonViTinh2 > 0) {
-	            this.soLuongDonViTinh2 = soLuongDonViTinh2;
-	        } else {
-	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        System.out.println(e.getMessage());
-	    }
+		this.soLuongDonViTinh2 = soLuongDonViTinh2;
 	}
+
+
 	public int getSoLuongDonViTinh3() {
 		return soLuongDonViTinh3;
 	}
+
+
 	public void setSoLuongDonViTinh3(int soLuongDonViTinh3) {
-		try {
-	        if (soLuongDonViTinh3 > 0) {
-	            this.soLuongDonViTinh3 = soLuongDonViTinh3;
-	        } else {
-	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        System.out.println(e.getMessage());
-	    }
+		this.soLuongDonViTinh3 = soLuongDonViTinh3;
+
 	}
 
 
@@ -162,6 +154,9 @@ public class ChiTietDonDoiTra {
 		return Objects.equals(maChiTietDonDoiTra, other.maChiTietDonDoiTra);
 	}
 	
+	
+
+
 	
 
 

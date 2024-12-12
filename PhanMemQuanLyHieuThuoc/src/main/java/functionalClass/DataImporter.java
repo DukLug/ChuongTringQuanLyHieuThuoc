@@ -90,24 +90,7 @@ public class DataImporter {
 
 	            // Construct SanPhamYTe object
 	            SanPhamYTe sanPham = new SanPhamYTe(
-	                maSanPham,
-	                tenSanPham,
-	                ngaySanXuat,
-	                hanSuDung,
-	                nuocSanXuat,
-	                trangThaiSanPham,
-	                ghiChu,
-	                moTa,
-	                dangBaoChe,
-	                thue,
-	                thanhPhan,
-	                donViTinh, // Enum for DonViTinh
-	                nhaCungCap,
-	                loaiSanPham,
-	                giaBan,
-	                maVach,
-	                yeuCauKeDon,
-	                hinhAnh
+	                maSanPham
 	            );
 
 	            sanPhamList.add(sanPham);
@@ -172,43 +155,7 @@ public class DataImporter {
              // Construct SanPhamYTe object
                 SanPhamYTe sanPham = new SanPhamYTe(
 //                		private String maSanPham;
-                		maSanPham,
-//                		private String tenSanPham;
-                		tenSanPham,
-//                		private Date ngaySanXuat;
-                		ngaySanXuat,
-//                		private Date hanSuDung;
-                		hanSuDung,
-//                		private String nuocSanXuat;
-                		nuocSanXuat,
-//                		private TrangThaiSanPham trangThaiSanPham;
-                		trangThaiSanPham,
-//                		private String ghiChu;
-                		ghiChu,
-//                		private String moTa;
-                		moTa,
-//                		private String dangBaoChe;
-                		dangBaoChe,
-//                		private double Thue;
-                		thue,
-//                		private String thanhPhan;
-                		thanhPhan,
-//                		private DonViTinh donViTinh;
-                		donViTinh,
-//                		private NhaCungCap nhaCungCap;
-                		nhaCungCap,
-//                		private LoaiSanPham loaiSanPham;
-                		loaiSanPham,
-//                		private BigDecimal giaBan;
-                		giaBan,
-//
-//                		private String maVach;
-                		maVach,
-//                		private String yeuCauKeDon;
-                		yeuCauKeDon,
-//                		private BufferedImage hinhAnh;
-                		hinhAnh
-
+                		maSanPham
                 );
 
 

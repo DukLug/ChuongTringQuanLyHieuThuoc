@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import connectDB.ConnectDB;
+import controller.LoaiSanPhamCTR;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,13 +54,14 @@ public class PhanMemQuanLyHieuThuoc {
 	   }
 		System.setProperty("sun.java2d.uiScale", "1.0");
 		
-		napDuLieu();
+		//napDuLieu();
 		
-		SanPhamYTeDAO.sanPhamYTe = SanPhamYTeDAO.layDanhSachTatCaSanPham();
+		//SanPhamYTeDAO.sanPhamYTe = SanPhamYTeDAO.layDanhSachTatCaSanPham();
         
 		
 		TrangChuUI trangChuUI = new TrangChuUI(false);
         //TestSearch();
+		System.out.println(LoaiSanPhamCTR.layMaMoi());
         
    }
    public static void hienLoi(Class<?> errorSource, Exception e) {	        
@@ -132,7 +134,7 @@ public class PhanMemQuanLyHieuThuoc {
         searchFields.add(TrangThaiLamViec.DaNghiViec); 
 
         ArrayList<SearchTool.SearchCondition> conditions = new ArrayList<>();
-        conditions.add(SearchTool.SearchCondition.NONCONDITION); 
+        conditions.add(SearchTool.SearchCondition.INCLUDE); 
         conditions.add(SearchTool.SearchCondition.NONCONDITION); 
         conditions.add(SearchTool.SearchCondition.MATCH); 
         conditions.add(SearchTool.SearchCondition.NONCONDITION); 
@@ -148,27 +150,27 @@ public class PhanMemQuanLyHieuThuoc {
 	}
 	
 	
-	private static void napDuLieu( ) {
-		try (Connection conn = ConnectDB.getConnection()) {
-            // Create a statement
-            Statement stmt = conn.createStatement();
-            
-            // SQL query to delete all rows from SanPhamYTe
-            String sql = "DELETE FROM SanPhamYTe;";
-            
-            // Execute the query
-            int rowsAffected = stmt.executeUpdate(sql);
-            System.out.println("Rows affected: " + rowsAffected);
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
-		ArrayList<SanPhamYTe> ds = SanPhamYTeDAO.sanPhamYTe;
-		for(SanPhamYTe sp : ds) {
-			SanPhamYTeDAO.insertSanPhamYTe(sp);
-		}
-		
-	}
+//	private static void napDuLieu( ) {
+//		try (Connection conn = ConnectDB.getConnection()) {
+//            // Create a statement
+//            Statement stmt = conn.createStatement();
+//            
+//            // SQL query to delete all rows from SanPhamYTe
+//            String sql = "DELETE FROM SanPhamYTe;";
+//            
+//            // Execute the query
+//            int rowsAffected = stmt.executeUpdate(sql);
+//            System.out.println("Rows affected: " + rowsAffected);
+//            
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//		SanPhamYTeDAO.sanPhamYTe = DataImporter.importDataFromXLSXQuickly("data/MauNhapThuoc2.xlsx");
+//		ArrayList<SanPhamYTe> ds = SanPhamYTeDAO.sanPhamYTe;
+//		for(SanPhamYTe sp : ds) {
+//			SanPhamYTeDAO.insertSanPhamYTe(sp);
+//		}
+//		
+//	}
 
 }

@@ -5,14 +5,22 @@ import java.util.Objects;
 public class LoaiSanPham {
     private String maLoai;
     private String tenLoai;
-    private int soLuongToiDa;
-
     
     
     public LoaiSanPham(String maLoai) {
         super();
         this.maLoai = maLoai;
     }
+
+    
+    
+	public LoaiSanPham(String maLoai, String tenLoai) {
+		super();
+		this.maLoai = maLoai;
+		this.tenLoai = tenLoai;
+	}
+
+
 
 	public String getMaLoai() {
 		return maLoai;
@@ -28,14 +36,6 @@ public class LoaiSanPham {
 
 	public void setTenLoai(String tenLoai) {
 		this.tenLoai = tenLoai;
-	}
-
-	public int getSoLuongToiDa() {
-		return soLuongToiDa;
-	}
-
-	public void setSoLuongToiDa(int soLuongToiDa) {
-		this.soLuongToiDa = soLuongToiDa;
 	}
 
 	@Override
@@ -57,8 +57,10 @@ public class LoaiSanPham {
 
 	@Override
 	public String toString() {
-		return "LoaiSanPham [maLoai=" + maLoai + ", tenLoai=" + tenLoai + ", soLuongToiDa=" + soLuongToiDa + "]";
+		return "LoaiSanPham [maLoai=" + maLoai + ", tenLoai=" + tenLoai + "]";
 	}
+
+	
 
 
 }

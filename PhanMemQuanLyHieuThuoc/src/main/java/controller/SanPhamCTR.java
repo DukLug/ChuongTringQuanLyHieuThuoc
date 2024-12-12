@@ -69,18 +69,24 @@ public class SanPhamCTR {
 	    ArrayList<Object> dataToSearch = new ArrayList<Object>();
 	    for(SanPhamYTe sp : SanPhamYTeDAO.layDanhSachTatCaSanPham()) {
 	    	dataToSearch.add(sp);
+	    	System.out.println(sp.toString());
 	    }
+	    
 
 
 	    ArrayList<Object> result = SearchTool.search(dataToSearch, SanPhamYTe.class, searchFields, conditions);
 	    ArrayList<SanPhamYTe> ketQuaTimSanPham = new ArrayList<SanPhamYTe>();
 	    // Display results
-	    System.out.println("Matching Results:");
+	    System.out.println("Matching Results: " + result.size());
 	    for (Object obj : result) {
 	        SanPhamYTe sp = (SanPhamYTe) obj;
 	        ketQuaTimSanPham.add(sp);
 	    }
 	    return ketQuaTimSanPham;
+	}
+	
+	public static String layMa() {
+		return "";
 	}
 
 }

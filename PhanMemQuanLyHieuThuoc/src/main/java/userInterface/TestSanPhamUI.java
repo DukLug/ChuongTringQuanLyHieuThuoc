@@ -46,23 +46,9 @@ public class TestSanPhamUI extends JPanel{
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(bangSanPham);
         scrollPane.setPreferredSize(new Dimension(1800, 600));
-
-        /*
-        scrollPane.getViewport().setBackground(Color.blue);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = Color.red;
-            }
-        });
-        scrollPane.getVerticalScrollBar().setBackground(Color.BLACK);
-        scrollPane.setPreferredSize(new Dimension(800, 500));
-        */
         add(scrollPane);
         JScrollBar sb = scrollPane.getVerticalScrollBar();
-        add(new CustomButton("Tai du lieu", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->taiDuLieu()));
+        add(new CustomButton("Them san pham", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->themSanPham()));
 	      
 	}
 	private void chuanBiDuLieu() {
@@ -73,7 +59,7 @@ public class TestSanPhamUI extends JPanel{
 				danhSachSanPham.get(i).getMaVach(),
 				danhSachSanPham.get(i).getTenSanPham(),
 				danhSachSanPham.get(i).getNuocSanXuat(),
-				danhSachSanPham.get(i).getGiaBan().toString() + "đ",
+				danhSachSanPham.get(i).getGiaBanDonViTinh1().toString() + "đ",
 			};
 		}
 		for(SanPhamYTe sp : danhSachSanPham) {
@@ -81,7 +67,7 @@ public class TestSanPhamUI extends JPanel{
 		}
 		System.out.println(danhSachSanPham.getFirst().toString());
 	}
-	private void taiDuLieu() {
+	private void themSanPham() {
 //		danhSachSanPham = DataImporter.importDataFromXLSX();
 //		chuanBiDuLieu();
 //		bangSanPham.capNhatDuLieu(duLieuBang);

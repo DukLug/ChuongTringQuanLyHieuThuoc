@@ -18,12 +18,14 @@ public class ChiTietDonDoiTraDAO {
 	    
 	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
 	        ps.setString(1, chiTietDonDoiTra.getMaChiTietDonDoiTra()); 
-	        ps.setInt(2, chiTietDonDoiTra.getSoLuong());           
-	        ps.setBigDecimal(3, chiTietDonDoiTra.getGiaBan());      
-	        ps.setString(4, chiTietDonDoiTra.getMaDonDoiTra().getMaDonDoiTra());    
-	        ps.setString(5, chiTietDonDoiTra.getMaSanPham().getMaSanPham());       
-	        ps.setString(6, chiTietDonDoiTra.getMaLoHang().getMaLo());            
-	        ps.setString(7, chiTietDonDoiTra.getMaLoHangThayThe() != null ? chiTietDonDoiTra.getMaLoHangThayThe().getMaLo() : null);     
+	        ps.setInt(2, chiTietDonDoiTra.getSoLuongDonViTinh1());           
+	        ps.setInt(3, chiTietDonDoiTra.getSoLuongDonViTinh2());  
+	        ps.setInt(4, chiTietDonDoiTra.getSoLuongDonViTinh3());  
+	        ps.setBigDecimal(5, chiTietDonDoiTra.getGiaBan());      
+	        ps.setString(6, chiTietDonDoiTra.getMaDonDoiTra().getMaDonDoiTra());    
+	        ps.setString(7, chiTietDonDoiTra.getMaSanPham().getMaSanPham());       
+	        ps.setString(8, chiTietDonDoiTra.getMaLoHang().getMaLo());            
+	        ps.setString(9, chiTietDonDoiTra.getMaLoHangThayThe() != null ? chiTietDonDoiTra.getMaLoHangThayThe().getMaLo() : null);     
 
 	        int rowsAffected = ps.executeUpdate(); 
 	        return rowsAffected > 0;              

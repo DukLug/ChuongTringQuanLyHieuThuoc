@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import component.CustomButton;
 import component.CustomItemList;
 import component.CustomButton.CustomButtonIconSide;
+import controller.NhaCungCapCTR;
 import controller.SanPhamCTR;
 import customDataType.DonViTinh;
 import customDataType.TrangThaiSanPham;
@@ -79,10 +80,6 @@ public class ChiTietSanPhamUI extends JPanel{
         inforPanel.setPreferredSize(new Dimension(1000, 700));
 //    	private String tenSanPham;
         inforPanel.add(inforGroup("Tên sản phẩm:", sanPham.getTenSanPham()));
-//    	private Date ngaySanXuat;
-        inforPanel.add(inforGroup("Ngày sản xuất:", sanPham.getNgaySanXuat().toString()));
-//    	private Date hanSuDung;
-        inforPanel.add(inforGroup("Hạn sử dụng", sanPham.getHanSuDung().toString()));
 //    	private String nuocSanXuat;
         inforPanel.add(inforGroup("Nước sản xuất:", sanPham.getNuocSanXuat().toString()));
 //    	private TrangThaiSanPham trangThaiSanPham;
@@ -100,13 +97,15 @@ public class ChiTietSanPhamUI extends JPanel{
 //    	private String thanhPhan;
         inforPanel.add(inforGroup("Thành phần:", sanPham.getMoTa().toString()));
 //    	private DonViTinh donViTinh;
-        inforPanel.add(inforGroup("Đơn vị tính:", sanPham.getDonViTinh().toString()));
+        inforPanel.add(inforGroup("Đơn vị tính:", sanPham.getDonViTinh1().toString()));
 //    	private NhaCungCap nhaCungCap;
-        inforPanel.add(inforGroup("Nhà cung cấp:", sanPham.getNhaCungCap().toString()));
+        NhaCungCap a =  NhaCungCapCTR.timKiemTheoMa(sanPham.getNhaCungCap().getMaNhaCungCap());
+        
+        inforPanel.add(inforGroup("Nhà cung cấp:", a.getTenNhaCungCap()));
 //    	private LoaiSanPham loaiSanPham;
         inforPanel.add(inforGroup("Loại sản phẩm:", sanPham.getLoaiSanPham().toString()));
 //    	private BigDecimal giaBan;
-        inforPanel.add(inforGroup("Giá bán:", sanPham.getGiaBan().toString() + "đ"));
+        inforPanel.add(inforGroup("Giá bán:", sanPham.getGiaBanDonViTinh1().toString() + "đ"));
 //    	private String maVach;
         inforPanel.add(inforGroup("Mã vạch:", sanPham.getMaVach().toString()));
 //    	private String yeuCauKeDon;

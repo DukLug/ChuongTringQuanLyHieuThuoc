@@ -13,8 +13,7 @@ public class KhachHangCTR {
 	private static Object[][] danhSach;
 	private static Object[][] data4Cot;
 	private static ArrayList<Object[]> ketQua = new ArrayList<>();
-	
-	public static void ketNoiData() {
+		public static void ketNoiData() {
 		ConnectDB.getInstance().connect();
 //		System.out.println("Connect!!");
 	}
@@ -108,8 +107,18 @@ public class KhachHangCTR {
 	    return false; 
 	}
 	
-	public static KhachHang kiemTraTrungsdt(String sdt) {
-		return kh_dao.timTheoSDT1(sdt);
+//	public static KhachHang kiemTraTrungsdt(String sdt) {
+//		return kh_dao.timTheoSDT1(sdt);
+//	}
+	
+	public static KhachHang kiemTraTrungsdt(String SDT) {
+		ArrayList<KhachHang> dsKH = kh_dao.timTheoSDT(SDT);
+
+		for (KhachHang kh : dsKH) 
+			if (kh.getSdt().equals(SDT))
+				return kh;
+		
+		return null;
 	}
 	
 	public static Object[][] locDTL(int batDau, int ketThuc) {

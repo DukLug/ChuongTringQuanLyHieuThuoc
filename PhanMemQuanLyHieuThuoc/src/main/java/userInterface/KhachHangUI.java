@@ -420,18 +420,13 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 		String ten = txtHoTen.getText().trim();
 		String sdt = txtSDT.getText().trim();
 		String cccd = txtCCCD.getText().trim();
-		
-		if (KhachHangCTR.kiemTraTrungsdt(sdt) != null) {
-			thongBaoLoi(txtHoTen, "Số điện thoại đã trùng");
-			return false;
-		}
 			
 		if (ten.isEmpty() || ten == null) {
 			thongBaoLoi(txtHoTen, "Tên khách hàng không được để trống");
 			return false;
 		}
 		
-		if (ten.matches("[0-9@#%!]")) {
+		if (!ten.matches("[a-zA-Z\\s]*")) {
 			thongBaoLoi(txtHoTen, "Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
 			return false;
 		}

@@ -7,10 +7,14 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -22,6 +26,7 @@ import component.CustomButton;
 import component.CustomPanel;
 import component.CustomTable;
 import customDataType.TrangThaiTaiKhoan;
+import entity.NhanVien;
 import entity.TaiKhoan;
 import controller.NhanVienCTR;
 import controller.TaiKhoanCTR;
@@ -40,6 +45,8 @@ public class TaiKhoanUI extends JPanel {
     private CustomButton btnTimKiem, btnThem, btnCapNhat;
     private JPanel panelBang, panelNhapLieu;
     private JLabel lblTieuDe;
+    private JComboBox<String> cbNhanVien;
+    private boolean themTaiKhoanMode = false;
 
     public TaiKhoanUI() {
         setLayout(null);
@@ -101,6 +108,7 @@ public class TaiKhoanUI extends JPanel {
             new Font("Tahoma", Font.PLAIN, 20), 
             Color.BLACK
         ));
+        
         panelNhapLieu.setBackground(Color.WHITE);
         panelNhapLieu.setBounds(1000, 70, 900, 350);
         panelNhapLieu.setLayout(null);
@@ -108,13 +116,13 @@ public class TaiKhoanUI extends JPanel {
         // Các trường nhập liệu
         JLabel lblMaTaiKhoan = createLabel("Mã Tài Khoản:", 42, 50);
         txtMaTaiKhoan = createTextField(250, 50);
-
+        txtMaTaiKhoan.setEditable(false);
         JLabel lblTenDangNhap = createLabel("Tên Đăng Nhập:", 42, 100);
         txtTenDangNhap = createTextField(250, 100);
-
+        txtTenDangNhap.setEditable(false);
         JLabel lblMatKhau = createLabel("Mật Khẩu:", 42, 150);
         txtMatKhau = createTextField(250, 150);
-
+        txtMatKhau.setEditable(false);
         // Trạng Thái Tài Khoản
         JLabel lblTrangThai = createLabel("Trạng Thái:", 42, 200);
         
@@ -148,7 +156,19 @@ public class TaiKhoanUI extends JPanel {
         panelNhapLieu.add(txtMatKhau);
         panelNhapLieu.add(lblTrangThai);
         panelNhapLieu.add(rdHoatDong);
-        //panelNhapLieu.add(rdKhoa);
+        // Add NhanVien ComboBox
+        JLabel lblNhanVien = createLabel("Nhân Viên:", 42, 250);
+        cbNhanVien = new JComboBox<>();
+        cbNhanVien.setBounds(250, 250, 600, 40);
+        cbNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        cbNhanVien.setEnabled(false);
+        panelNhapLieu.add(lblNhanVien);
+        panelNhapLieu.add(cbNhanVien);
+
+        // Modify button to support new functionality
+        btnThem = new CustomButton("Thêm", UIStyles.ThemButtonStyle, () -> batDauThemTaiKhoan());
+        btnThem.setBounds(200, 300, 150, 40);
+        btnThem.setFont(new Font("Tahoma", Font.PLAIN, 20));
         panelNhapLieu.add(rdNgungHoatDong);
         panelNhapLieu.add(btnThem);
         panelNhapLieu.add(btnCapNhat);
@@ -231,6 +251,7 @@ public class TaiKhoanUI extends JPanel {
 
     // Cập nhật tài khoản
     private void capNhatTaiKhoan() {
+    	huyThemTaiKhoan();
         try {
             String maTaiKhoan = txtMaTaiKhoan.getText();
             String tenDangNhap = txtTenDangNhap.getText();
@@ -267,19 +288,20 @@ public class TaiKhoanUI extends JPanel {
         }
     }
 
-    // Hiển thị chi tiết tài khoản khi chọn từ bảng
     private void hienThiChiTietTaiKhoan() {
+    	huyThemTaiKhoan();
         int selectedRow = bangTaiKhoan.getSelectedRow();
         if (selectedRow != -1) {
             String maTaiKhoan = (String) bangTaiKhoan.getValueAt(selectedRow, 0);
             TaiKhoan selectedTaiKhoan = timTaiKhoan(maTaiKhoan);
-            
+
             if (selectedTaiKhoan != null) {
+                // Populate text fields
                 txtMaTaiKhoan.setText(selectedTaiKhoan.getMaTaiKhoan());
                 txtTenDangNhap.setText(selectedTaiKhoan.getTenDangNhap());
-                txtMatKhau.setText(selectedTaiKhoan.getMatKhau());
-                
-                // Đặt radio button phù hợp với trạng thái tài khoản
+                txtMatKhau.setText("********");
+
+                // Set radio button based on account status
                 switch(selectedTaiKhoan.getTrangThaiTaiKhoan()) {
                     case HoatDong:
                         rdHoatDong.setSelected(true);
@@ -290,6 +312,31 @@ public class TaiKhoanUI extends JPanel {
                     case NgungHoatDong:
                         rdNgungHoatDong.setSelected(true);
                         break;
+                }
+
+                // Update ComboBox to show the corresponding NhanVien
+                NhanVien nhanVien = NhanVienCTR.timTheoMa(selectedTaiKhoan.getMaTaiKhoan());
+                if (nhanVien != null) {
+                    String nhanVienDisplay = nhanVien.getMaNhanVien() + " - " + nhanVien.getHoTen();
+                    
+                    // Populate ComboBox if needed
+                    DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) cbNhanVien.getModel();
+                    
+                    // Check if the NhanVien is already in the model
+                    boolean exists = false;
+                    for (int i = 0; i < model.getSize(); i++) {
+                        if (model.getElementAt(i).equals(nhanVienDisplay)) {
+                            cbNhanVien.setSelectedIndex(i);
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    // If not exists, add to the model
+                    if (!exists) {
+                        model.addElement(nhanVienDisplay);
+                        cbNhanVien.setSelectedItem(nhanVienDisplay);
+                    }
                 }
             }
         }
@@ -302,5 +349,125 @@ public class TaiKhoanUI extends JPanel {
             }
         }
         return null;
+    }
+    private void batDauThemTaiKhoan() {
+        if (!themTaiKhoanMode) {
+            // Enter add mode
+            themTaiKhoanMode = true;
+            btnThem.setText("Hoàn Thành");
+            txtTenDangNhap.setEditable(true);
+            // Enable ComboBox with available NhanVien
+            cbNhanVien.setEnabled(true);
+            capNhatDanhSachNhanVienChuaCoTaiKhoan();
+
+            // Add listener to update fields when selection changes
+            cbNhanVien.addActionListener(e -> {
+                if (cbNhanVien.getSelectedItem() != null) {
+                    String selectedNhanVien = (String) cbNhanVien.getSelectedItem();
+                    String maNhanVien = selectedNhanVien.split(" - ")[0];
+                    
+                    // Update text fields
+                    txtMaTaiKhoan.setText(maNhanVien);
+                    txtTenDangNhap.setText(maNhanVien);
+                }
+            });
+
+            // Trigger the first selection update
+            if (cbNhanVien.getItemCount() > 0) {
+                cbNhanVien.setSelectedIndex(0);
+            }
+
+            // Reset and enable password field
+            txtMatKhau.setText("");
+            txtMatKhau.setEditable(true);
+        } else {
+            // Complete account creation
+            hoanThanhThemTaiKhoan();
+        }
+    }
+
+    // Method to populate ComboBox with NhanVien without TaiKhoan
+    private void capNhatDanhSachNhanVienChuaCoTaiKhoan() {
+        // Get all NhanVien without TaiKhoan
+        ArrayList<NhanVien> danhSachNhanVienChuaCoTK = NhanVienCTR.layDanhSachTatCaNhanVienStatic().stream()
+            .filter(nv -> !danhSachTaiKhoan.stream()
+                .anyMatch(tk -> tk.getMaTaiKhoan().equals(nv.getMaNhanVien())))
+            .collect(Collectors.toCollection(ArrayList::new));
+
+        // Populate ComboBox
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (NhanVien nv : danhSachNhanVienChuaCoTK) {
+            model.addElement(nv.getMaNhanVien() + " - " + nv.getHoTen());
+        }
+        cbNhanVien.setModel(model);
+    }
+
+
+
+    // Complete account creation
+    private void hoanThanhThemTaiKhoan() {
+    	
+        try {
+            // Validate input
+            if (cbNhanVien.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn Nhân Viên", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Get selected NhanVien
+            String selectedNhanVien = (String) cbNhanVien.getSelectedItem();
+            String maNhanVien = selectedNhanVien.split(" - ")[0];
+            
+            // Validate password
+            String matKhau = txtMatKhau.getText().trim();
+            if (matKhau.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Create TaiKhoan
+            TaiKhoan taiKhoan = new TaiKhoan(
+                maNhanVien, 
+                maNhanVien, // Sử dụng mã nhân viên làm tên đăng nhập
+                TaiKhoanCTR.hashPassword(matKhau), 
+                TrangThaiTaiKhoan.HoatDong
+            );
+            
+            // Add account
+            boolean ketQua = TaiKhoanCTR.themTaiKhoan(taiKhoan);
+            
+            if (ketQua) {
+            	huyThemTaiKhoan();
+                danhSachTaiKhoan.add(taiKhoan);
+                chuanBiDuLieu();
+                bangTaiKhoan.capNhatDuLieu(duLieuBang);
+                
+                // Reset UI
+                btnThem.setText("Thêm");
+                themTaiKhoanMode = false;
+                cbNhanVien.setEnabled(false);
+                
+                JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công", "Thành Công", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void huyThemTaiKhoan() {
+
+        
+        // Reset UI
+        btnThem.setText("Thêm");
+        themTaiKhoanMode = false;
+        cbNhanVien.setEnabled(false);
+        txtMaTaiKhoan.setEditable(false);
+        txtTenDangNhap.setEditable(false);
+        txtMatKhau.setEditable(false);
+        System.out.println("a");
+
+            
+                
     }
 }

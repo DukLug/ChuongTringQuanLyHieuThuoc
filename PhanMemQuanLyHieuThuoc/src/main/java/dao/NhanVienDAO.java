@@ -73,6 +73,31 @@ private ArrayList<NhanVien> dsNhanVien;
 		    }
 		    return dsNhanVien;
 		}
+		
+		// Lấy toàn bộ bảng nhân viên
+				public static ArrayList<NhanVien> layDanhSachTatCaNhanVienStatic() {
+					
+					ArrayList<NhanVien> dsNhanVien = new ArrayList<NhanVien>();
+				    try {
+				        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("Select * from NhanVien");
+				        ResultSet rs = ps.executeQuery();
+				        while (rs.next()) {
+				            String maNhanVien = rs.getString("MaNhanVien");
+				            String hoTen = rs.getString("HoTen");
+				            String sdt = rs.getString("Sdt");
+				            String cccd = rs.getString("Cccd");
+				            Date ngaySinh = rs.getDate("NgaySinh");
+				            GioiTinh gioiTinh = GioiTinh.fromString(rs.getNString("GioiTinh"));
+				            TrangThaiLamViec trangThai = TrangThaiLamViec.fromString(rs.getNString("TrangThaiLamViec"));
+				            ChucVu chucVu = ChucVu.fromString(rs.getNString("ChucVu"));
+				            NhanVien nv = new NhanVien(maNhanVien, hoTen, sdt, cccd, ngaySinh, gioiTinh, chucVu, trangThai);
+				            dsNhanVien.add(nv);
+				        }
+				    } catch (Exception e) {
+				        e.printStackTrace();
+				    }
+				    return dsNhanVien;
+				}
 
 	// thêm nhân viên
 	public boolean themNhanVien(NhanVien newNhanVien) {

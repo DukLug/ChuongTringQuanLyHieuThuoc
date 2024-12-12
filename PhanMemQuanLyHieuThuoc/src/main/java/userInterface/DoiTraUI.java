@@ -44,6 +44,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import application.PhanMemQuanLyHieuThuoc;
 import component.CustomButton;
 import component.CustomPanel;
 import component.CustomTable;
@@ -172,7 +173,7 @@ public class DoiTraUI extends JPanel{
 				lblTenNV.setBounds(32, 10, 225, 30);
 				panelThongTin.add(lblTenNV);
 				lblTenNV.setFont(new Font("Tahoma", Font.BOLD, 20));
-				lblTenNV.setText("Hứa Lập Quốc");
+				lblTenNV.setText(PhanMemQuanLyHieuThuoc.nhanVienHienTai.getHoTen());
 				
 				lblNgayLap = new JLabel();
 				lblNgayLap.setForeground(Color.BLACK);
@@ -1199,7 +1200,7 @@ public class DoiTraUI extends JPanel{
 
 		private NhanVien getSelectedNhanVien() {
 			
-		    return new NhanVien("NV000001");
+		    return PhanMemQuanLyHieuThuoc.nhanVienHienTai;
 		}
 
 		private KhuyenMai getSelectedKhuyenMai() {

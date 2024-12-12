@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.util.Stack;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -24,7 +25,11 @@ import javax.swing.*;
 import component.CustomButton;
 import component.CustomButton.CustomButtonFunction;
 import component.CustomButton.CustomButtonIconSide;
+import controller.NhanVienCTR;
+import controller.TaiKhoanCTR;
 import component.CustomComboBox;
+import customDataType.ChucVu;
+import entity.TaiKhoan;
 import application.*;
 
 
@@ -79,8 +84,23 @@ public class TrangChuUI extends JFrame {
         labelBarEast.setLayout(new BoxLayout(labelBarEast, BoxLayout.X_AXIS));
         labelBarEast.add(new CustomButton("About", UIStyles.LabelBarButtonStyle, UIStyles.AboutIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
         labelBarEast.add(new CustomButton("Help", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
-        labelBarEast.add(new CustomButton("Hứa Lập Quốc", UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
-        
+        //labelBarEast.add(new CustomButton(PhanMemQuanLyHieuThuoc.nhanVienHienTai.getHoTen(), UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
+        labelBarEast.add(new CustomComboBox(
+        		PhanMemQuanLyHieuThuoc.nhanVienHienTai.getHoTen(), 
+        		UIStyles.LabelBarButtonStyle, 
+        		UIStyles.UserIcon,
+        		CustomButtonIconSide.RIGHT,
+        		0,
+        		UIStyles.NavBarDropBoxItemHeight,
+        		new String[]{"Đăng xuất", "Đổi mật  khẩu"},
+        		new CustomButtonFunction[] {
+
+        			()->dangXuat(),
+
+        			()->doiMatKhau(),
+
+        		}
+        		));
         //lbaelBarEast.add(new )
         labelBar.setLayout(new BorderLayout());
         labelBar.add(labelBarWest, BorderLayout.WEST);
@@ -124,47 +144,49 @@ public class TrangChuUI extends JFrame {
         		0,
         		UIStyles.NavBarDropBoxItemHeight,
 
-        		new String[]{"Hóa đơn", "Đơn nhập"},
+        		new String[]{"Hóa đơn", "Đơn nhập", "Đơn hủy"},
         		new CustomButtonFunction[] {
 					()->taiTrang(new HoaDonUI()),
 					()->taiTrang(new DonNhapHangUI()),
-
+					()->taiTrang(new DonHuyHangUI()),
         		}
         		));
+		if(PhanMemQuanLyHieuThuoc.nhanVienHienTai.getChucVu() == ChucVu.ChuCuaHang) {
+			navBarWest.add(new CustomComboBox(
+	        		"Quản lý nâng cao", 
+	        		UIStyles.NavBarButtonStyle, 
+	        		UIStyles.ContactIcon,
+	        		CustomButtonIconSide.LEFT,
+	        		0,
+	        		UIStyles.NavBarDropBoxItemHeight,
+	        		new String[]{"Khuyến mãi", "Nhân viên", "Tài khoản", "Loại sản phẩm"},
+	        		
+	        		new CustomButtonFunction[] {
+	        			()->taiTrang(new KhuyenMaiUI()),
+	        			()->taiTrang(new NhanVienUI()),
+	        			()->taiTrang(new TaiKhoanUI()),
+	        			()->taiTrang(new LoaiSanPhamUI())
+	        		}
+	        		));
+			        
+			navBarWest.add(new CustomComboBox(
+	        		"Thống kê nâng cao", 
+	        		UIStyles.NavBarButtonStyle, 
+	        		UIStyles.ReportIcon,
+	        		CustomButtonIconSide.LEFT,
+	        		0,
+	        		UIStyles.NavBarDropBoxItemHeight,
+	        		new String[]{"Cuối ngày", "Bán hàng", "Hàng hóa", "Nhân viên", "Nhà cung cấp"},
+	        		new CustomButtonFunction[] {
+	        			()->taiTrang(new BCCuoiNgayUI()),
+	        			()->taiTrang(new BCBanHangUI()),
+	        			()->taiTrang(new BCHangHoaUI()),
+	        			()->taiTrang(new ThongKeUI()),
+	        			()->taiTrang(new BCNhaCungCapUI())
+	        		}
+	        		));
+		}
 		
-		navBarWest.add(new CustomComboBox(
-        		"Quản lý nâng cao", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.ContactIcon,
-        		CustomButtonIconSide.LEFT,
-        		0,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Khuyến mãi", "Nhân viên", "Tài khoản", "Loại sản phẩm"},
-        		
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new KhuyenMaiUI()),
-        			()->taiTrang(new NhanVienUI()),
-        			()->taiTrang(new TaiKhoanUI()),
-        			()->taiTrang(new LoaiSanPhamUI())
-        		}
-        		));
-		        
-		navBarWest.add(new CustomComboBox(
-        		"Thống kê nâng cao", 
-        		UIStyles.NavBarButtonStyle, 
-        		UIStyles.ReportIcon,
-        		CustomButtonIconSide.LEFT,
-        		0,
-        		UIStyles.NavBarDropBoxItemHeight,
-        		new String[]{"Cuối ngày", "Bán hàng", "Hàng hóa", "Nhân viên", "Nhà cung cấp"},
-        		new CustomButtonFunction[] {
-        			()->taiTrang(new BCCuoiNgayUI()),
-        			()->taiTrang(new BCBanHangUI()),
-        			()->taiTrang(new BCHangHoaUI()),
-        			()->taiTrang(new ThongKeUI()),
-        			()->taiTrang(new BCNhaCungCapUI())
-        		}
-        		));
 				
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
@@ -226,6 +248,124 @@ public class TrangChuUI extends JFrame {
 		
 	}
 	
+	private void dangXuat() {
+		TrangChuUI.singleton.setVisible(false);
+		new DangNhapUI().setVisible(true);
+    	
+    	
+	}
+	
+	private void doiMatKhau() {
+	    // Create a new JFrame for changing password
+	    JFrame doiMatKhauFrame = new JFrame("Đổi Mật Khẩu");
+	    doiMatKhauFrame.setLayout(new GridLayout(5, 2, 10, 10));
+	    doiMatKhauFrame.setSize(500, 300);
+	    doiMatKhauFrame.setLocationRelativeTo(null);
+	    
+
+	    // Create labels and text fields
+	    JLabel lblMatKhauCu = createStyledLabel("Mật khẩu cũ:", 20);
+	    JPasswordField txtMatKhauCu = new JPasswordField(20);
+	    txtMatKhauCu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+	    JLabel lblMatKhauMoi = createStyledLabel("Mật khẩu mới:", 20);
+	    JPasswordField txtMatKhauMoi = new JPasswordField(20);
+	    txtMatKhauMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+	    JLabel lblXacNhanMatKhauMoi = createStyledLabel("Xác nhận mật khẩu mới:", 20);
+	    JPasswordField txtXacNhanMatKhauMoi = new JPasswordField(20);
+	    txtXacNhanMatKhauMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+	    // Create buttons
+	    CustomButton btnDoiMatKhau = new CustomButton("Đổi Mật Khẩu", UIStyles.BanHangButtonStyle,()-> {
+	            // Get current account
+	            TaiKhoan taiKhoanHienTai = PhanMemQuanLyHieuThuoc.taiKhoanHienTai;
+
+	            // Get password inputs
+	            String matKhauCu = TaiKhoanCTR.hashPassword(new String(txtMatKhauCu.getPassword()));
+	            String matKhauMoi = TaiKhoanCTR.hashPassword(new String(txtMatKhauMoi.getPassword()));
+	            String xacNhanMatKhauMoi = TaiKhoanCTR.hashPassword(new String(txtXacNhanMatKhauMoi.getPassword()));
+
+	            // Validate inputs
+	            if (matKhauCu.isEmpty() || matKhauMoi.isEmpty() || xacNhanMatKhauMoi.isEmpty()) {
+	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+	                    "Vui lòng điền đầy đủ thông tin!", 
+	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Check if current password is correct
+	            if (!matKhauCu.equals(taiKhoanHienTai.getMatKhau())) {
+	            	
+	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+	                    "Mật khẩu cũ không chính xác!", 
+	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Check if new passwords match
+	            if (!matKhauMoi.equals(xacNhanMatKhauMoi)) {
+	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+	                    "Mật khẩu mới và xác nhận mật khẩu không khớp!", 
+	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            // Update password
+	            taiKhoanHienTai.setMatKhau(xacNhanMatKhauMoi);
+	            try {
+	                TaiKhoanCTR.capNhatTaiKhoan(taiKhoanHienTai);
+	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+	                    "Đổi mật khẩu thành công!", 
+	                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	                doiMatKhauFrame.dispose();
+	            } catch (Exception ex) {
+	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+	                    "Lỗi khi cập nhật mật khẩu: " + ex.getMessage(), 
+	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+	            }
+	        }
+	    );
+
+	    CustomButton btnHuy = new CustomButton("Hủy", UIStyles.CancelButtonStyle,()-> {
+	    	doiMatKhauFrame.dispose();
+	    });
+
+	    // Add components to the frame
+	    doiMatKhauFrame.add(lblMatKhauCu);
+	    doiMatKhauFrame.add(txtMatKhauCu);
+	    doiMatKhauFrame.add(lblMatKhauMoi);
+	    doiMatKhauFrame.add(txtMatKhauMoi);
+	    doiMatKhauFrame.add(lblXacNhanMatKhauMoi);
+	    doiMatKhauFrame.add(txtXacNhanMatKhauMoi);
+	    doiMatKhauFrame.add(new JLabel()); // Empty label for layout
+	    doiMatKhauFrame.add(btnDoiMatKhau);
+	    doiMatKhauFrame.add(new JLabel()); // Empty label for layout
+	    doiMatKhauFrame.add(btnHuy);
+
+	    // Make the frame visible
+	    doiMatKhauFrame.setVisible(true);
+	}
+	private JLabel createStyledLabel(String text, int fontSize) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+        return label;
+    }
+
+    // Helper method to create styled JTextField
+    private JTextField createStyledTextField(String text, int columns) {
+        JTextField textField = new JTextField(text, columns);
+        textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        return textField;
+    }
+
+    // Helper method to create styled JButton
+    private JButton createStyledButton(String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        button.addActionListener(actionListener);
+        return button;
+    }
 
 
 }

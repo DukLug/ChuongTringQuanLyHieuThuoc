@@ -24,6 +24,10 @@ public class NhanVienCTR {
     public static NhanVien timTheoMa(String maNV) {
     	return NhanVienDAO.timNhanVienTheoMaStatic(maNV).getFirst();
     }
+    
+    public static ArrayList<NhanVien> layDanhSachTatCaNhanVienStatic(){
+    	return NhanVienDAO.layDanhSachTatCaNhanVienStatic();
+    }
 
     /**
      * Hàm tìm kiếm nhân viên theo số điện thoại.

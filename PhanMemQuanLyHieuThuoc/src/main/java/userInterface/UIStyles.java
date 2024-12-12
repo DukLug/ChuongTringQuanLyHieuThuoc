@@ -75,7 +75,9 @@ public class UIStyles {
 	public static final ButtonStyle XoaSanPhamButtonStyle = new ButtonStyle(
 			30, NavBarHeight, 30, Color.black, Color.white, Color.white, Color.white
 		);
-	
+	public static final ButtonStyle CancelButtonStyle = new ButtonStyle(
+			160, NavBarHeight, 18, Color.white, Color.decode("#a83e32"), Color.decode("#91352a"), Color.decode("#752a22")
+		);
 	public static final int NavBarDropBoxItemHeight = NavBarHeight - 30;
 	
 	public static final Color MainSectionBackgroundColor = Color.gray;

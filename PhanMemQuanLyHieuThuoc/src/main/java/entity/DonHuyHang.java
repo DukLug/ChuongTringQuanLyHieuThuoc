@@ -16,6 +16,7 @@ public class DonHuyHang {
 	public DonHuyHang(String maDonHuyHang) {
 		super();
 		this.maDonHuyHang = maDonHuyHang;
+		
 	}
 	
 	public DonHuyHang(String maDonHuyHang, Date ngayHuy, int soLuongDonViTinh1, int soLuongDonViTinh2,

@@ -7,8 +7,11 @@ import java.util.Objects;
 public class LoHang {
 	private String maLo;
 	private Date ngaySanXuat;
+	private Date hanSuDung;
 	private BigDecimal giaNhap;
-	private int soLuong;
+	private int soLuongDonViTinh1;
+	private int soLuongDonViTinh2;
+	private int soLuongDonViTinh3;
 	private String viTri;
 	private SanPhamYTe sanPham;
 	private ChiTietDonNhap maChiTietDonNhap;
@@ -25,15 +28,17 @@ public class LoHang {
 	}
 
 
-
-
-	public LoHang(String maLo, Date ngaySanXuat, BigDecimal giaNhap, int soLuong, String viTri, SanPhamYTe sanPham,
+	public LoHang(String maLo, Date ngaySanXuat, Date hanSuDung, BigDecimal giaNhap, int soLuongDonVinhTinh1, int soLuongDonVinhTinh2, int soLuongDonVinhTinh3, String viTri, SanPhamYTe sanPham,
 			ChiTietDonNhap maChiTietDonNhap) {
 		super();
 		this.maLo = maLo;
 		setNgaySanXuat(ngaySanXuat);
+		setHanSuDung(hanSuDung);
 		setGiaNhap(giaNhap);
-		setSoLuong(soLuong);
+		
+		setSoLuongDonViTinh1(soLuongDonViTinh1);
+		setSoLuongDonViTinh2(soLuongDonViTinh2);
+		setSoLuongDonViTinh3(soLuongDonViTinh3);
 		setViTri(viTri);
 		setSanPham(sanPham);
 		setMaChiTietDonNhap(maChiTietDonNhap);
@@ -56,6 +61,13 @@ public class LoHang {
 	        System.out.println(e.getMessage());
 	    }
 	}
+	
+	public Date getHanSuDung() {
+		return hanSuDung;
+	}
+	public void setHanSuDung(Date hanSuDung) {
+		this.hanSuDung = hanSuDung;
+	}
 	public BigDecimal getGiaNhap() {
 		return giaNhap;
 	}
@@ -70,13 +82,41 @@ public class LoHang {
 	        System.out.println(e.getMessage());
 	    }
 	}
-	public int getSoLuong() {
-		return soLuong;
+	public int getSoLuongDonViTinh1() {
+		return soLuongDonViTinh1;
 	}
-	public void setSoLuong(int soLuong) {
+	public void setSoLuongDonViTinh1(int soLuongDonViTinh1) {
 		try {
-	        if (soLuong > 0) {
-	            this.soLuong = soLuong;
+	        if (soLuongDonViTinh1 > 0) {
+	            this.soLuongDonViTinh1 = soLuongDonViTinh1;
+	        } else {
+	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
+	}
+	public int getSoLuongDonViTinh2() {
+		return soLuongDonViTinh2;
+	}
+	public void setSoLuongDonViTinh2(int soLuongDonViTinh2) {
+		try {
+	        if (soLuongDonViTinh2 > 0) {
+	            this.soLuongDonViTinh2 = soLuongDonViTinh2;
+	        } else {
+	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
+	}
+	public int getSoLuongDonViTinh3() {
+		return soLuongDonViTinh3;
+	}
+	public void setSoLuongDonViTinh3(int soLuongDonViTinh3) {
+		try {
+	        if (soLuongDonViTinh3 > 0) {
+	            this.soLuongDonViTinh3 = soLuongDonViTinh3;
 	        } else {
 	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
 	        }
@@ -119,9 +159,12 @@ public class LoHang {
 	}
 	@Override
 	public String toString() {
-		return "LoHang [maLo=" + maLo + ", ngaySanXuat=" + ngaySanXuat + ", giaNhap=" + giaNhap + ", soLuong=" + soLuong
-				+ ", viTri=" + viTri + ", sanPham=" + sanPham + ", maChiTietDonNhap=" + maChiTietDonNhap + "]";
+		return "LoHang [maLo=" + maLo + ", ngaySanXuat=" + ngaySanXuat + ", hanSuDung=" + hanSuDung + ", giaNhap="
+				+ giaNhap + ", soLuongDonViTinh1=" + soLuongDonViTinh1 + ", soLuongDonViTinh2=" + soLuongDonViTinh2
+				+ ", soLuongDonViTinh3=" + soLuongDonViTinh3 + ", viTri=" + viTri + ", sanPham=" + sanPham
+				+ ", maChiTietDonNhap=" + maChiTietDonNhap + "]";
 	}
-
+	
+	
 
 }

@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -18,7 +21,12 @@ import javax.swing.border.LineBorder;
 import component.CustomButton;
 import component.CustomItemList;
 import component.CustomButton.CustomButtonIconSide;
+import controller.NhaCungCapCTR;
 import controller.SanPhamCTR;
+import customDataType.DonViTinh;
+import customDataType.TrangThaiSanPham;
+import entity.LoaiSanPham;
+import entity.NhaCungCap;
 import entity.SanPhamYTe;
 
 public class ChiTietSanPhamUI extends JPanel{
@@ -69,13 +77,40 @@ public class ChiTietSanPhamUI extends JPanel{
         JPanel inforPanel = new JPanel();
         inforPanel.setBackground(Color.white);
         inforPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
+        inforPanel.setPreferredSize(new Dimension(1000, 700));
+//    	private String tenSanPham;
         inforPanel.add(inforGroup("Tên sản phẩm:", sanPham.getTenSanPham()));
-        inforPanel.add(inforGroup("Nhà sản xuất:", sanPham.getNhaSanXuat().toString()));
-        inforPanel.add(inforGroup("Giá:", sanPham.getGiaBan().toString() + "đ"));
-        inforPanel.add(inforGroup("Công dụng", sanPham.getMoTa()));
-        inforPanel.add(inforGroup("Hạn sử dụng", sanPham.getHanSuDung().toString()));
+//    	private String nuocSanXuat;
+        inforPanel.add(inforGroup("Nước sản xuất:", sanPham.getNuocSanXuat().toString()));
+//    	private TrangThaiSanPham trangThaiSanPham;
+        inforPanel.add(inforGroup("Trạng thái sản phẩm:", sanPham.getTrangThaiSanPham().toString()));
+//    	private String ghiChu;
+        inforPanel.add(inforGroup("Ghi chú", sanPham.getGhiChu().toString()));
+//    	private String moTa;
+        //inforPanel.add(inforGroup("Nhà sản xuất:", sanPham.getMoTa().toString()));
+//    	private String dangBaoChe;
+        inforPanel.add(inforGroup("Dạng bào chế:", sanPham.getDangBaoChe()));
+//    	private double Thue;
+        inforPanel.add(inforGroup("Thuế:", sanPham.getThue() + "%"));
+//    	private BufferedImage hinhAnh;
+        //inforPanel.add(inforGroup("Nhà sản xuất:", sanPham.getNhaSanXuat().toString()));
+//    	private String thanhPhan;
+        inforPanel.add(inforGroup("Thành phần:", sanPham.getMoTa().toString()));
+//    	private DonViTinh donViTinh;
+        inforPanel.add(inforGroup("Đơn vị tính:", sanPham.getDonViTinh1().toString()));
+//    	private NhaCungCap nhaCungCap;
+        NhaCungCap a =  NhaCungCapCTR.timKiemTheoMa(sanPham.getNhaCungCap().getMaNhaCungCap());
         
+        inforPanel.add(inforGroup("Nhà cung cấp:", a.getTenNhaCungCap()));
+//    	private LoaiSanPham loaiSanPham;
+        inforPanel.add(inforGroup("Loại sản phẩm:", sanPham.getLoaiSanPham().toString()));
+//    	private BigDecimal giaBan;
+        inforPanel.add(inforGroup("Giá bán:", sanPham.getGiaBanDonViTinh1().toString() + "đ"));
+//    	private String maVach;
+        inforPanel.add(inforGroup("Mã vạch:", sanPham.getMaVach().toString()));
+//    	private String yeuCauKeDon;
+        inforPanel.add(inforGroup("Yêu cầu kê đơn:", sanPham.getYeuCauKeDon().toString()));
+              
         
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
@@ -91,25 +126,25 @@ public class ChiTietSanPhamUI extends JPanel{
     public JPanel inforGroup(String contentTitle, String content) {
     	JPanel inputGroub = new JPanel();
     	//inputGroub.setLayout(new BorderLayout());
-    	inputGroub.setPreferredSize(new Dimension(500, 90));
+    	inputGroub.setPreferredSize(new Dimension(1000, 50));
+    	inputGroub.setLayout(new BoxLayout(inputGroub, BoxLayout.X_AXIS));
     	inputGroub.setBackground(Color.white);
-    	inputGroub.setLayout(new BoxLayout(inputGroub, BoxLayout.Y_AXIS));
-    	inputGroub.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-    	JTextField contentField = new JTextField();
-    	contentField.setDisabledTextColor(Color.BLACK);
+    	//inputGroub.setLayout(new BoxLayout(inputGroub, BoxLayout.Y_AXIS));
+    	inputGroub.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+    	JLabel contentField = new JLabel();
+    	//contentField.setDisabledTextColor(Color.BLACK);
     	contentField.setFont(new Font("Tahoma", Font.PLAIN, 20));
     	contentField.setBounds(177, 115, 298, 30);
-    	contentField.setColumns(10);
-    	contentField.setBorder(new LineBorder(Color.BLACK, 1)); 
-    	contentField.setPreferredSize(new Dimension(350, 45));
-    	contentField.setEditable(false);
-    	contentField.setText(content);
+    	//contentField.setColumns(10);
+    	contentField.setPreferredSize(new Dimension(700, 50));
+    	//contentField.setEditable(false);
+    	contentField.setText("<HTML>" + content + "</HTML>");
 		
 		JPanel titlePanel = new JPanel();
-		titlePanel.setPreferredSize(new Dimension(150, 45));
+		titlePanel.setPreferredSize(new Dimension(300, 50));
 		titlePanel.setLayout(new BorderLayout());
 		JLabel title = new JLabel(contentTitle);
-		title.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		title.setFont(new Font("Tahoma", Font.BOLD, 20));
 		title.setBounds(42, 162, 86, 25);
 		title.setBackground(Color.white);
 		title.setOpaque(true);

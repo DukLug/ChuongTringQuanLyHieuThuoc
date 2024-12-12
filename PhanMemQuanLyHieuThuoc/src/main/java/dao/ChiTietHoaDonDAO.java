@@ -32,10 +32,10 @@ public class ChiTietHoaDonDAO {
 	            BigDecimal giaBanChiTiet = rs.getBigDecimal("TongTien"); 
 
 	            
-	            SanPhamYTe sanPhamYTe = new SanPhamYTe(maSanPham, tenSanPham, giaBanSanPham, donViTinh);
+	            SanPhamYTe sanPhamYTe = new SanPhamYTe(maSanPham);
 
 	           
-	            ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(sanPhamYTe, soLuong, giaBanChiTiet);
+	            ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon("VoMa");
 	            chiTietHoaDons.add(chiTietHoaDon);
 	        }
 	    } catch (SQLException e) {

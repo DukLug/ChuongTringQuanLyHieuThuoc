@@ -1,5 +1,12 @@
 package controller;
 
-public class KhoCTR {
+import java.util.ArrayList;
 
+import dao.LoHangDAO;
+import entity.LoHang;
+
+public class KhoCTR {
+	public static ArrayList<LoHang> layDanhSachTatCaLoHang(){
+		return LoHangDAO.layDanhSachTatCaLoHang();
+	}
 }

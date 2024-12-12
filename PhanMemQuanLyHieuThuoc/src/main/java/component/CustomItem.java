@@ -18,7 +18,9 @@ public class CustomItem extends JPanel{
 	private int[] cellsWidth;
 	private JComponent[] cells;
 	
-	
+	public CustomItem() {
+		super();
+	}
 	public CustomItem(int prefWidth, int prefHeight, Color backgroundColor, Border border, int[]  cellsWidth) {
 		super();
 		this.itemPrefWidth = prefWidth;

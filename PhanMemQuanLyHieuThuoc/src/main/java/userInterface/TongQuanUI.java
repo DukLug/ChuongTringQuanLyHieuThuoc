@@ -44,6 +44,7 @@ import component.CustomTable;
 import component.RoundedBorder;
 import controller.SanPhamCTR;
 import dao.KhuyenMaiDAO;
+import dao.SanPhamYTeDAO;
 import entity.KhuyenMai;
 import entity.SanPhamYTe;
 import functionalClass.ImageLoader;
@@ -76,7 +77,7 @@ public class TongQuanUI extends JPanel{
 		super();
 		setStyle();
 		taoHinh();
-		capNhatDanhSachBanChay(SanPhamCTR.layDanhSachTatCaSanPham());
+		capNhatDanhSachBanChay(SanPhamYTeDAO.layDanhSachTatCaSanPham());
 		
 	}
 	
@@ -232,7 +233,7 @@ public class TongQuanUI extends JPanel{
 	    unknownPanel.add(ThongKeLabel);
 	    JPanel bieuDo = new JPanel();
 	    unknownPanel.add(bieuDo);
-	    setDataToChart2(bieuDo);
+	    //setDataToChart2(bieuDo);
 	    unknownPanel.setLayout(new BoxLayout(unknownPanel, BoxLayout.Y_AXIS));
 	    //san pham ban chay 
 	    JLabel sanPhamBanChayLabel = new JLabel("SẢN PHẨM BÁN CHẠY", SwingConstants.CENTER);
@@ -312,9 +313,10 @@ public class TongQuanUI extends JPanel{
 
 
 	private void capNhatDanhSachBanChay(ArrayList<SanPhamYTe> dsBanChay) {
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < dsBanChay.size()%10; i++) {
 			sanPhamBanChayList.addItem(new SanPhamBanChayRow(dsBanChay.get(i)));
 		}
+
 	}
 	
 	public static class SanPhamBanChayRow extends CustomItem{
@@ -361,7 +363,7 @@ public class TongQuanUI extends JPanel{
 			tenSanPham = new JLabel("<html>"+ sanPham.getTenSanPham() +"</html>");
 			tenSanPham.setFont(titleFont);
 			
-			giaSanPham = new JLabel(sanPham.getGiaBan().toString() + " đ");
+			giaSanPham = new JLabel(sanPham.getGiaBanDonViTinh1().toString() + " đ");
 			giaSanPham.setFont(priceFont);
 			
 			cellInfo.setBackground(backgroundColor);

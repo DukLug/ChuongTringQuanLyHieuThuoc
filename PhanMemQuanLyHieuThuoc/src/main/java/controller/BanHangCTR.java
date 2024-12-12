@@ -227,27 +227,41 @@ public class BanHangCTR {
 	    return maHD;
 	}
 	
-	public String taoMaChiTietHoaDon() {
-	    String stt = "0000";
-	    int soHienTai1 = Integer.parseInt(stt); 
+	public String taoMaChiTietHoaDon(String maHD) {
+//	    String stt = "00";
+//	    int soHienTai1 = Integer.parseInt(stt); 
+		
+		int soHienTai1 = -1;
 	    
-	    ArrayList<ChiTietHoaDon> dsCTHD = layDSCTHDTheoNgayHienTai(cthd_dao.layDSCTHD());
+		String chuoi = maHD.substring(2);
+		
+		ArrayList<ChiTietHoaDon> dsCTHD = layDSCTHDTheoMaHD(cthd_dao.layDSCTHD(), chuoi);
 	    soHienTai1 = dsCTHD.size() + 1;
-
-//	    LocalDate ngayHienTai = LocalDate.now();
-//	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-//	    String ngayHientai = ngayHienTai.format(formatter);
-	    
-	    String maCTHD = String.format("CTHD" + ngayHienTai + "%04d", soHienTai1);
+//	    
+//	    ArrayList<ChiTietHoaDon> dsCTHD = layDSCTHDTheoNgayHienTai(cthd_dao.layDSCTHD());
+//	    soHienTai1 = dsCTHD.size() + 1;
+//	    
+	    String maCTHD = String.format("CTHD" + chuoi + "%02d", soHienTai1);
 
 	    return maCTHD;
 	}
 	
-	private ArrayList<ChiTietHoaDon> layDSCTHDTheoNgayHienTai(ArrayList<ChiTietHoaDon> danhSach) {
+//	private ArrayList<ChiTietHoaDon> layDSCTHDTheoNgayHienTai(ArrayList<ChiTietHoaDon> danhSach) {
+//		ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<ChiTietHoaDon>();
+//		    
+//		for (ChiTietHoaDon cthd : danhSach)
+//			if (cthd.getMaChiTietHoaDon().contains(ngayHienTai))
+//				dsCTHD.add(cthd);
+//		
+//		return dsCTHD;
+//		
+//	}
+	
+	private ArrayList<ChiTietHoaDon> layDSCTHDTheoMaHD(ArrayList<ChiTietHoaDon> danhSach, String chuoi) {
 		ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<ChiTietHoaDon>();
 		    
 		for (ChiTietHoaDon cthd : danhSach)
-			if (cthd.getMaChiTietHoaDon().contains(ngayHienTai))
+			if (cthd.getMaChiTietHoaDon().contains(chuoi))
 				dsCTHD.add(cthd);
 		
 		return dsCTHD;

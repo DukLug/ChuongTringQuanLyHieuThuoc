@@ -580,7 +580,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			            BanHangRow row = (BanHangRow) item;
 			            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
 
-			            String maCTHD = bh_ctr.taoMaChiTietHoaDon();
+			            String maCTHD = bh_ctr.taoMaChiTietHoaDon(hoaDon.getMaHoaDon());
 			            int soLuong = sanPham.soLuong;
 						BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(sanPham.giaBan, sanPham.soLuong + "");
 						HoaDon hd = new HoaDon(maHD);

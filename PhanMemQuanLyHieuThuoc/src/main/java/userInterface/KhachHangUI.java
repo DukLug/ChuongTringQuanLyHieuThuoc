@@ -333,7 +333,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 		if (o.equals(btnThem)) {
 			if (kiemTraDuLieu()) {
 				kh = layThongTin();
-				
+				System.out.println(kh);
 				if (KhachHangCTR.kiemTraTrung(kh.getMaKhachHang())) {
 					JOptionPane.showMessageDialog(this, "Mã khách hàng bị trùng");
 					return;
@@ -424,12 +424,22 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 			return false;
 		}
 		
+		if (ten.matches("[0-9@#%!]")) {
+			thongBaoLoi(txtHoTen, "Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+			return false;
+		}
+		
+		if (sdt.isEmpty() || sdt == null) {
+			thongBaoLoi(txtSDT, "Số điện thoại không được để trống");
+			return false;
+		}
+		
 		if (!(sdt.length() > 0 && sdt.matches("[0-9]{10,14}"))) {
 			thongBaoLoi(txtSDT, "Số điện thoại phải từ 10 đến 14 ký tự số");
 			return false;
 		}
 		
-		if (cccd.length() > 0) {
+		if (cccd.length() > 0 && cccd != null) {
 			if (!(cccd.matches("[0-9]{12}"))) {
 				thongBaoLoi(txtCCCD, "Căn cước công dân phải đủ 12 ký tự số");
 				return false;

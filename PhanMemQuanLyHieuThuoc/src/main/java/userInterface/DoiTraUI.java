@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -23,8 +24,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -45,6 +48,7 @@ import component.CustomButton;
 import component.CustomPanel;
 import component.CustomTable;
 import controller.ChiTietHoaDonCTR;
+import controller.DonDoiTraCTR;
 import controller.HoaDonCTR;
 import customDataType.DonViTinh;
 import dao.ChiTietDonDoiTraDAO;
@@ -114,6 +118,7 @@ public class DoiTraUI extends JPanel{
 	private JPanel panelTong;
 	
 	private DecimalFormat df = new DecimalFormat("#.0000");
+	private DonDoiTraCTR donDoiTraCTR;
 
 	
 
@@ -126,6 +131,7 @@ public class DoiTraUI extends JPanel{
 		 	e.printStackTrace();
 		 }	
 		donDoiTraDAO = new DonDoiTraDAO();
+		donDoiTraCTR = new DonDoiTraCTR();
 		chiTietHoaDonCTR = new ChiTietHoaDonCTR();
 		LoHangDAO = new LoHangDAO();
 		chiTietDoiTraDAO = new ChiTietDonDoiTraDAO();
@@ -440,80 +446,93 @@ public class DoiTraUI extends JPanel{
 		        tableTraHang.addMouseListener(new MouseAdapter() {
 		            @Override
 		            public void mouseClicked(MouseEvent e) {
-		            	DefaultTableModel model = (DefaultTableModel) tableTraHang.getModel();
-		            	 
+		                DefaultTableModel model = (DefaultTableModel) tableTraHang.getModel();
+
 		                int row = tableTraHang.rowAtPoint(e.getPoint());
 		                int col = tableTraHang.columnAtPoint(e.getPoint());
-		                
+
+		                // Xử lý xóa sản phẩm khi nhấp vào cột đầu tiên
 		                if (col == 0) {
-		 
-		                	 int confirm = JOptionPane.showConfirmDialog(null, 
-		                             "Bạn có chắc chắn muốn xóa sản phẩm này?", 
-		                             "Xác nhận xóa", 
-		                             JOptionPane.YES_NO_OPTION);
-		                         
-		                         
-		                         if (confirm == JOptionPane.YES_OPTION) {
-		                             model.removeRow(row); 
-		                             if (model.getRowCount() == 0) {
-		    		                     LamMoi();
-		    		                     return;
-		    		                 }
-		                             capNhatTongHangTra();
-		                             capNhatTongGiaTra();
-		                             tinhTongHoaDon();
-		                             
-		                         }
-		                	
+		                    int confirm = JOptionPane.showConfirmDialog(null, 
+		                        "Bạn có chắc chắn muốn xóa sản phẩm này?", 
+		                        "Xác nhận xóa", 
+		                        JOptionPane.YES_NO_OPTION);
+
+		                    if (confirm == JOptionPane.YES_OPTION) {
+		                        model.removeRow(row);
+		                        if (model.getRowCount() == 0) {
+		                            LamMoi();
+		                            return;
+		                        }
+		                        capNhatTongHangTra();
+		                        capNhatTongGiaTra();
+		                        tinhTongHoaDon();
+		                    }
 		                }
 
-		                if (col == 4) {  
-		                    
-		                    int currentQuantity = (int) model.getValueAt(row, 4);
-		                    
-		                    String inputQuantity = JOptionPane.showInputDialog("Nhập số lượng mới:", currentQuantity);
-		                    if (inputQuantity == null || inputQuantity.isEmpty()) {
-		                        return; 
-		                    }
-		                    
+		                // Xử lý chỉnh sửa số lượng khi nhấp vào cột số lượng
+		                if (col == 4) { 
 		                    try {
+		                        int currentQuantity = (int) model.getValueAt(row, 4);
+		                        String inputQuantity = JOptionPane.showInputDialog("Nhập số lượng mới:", currentQuantity);
+
+		                        if (inputQuantity == null || inputQuantity.isEmpty()) return;
+
 		                        int newQuantity = Integer.parseInt(inputQuantity);
-		                        String maHoaDon = (String) model.getValueAt(row, 0);
-		                        
-		                       
-		                        ArrayList<ChiTietHoaDon> dsChiTietHoaDon = chiTietHoaDonCTR.timChiTietHoaDonTheoMaHoaDon(txtmaHoaDon.getText());
-		                        
-		                        
-		                        if (dsChiTietHoaDon == null || dsChiTietHoaDon.isEmpty()) {
-		                            JOptionPane.showMessageDialog(null, "Không tìm thấy chi tiết hóa đơn cho mã: " + maHoaDon);
-		                            return; 
+		                        String maSanPham = (String) model.getValueAt(row, 0);
+
+		                        // Sử dụng phương thức timChiTietHoaDonTheoMaHoaDon để lấy toàn bộ danh sách chi tiết hóa đơn
+		                        ArrayList<ChiTietHoaDon> allChiTietHoaDon = chiTietHoaDonCTR.timChiTietHoaDonTheoMaHoaDon(txtmaHoaDon.getText());
+
+		                        // Tìm chi tiết hóa đơn phù hợp với mã sản phẩm
+		                        ChiTietHoaDon chiTietHoaDon = allChiTietHoaDon.stream()
+		                                .filter(ct -> ct.getSanPhamYTe().getMaSanPham().equals(maSanPham))
+		                                .findFirst()
+		                                .orElse(null);
+
+		                        if (chiTietHoaDon == null) {
+		                            JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm: " + maSanPham);
+		                            return;
 		                        }
-//		                        
-		                        ChiTietHoaDon chiTietHoaDon = dsChiTietHoaDon.get(0); 
-		                        int maxQuantity = chiTietHoaDon.getSoLuong(); 
-		                        
-		                        if (newQuantity > maxQuantity) {
-		                           
-		                            newQuantity = maxQuantity; 
+		                        int maxQuantity1 = chiTietHoaDon.getSoLuongDonViTinh1();
+		                        int maxQuantity2 = chiTietHoaDon.getSoLuongDonViTinh2();
+		                        int maxQuantity3 = chiTietHoaDon.getSoLuongDonViTinh3();
+		                        // Lấy số lượng tối đa của sản phẩm từ danh sách chi tiết hóa đơn
+		                        if (newQuantity > maxQuantity1 && maxQuantity1 > 0) {
+		                            if (newQuantity > maxQuantity2 && maxQuantity2 > 0) {
+		                                if (newQuantity > maxQuantity3 && maxQuantity3 > 0) {
+		                                    newQuantity = maxQuantity3; 
+		                                } else {
+		                                    newQuantity = maxQuantity2;
+		                                }
+		                            } else {
+		                                newQuantity = maxQuantity1;
+		                            }
 		                        } else if (newQuantity <= 0) {
-		                        	newQuantity = 0;
-		                            return; 
+		                            model.removeRow(row);
+		                            capNhatTongGiaTra();
+		                            capNhatTongHangTra();
+		                            tinhTongHoaDon();
+		                            return;
 		                        }
 
-		                        model.setValueAt(newQuantity, row, 4); 
+		                        // Cập nhật số lượng và tổng tiền
+		                        model.setValueAt(newQuantity, row, 4);
 		                        BigDecimal giaBan = (BigDecimal) model.getValueAt(row, 2);
 		                        BigDecimal newTongTien = giaBan.multiply(BigDecimal.valueOf(newQuantity));
 		                        model.setValueAt(newTongTien, row, 5);
+
 		                        capNhatTongGiaTra();
 		                        capNhatTongHangTra();
 		                        tinhTongHoaDon();
 
 		                    } catch (NumberFormatException ex) {
-		                        
+		                        JOptionPane.showMessageDialog(null, "Số lượng nhập không hợp lệ!");
 		                    }
 		                }
 		            }
 		        });
+
 
 
 
@@ -562,6 +581,52 @@ public class DoiTraUI extends JPanel{
 				Object[][] dataDoiHang = new Object[0][columnNames.length];
 				
 				tableDoiHang = new CustomTable(dataDoiHang, headers, UIStyles.NhanVienTableHeaderStyle, UIStyles.NhanVienTableRowStyle, 20);
+				// Thiết lập JComboBox cho cột "Đơn vị tính"
+				String[] donViTinhOptions = {"Viên", "Vỉ", "Hộp"};
+				JComboBox<String> comboBox = new JComboBox<>(donViTinhOptions);
+				
+				comboBox.addItemListener(e -> {
+				    if (e.getStateChange() == ItemEvent.SELECTED) {
+				        int row = tableDoiHang.getSelectedRow();  
+				        int column = tableDoiHang.getSelectedColumn();  
+
+				        if (column == 3) {  
+				            String donViTinh = (String) e.getItem();  
+
+				            DefaultTableModel model = (DefaultTableModel) tableDoiHang.getModel();
+				            String maSanPham = (String) model.getValueAt(row, 0);  
+				            BigDecimal giaBan = (BigDecimal) model.getValueAt(row, 2);  
+				            int soLuong = (int) model.getValueAt(row, 4);  
+
+				            // Lấy số lượng tồn kho theo đơn vị tính
+				            DonViTinh donViTinhEnum = DonViTinh.fromString(donViTinh);
+				            SanPhamYTeDAO sanPhamYTeDAO = new SanPhamYTeDAO();
+				            int soLuongTonKho = chiTietDoiTraDAO.laySoLuongTonKho(maSanPham, donViTinhEnum);
+
+				            // Kiểm tra xem số lượng nhập vào có vượt quá tồn kho không
+				            if (soLuong > soLuongTonKho) {
+				                JOptionPane.showMessageDialog(null, "Số lượng nhập vào vượt quá tồn kho (" + soLuongTonKho + " " + donViTinh + ").");
+				                soLuong = soLuongTonKho;  // Điều chỉnh lại số lượng theo tồn kho
+				            }
+
+				            // Cập nhật giá bán theo đơn vị tính
+				            BigDecimal giaBanMoi = sanPhamYTeDAO.getGiaBanTheoDonViTinh(maSanPham, donViTinhEnum);
+
+				            if (giaBanMoi != null) {
+				                model.setValueAt(giaBanMoi, row, 2);  
+				                BigDecimal tongTien = giaBanMoi.multiply(BigDecimal.valueOf(soLuong)); 
+				                model.setValueAt(tongTien, row, 5); 
+
+				                // Cập nhật lại tổng tiền mua hàng và hóa đơn nếu cần
+				                capNhatTongTienMuaHang();
+				                tinhTongHoaDon();
+				            }
+				        }
+				    }
+				});
+				
+				tableDoiHang.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(comboBox));
+				
 		        JScrollPane scrollPaneBangDoi = new JScrollPane(tableDoiHang);
 		        scrollPaneBangDoi.setPreferredSize(new Dimension(1123, 711)); 
 		        scrollPaneBangDoi.setBorder(new LineBorder(Color.GRAY, 1, true));
@@ -574,7 +639,6 @@ public class DoiTraUI extends JPanel{
 		                int row = tableDoiHang.rowAtPoint(e.getPoint());
 		                int column = tableDoiHang.columnAtPoint(e.getPoint());
 
-		                
 		                if (column == 4) { 
 		                    String input = JOptionPane.showInputDialog("Nhập số lượng mới:");
 		                    if (input != null) {
@@ -582,25 +646,31 @@ public class DoiTraUI extends JPanel{
 		                            int newQuantity = Integer.parseInt(input); 
 
 		                            DefaultTableModel model = (DefaultTableModel) tableDoiHang.getModel();
-		                            //String maSanPham = (String) model.getValueAt(row, 0); 
-
-		                           if(newQuantity <= 0) {
-		                        	 model.removeRow(row);
-		                        	   
-		                           }else {
-		                        	   
-		                           
+		                            String maSanPham = (String) model.getValueAt(row, 0); 
 		                            
-		                            model.setValueAt(newQuantity, row, column); 
-
+		                            String donViTinh = (String) model.getValueAt(row, 3); 
+		                            DonViTinh donViTinhEnum = DonViTinh.fromString(donViTinh);
 		                            
-		                            BigDecimal giaBan = (BigDecimal) model.getValueAt(row, 2);
-		                            BigDecimal tongTien = giaBan.multiply(BigDecimal.valueOf(newQuantity)); 
-		                            model.setValueAt(tongTien, row, 5); 
+		                            int soLuongTonKho = chiTietDoiTraDAO.laySoLuongTonKho(maSanPham, donViTinhEnum);
+
 		                           
+		                            if (newQuantity > soLuongTonKho) {
+		                                newQuantity = soLuongTonKho;
+		                                JOptionPane.showMessageDialog(null, "Số lượng nhập vào vượt quá tồn kho");
 		                            }
-		                           capNhatTongTienMuaHang();
-		                           tinhTongHoaDon();
+
+		                            if (newQuantity <= 0) {
+		                                model.removeRow(row);
+		                            } else {
+		                                model.setValueAt(newQuantity, row, column);
+
+		                                BigDecimal giaBan = (BigDecimal) model.getValueAt(row, 2);
+		                                BigDecimal tongTien = giaBan.multiply(BigDecimal.valueOf(newQuantity)); 
+		                                model.setValueAt(tongTien, row, 5);
+		                            }
+
+		                            capNhatTongTienMuaHang();
+		                            tinhTongHoaDon();
 
 		                        } catch (NumberFormatException ex) {
 		                            JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ, vui lòng nhập lại.");
@@ -702,70 +772,116 @@ public class DoiTraUI extends JPanel{
 	    lblNgayLap.setText(tgHienTai.format(formatter));
 
 	}
+	
+
 
 	
-	// tìm hóa đơn cần đổi trả
+//	// Tìm hóa đơn cần đổi trả
 	private void timChiTietHoaDonTheoMa(String maHD) {
+		boolean donDoiTra = donDoiTraCTR.kiemTraHoaDonDaDoiTra(maHD);
+		if(donDoiTra) {
+			  JOptionPane.showMessageDialog(this, "Hóa đơn này đã được đổi trả hoặc quá hạn đổi trả");
+		}else {
+		
 	    ArrayList<ChiTietHoaDon> dsChiTietHoaDon = chiTietHoaDonCTR.timChiTietHoaDonTheoMaHoaDon(maHD);
 	    String mahoaDon = txtmaHoaDon.getText();
-	    if(mahoaDon != null && !mahoaDon.isEmpty()) {
-	    	JOptionPane.showMessageDialog(this,"đã có hóa đơn đang thực hiện đổi trả");
-	    	return;
-	    }
 	    
+	    if (mahoaDon != null && !mahoaDon.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Đã có hóa đơn đang thực hiện đổi trả");
+	        return;
+	    }
+
 	    if (dsChiTietHoaDon != null && !dsChiTietHoaDon.isEmpty()) {
 	        LayThongTinKhachHangTheoHoadon(maHD);
 	        
 	        Object[][] currentData = tableTraHang.getData();
+	        
 	        for (ChiTietHoaDon chiTietHoaDon : dsChiTietHoaDon) {
 	            SanPhamYTe spYTe = chiTietHoaDon.getSanPhamYTe();
 	            boolean exists = false;
-	            int maxQuantity = chiTietHoaDon.getSoLuong(); 
+	            
+	            // Lấy số lượng tối đa từ cơ sở dữ liệu cho từng đơn vị tính
+	            int maxQuantity1 = chiTietHoaDon.getSoLuongDonViTinh1();
+	            int maxQuantity2 = chiTietHoaDon.getSoLuongDonViTinh2();
+	            int maxQuantity3 = chiTietHoaDon.getSoLuongDonViTinh3();
+	            
+	            BigDecimal giaBan1 = spYTe.getGiaBanDonViTinh1();
+	            BigDecimal giaBan2 = spYTe.getGiaBanDonViTinh2();
+	            BigDecimal giaBan3 = spYTe.getGiaBanDonViTinh3();
 
+	            // Kiểm tra nếu sản phẩm đã có trong bảng, cập nhật lại số lượng và giá
 	            for (int i = 0; i < currentData.length; i++) {
 	                if (currentData[i][0].equals(spYTe.getMaSanPham())) {
-	                    int currentQuantity = (int) currentData[i][4]; 
-	                    
-	                   
-	                    if (currentQuantity + 1 > maxQuantity) {
-	                        currentData[i][4] = maxQuantity;  
-	                    } else {
-	                        currentData[i][4] = currentQuantity + 1;  
+	                    // Cập nhật giá trị và số lượng cho từng đơn vị tính
+	                    int currentQuantity1 = (int) currentData[i][4];  
+	                    if (currentQuantity1 + 1 <= maxQuantity1) {
+	                        currentData[i][4] = currentQuantity1 + 1;
+	                        currentData[i][5] = tinhGiaBan1(spYTe, (int) currentData[i][4]);
 	                    }
-	                    
-	               
-	                    currentData[i][5] = tinhGiaBan(spYTe, (int) currentData[i][4]);
-	                    exists = true;
+	                    // Lặp lại cho các đơn vị tính khác nếu có
 	                    break;
 	                }
 	            }
 
+	            // Nếu sản phẩm chưa có trong bảng, thêm mới vào bảng với từng đơn vị tính
 	            if (!exists) {
-	                
-	                Object[][] newData = new Object[currentData.length + 1][6];
+	                Object[][] newData = new Object[currentData.length + 3][6];  // Thêm 3 hàng cho 3 đơn vị tính
 	                System.arraycopy(currentData, 0, newData, 0, currentData.length);
-
+	                
+	                // Thêm thông tin cho từng đơn vị tính
+	                // Đơn vị tính 1
 	                newData[currentData.length][0] = spYTe.getMaSanPham();
 	                newData[currentData.length][1] = spYTe.getTenSanPham();
-	                newData[currentData.length][2] = spYTe.getGiaBan();
-	                newData[currentData.length][3] = spYTe.getDonViTinh();
-	                newData[currentData.length][4] = Math.min(1, maxQuantity);  
-	                newData[currentData.length][5] = tinhGiaBan(spYTe, (int) newData[currentData.length][4]);
+	                newData[currentData.length][2] = giaBan1;
+	                newData[currentData.length][3] = spYTe.getDonViTinh1();
+	                newData[currentData.length][4] = Math.max(0, maxQuantity1);  
+	                newData[currentData.length][5] = tinhGiaBan1(spYTe, (int) newData[currentData.length][4]);
 
-	                currentData = newData; 
+	                // Đơn vị tính 2
+	                newData[currentData.length + 1][0] = spYTe.getMaSanPham();
+	                newData[currentData.length + 1][1] = spYTe.getTenSanPham();
+	                newData[currentData.length + 1][2] = giaBan2;
+	                newData[currentData.length + 1][3] = spYTe.getDonViTinh2();
+	                newData[currentData.length + 1][4] = Math.max(0, maxQuantity2);  // Đảm bảo số lượng >= 1
+	                newData[currentData.length + 1][5] = tinhGiaBan2(spYTe, (int) newData[currentData.length + 1][4]);
+
+	                // Đơn vị tính 3
+	                newData[currentData.length + 2][0] = spYTe.getMaSanPham();
+	                newData[currentData.length + 2][1] = spYTe.getTenSanPham();
+	                newData[currentData.length + 2][2] = giaBan3;
+	                newData[currentData.length + 2][3] = spYTe.getDonViTinh3();
+	                newData[currentData.length + 2][4] = Math.max(0, maxQuantity3);  // Đảm bảo số lượng >= 1
+	                newData[currentData.length + 2][5] = tinhGiaBan3(spYTe, (int) newData[currentData.length + 2][4]);
+
+	                currentData = newData;  // Cập nhật lại bảng
 	            }
 	        }
 
-	        tableTraHang.setData(currentData);
-	        capNhatTongGiaTra();
-	        capNhatTongHangTra();
-	        tinhTongHoaDon();
-	        txtTimTheoMaHoaDon.setText(null);
+	        // Loại bỏ các dòng có số lượng <= 0
+	        List<Object[]> validData = new ArrayList<>();
+	        for (Object[] row : currentData) {
+	            if ((int) row[4] > 0) {
+	                validData.add(row);
+	            }
+	        }
+
+	        // Cập nhật lại dữ liệu sau khi loại bỏ các dòng không hợp lệ
+	        currentData = validData.toArray(new Object[0][]);
+
+	        tableTraHang.setData(currentData);  // Cập nhật dữ liệu cho bảng
+	        capNhatTongGiaTra();  // Cập nhật tổng giá trị
+	        capNhatTongHangTra();  // Cập nhật tổng số hàng
+	        tinhTongHoaDon();  // Tính toán tổng hóa đơn
+	        txtTimTheoMaHoaDon.setText(null);  // Xóa ô tìm kiếm
 	        JOptionPane.showMessageDialog(this, "Thông tin chi tiết hóa đơn đã được tải thành công.");
 	    } else {
 	        JOptionPane.showMessageDialog(this, "Không tìm thấy chi tiết hóa đơn cho mã: " + maHD);
 	    }
+		}
 	}
+
+	
+	
 	
 	// phí trả hàng
 	private BigDecimal tinhPhiTraHang(BigDecimal tongTienHangTra) {
@@ -811,7 +927,7 @@ public class DoiTraUI extends JPanel{
 	}
 
 	
-	// thêm sản phẩm mới vào bảng đổi trả
+	// thêm sản phẩm mới vào bảng đổi hàng
 	
 	private void themSanPhamVaoChiTietDoiTra(String maSP) {
 	    SanPhamYTeDAO spDao = new SanPhamYTeDAO();
@@ -827,7 +943,7 @@ public class DoiTraUI extends JPanel{
 	                
 	                int currentQuantity = (int) currentData[i][4]; 
 	                currentData[i][4] = currentQuantity + 1; 
-	                currentData[i][5] = tinhGiaBan(spYTe, currentQuantity + 1); 
+	                currentData[i][5] = tinhGiaBan1(spYTe, currentQuantity + 1); 
 	                exists = true;
 	                break;
 	            }
@@ -840,10 +956,10 @@ public class DoiTraUI extends JPanel{
 
 	            newData[currentData.length][0] = spYTe.getMaSanPham();
 	            newData[currentData.length][1] = spYTe.getTenSanPham();
-	            newData[currentData.length][2] = spYTe.getGiaBan();
-	            newData[currentData.length][3] = spYTe.getDonViTinh();
+	            newData[currentData.length][2] = spYTe.getGiaBanDonViTinh1();
+	            newData[currentData.length][3] = spYTe.getDonViTinh1();
 	            newData[currentData.length][4] = 1;
-	            newData[currentData.length][5] = tinhGiaBan(spYTe, 1); 
+	            newData[currentData.length][5] = tinhGiaBan1(spYTe, 1); 
 
 	            tableDoiHang.setData(newData);
 	        } else {
@@ -863,10 +979,18 @@ public class DoiTraUI extends JPanel{
 
 
 	// tính tiền tổng tiền
-	private BigDecimal tinhGiaBan(SanPhamYTe spYTe, int soLuong) {
+	private BigDecimal tinhGiaBan1(SanPhamYTe spYTe, int soLuong) {
 	    
-	    return spYTe.getGiaBan().multiply(new BigDecimal(soLuong));
+	    return spYTe.getGiaBanDonViTinh1().multiply(new BigDecimal(soLuong));
 	}
+	private BigDecimal tinhGiaBan2(SanPhamYTe spYTe, int soLuong) {
+		    
+		    return spYTe.getGiaBanDonViTinh2().multiply(new BigDecimal(soLuong));
+		}
+	private BigDecimal tinhGiaBan3(SanPhamYTe spYTe, int soLuong) {
+		    
+		    return spYTe.getGiaBanDonViTinh3().multiply(new BigDecimal(soLuong));
+		}
 	
 	
 	// phát sinh mã chi tiết đơn đổi trả
@@ -1031,7 +1155,8 @@ public class DoiTraUI extends JPanel{
 	   txtmaHoaDon.setText("");
 	   txtTongGiaGoc.setText("");;
 	   txtPhiTraHang.setText("");
-
+	   txtTimTheoMaSP.setText("");
+	   txtTimTheoMaHoaDon.setText("");
 	   txtTongTienHang.setText("");
 	   txtGiamGia.setText("");
 	   txtTongTienMua.setText("");	  
@@ -1116,7 +1241,25 @@ public class DoiTraUI extends JPanel{
 		        String maChitietDoiTra = phatSinhMaChiTietDoiTra(phatSinhMaDonDoiTra());
 		        String maSanPham = (String) row[0];
 		        SanPhamYTe maSP = new SanPhamYTe(maSanPham);
+		        
+		        String donViTinhString = (String) row[3]; 
+		        DonViTinh donViTinh = DonViTinh.fromString(donViTinhString);
+
+		        int soLuongDonvi1 = 0; 
+		        int soLuongDonvi2 = 0; 
+		        int soLuongDonvi3 = 0;
+
 		        int soLuong = (int) row[4];
+
+		        if (donViTinh == DonViTinh.Vien) {
+		            soLuongDonvi1 = soLuong;
+		        } else if (donViTinh == DonViTinh.Vi) {
+		            soLuongDonvi2 = soLuong;
+		        } else if (donViTinh == DonViTinh.Hop) {
+		            soLuongDonvi3 = soLuong;
+		        }
+
+		        
 		        BigDecimal tongTien = (BigDecimal) row[5];
 		       
 		       // DonDoiTra maDonDoiTra = getSelectmaDonDoiTra();
@@ -1130,7 +1273,7 @@ public class DoiTraUI extends JPanel{
 	
 		       
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuongDonvi1, soLuongDonvi2,soLuongDonvi3, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 
 		      
@@ -1159,7 +1302,33 @@ public class DoiTraUI extends JPanel{
 		        String maChitietDoiTra = phatSinhMaChiTietDoiTra(phatSinhMaDonDoiTra());
 		        String maSanPham = (String) row[0];
 		        SanPhamYTe maSP = new SanPhamYTe(maSanPham);
-		        int soLuong = (int) row[4];
+		       
+		        
+		        String donViTinhString = (row[3] instanceof String) ? (String) row[3] : null;
+		        if (donViTinhString == null) {
+		            System.out.println("Đơn vị tính không hợp lệ!");
+		            continue;
+		        }
+
+		     // Chuyển đổi String thành DonViTinh
+		     DonViTinh donViTinh = DonViTinh.fromString(donViTinhString);  
+
+		     int soLuongDonvi1 = 0; 
+		     int soLuongDonvi2 = 0; 
+		     int soLuongDonvi3 = 0;
+
+		     int soLuong = (int) row[4];
+
+		     if (donViTinh == DonViTinh.Vien) {
+		         soLuongDonvi1 = soLuong;
+		     } else if (donViTinh == DonViTinh.Vi) {
+		         soLuongDonvi2 = soLuong;
+		     } else if (donViTinh == DonViTinh.Hop) {
+		         soLuongDonvi3 = soLuong;
+		     }
+
+		        
+		        
 		        BigDecimal tongTien = (BigDecimal) row[5];
 		        //String maDonDoiTra = phatSinhMaDonDoiTra();
 		        //DonDoiTra maDoiTra = new DonDoiTra(maDonDoiTra);
@@ -1172,7 +1341,7 @@ public class DoiTraUI extends JPanel{
 		        
 		     
 		        
-		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuong, tongTien, new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
+		        ChiTietDonDoiTra chiTietDoiTra = new ChiTietDonDoiTra(maChitietDoiTra, soLuongDonvi1, soLuongDonvi2,soLuongDonvi3, tongTien,new DonDoiTra(maDonDoiTra), maSP, maLoHang, maLohayThe);
 		      
 		      
 		        
@@ -1283,10 +1452,10 @@ public class DoiTraUI extends JPanel{
 
 		private void thanhToan() {
 			
-			 if(!Valid()) {
-				  return;
-				  
-			  }
+//			 if(!Valid()) {
+//				  return;
+//				  
+//			  }
 			 
 		    DonDoiTra donDoiTra = taoDonDoiTra();
 		    
@@ -1294,14 +1463,13 @@ public class DoiTraUI extends JPanel{
 		        boolean kq = donDoiTraDAO.themDonDoiTra(donDoiTra); 
 		        
 		        if (kq) {
-		            JOptionPane.showMessageDialog(panelTong, "Tạo đơn đổi trả thành công!");
 		            
 		            String maDonDoiTra = donDoiTraDAO.maDonDoiTra(donDoiTra.getMaDonDoiTra());
 		            ThemChiTietDonDoiTra(maDonDoiTra);
 		            
 		            Object[][] dataDoiHang = tableDoiHang.getDataStart1();
 				    Object[][] dataTraHang = tableTraHang.getDataStart1();
-		            
+		            String ghiChu = txtGhiChu.getText();
 		            String tienTraHang = txtTongGiaGoc.getText();
 		            String phitrahang = txtPhiTraHang.getText();
 		            String tienMua = txtTongTienHang.getText();
@@ -1327,11 +1495,19 @@ public class DoiTraUI extends JPanel{
 		            }
 		            
 		            BigDecimal tienTraKhach = tienKhachDuaDecimal.subtract(tongTienDecimal);
+		            
+		            if(tienTraKhach.compareTo(BigDecimal.ZERO) <= 0) {
+		                if (!Valid()) {
+		                    return; 
+		                }
+		            }
 		             
-		            String tienTra = df.format(tienTraKhach);
-
-		            HoaDonDoiTraUI hddoiTra = new HoaDonDoiTraUI(donDoiTra,dataTraHang, dataDoiHang, tienTraHang, phitrahang, tienMua, giamGia, tongTien, tienKhachDua, tienTra);
-		            HoaDonTraUI hdonTra = new HoaDonTraUI(donDoiTra, dataTraHang, tienTraHang, phitrahang, tongTien);
+		            String tienTra = df.format(tienTraKhach.abs());
+		            
+		            
+		            JOptionPane.showMessageDialog(panelTong, "Tạo đơn đổi trả thành công!");
+		            HoaDonDoiTraUI hddoiTra = new HoaDonDoiTraUI(donDoiTra,dataTraHang, dataDoiHang, tienTraHang, phitrahang, tienMua, giamGia, tongTien, tienKhachDua, tienTra,ghiChu);
+		            HoaDonTraUI hdonTra = new HoaDonTraUI(donDoiTra, dataTraHang, tienTraHang, phitrahang, tongTien,ghiChu);
 		            
 		            if(dataDoiHang.length <=0) {
 		            	hdonTra.setVisible(true);

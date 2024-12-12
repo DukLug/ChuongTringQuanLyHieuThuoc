@@ -43,6 +43,9 @@ public class DonDoiTraCTR {
 		 return doiTraDAO.layThongTinDonDoiTraTheoMa(maDonDoiTra);
 	 }
 
+	  public boolean kiemTraHoaDonDaDoiTra(String maHoaDon) {
+		  return doiTraDAO.kiemTraHoaDonDaDoiTra(maHoaDon);
+	  }
 
 
 

@@ -36,7 +36,7 @@ public class HoaDonTraUI extends JFrame {
 	
 	
 
-	public  HoaDonTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, String tienTra, String phitrahang,  String tongTien ) {
+	public  HoaDonTraUI(DonDoiTra donDoiTra, Object[][] dataTraHang, String tienTra, String phitrahang,  String tongTien,String ghiChu ) {
 		
 
 		
@@ -158,6 +158,15 @@ public class HoaDonTraUI extends JFrame {
 		textTongTien.setBounds(129, 390, 224, 31);
 		textTongTien.setText(tongTien);
 		panel.add(textTongTien);
+		
+		JLabel lblNewLabel_14 = new JLabel("Ghi chú:");
+		lblNewLabel_14.setBounds(10, 410, 135, 31);
+		panel.add(lblNewLabel_14);
+
+		JLabel textghiChu = new JLabel("");
+		textghiChu.setBounds(129, 410, 224, 31);
+		textghiChu.setText(ghiChu);
+		panel.add(textghiChu);
 		
 		
 	}

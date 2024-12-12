@@ -6,7 +6,9 @@ import java.util.Objects;
 public class ChiTietDonNhap {
 	private String maChiTietDonNhap;
 	private SanPhamYTe maSanPham;
-	private int soLuong;
+	private int soLuongDonViTinh1;
+	private int soLuongDonViTinh2;
+	private int soLuongDonViTinh3;
 	private BigDecimal giaNhap;
 	private DonNhapHang maDonNhap;
 	
@@ -23,12 +25,14 @@ public class ChiTietDonNhap {
 
 
 
-	public ChiTietDonNhap(String maChiTietDonNhap, SanPhamYTe maSanPham, int soLuong, BigDecimal giaNhap,
+	public ChiTietDonNhap(String maChiTietDonNhap, SanPhamYTe maSanPham, int soLuongDonViTinh1, int soLuongDonViTinh2, int soLuongDonViTinh3, BigDecimal giaNhap,
 			DonNhapHang maDonNhap) {
 		super();
 		this.maChiTietDonNhap = maChiTietDonNhap;
 		setMaSanPham(maSanPham);
-		setSoLuong(soLuong);
+		setSoLuongDonViTinh1(soLuongDonViTinh1);
+		setSoLuongDonViTinh2(soLuongDonViTinh2);
+		setSoLuongDonViTinh3(soLuongDonViTinh3);
 		setGiaNhap(giaNhap);
 		setMaDonNhap(maDonNhap);
 	}
@@ -41,13 +45,41 @@ public class ChiTietDonNhap {
 	public void setMaSanPham(SanPhamYTe maSanPham) {
 		this.maSanPham = maSanPham;
 	}
-	public int getSoLuong() {
-		return soLuong;
+	public int getSoLuongDonViTinh1() {
+		return soLuongDonViTinh1;
 	}
-	public void setSoLuong(int soLuong) {
+	public void setSoLuongDonViTinh1(int soLuongDonViTinh1) {
 		try {
-	        if (soLuong > 0) {
-	            this.soLuong = soLuong;
+	        if (soLuongDonViTinh1 > 0) {
+	            this.soLuongDonViTinh1 = soLuongDonViTinh1;
+	        } else {
+	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
+	}
+	public int getSoLuongDonViTinh2() {
+		return soLuongDonViTinh2;
+	}
+	public void setSoLuongDonViTinh2(int soLuongDonViTinh2) {
+		try {
+	        if (soLuongDonViTinh2 > 0) {
+	            this.soLuongDonViTinh2 = soLuongDonViTinh2;
+	        } else {
+	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        System.out.println(e.getMessage());
+	    }
+	}
+	public int getSoLuongDonViTinh3() {
+		return soLuongDonViTinh3;
+	}
+	public void setSoLuongDonViTinh3(int soLuongDonViTinh3) {
+		try {
+	        if (soLuongDonViTinh3 > 0) {
+	            this.soLuongDonViTinh3 = soLuongDonViTinh3;
 	        } else {
 	            throw new IllegalArgumentException("Số lượng phải lớn hơn 0.");
 	        }
@@ -92,9 +124,13 @@ public class ChiTietDonNhap {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietDonNhap [maChiTietDonNhap=" + maChiTietDonNhap + ", maSanPham=" + maSanPham + ", soLuong="
-				+ soLuong + ", giaNhap=" + giaNhap + ", maDonNhap=" + maDonNhap + "]";
+		return "ChiTietDonNhap [maChiTietDonNhap=" + maChiTietDonNhap + ", maSanPham=" + maSanPham
+				+ ", soLuongDonViTinh1=" + soLuongDonViTinh1 + ", soLuongDonViTinh2=" + soLuongDonViTinh2
+				+ ", soLuongDonViTinh3=" + soLuongDonViTinh3 + ", giaNhap=" + giaNhap + ", maDonNhap=" + maDonNhap
+				+ "]";
 	}
+	
+	
 	
 	
 

@@ -72,6 +72,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	private JFrame frameThem;
 	private String lastFormattedDate = "";
 	private JButton btnxoaTrang;
+	private JTextField txtsoLuong;
 
 	
 	 private static HashMap<String, Integer> soThuTuMap = new HashMap<>();
@@ -267,7 +268,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 
 			panelDanhSachKM.add(panelTren, BorderLayout.NORTH);
 		
-			String[] headers = {"Mã khuyến mãi", "Ngày khuyến mãi", "Ngày kết thúc","Điều kiện","Chiết khấu","Mã nhân viên"};  
+			String[] headers = {"Mã khuyến mãi", "Ngày khuyến mãi", "Ngày kết thúc","Điều kiện","Chiết khấu","Mã nhân viên","Số lượng"};  
 			// Dữ liệu cho bảng
 			Object[][] data = new Object[0][headers.length];
 		
@@ -383,18 +384,33 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 0.9, 0.01); // Giá trị khởi tạo, min, max, step
 		    spChietKhau = new JSpinner(model);
 		    spChietKhau.setBounds(400, 300, 300, 30);
+		    
 		    panelThem.add(spChietKhau);
 		    
+		    
+		    // mã nhân viên
+		    JLabel lblsoLuong = new JLabel("Số lượng");
+		    lblsoLuong.setFont(new Font("Tahoma", Font.BOLD, 18));
+		    lblsoLuong.setBounds(100, 350, 150, 30);
+			panelThem.add(lblsoLuong);
+
+			txtsoLuong = new JTextField();
+			txtsoLuong.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			txtsoLuong.setBounds(400, 350, 300, 30);
+			panelThem.add(txtsoLuong);
+			
+			
 		    // mã nhân viên
 		    JLabel lblMaNV = new JLabel("Mã nhân viên");
 			lblMaNV.setFont(new Font("Tahoma", Font.BOLD, 18));
-			lblMaNV.setBounds(100, 350, 150, 30);
+			lblMaNV.setBounds(100, 400, 150, 30);
 			panelThem.add(lblMaNV);
 
 			txtMaNV = new JTextField();
 			txtMaNV.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			txtMaNV.setBounds(400, 350, 300, 30);
-			//txtMaNV.setEditable(false);  // Không cho phép chỉnh sửa mã nhân viên
+			txtMaNV.setBounds(400, 400, 300, 30);
+			txtMaNV.setText("NV000001");
+			txtMaNV.setEditable(false);  // Không cho phép chỉnh sửa mã nhân viên
 			panelThem.add(txtMaNV);
 
 
@@ -427,6 +443,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 			       jdcNgayKT.setDate(null);
 			       cbDieuKien.setSelectedIndex(-1);
 			       spChietKhau.setValue(0);
+			       txtsoLuong.setText("");
 			        
 			    });
 
@@ -466,13 +483,43 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		}
 
 	 
+	// Hàm valid cho số lượng
+	 private boolean validSoLuong(String soluong) {
+	     if (soluong == null || soluong.trim().isEmpty()) {
+	         JOptionPane.showMessageDialog(null, "Số lượng không được để trống.");
+	         return false;
+	     }
+
+	     try {
+	         int soLuongInt = Integer.parseInt(soluong);
+
+	         if (soLuongInt <= 0) {
+	             JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0.");
+	             return false;
+	         }
+
+	         if (soLuongInt > 999) {
+	             JOptionPane.showMessageDialog(null, "Số lượng không được lớn hơn 999.");
+	             return false;
+	         }
+
+	     } catch (NumberFormatException e) {
+	         JOptionPane.showMessageDialog(null, "Số lượng phải là một số hợp lệ.");
+	         return false;
+	     }
+
+	     return true;
+	 }
+	 
 	private void TimKhuyenMai() {
 		String makm = txtTimTheoMaKM.getText();
 		Date ngaykm = null;
 		Date ngaykt= null;
 		String dieuKien = cbTimTheoDK.getSelectedItem().toString();
 		String manv = txtTimTheoMaNV.getText();
+
 		ArrayList<KhuyenMai> danhSachKhuyenMai= new ArrayList<>();
+		
 
 		if (jdcTimNgayKM != null && jdcTimNgayKM.getDate() != null) {
 	        ngaykm = new Date(jdcTimNgayKM.getDate().getTime());
@@ -487,6 +534,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		    	danhSachKhuyenMai = khuyenMaiCTR.timKhuyenMaiTheoMa(makm);
 		        if (!danhSachKhuyenMai.isEmpty()) {
 		            capNhatBangKhuyenMai(danhSachKhuyenMai);
+		            LamMoi();
 		            return; 
 		        }
 		    }
@@ -494,6 +542,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		    	danhSachKhuyenMai = khuyenMaiCTR.timKhuyenMaiTheoDieuKien(dieuKien);
 		        if (!danhSachKhuyenMai.isEmpty()) {
 		            capNhatBangKhuyenMai(danhSachKhuyenMai);
+		            LamMoi();
 		            return; 
 		        }
 		    }
@@ -502,6 +551,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		    	danhSachKhuyenMai = khuyenMaiCTR.timKhuyenMaiTheoMaNhanvien(manv);
 		        if (!danhSachKhuyenMai.isEmpty()) {
 		            capNhatBangKhuyenMai(danhSachKhuyenMai);
+		            LamMoi();
 		            return; 
 		        }
 		    }
@@ -510,6 +560,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		        danhSachKhuyenMai = khuyenMaiCTR.timKhuyenMaiTheoNgayKhuyenMai(ngaykm);
 		        if (!danhSachKhuyenMai.isEmpty()) {
 		            capNhatBangKhuyenMai(danhSachKhuyenMai);
+		            LamMoi();
 		            return;
 		        }
 		    }
@@ -518,10 +569,12 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		        danhSachKhuyenMai = khuyenMaiCTR.timKhuyenMaiTheoNgayKetThuc(ngaykt);
 		        if (!danhSachKhuyenMai.isEmpty()) {
 		            capNhatBangKhuyenMai(danhSachKhuyenMai);
+		            LamMoi();
 		            return;
 		        }
 		    }
 		    JOptionPane.showMessageDialog(this, "Không tìm thấy Khuyến mãi với các tiêu chí đã nhập.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		    LamMoi();
 		    layToanBoDanhSach();
 
 		
@@ -530,7 +583,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	
 	public void layToanBoDanhSach() {
 		ArrayList<KhuyenMai> dsKhuyenMai = khuyenMaiCTR.layDanhSachTatCaKhuyenMai();
-		Object[][] data = new Object[dsKhuyenMai.size()][6]; 
+		Object[][] data = new Object[dsKhuyenMai.size()][7]; 
 
 		for (int i = 0; i < dsKhuyenMai.size(); i++) {
 		    KhuyenMai km = dsKhuyenMai.get(i);
@@ -540,6 +593,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		    data[i][3] = km.getDieuKien();
 		    data[i][4] = km.getChietKhau();
 		    data[i][5] = km.getMaNhanVien().getMaNhanVien();
+		    data[i][6] = km.getSoLuongGioiHan();
 		   
 		}
 
@@ -559,17 +613,18 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    Date ngayKetThuc = new Date(jdcNgayKT.getDate().getTime());
 	    String dieuKien = cbDieuKien.getSelectedItem().toString();
 	    double chietKhau = (Double) spChietKhau.getValue();	
-	    
+	    int soLuong = Integer.parseInt(txtsoLuong.getText());
 	    String maNVString = txtMaNV.getText(); 
 	    NhanVien maNV = nv_dao.layNhanVienTheoMa(maNVString); 
 
-	    KhuyenMai khuyenMai = new KhuyenMai(maKM, ngayKhuyenMai, ngayKetThuc, dieuKien, chietKhau, maNV);
+	    KhuyenMai khuyenMai = new KhuyenMai(maKM, ngayKhuyenMai, ngayKetThuc, dieuKien, chietKhau, maNV,soLuong);
 
 	    boolean kq = khuyenMaiCTR.themKhuyenMai(khuyenMai);
 
 	    if (kq) {
 	        JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thành công!");
 	        frameThem.dispose();
+	        LamMoi();
             layToanBoDanhSach(); 
 	    } else {
 	        JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -591,7 +646,8 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	            km.getNgayKetThuc(),
 	            km.getDieuKien(),
 	            km.getChietKhau(),
-	            km.getMaNhanVien().getMaNhanVien()
+	            km.getMaNhanVien().getMaNhanVien(),
+	            km.getSoLuongGioiHan()
 	        });
 	    }
 	}
@@ -659,6 +715,7 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 		        cbDieuKien.setSelectedItem(rowData[3]);
 		        spChietKhau.setValue(Double.parseDouble(rowData[4].toString()));
 		        txtMaNV.setText(rowData[5].toString());
+		        txtsoLuong.setText(rowData[6].toString());
 	        } else {
 	            JOptionPane.showMessageDialog(null, "Không có dữ liệu cho hàng đã chọn.", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	        }
@@ -677,17 +734,19 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    Date ngayKetThuc = new Date(jdcNgayKT.getDate().getTime());
 	    String dieuKien = cbDieuKien.getSelectedItem().toString();
 	    double chietKhau = (double) spChietKhau.getValue();
+	    int soLuong = Integer.parseInt(txtsoLuong.getText());
 	    String maNV = txtMaNV.getText();
 	    NhanVien nv = new NhanVien(maNV);
 
 	 
-	    KhuyenMai km = new KhuyenMai(maKM, ngayBatDau, ngayKetThuc, dieuKien, chietKhau, nv);
+	    KhuyenMai km = new KhuyenMai(maKM, ngayBatDau, ngayKetThuc, dieuKien, chietKhau, nv,soLuong);
 
 	    boolean kq = khuyenMaiCTR.capNhatKhuyenMai(km);
 
 	    if (kq) {
 	        JOptionPane.showMessageDialog(null, "Cập nhật khuyến mãi thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 	        frameThem.dispose(); 
+	        LamMoi();
 	        layToanBoDanhSach();
 	       
 	    } else {
@@ -696,6 +755,12 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	}
 
 	private boolean valid() {
+		
+		String soluong =txtsoLuong.getText();
+		
+		 if (!validSoLuong(soluong)) {
+		        return false; 
+		    }
 	    // Kiểm tra ngày bắt đầu khuyến mãi
 	    if (jdcNgayKM.getDate() == null) {
 	        JOptionPane.showMessageDialog(frameThem, "Vui lòng chọn ngày khuyến mãi!");
@@ -745,6 +810,24 @@ public class KhuyenMaiUI extends JPanel implements ActionListener {
 	    return true;
 	}
 
+	private void LamMoi() {
+	  
+	    txtTimTheoMaKM.setText("");
+	    txtTimTheoMaNV.setText("");
+	    
+	    
+	    if (jdcTimNgayKM != null) {
+	    	jdcTimNgayKM.setDate(null);
+	    }
+	    if (jdcTimNgayKT != null) {
+	    	jdcTimNgayKT.setDate(null);
+	    }
+
+	    if (cbTimTheoDK != null) {
+	    	cbTimTheoDK.setSelectedIndex(0);
+	    }
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

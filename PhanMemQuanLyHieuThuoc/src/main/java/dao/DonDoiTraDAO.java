@@ -200,9 +200,47 @@ public class DonDoiTraDAO {
 		    
 		    
 		
-		 
-		   
+		 // tìm hóa đơn đổi trả bằng mã hóa đơn
+		    public boolean kiemTraHoaDonDaDoiTra(String maHoaDon) {
+		        try {
+		        	
+		        	 //đk 1 : vẫn trong thời gian đổi trả
+		            String query1 = "SELECT COUNT(*) FROM HoaDon hd WHERE hd.MaHoaDon = ? AND DATEDIFF(DAY, hd.NgayTao, GETDATE()) <= 3;";
+			           
+		            PreparedStatement ps1 = ConnectDB.getConnection().prepareStatement(query1);
+		            ps1.setString(1, maHoaDon);  
+		            
+		            
+		            ResultSet rs1 = ps1.executeQuery();
+		            if (rs1.next() && rs1.getInt(1) <= 0) {
+		                return true;  
+		            } 
+		        	
+		        	// đk1: chưa đổi trả lần nào
+		            String query2 = "SELECT COUNT(*) FROM DonDoiTra WHERE MaHoaDon = ?";
+		           
+		            PreparedStatement ps2 = ConnectDB.getConnection().prepareStatement(query2);
+		            ps2.setString(1, maHoaDon);  
+		            
+		            ResultSet rs2 = ps2.executeQuery();
+		            
+		            if (rs2.next()&& rs2.getInt(1) <= 0) {
+		                return false;  
+		            }else {
+		            	return true;
+		            }
+		            
+		           
+		            
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            return false;
+		        }
+		        
+		    }
 		    
+		   
+		
 	 
 	 
 

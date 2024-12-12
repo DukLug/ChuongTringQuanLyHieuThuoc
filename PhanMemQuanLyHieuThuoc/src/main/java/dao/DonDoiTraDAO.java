@@ -205,7 +205,7 @@ public class DonDoiTraDAO {
 		        try {
 		        	
 		        	 //đk 1 : vẫn trong thời gian đổi trả
-		            String query1 = "SELECT COUNT(*) FROM HoaDon hd WHERE hd.MaHoaDon = ? AND DATEDIFF(DAY, hd.NgayTao, GETDATE()) <= 3;";
+		            String query1 = "SELECT COUNT(*) FROM HoaDon hd WHERE hd.MaHoaDon = ? AND DATEDIFF(DAY, hd.NgayTao, GETDATE()) <= 60;";
 			           
 		            PreparedStatement ps1 = ConnectDB.getConnection().prepareStatement(query1);
 		            ps1.setString(1, maHoaDon);  

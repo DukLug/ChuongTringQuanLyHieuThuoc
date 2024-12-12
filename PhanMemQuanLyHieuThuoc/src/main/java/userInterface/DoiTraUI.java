@@ -1409,6 +1409,7 @@ public class DoiTraUI extends JPanel{
 
 		        txtKhachTra.setEnabled(true);
 		        txtKhachTra.requestFocus();
+		        
 		    } else {
 		        lblTienTraKhach.setText("Tiền trả khách:"); 
 		        txtTongHoaDon.setText(df.format(tongHoaDon.abs())); 
@@ -1426,6 +1427,7 @@ public class DoiTraUI extends JPanel{
 		            JOptionPane.showMessageDialog(null, "Số tiền khách đưa không được để trống.");
 		            return false;
 		        }
+		       
 
 		        BigDecimal tien = new BigDecimal(tienKhachDua);
 
@@ -1433,7 +1435,20 @@ public class DoiTraUI extends JPanel{
 		            JOptionPane.showMessageDialog(null, "Số tiền khách đưa phải lớn hơn 0.");
 		            return false;
 		        }
-
+		        
+		        BigDecimal tongTienDecimal = BigDecimal.ZERO;
+		        String tongTien = txtTongHoaDon.getText();
+		        try {
+	                tongTienDecimal = new BigDecimal(tongTien);
+	            } catch (NumberFormatException e) {
+	                System.out.println("Giá trị tổng tiền không hợp lệ: " + tongTien);
+	            }
+		        
+		        if(tien.compareTo(tongTienDecimal)<0) {
+		        	JOptionPane.showMessageDialog(null, "Số tiền khách đưa không đủ để thanh toán.");
+		            return false;
+		        }
+		        
 		        // Giới hạn số tiền tối đa (ví dụ: 1 tỷ)
 		        BigDecimal maxAmount = new BigDecimal("1000000000");
 		        if (tien.compareTo(maxAmount) > 0) {
@@ -1452,10 +1467,7 @@ public class DoiTraUI extends JPanel{
 
 		private void thanhToan() {
 			
-//			 if(!Valid()) {
-//				  return;
-//				  
-//			  }
+
 			 
 		    DonDoiTra donDoiTra = taoDonDoiTra();
 		    
@@ -1494,9 +1506,42 @@ public class DoiTraUI extends JPanel{
 		                System.out.println("Giá trị tổng tiền không hợp lệ: " + tongTien);
 		            }
 		            
+		            
 		            BigDecimal tienTraKhach = tienKhachDuaDecimal.subtract(tongTienDecimal);
 		            
-		            if(tienTraKhach.compareTo(BigDecimal.ZERO) <= 0) {
+		            
+		            String tienTraHangText = txtTienTraHang.getText();
+				    String tongTienMuaText = txtTongTienMua.getText();
+
+				    BigDecimal tongTienTraKhach;
+				    BigDecimal tongTienMuaHang;
+
+				   
+				    if (tienTraHangText.isEmpty()) {
+				        tongTienTraKhach = BigDecimal.ZERO;
+				    } else {
+				        try {
+				            tongTienTraKhach = new BigDecimal(tienTraHangText);
+				        } catch (NumberFormatException e) {
+				            JOptionPane.showMessageDialog(this, "Giá trị tiền trả hàng không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				            return; 
+				        }
+				    }
+
+				    if (tongTienMuaText.isEmpty()) {
+				    
+				        tongTienMuaHang = BigDecimal.ZERO;
+				    } else {
+				        try {
+				            tongTienMuaHang = new BigDecimal(tongTienMuaText);
+				        } catch (NumberFormatException e) {
+				            JOptionPane.showMessageDialog(this, "Giá trị tổng tiền mua không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				            return; 
+				        }
+				    }
+
+				    BigDecimal tongHoaDon = tongTienTraKhach.subtract(tongTienMuaHang);
+		            if(tongHoaDon.compareTo(BigDecimal.ZERO) <= 0) {
 		                if (!Valid()) {
 		                    return; 
 		                }

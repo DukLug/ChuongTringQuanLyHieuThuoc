@@ -530,28 +530,32 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    if (!maNV.isEmpty()) {
 	        danhSachNhanVien = nhanVienCTR.timKiemTheoMaNV(maNV);
 	        if (!danhSachNhanVien.isEmpty()) {
-	            capNhatBangNhanVien(danhSachNhanVien);
+	        	LamMoi();
+	        	capNhatBangNhanVien(danhSachNhanVien);
 	            return; 
 	        }
 	    }
 
 	    if (!hoten.isEmpty()) {
 	        ArrayList<NhanVien> danhSachTheoTen = nhanVienCTR.timKiemTheoHoTen(hoten);
+	        LamMoi();
 	        danhSachNhanVien.addAll(danhSachTheoTen);
 	    }
 
 	   
 	    if (!sdt.isEmpty()) {
 	        ArrayList<NhanVien> danhSachTheoSDT = nhanVienCTR.timKiemTheoSDT(sdt);
+	        LamMoi();
 	        danhSachNhanVien.addAll(danhSachTheoSDT);
 	    }
 
 	   
 	    if (danhSachNhanVien.isEmpty()) {
 	        JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên với các tiêu chí đã nhập.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	        LamMoi();
 	        layToanBoDanhSach();
 	    } else {
-	        
+	    	LamMoi();
 	        capNhatBangNhanVien(danhSachNhanVien);
 	    }
 	}
@@ -752,6 +756,15 @@ public class NhanVienUI extends JPanel implements ActionListener {
 	    }
 
 	    return true; 
+	}
+	
+	
+	private void LamMoi() {
+		  
+	    txtTimTheoMa.setText("");
+	    txtTimTheoSDT.setText("");
+	    txtTimTheoTen.setText("");
+		
 	}
 
 	@Override

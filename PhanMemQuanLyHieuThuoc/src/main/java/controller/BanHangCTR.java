@@ -63,6 +63,10 @@ public class BanHangCTR {
 		return kh_dao.capNhat1(kh);
 	}
 	
+	public boolean capNhatSoLuongKM(String maKM) {
+		return km_dao.capNhatSoLuongGioHan(maKM);
+	}
+	
 	public boolean themHD(HoaDon hd) {
 		return hd_dao.them(hd);
 	}

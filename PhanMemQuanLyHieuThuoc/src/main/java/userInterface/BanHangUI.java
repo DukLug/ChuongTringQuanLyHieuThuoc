@@ -609,8 +609,18 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			
 			if (kiemTraSLTon(banHangList)) {
 				
-				if (!chckbxKhachLe.isSelected() || txtSDT.getText().trim() == null) {
+				if ( txtSDT.getText().trim() == null) {
 					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+					return;
+				}
+				
+				if (txtSDT.getText().trim() == null && !chckbxKhachLe.isSelected() ) {
+					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+					return;
+				}
+				
+				if (banHangList.getItemList().size() == 0) {
+					JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm");
 					return;
 				}
 				
@@ -652,7 +662,8 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 							ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3,
 									tongTien, hd, sanPhamYTe, LoHang, LohayThe);
 							
-							if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)) 
+							if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)
+									&& bh_ctr.capNhatSoLuongKM(khuyenMai.getMaKhuyenMai())) 
 								continue;
 				        }
 					}

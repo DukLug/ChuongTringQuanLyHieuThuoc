@@ -1,21 +1,4 @@
-<<<<<<< HEAD
-/application/
-/component/
-/connectDB/
-/controller/
-/customDataType/
-/dao/
-/entity/
-/functionalClass/
-/testEntity/
-/userInterface/
 /META-INF/
-=======
-/META-INF/
-/entity/
-/dao/
-/functionalClass/
 /userInterface/
-/application/
 /controller/
->>>>>>> main
+/dao/

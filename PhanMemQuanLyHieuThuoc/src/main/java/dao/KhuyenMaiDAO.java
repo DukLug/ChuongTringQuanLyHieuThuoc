@@ -294,5 +294,19 @@ public class KhuyenMaiDAO {
 	    return khuyenMaiTheoDieuKien;
 	}
 	
+	public boolean capNhatSoLuongGioHan(String maKM) {
+	    int n = 0;
+	    try {
+	        PreparedStatement ps1 = ConnectDB.getConnection().prepareStatement(
+	            "UPDATE KhuyenMai SET SoLuongGioiHan = SoLuongGioiHan - 1 WHERE MaKhuyenMai = ?");
+	        ps1.setString(1, maKM);
+	        n = ps1.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return (n > 0); 
+	}
+	
 
 }

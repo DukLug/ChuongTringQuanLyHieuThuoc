@@ -1,170 +1,218 @@
 package userInterface;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Date;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
+import component.*;
+import controller.*;
+import entity.*;
+import customDataType.*;
 
-import component.CustomButton;
-import component.CustomItemList;
-import component.RoundedBorder;
-import component.CustomButton.ButtonStyle;
-import component.CustomButton.CustomButtonIconSide;
-import customDataType.DonViTinh;
-import component.CustomItem;
-import testEntity.TestNguoi;
-import testEntity.Thuoc;
+public class NhapHangUI extends JPanel implements ActionListener, MouseListener {
+    private JTextField txtTimNCC;
+    private JTextField txtTenNCC;
+    private JTextField txtSDTNCC;
+    private CustomButton btnChonNCC;
+    private CustomButton btnTaoDonNhap;
+    private CustomButton btnLamMoi;
+    private JTextField txtTimSP;
+    private CustomButton btnThemSP;
+    private JTextField txtGhiChu;
+    private JLabel lblNgayNhap;
+    private JLabel lblTenNV;
+    private static CustomItemList nhapHangList;
+    private JComboBox<String> comboBoxLoaiDonNhap;
+    private JTextField txtTongTienDonNhap;
+    private JTextField txtChietKhau;
+    private JTextField txtTongTienSauChietKhau;
 
-public class NhapHangUI extends JPanel {
-	
-	public ArrayList<Thuoc> bangNhapThuoc;
-	public CustomButton btnCapNhat;
+    public NhapHangUI() {
+        super();
+        taoHinh();
+        lamMoi();
+        layThoiGianHienTai();
+    }
 
-	
-	
-	NhapHangUI() {
-		super();
-		taoHinh();
-	}
-	
-	public void taoHinh() {
-		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
-		this.setBackground(Color.white);
-		this.add(new JLabel("NhapHangUI"));
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    public void taoHinh() {
+        setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
+        setLayout(null);
+        setBackground(Color.WHITE);
 
-		
-		 CustomItemList nhapHangList = new CustomItemList(
-		            1500, 
-		            500, 
-		            100, 
-		            50, 
-		            Color.white, 
-		            new int[]{500, 500, 500}, 
-		            Color.blue, 
-		            50, 
-		            new String[]{"HI", "Hello", "A"}, 
-		            new Font("Arial", Font.BOLD, 14), 
-		            new ArrayList<CustomItem>()
-		        );
-		nhapHangList.addItem(new NhapHangRow(1,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(2,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(3,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(4,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(5,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(6,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(7,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(8,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		
-		nhapHangList.addItem(new NhapHangRow(9,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(10,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(11,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(12,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(13,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(14,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		nhapHangList.addItem(new NhapHangRow(15,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
-		
-		btnCapNhat = new CustomButton("Cập nhật thông tin", UIStyles.LabelBarButtonStyle, UIStyles.GoBackIcon, CustomButtonIconSide.LEFT, ()->kiemTraCapNhat(nhapHangList));
-		add(btnCapNhat);
-		add(nhapHangList);
-	}
-	public void kiemTraCapNhat(CustomItemList list) {
-		ArrayList<CustomItem> newItems = new ArrayList<CustomItem>();
-		Random rand = new Random();
-		int n = rand.nextInt();
-		for(int i = 0; i < n%20; i++) {
-			newItems.add(new NhapHangRow(i,new Thuoc("thuoc1", "ten 1", DonViTinh.Hop, 12)));
+        JPanel panelTong = new JPanel();
+        panelTong.setBackground(UIStyles.BackgroundColor);
+        panelTong.setBounds(0, 0, UIStyles.ApplicationWidth, UIStyles.MainSectionHeight);
+        add(panelTong);
+        panelTong.setLayout(null);
+
+        // Phần tìm kiếm Nhà Cung Cấp
+        JPanel panelTimKiemNCC = new JPanel();
+        panelTimKiemNCC.setBounds(23, 13, 955, 45);
+        panelTimKiemNCC.setBorder(new LineBorder(Color.BLACK, 1, true));
+        panelTong.add(panelTimKiemNCC);
+        panelTimKiemNCC.setLayout(null);
+
+        txtTimNCC = new JTextField();
+        txtTimNCC.setBackground(Color.WHITE);
+        txtTimNCC.setFont(new Font("Tahoma", Font.PLAIN, 23));
+        txtTimNCC.setBounds(59, 2, 787, 40);
+        txtTimNCC.setBorder(new MatteBorder(0, 2, 0, 2, Color.BLACK));
+        UIStyles.setPlaceholder(txtTimNCC, "Tìm kiếm Nhà Cung Cấp");
+        panelTimKiemNCC.add(txtTimNCC);
+
+        btnChonNCC = new CustomButton("Chọn NCC", UIStyles.NavBarButtonStyle, null, CustomButton.CustomButtonIconSide.LEFT, () -> quayLai());
+        btnChonNCC.setFont(new Font("Tahoma", Font.BOLD, 20));
+        btnChonNCC.setBounds(848, 3, 105, 40);
+        btnChonNCC.setFocusable(false);
+        panelTimKiemNCC.add(btnChonNCC);
+
+        // Phần tìm kiếm Sản Phẩm
+        JPanel panelTimKiemSP = new JPanel();
+        panelTimKiemSP.setBounds(23, 70, 955, 45);
+        panelTimKiemSP.setBorder(new LineBorder(Color.BLACK, 1, true));
+        panelTong.add(panelTimKiemSP);
+        panelTimKiemSP.setLayout(null);
+
+        txtTimSP = new JTextField();
+        txtTimSP.setBackground(Color.WHITE);
+        txtTimSP.setFont(new Font("Tahoma", Font.PLAIN, 23));
+        txtTimSP.setBounds(59, 2, 787, 40);
+        txtTimSP.setBorder(new MatteBorder(0, 2, 0, 2, Color.BLACK));
+        UIStyles.setPlaceholder(txtTimSP, "Tìm kiếm Sản Phẩm");
+        panelTimKiemSP.add(txtTimSP);
+
+        btnThemSP = new CustomButton("Thêm SP", UIStyles.NavBarButtonStyle, null, CustomButton.CustomButtonIconSide.LEFT, () -> quayLai());
+        btnThemSP.setFont(new Font("Tahoma", Font.BOLD, 20));
+        btnThemSP.setBounds(848, 3, 105, 40);
+        btnThemSP.setFocusable(false);
+        panelTimKiemSP.add(btnThemSP);
+
+        // Danh sách Sản Phẩm Nhập Hàng
+        nhapHangList = new CustomItemList(
+            1255, 549, 10, 50, Color.white, 
+            new int[]{30, 200, 240, 240, 240, 200, 100}, 
+            Color.LIGHT_GRAY, 50, 
+            new String[]{"", "Tên sản phẩm", "ĐVT1", "ĐVT2", "ĐVT3", "Tổng tiền", ""}, 
+            new Font("Arial", Font.BOLD, 20), 
+            new ArrayList<CustomItem>()
+        );
+        nhapHangList.setBounds(23, 130, 1255, 654);
+        panelTong.add(nhapHangList);
+
+        // Ghi chú
+        txtGhiChu = new JTextField();
+        txtGhiChu.setBounds(23, 790, 1255, 56);
+        panelTong.add(txtGhiChu);
+        txtGhiChu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        txtGhiChu.setColumns(10);
+        UIStyles.setPlaceholder(txtGhiChu, "Ghi chú đơn nhập hàng");
+
+        // Phần thông tin tổng hợp
+        JPanel panelThongTin = new JPanel();
+        panelThongTin.setBackground(Color.WHITE);
+        panelThongTin.setBounds(1318, 0, 602, 850);
+        panelTong.add(panelThongTin);
+        panelThongTin.setLayout(null);
+
+        // Tổng tiền đơn nhập
+        txtTongTienDonNhap = new JTextField();
+        txtTongTienDonNhap.setBounds(20, 100, 560, 40);
+        txtTongTienDonNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        txtTongTienDonNhap.setEditable(false);
+        panelThongTin.add(txtTongTienDonNhap);
+
+        // Chiết khấu
+        txtChietKhau = new JTextField();
+        txtChietKhau.setBounds(20, 200, 560, 40);
+        txtChietKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panelThongTin.add(txtChietKhau);
+
+        // Tổng tiền sau chiết khấu
+        txtTongTienSauChietKhau = new JTextField();
+        txtTongTienSauChietKhau.setBounds(20, 300, 560, 40);
+        txtTongTienSauChietKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        txtTongTienSauChietKhau.setEditable(false);
+        panelThongTin.add(txtTongTienSauChietKhau);
+
+        // Nút Tạo Đơn Nhập và Làm Mới
+        btnTaoDonNhap = new CustomButton("Tạo Đơn Nhập", UIStyles.NavBarButtonStyle, null, CustomButton.CustomButtonIconSide.LEFT, () -> quayLai());
+        btnTaoDonNhap.setBounds(20, 400, 270, 50);
+        panelThongTin.add(btnTaoDonNhap);
+
+        btnLamMoi = new CustomButton("Làm Mới", UIStyles.NavBarButtonStyle, null, CustomButton.CustomButtonIconSide.LEFT, () -> quayLai());
+        btnLamMoi.setBounds(310, 400, 270, 50);
+        panelThongTin.add(btnLamMoi);
+
+        // Đăng ký sự kiện
+        txtTimNCC.addActionListener(this);
+        txtTimSP.addActionListener(this);
+        txtGhiChu.addActionListener(this);
+        txtChietKhau.addActionListener(this);
+
+        btnChonNCC.addActionListener(this);
+        btnThemSP.addActionListener(this);
+        btnTaoDonNhap.addActionListener(this);
+        btnLamMoi.addActionListener(this);
+    }
+
+    // Phương thức quay lại (placeholder)
+    private void quayLai() {
+        // Implement later
+    }
+
+    // Phương thức lấy thời gian hiện tại
+    private void layThoiGianHienTai() {
+        // Implement later
+    }
+
+    // Phương thức làm mới
+    private void lamMoi() {
+        // Implement later
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Implement action handling
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // Implement mouse click handling
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // Implement mouse press handling
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // Implement mouse release handling
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // Implement mouse enter handling
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // Implement mouse exit handling
+    }
+
+    // Nested class for NhapHangRow (similar to BanHangRow)
+    public static class NhapHangRow extends CustomItem implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
-		list.updateList(newItems);
-	}
-	
-	public static class NhapHangRow extends CustomItem{
-		//Item, ItemList chỉ phụ trách thể hiện thông tin, thông tin lưu ở các class con giống như NhapHangRow này
-		//Các thuộc tính style, code thẳng vào, phải có static, cop về chỉnh lại cũng được
-		private static int prefWidth = 1500;
-		private static int prefHeight = 100;
-		private static Font font = UIStyles.DefaultFont;
-		private static Color backgroundColor = Color.white;
-		//Rounded border phức tạp, có thể phá panel bên trong, bán kính càng lớn càng dễ hỏng
-		private static Border border = new RoundedBorder(Color.BLUE, 3, 20);
-		
-		//Chú ý nên match với lúc tạo ItemList
-		private static int[] cellsWidth = new int[] {500, 500, 500};
-		
-		//cells
-		private JComponent[] cells;
-		
-		//Du lieu item
-		public Thuoc thuoc;	
-		
-		//Các cell thêm vào đây rồi set phía dưới giống các ui, để public để sau đó lấy dữ liệu, set dữ liệu
-		public JLabel sttLabel;
-		//Các phần nằm chung trong một cell phải thêm vào đây , xuống dưới tạo một JPanel gộp lại
-		public CustomButton btn1;
-		public JTextField textField;
-		public CustomButton btn2;
-		public JLabel moneyLabel;
-		public CustomButton btnThongTin;
-		
-		//Thêm nội dung cho các trường đã khai báo ở trên vào constructor, có stt mới thêm stt vào, không thì chỉ cần data
-		public NhapHangRow(int stt, Thuoc thuoc) {
-			//Tạo item rỗng, trên cop thì ở đây  cop
-			super(prefWidth, prefHeight, backgroundColor, border, cellsWidth);
-			
-			//Set dữ liệu
-			this.thuoc = thuoc;
-			
-			//Thiết kế các cell, TỰ gõ
-			sttLabel = new JLabel(stt+"");
-			
-			JPanel cell2 = new JPanel();
-			cell2.setLayout(new BoxLayout(cell2, BoxLayout.X_AXIS));
-			ButtonStyle btnStyle = new ButtonStyle(
-					20, 10, 25, Color.WHITE, Color.decode("#7A7A7A"), Color.decode("#7A7A7A"), Color.decode("#5E5E5E")
-				);
-			btn1 = new CustomButton("-", UIStyles.LabelBarButtonStyle, UIStyles.GoBackIcon, CustomButtonIconSide.LEFT, ()->capNhatSoLuong(-1));
-			//thêm dữ liệu ban đầu
-			textField = new JTextField(thuoc.soLuong + "");
-			
-			btn2 = new CustomButton("+", UIStyles.LabelBarButtonStyle, UIStyles.GoBackIcon, CustomButtonIconSide.LEFT, ()->capNhatSoLuong(1));
-			cell2.add(btn1);
-			cell2.add(textField);
-			cell2.add(btn2);
-			
-			JPanel cell3 = new JPanel();
-			moneyLabel = new JLabel(thuoc.maThuoc + ".000 đ");
-			
-			btnThongTin = new CustomButton("In thông tin", UIStyles.LabelBarButtonStyle, UIStyles.GoBackIcon, CustomButtonIconSide.LEFT, ()->layThongTin());
-			cell3.add(moneyLabel);
-			cell3.add(btnThongTin);
-			
-			//Thêm cells vào Item
-			cells = new JComponent[] {
-					sttLabel, cell2, cell3
-			};
-			
-			super.addCells(cells);
-		}
-		
-		public void capNhatSoLuong(int thayDoi) {
-			thuoc.soLuong += thayDoi;
-			textField.setText("" + thuoc.soLuong);
-					
-		}
-		public void layThongTin() {
-			System.out.println(this.thuoc);
-		}
-		
-
-	}
+        // Implement similar structure to BanHangRow
+        // You can customize this based on your specific requirements for nhập hàng
+    }
 }

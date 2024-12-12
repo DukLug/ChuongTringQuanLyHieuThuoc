@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -46,8 +48,9 @@ public class DonNhapHangUI extends JPanel {
 
     public void taoHinh() {
         setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
-        this.setBackground(Color.gray);
+        this.setBackground(UIStyles.BackgroundColor);
         this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Title
         JPanel titlePanel = new JPanel();
@@ -59,15 +62,23 @@ public class DonNhapHangUI extends JPanel {
 
         // Create custom table for DonNhapHang
         JPanel panelDonNhap = new JPanel();
-        panelDonNhap.setPreferredSize(new Dimension(650, 700));
-        panelDonNhap.setMaximumSize(new Dimension(650, 700));
-        panelDonNhap.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelDonNhap.setBorder(new TitledBorder(
+                new LineBorder(Color.BLACK, 1), 
+                "Danh sách đơn nhập", 
+                TitledBorder.LEFT, 
+                TitledBorder.TOP, 
+                new Font("Tahoma", Font.PLAIN, 20), 
+                Color.BLACK
+            ));
+        panelDonNhap.setPreferredSize(new Dimension(650, 650));
+        panelDonNhap.setMaximumSize(new Dimension(650, 650));
+        //panelDonNhap.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         bangDonNhap = new CustomTable(duLieuBangDonNhap, tenCotBangDonNhap, UIStyles.NhanVienTableHeaderStyle,
                 UIStyles.NhanVienTableRowStyle, 20, new int[] {200, 200, 300});
 
         JScrollPane scrollPane = new JScrollPane(bangDonNhap);
-        scrollPane.setPreferredSize(new Dimension(650, 700));
+        scrollPane.setPreferredSize(new Dimension(650, 600));
 
         bangDonNhap.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -80,15 +91,22 @@ public class DonNhapHangUI extends JPanel {
 
         // Create custom table for ChiTietDonNhap
         JPanel panelChiTiet = new JPanel();
-        panelChiTiet.setPreferredSize(new Dimension(900, 700));
-        panelChiTiet.setMinimumSize(new Dimension(900, 700));
-        panelChiTiet.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
+        panelChiTiet.setPreferredSize(new Dimension(900, 650));
+        panelChiTiet.setMinimumSize(new Dimension(900, 650));
+        //panelChiTiet.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelChiTiet.setBorder(new TitledBorder(
+                new LineBorder(Color.BLACK, 1), 
+                "Chi Tiết đơn nhập", 
+                TitledBorder.LEFT, 
+                TitledBorder.TOP, 
+                new Font("Tahoma", Font.PLAIN, 20), 
+                Color.BLACK
+            ));
         bangChiTietDonNhap = new CustomTable(duLieuBangCTDN, tenCotCTDN, UIStyles.NhanVienTableHeaderStyle,
                 UIStyles.NhanVienTableRowStyle, 20, new int[] {250, 150, 150, 150, 200});
 
         JScrollPane scrollPaneCTDN = new JScrollPane(bangChiTietDonNhap);
-        scrollPaneCTDN.setPreferredSize(new Dimension(900, 700));
+        scrollPaneCTDN.setPreferredSize(new Dimension(850, 600));
         
         panelChiTiet.add(scrollPaneCTDN);
         
@@ -171,7 +189,7 @@ public class DonNhapHangUI extends JPanel {
         duLieuBangDonNhap = new String[filteredList.size()][tenCotBangDonNhap.length];
         for (int i = 0; i < filteredList.size(); i++) {
             duLieuBangDonNhap[i] = new String[] { filteredList.get(i).getMaDonNhap(),
-                    filteredList.get(i).getNgayNhap().toString(), filteredList.get(i).getNhanVienNhap().getHoTen() };
+                    filteredList.get(i).getNgayNhap().toString(), NhanVienCTR.timTheoMa(danhSachDonNhap.get(i).getNhanVienNhap().getMaNhanVien()).getHoTen() };
         }
         bangDonNhap.capNhatDuLieu(duLieuBangDonNhap);
     }

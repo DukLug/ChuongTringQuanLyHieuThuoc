@@ -19,8 +19,8 @@ import userInterface.TaiKhoanUI;
 
 public class SanPhamCTR {
 	
-	public static void themSanPham(TaiKhoanUI sanPhamUI) {
-		
+	public static void themSanPham(SanPhamYTe sanPham) {
+		SanPhamYTeDAO.insertSanPhamYTe(sanPham);
 	}
 	
 	public static void kiemTraTonKho(BanHangUI banHangUI) {

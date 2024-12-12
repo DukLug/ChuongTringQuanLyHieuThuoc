@@ -98,7 +98,6 @@ public class SanPhamYTeDAO {
                     loai,
                     rs.getString("MaVach"),
                     rs.getString("YeuCauKeDon"),
-                    null,
                     null
                 );
                 
@@ -157,7 +156,6 @@ public class SanPhamYTeDAO {
                     rs.getNString("MaVach"),
                     rs.getNString("YeuCauKeDon"),
 
-                    null,
                     null
                 );
             }

@@ -75,7 +75,6 @@ public class SanPhamYTe {
 			LoaiSanPham loaiSanPham,
 			String maVach,
 			String yeuCauKeDon,
-			BufferedImage hinhAnh,
 			ArrayList<LoHang> loHang
 			) {
 		super();
@@ -388,8 +387,7 @@ public class SanPhamYTe {
 				+ ", donViTinh2=" + donViTinh2 + ", donViTinh3=" + donViTinh3 + ", giaBanDonViTinh1=" + giaBanDonViTinh1
 				+ ", giaBanDonViTinh2=" + giaBanDonViTinh2 + ", giaBanDonViTinh3=" + giaBanDonViTinh3
 				+ ", giaTriQuyDoi2=" + giaTriQuyDoi2 + ", giaTriQuyDoi3=" + giaTriQuyDoi3 + ", nhaCungCap=" + nhaCungCap
-				+ ", loaiSanPham=" + loaiSanPham + ", maVach=" + maVach + ", yeuCauKeDon=" + yeuCauKeDon + ", hinhAnh="
-				+ hinhAnh + ", loHang=" + loHang + "]";
+				+ ", loaiSanPham=" + loaiSanPham + ", maVach=" + maVach + ", yeuCauKeDon=" + yeuCauKeDon + ", loHang=" + loHang + "]";
 
 	}
 

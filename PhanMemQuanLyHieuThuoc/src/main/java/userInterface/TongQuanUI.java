@@ -313,7 +313,7 @@ public class TongQuanUI extends JPanel{
 
 
 	private void capNhatDanhSachBanChay(ArrayList<SanPhamYTe> dsBanChay) {
-		for(int i = 0; i < dsBanChay.size()%10; i++) {
+		for(int i = 0; i < dsBanChay.size()*0; i++) {
 			sanPhamBanChayList.addItem(new SanPhamBanChayRow(dsBanChay.get(i)));
 		}
 

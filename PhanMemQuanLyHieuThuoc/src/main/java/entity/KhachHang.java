@@ -87,6 +87,7 @@ public class KhachHang {
 	}
 
 	public void setCccd(String cccd) {
+		if(cccd==null) return;
 		if (cccd.length() > 0)
 			if (cccd.length() != 12)
 				throw new  IllegalArgumentException("Căn cước công dân phải gồm 12 ký tự só");

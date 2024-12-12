@@ -127,118 +127,121 @@ public class LoHangUI extends JPanel {
         }
     }
     
-    // Phương thức hiển thị dialog chỉnh sửa lô hàng
+ // Helper method to create styled JLabel
+    private JLabel createStyledLabel(String text, int fontSize) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+        return label;
+    }
+
+    // Helper method to create styled JTextField
+    private JTextField createStyledTextField(String text, int columns) {
+        JTextField textField = new JTextField(text, columns);
+        textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        return textField;
+    }
+
+    // Helper method to create styled JButton
+    private JButton createStyledButton(String text, ActionListener actionListener) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        button.addActionListener(actionListener);
+        return button;
+    }
+
+    // Method to display the dialog for editing a batch
     private void hienThiChinhSuaLoHang(int rowIndex) {
         LoHang loHang = danhSachLoHang.get(rowIndex);
-        
-        // Tạo dialog để chỉnh sửa
+
+        // Create dialog for editing
         JDialog dialog = new JDialog();
         dialog.setTitle("Điều Chỉnh Số Lượng Lô Hàng");
-        dialog.setSize(400, 300);
+        dialog.setSize(600, 500);
         dialog.setModal(true);
         dialog.setLocationRelativeTo(null);
-        
+
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setSize(600, 500);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        SanPhamYTe sp = SanPhamCTR.timSanPhamTheoMaSanPham( loHang.getSanPham().getMaSanPham());
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
-        // Hiển thị thông tin hiện tại
+
+        // Display current details
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(new JLabel("Mã Lô: " + loHang.getMaLo()), gbc);
-        
-        gbc.gridy = 1;
-        panel.add(new JLabel("Sản Phẩm: " + loHang.getSanPham().getTenSanPham()), gbc);
-        
-        // Số lượng hiện tại
-        gbc.gridy = 2;
-        panel.add(new JLabel("Số Lượng Hiện Tại:"), gbc);
+        panel.add(createStyledLabel("Mã Lô: " + loHang.getMaLo(), 20), gbc);
+
+        gbc.gridy++;
+        panel.add(createStyledLabel("Sản Phẩm: " + sp.getTenSanPham(), 20), gbc);
+
+        gbc.gridy++;
+        panel.add(createStyledLabel("Số Lượng Hiện Tại:", 20), gbc);
         gbc.gridx = 1;
-        panel.add(new JLabel(
-            "ĐVT1: " + loHang.getSoLuongDonViTinh1() + 
-            ", ĐVT2: " + loHang.getSoLuongDonViTinh2() + 
-            ", ĐVT3: " + loHang.getSoLuongDonViTinh3()
-        ), gbc);
-        
-        // Nhập số lượng mới
+        panel.add(createStyledLabel(
+        		loHang.getSoLuongDonViTinh1() +  " " + sp.getDonViTinh1().toString() + ", "+
+        	            loHang.getSoLuongDonViTinh2() +  " " + sp.getDonViTinh2().toString() + ", "+
+        	            loHang.getSoLuongDonViTinh3() +  " " + sp.getDonViTinh3().toString() + ", ", 20), gbc);
+
+        // Input fields for new quantities
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        panel.add(new JLabel("Số Lượng ĐVT1 Mới:"), gbc);
+        gbc.gridy++;
+        panel.add(createStyledLabel("Số Lượng " + sp.getDonViTinh1() + " Mới:", 20), gbc);
         gbc.gridx = 1;
-        JTextField txtSoLuongDVT1 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh1()), 10);
+        JTextField txtSoLuongDVT1 = createStyledTextField(String.valueOf(loHang.getSoLuongDonViTinh1()), 10);
         panel.add(txtSoLuongDVT1, gbc);
-        
+
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        panel.add(new JLabel("Số Lượng ĐVT2 Mới:"), gbc);
+        gbc.gridy++;
+        panel.add(createStyledLabel("Số Lượng " + sp.getDonViTinh2() + " Mới:", 20), gbc);
         gbc.gridx = 1;
-        JTextField txtSoLuongDVT2 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh2()), 10);
+        JTextField txtSoLuongDVT2 = createStyledTextField(String.valueOf(loHang.getSoLuongDonViTinh2()), 10);
         panel.add(txtSoLuongDVT2, gbc);
-        
+
         gbc.gridx = 0;
-        gbc.gridy = 5;
-        panel.add(new JLabel("Số Lượng ĐVT3 Mới:"), gbc);
+        gbc.gridy++;
+        panel.add(createStyledLabel("Số Lượng " + sp.getDonViTinh3() + " Mới:", 20), gbc);
         gbc.gridx = 1;
-        JTextField txtSoLuongDVT3 = new JTextField(String.valueOf(loHang.getSoLuongDonViTinh3()), 10);
+        JTextField txtSoLuongDVT3 = createStyledTextField(String.valueOf(loHang.getSoLuongDonViTinh3()), 10);
         panel.add(txtSoLuongDVT3, gbc);
-        
-        // Nút Cập Nhật
+
+        // Update button
         gbc.gridx = 1;
-        gbc.gridy = 6;
-        JButton btnCapNhat = new JButton("Cập Nhật");
-        btnCapNhat.addActionListener(e -> {
+        gbc.gridy++;
+        CustomButton btnCapNhat = new CustomButton("Cập Nhật", UIStyles.BanHangButtonStyle,() -> {
             try {
-                // Kiểm tra và chuyển đổi số lượng
                 int soLuongDVT1 = Integer.parseInt(txtSoLuongDVT1.getText().trim());
                 int soLuongDVT2 = Integer.parseInt(txtSoLuongDVT2.getText().trim());
                 int soLuongDVT3 = Integer.parseInt(txtSoLuongDVT3.getText().trim());
-                
-                // Kiểm tra số lượng không âm
+
                 if (soLuongDVT1 < 0 || soLuongDVT2 < 0 || soLuongDVT3 < 0) {
                     throw new IllegalArgumentException("Số lượng không được âm");
                 }
-                
-                // Cập nhật lô hàng
+
                 loHang.setSoLuongDonViTinh1(soLuongDVT1);
                 loHang.setSoLuongDonViTinh2(soLuongDVT2);
                 loHang.setSoLuongDonViTinh3(soLuongDVT3);
-                
-                // Gọi phương thức cập nhật từ KhoCTR
+
                 boolean capNhatThanhCong = KhoCTR.capNhatLoHang(loHang);
-                
+
                 if (capNhatThanhCong) {
-                    JOptionPane.showMessageDialog(dialog, 
-                        "Cập nhật lô hàng thành công!", 
-                        "Thành Công", 
-                        JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Làm mới danh sách và bảng
+                    JOptionPane.showMessageDialog(dialog, "Cập nhật lô hàng thành công!", "Thành Công", JOptionPane.INFORMATION_MESSAGE);
                     refreshDanhSachLoHang();
                     dialog.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(dialog, 
-                        "Cập nhật lô hàng thất bại!", 
-                        "Lỗi", 
-                        JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(dialog, "Cập nhật lô hàng thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(dialog, 
-                    "Vui lòng nhập số lượng hợp lệ!", 
-                    "Lỗi Nhập Liệu", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(dialog, "Vui lòng nhập số lượng hợp lệ!", "Lỗi Nhập Liệu", JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(dialog, 
-                    ex.getMessage(), 
-                    "Lỗi", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(btnCapNhat, gbc);
-        
+
         dialog.add(panel);
         dialog.setVisible(true);
-
     }
     
     private void chuanBiDuLieu() {
@@ -268,11 +271,13 @@ public class LoHangUI extends JPanel {
     private void themLoHang() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Thêm Lô Hàng Mới");
-        dialog.setSize(500, 600);
+        dialog.setSize(600, 800);
         dialog.setModal(true);
         dialog.setLocationRelativeTo(null);
         
+        
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;

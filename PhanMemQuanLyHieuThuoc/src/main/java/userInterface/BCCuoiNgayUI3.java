@@ -33,6 +33,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 import component.CustomButton;
 import component.CustomTable;
@@ -41,7 +47,7 @@ import controller.DonDoiTraCTR;
 import controller.HoaDonCTR;
 import dao.HoaDonDAO;
 
-public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListener {
+public class BCCuoiNgayUI3 extends JPanel implements ActionListener, MouseListener {
     private static final long serialVersionUID = 1L;
     private HoaDonDAO hoaDonDao;
     private HoaDonCTR hoaDonCTR;
@@ -53,14 +59,13 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
     private JButton btnXuatFile;
     private String[] headers = {"Mã hóa đơn", "Ngày Bán", "Doanh thu", "Loại hóa đơn", "Phí trả hàng", "Thực thu"};
 
-    public BCCuoiNgayUI() {
+    public BCCuoiNgayUI3() {
         super();
         hoaDonCTR = new HoaDonCTR();
         hoaDonDao = new HoaDonDAO();
         taoHinh();
         layThoiGianHienTai();
     }
-
     private void taoHinh() {
         setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
         this.setBackground(Color.white);
@@ -109,9 +114,9 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
         tableCuoiNgay = new CustomTable(data, headers, UIStyles.NhanVienTableHeaderStyle,
                 UIStyles.NhanVienTableRowStyle, 20);
         JScrollPane scrollPane = new JScrollPane(tableCuoiNgay);
-        scrollPane.setPreferredSize(new Dimension(1800, 600)); 
+        scrollPane.setPreferredSize(new Dimension(1200, 600)); // Giảm chiều rộng cho bảng
         panelTong.add(scrollPane);
-        scrollPane.setBounds(55, 149, 1800, 600);
+        scrollPane.setBounds(55, 149, 1200, 600); // Di chuyển bảng sang bên trái
 
         data = layDataKetHop();
         tableCuoiNgay.capNhatDuLieu(data);
@@ -155,16 +160,59 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
         lblTongDoanhThu.setBounds(500, 780, 400, 30);
         lblTongPhiTra.setBounds(1100, 780, 400, 30);
         lblTongThucThu.setBounds(1500, 780, 400, 30);
-  
-
-
+        
         panelTong.add(lblTongHoaDon);
         panelTong.add(lblTongDoanhThu);
         panelTong.add(lblTongPhiTra);
         panelTong.add(lblTongThucThu);
         
+        
+//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//        dataset.addValue(tongHoaDon, "Tổng Hóa Đơn", "Hóa Đơn");
+//        dataset.addValue(tongDoanhThu, "Tổng Doanh Thu", "Doanh Thu");
+//        dataset.addValue(tongPhiTra, "Tổng Phí Trả", "Phí Trả");
+//        dataset.addValue(tongThucThu, "Tổng Thực Thu", "Thực Thu");
+//
+//        // Tạo biểu đồ cột
+//        JFreeChart barChart = ChartFactory.createBarChart(
+//                "Thống Kê Doanh Thu",
+//                "Loại",
+//                "Giá Trị",
+//                dataset,
+//                PlotOrientation.VERTICAL,
+//                true,
+//                true,
+//                false
+//        );
+//
+//        // Thêm biểu đồ vào panel
+//        ChartPanel barChartPanel = new ChartPanel(barChart);
+//        barChartPanel.setPreferredSize(new Dimension(600, 600));
+//        barChartPanel.setBounds(1300, 149, 600, 600);
+//        panelTong.add(barChartPanel);
+//        
+        
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        pieDataset.setValue("Doanh Thu", tongDoanhThu);
+        pieDataset.setValue("Phí Trả", tongPhiTra);
+//        pieDataset.setValue("Thực Thu", tongThucThu);
+
+        JFreeChart pieChart = ChartFactory.createPieChart(
+                "Thống Kê Doanh Thu (Biểu Đồ Tròn)",
+                pieDataset,
+                true,
+                true,
+                false
+        );
+
+        // Thêm biểu đồ tròn vào panel
+        ChartPanel pieChartPanel = new ChartPanel(pieChart);
+        pieChartPanel.setPreferredSize(new Dimension(600, 600));
+        pieChartPanel.setBounds(1300, 149, 600, 600); // Đặt vị trí cho biểu đồ tròn
+        panelTong.add(pieChartPanel);  
         btnXuatFile.addActionListener(this);
     }
+
 
 
     public Object[][] layDataKetHop() {

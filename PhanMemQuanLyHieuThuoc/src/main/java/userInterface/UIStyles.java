@@ -45,7 +45,7 @@ public class UIStyles {
 	public static final Color NavBarBackgroundColor = Color.decode("#527DFF");
 	
 	public static final ButtonStyle NavBarButtonStyle = new ButtonStyle(
-			160, NavBarHeight, 18, Color.white, Color.decode("#527DFF"), Color.decode("#476FE8"), Color.decode("#3D5BB4")
+			220, NavBarHeight, 18, Color.white, Color.decode("#527DFF"), Color.decode("#476FE8"), Color.decode("#3D5BB4")
 		);
 	
 	public static final ButtonStyle DoiTraButtonStyle = new ButtonStyle(

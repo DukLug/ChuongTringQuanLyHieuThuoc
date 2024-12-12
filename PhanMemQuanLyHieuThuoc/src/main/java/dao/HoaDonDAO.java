@@ -119,7 +119,8 @@ public class HoaDonDAO {
 //	        String sql = "SELECT MaHoaDon, NgayTao, DiemSuDung, ThanhTien, MaNhanVien, MaKhuyenMai, MaKhachHang FROM HoaDon WHERE NgayTao = '2024-11-04'";
 	        String sql = "SELECT MaHoaDon, NgayTao, DiemSuDung, ThanhTien, MaNhanVien, MaKhuyenMai, MaKhachHang " +
             "FROM HoaDon " +
-            "WHERE CONVERT(DATE, NgayTao) = CAST(GETDATE() AS DATE)";
+            "WHERE CAST(NgayTao AS DATE) = CAST(GETDATE() AS DATE)";
+	        
 	        Statement statement = con.createStatement();
 	        ResultSet rs = statement.executeQuery(sql);
 	        
@@ -265,5 +266,104 @@ public class HoaDonDAO {
 		}
 		
 		return n > 0;
+	}
+	
+	public static Object[][] layDanhSachHoaDonCuoiNgay() {
+		dsHoaDon = new ArrayList<>();
+
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getConnection();
+			String sql = "select MaHoaDon, NgayTao, DiemSuDung, ThanhTien, MaNhanVien, MaKhuyenMai, MaKhachHang from HoaDon  WHERE CONVERT(DATE, NgayTao) = CAST(GETDATE() AS DATE)";
+			Statement statement = con.createStatement();
+
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				String maHoaDon = rs.getString(1);
+				Date ngayTao = rs.getDate(2);
+				int diemSuDung = rs.getInt(3);
+				BigDecimal thanhTien = rs.getBigDecimal(4);
+				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
+				KhuyenMai km = new KhuyenMai(rs.getString("MaKhuyenMai"));
+				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"));
+
+				HoaDon hd = new HoaDon(maHoaDon, ngayTao, diemSuDung, thanhTien, nv, km, kh);
+				dsHoaDon.add(hd);
+				
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		Object[][] data = new Object[dsHoaDon.size()][7];
+//		String [] headers = {"Mã hóa đơn","Loại hóa đơn", "Thời gian", "Số lượng", "Doanh thu", "Phí trả hàng", "Thực thu"};
+//		0,;oai, 1,soluong, 3,phitrahang, thucthu
+		for (int i = 0; i < dsHoaDon.size(); i++) {
+			data[i][0] = dsHoaDon.get(i).getMaHoaDon();
+			data[i][1] = dsHoaDon.get(i).getNgayTao();
+			data[i][2] = dsHoaDon.get(i).getDiemSuDung();
+			data[i][3] = dsHoaDon.get(i).getThanhTien();
+			data[i][4] = dsHoaDon.get(i).getNhanVien().getMaNhanVien();
+			data[i][5] = dsHoaDon.get(i).getKhuyenMai().getMaKhuyenMai();
+			data[i][6] = dsHoaDon.get(i).getKhachHang().getMaKhachHang();
+		}
+		return data;
+	
+	}
+	
+	
+	public static Object[][] layDataHDTK(String filterCondition) {
+	    Object[][] data = null;
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        
+	        // Khởi tạo câu lệnh SQL cơ bản
+	        String sql = "SELECT * FROM HoaDon WHERE 1=1";
+	        
+	        // Thay đổi điều kiện dựa trên filterCondition
+	        if (filterCondition.equals("Hôm nay")) {
+	            sql += " AND CAST(NgayTao AS DATE) = CAST(GETDATE() AS DATE)";
+	        } else if (filterCondition.equals("Hôm qua")) {
+	            sql += " AND CAST(NgayTao AS DATE) = CAST(DATEADD(DAY, -1, GETDATE()) AS DATE)";
+	        } else if (filterCondition.equals("Tuần này")) {
+	            sql += " AND DATEDIFF(WEEK, 0, NgayTao) = DATEDIFF(WEEK, 0, GETDATE())";
+	        } else if (filterCondition.equals("Tuần trước")) {
+	            sql += " AND DATEDIFF(WEEK, 0, NgayTao) = DATEDIFF(WEEK, 0, GETDATE()) - 1";
+	        } else if (filterCondition.equals("Tháng này")) {
+	            sql += " AND MONTH(NgayTao) = MONTH(GETDATE()) AND YEAR(NgayTao) = YEAR(GETDATE())";
+	        } else if (filterCondition.equals("Tháng trước")) {
+	            sql += " AND MONTH(NgayTao) = MONTH(DATEADD(MONTH, -1, GETDATE())) AND YEAR(NgayTao) = YEAR(DATEADD(MONTH, -1, GETDATE()))";
+	        } else if (filterCondition.equals("Năm nay")) {
+	            sql += " AND YEAR(NgayTao) = YEAR(GETDATE())";
+	        } else if (filterCondition.equals("Năm trước")) {
+	            sql += " AND YEAR(NgayTao) = YEAR(GETDATE()) - 1";
+	        }
+
+	        // Tạo PreparedStatement với ResultSet scrollable
+	        PreparedStatement statement = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	        ResultSet rs = statement.executeQuery();
+
+	        // Đếm số hàng trong ResultSet
+	        rs.last();
+	        int rowCount = rs.getRow();
+	        rs.beforeFirst();
+
+	        data = new Object[rowCount][5];
+
+	        int i = 0;
+	        while (rs.next()) {
+	            data[i][0] = rs.getString("MaHoaDon");
+	            data[i][1] = rs.getBigDecimal("ThanhTien");
+	            data[i][2] = rs.getDate("NgayTao");
+	            data[i][3] = rs.getString("MaNhanVien");
+	            data[i][4] = rs.getString("MaKhachHang");
+	            i++;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return data;
 	}
 }

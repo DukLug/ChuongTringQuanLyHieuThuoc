@@ -25,6 +25,14 @@ public class KhachHang {
 		setCccd(cccd);
 	}
 
+	public KhachHang(String maKhachHang, String hoTen, String sdt, int diemTichLuy) {
+		super();
+		this.maKhachHang = maKhachHang;
+		this.hoTen = hoTen;
+		this.sdt = sdt;
+		this.diemTichLuy = diemTichLuy;
+	}
+
 	public KhachHang(String maKhachHang) {
 		super();
 		this.maKhachHang = maKhachHang;
@@ -49,8 +57,8 @@ public class KhachHang {
 
 	public void setHoTen(String hoTen) {
 
-		if (hoTen.matches("^[a-zA-Z][\\sa-zA-Z]*$"))
-			throw new  IllegalArgumentException("Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+		if (hoTen.matches("[0-9@#%!]")) //^[a-zA-Z]+[\\sa-zA-Z]*
+			throw new IllegalArgumentException("Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
 		
 
 		this.hoTen = hoTen;
@@ -87,10 +95,14 @@ public class KhachHang {
 	}
 
 	public void setCccd(String cccd) {
-		if(cccd==null) return;
-		if (cccd.length() > 0)
-			if (cccd.length() != 12)
-				throw new  IllegalArgumentException("Căn cước công dân phải gồm 12 ký tự só");
+
+		if (cccd != null) {
+			if (cccd.length() > 0)
+				if (cccd.length() != 12)
+					throw new  IllegalArgumentException("Căn cước công dân phải gồm 12 ký tự só");
+		}
+		
+
 
 		this.cccd = cccd;
 	}

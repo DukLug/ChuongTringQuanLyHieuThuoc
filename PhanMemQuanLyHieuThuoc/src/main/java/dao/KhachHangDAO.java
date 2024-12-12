@@ -103,6 +103,26 @@ public class KhachHangDAO {
 		return n > 0;
 	}
 	
+	public static boolean them2(KhachHang kh) {
+	    String sql = "INSERT INTO KhachHang(MaKhachHang, HoTen, Sdt, DiemTichLuy) VALUES(?, ?, ?, ?)";
+	    try (
+	        Connection con = ConnectDB.getConnection();
+	        PreparedStatement stmt = con.prepareStatement(sql)
+	    ) {
+	    	stmt.setString(1, kh.getMaKhachHang());
+	        stmt.setString(2, kh.getHoTen());
+	        stmt.setString(3, kh.getSdt());
+	        stmt.setInt(4, kh.getDiemTichLuy());
+	        
+	        int n = stmt.executeUpdate();
+	        return n > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace(); 
+	    }
+	    return false; 
+	}
+
+	
 	public static boolean capNhat(KhachHang kh) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
@@ -118,6 +138,38 @@ public class KhachHangDAO {
 			stmt.setString(4, kh.getDiaChi());
 			stmt.setInt(5, kh.getDiemTichLuy());
 			stmt.setString(6, kh.getMaKhachHang());
+	
+
+			n = stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			try {
+				stmt.close();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return n > 0;
+	}
+	
+	public static boolean capNhat1(KhachHang kh) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		int n = 0;
+		
+		try {
+			stmt = con.prepareStatement("update KhachHang set HoTen = ?, Sdt = ?, Cccd = ? WHERE MaKhachHang = ?");
+			stmt.setString(1, kh.getHoTen());
+			stmt.setString(2, kh.getSdt());
+			stmt.setString(3, kh.getCccd());
+			stmt.setString(4, kh.getMaKhachHang());
 	
 
 			n = stmt.executeUpdate();
@@ -159,6 +211,67 @@ public class KhachHangDAO {
 	    }
 	    return khachHangCanTim;
 	}
+	
+	public KhachHang timTheoSDT1(String SDT) {
+		KhachHang khachHang = new KhachHang();
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE Sdt = ?");
+	        ps.setString(1, SDT);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            String ma = rs.getString("MaKhachHang");
+	            String ten = rs.getString("HoTen");
+	            String sdt = rs.getString("Sdt");
+	            String cccd = rs.getString("Cccd");
+	            String diaChi = rs.getString("DiaChi");
+	            int dtl = rs.getInt("DiemTichLuy");
+	            khachHang = new KhachHang(ma, ten, sdt, cccd, diaChi, dtl);
+
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return khachHang;
+	}
+	
+	public ArrayList<KhachHang> timTheoMa(String ma) {
+	    ArrayList<KhachHang> khachHangCanTim = new ArrayList<KhachHang>();
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE MaKhachHang = ?");
+	        ps.setString(1, ma);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            String maKH = rs.getString("MaKhachHang");
+	            String ten = rs.getString("HoTen");
+	            String sdt = rs.getString("Sdt");
+	            String cccd = rs.getString("Cccd");
+	            String diaChi = rs.getString("DiaChi");
+	            int dtl = rs.getInt("DiemTichLuy");
+	            KhachHang khachHang = new KhachHang(maKH, ten, sdt, cccd, diaChi, dtl);
+	           
+	            khachHangCanTim.add(khachHang);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return khachHangCanTim;
+	}
+	
+	public boolean capNhatDTL(KhachHang kh, int DTL) {
+	    int n = 0;
+	    try {
+	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("UPDATE KhachHang SET DiemTichLuy = DiemTichLuy + ? WHERE MaKhachHang = ?");
+	        ps.setInt(1, DTL);  
+	        ps.setString(2, kh.getMaKhachHang()); 
+
+	        n = ps.executeUpdate();  
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return n > 0;
+	}
+
 	
 	// lấy tên và sdt khách hàng theo mã đoiỉ trả
 	public KhachHang layThongTinKhachHangTheoMaDonDoiTra(String maDonDoiTra) {

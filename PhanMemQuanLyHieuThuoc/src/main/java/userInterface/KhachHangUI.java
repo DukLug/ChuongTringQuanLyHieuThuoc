@@ -69,8 +69,7 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 	public void taoHinh() {
 		setPreferredSize(new Dimension(UIStyles.ApplicationWidth, UIStyles.MainSectionHeight));
 		this.setBackground(Color.WHITE);
-		
-setLayout(null);
+		setLayout(null);
 		
 		JPanel panelTong = new JPanel();
 		panelTong.setBackground(UIStyles.BackgroundColor);
@@ -334,7 +333,7 @@ setLayout(null);
 		if (o.equals(btnThem)) {
 			if (kiemTraDuLieu()) {
 				kh = layThongTin();
-				
+			
 				if (KhachHangCTR.kiemTraTrung(kh.getMaKhachHang())) {
 					JOptionPane.showMessageDialog(this, "Mã khách hàng bị trùng");
 					return;
@@ -344,6 +343,7 @@ setLayout(null);
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
 					data = KhachHangCTR.layData();
 					tableKH.capNhatDuLieu(data);
+					xoaTrang();
 				}
 				else
 					JOptionPane.showMessageDialog(this, "Thêm không thành công");
@@ -358,6 +358,7 @@ setLayout(null);
 					JOptionPane.showMessageDialog(this, "Cập nhật thành công");
 					data = KhachHangCTR.layData();
 					tableKH.capNhatDuLieu(data);
+					xoaTrang();
 				} else
 					JOptionPane.showMessageDialog(this, "Cập nhật không thành công");
 			}
@@ -420,8 +421,23 @@ setLayout(null);
 		String sdt = txtSDT.getText().trim();
 		String cccd = txtCCCD.getText().trim();
 		
+		if (KhachHangCTR.kiemTraTrungsdt(sdt) != null) {
+			thongBaoLoi(txtHoTen, "Số điện thoại đã trùng");
+			return false;
+		}
+			
 		if (ten.isEmpty() || ten == null) {
 			thongBaoLoi(txtHoTen, "Tên khách hàng không được để trống");
+			return false;
+		}
+		
+		if (ten.matches("[0-9@#%!]")) {
+			thongBaoLoi(txtHoTen, "Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+			return false;
+		}
+		
+		if (sdt.isEmpty() || sdt == null) {
+			thongBaoLoi(txtSDT, "Số điện thoại không được để trống");
 			return false;
 		}
 		
@@ -430,7 +446,7 @@ setLayout(null);
 			return false;
 		}
 		
-		if (cccd.length() > 0) {
+		if (cccd.length() > 0 && cccd != null) {
 			if (!(cccd.matches("[0-9]{12}"))) {
 				thongBaoLoi(txtCCCD, "Căn cước công dân phải đủ 12 ký tự số");
 				return false;

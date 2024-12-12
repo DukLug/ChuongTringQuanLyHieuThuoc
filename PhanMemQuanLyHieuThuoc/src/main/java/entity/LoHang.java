@@ -27,7 +27,15 @@ public class LoHang {
 		this.maLo = maLo;
 	}
 
-
+	public LoHang(String maLo, int soLuongDonViTinh1, int soLuongDonViTinh2, int soLuongDonViTinh3,
+			SanPhamYTe sanPham) {
+		super();
+		this.maLo = maLo;
+		this.soLuongDonViTinh1 = soLuongDonViTinh1;
+		this.soLuongDonViTinh2 = soLuongDonViTinh2;
+		this.soLuongDonViTinh3 = soLuongDonViTinh3;
+		this.sanPham = sanPham;
+	}
 	public LoHang(String maLo, Date ngaySanXuat, Date hanSuDung, BigDecimal giaNhap, int soLuongDonVinhTinh1, int soLuongDonVinhTinh2, int soLuongDonVinhTinh3, String viTri, SanPhamYTe sanPham,
 			ChiTietDonNhap maChiTietDonNhap) {
 		super();

@@ -269,7 +269,7 @@ public class KhuyenMaiDAO {
 	    ArrayList<KhuyenMai> khuyenMaiTheoDieuKien = new ArrayList<>();
 	    try {
 	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ?;"
+	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ? and NgayKetThuc < GETDATE() and SoLuongGioiHan > 0;"
 	        );
 	        ps.setString(1,DieuKien);  
 	        ResultSet rs = ps.executeQuery();
@@ -281,6 +281,8 @@ public class KhuyenMaiDAO {
 	            String dieuKien = rs.getString("DieuKien");
 	            int soLuong = rs.getInt("SoLuongGioiHan");
 	            double chietKhau = rs.getDouble("ChietKhau");
+	            //int soLuong = rs.getInt("SoLuongGioiHan");
+	            		
 	            NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
 	            
 	            KhuyenMai kmTheoNgay = new KhuyenMai(maKhuyenMai, ngayKhuyenMai, ngayketThuc, dieuKien, chietKhau, nv,soLuong);

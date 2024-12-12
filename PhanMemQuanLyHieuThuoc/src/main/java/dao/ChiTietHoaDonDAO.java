@@ -2,14 +2,20 @@ package dao;
 
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import customDataType.DonViTinh;
+import entity.ChiTietDonDoiTra;
 import entity.ChiTietHoaDon;
+import entity.HoaDon;
+import entity.KhachHang;
+import entity.LoHang;
 import entity.SanPhamYTe;
 
 public class ChiTietHoaDonDAO {
@@ -62,7 +68,71 @@ public class ChiTietHoaDonDAO {
 	}
 
 	
-	
+	// thêm chi tiết đơn đổi trả
+		public boolean themChiTietHoadon(ChiTietHoaDon chiTietHoaDon) {
+		    String sql = "INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, SoLuongDonViTinh1, SoLuongDonViTinh2, SoLuongDonViTinh3, TongTien, MaHoaDon, MaSanPham, MaLo, MaLoHangThayThe) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		    
+		    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+		        ps.setString(1, chiTietHoaDon.getMaChiTietHoaDon()); 
+		        ps.setInt(2, chiTietHoaDon.getSoLuongDonViTinh1());           
+		        ps.setInt(3, chiTietHoaDon.getSoLuongDonViTinh2());      
+		        ps.setInt(4, chiTietHoaDon.getSoLuongDonViTinh3());    
+		        ps.setBigDecimal(5, chiTietHoaDon.getTongTien());  
+		        ps.setString(6, chiTietHoaDon.getHoaDon().getMaHoaDon());  
+		        ps.setString(7, chiTietHoaDon.getSanPhamYTe().getMaSanPham());  
+		        ps.setString(8, chiTietHoaDon.getLoHang().getMaLo());            
+		        ps.setString(9, chiTietHoaDon.getLoHangThayThe() != null ? chiTietHoaDon.getLoHangThayThe().getMaLo() : null);     
+
+		        int rowsAffected = ps.executeUpdate(); 
+		        return rowsAffected > 0;              
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false; 
+		    }
+		}
+		
+		// lấy danh sách các cgi tiet doi tra
+		public ArrayList<ChiTietHoaDon> layDSCTHD() {
+		    ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<>();
+		    try {
+		        ConnectDB.getInstance();
+		        Connection con = ConnectDB.getConnection();
+		        String sql = "SELECT * FROM ChiTietHoaDon";
+		        Statement statement = con.createStatement();
+		        
+		        // Thực thi câu lệnh SQL và trả về ResultSet
+		        ResultSet rs = statement.executeQuery(sql);
+		        
+		        // Duyệt qua các kết quả trả về
+		        while (rs.next()) {
+		            String maCTHD = rs.getString(1);
+		            int soLuong = rs.getInt(2);
+		            BigDecimal tongTien = rs.getBigDecimal(3);
+		            String maHD = rs.getString(4);
+		            HoaDon hoaDon = new HoaDon(maHD);
+		            
+		            String maSP = rs.getString(5);
+		            SanPhamYTe sanPham = new SanPhamYTe(maSP);
+		            
+		            String maLo = rs.getString(6);
+					LoHang LoHang = new LoHang(maLo);
+					
+					String maLoThayThe = rs.getString(7);
+					LoHang LohayThe = new LoHang(maLoThayThe);
+
+//					 = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hoaDon, sanPham, LoHang, LohayThe);
+					 ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, soLuong, soLuong, tongTien, hoaDon, sanPham, LoHang, LohayThe);
+
+		            dsCTHD.add(chiTietHoaDon);
+		        }
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return dsCTHD;
+		}
+		
 
 }
 	

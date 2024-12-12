@@ -1,9 +1,12 @@
 package component;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -144,6 +147,13 @@ public class CustomItemList extends JPanel {
         }
     }
     
+//    public void removeAllItems() {
+//        itemList.clear();  // Xóa toàn bộ phần tử trong danh sách itemList
+//        
+//        panel.removeAll();  
+//        panel.revalidate();  
+//        panel.repaint();  
+
     public void  checkFewItem() {    	
     	if(panel.getComponentCount() == 0) 
     		return;
@@ -164,6 +174,7 @@ public class CustomItemList extends JPanel {
     	for(int i = 0 ; i<virtualItemCount;i++) {
     		panel.add(new JPanel());
     	}
+
     }
 }
 

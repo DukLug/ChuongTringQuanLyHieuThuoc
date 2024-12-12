@@ -25,6 +25,14 @@ public class KhachHang {
 		setCccd(cccd);
 	}
 
+	public KhachHang(String maKhachHang, String hoTen, String sdt, int diemTichLuy) {
+		super();
+		this.maKhachHang = maKhachHang;
+		this.hoTen = hoTen;
+		this.sdt = sdt;
+		this.diemTichLuy = diemTichLuy;
+	}
+
 	public KhachHang(String maKhachHang) {
 		super();
 		this.maKhachHang = maKhachHang;

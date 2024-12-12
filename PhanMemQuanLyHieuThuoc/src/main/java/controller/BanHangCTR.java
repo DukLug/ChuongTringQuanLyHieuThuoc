@@ -29,6 +29,7 @@ import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.KhuyenMai;
+import entity.LoHang;
 import entity.SanPhamYTe;
 import testEntity.Thuoc;
 import userInterface.BanHangUI.BanHangRow;
@@ -54,12 +55,20 @@ public class BanHangCTR {
 		super();
 	}
 	
+	public boolean themKH(KhachHang kh) {
+		return kh_dao.them2(kh);
+	}
+	
+	public boolean capNhatKH(KhachHang kh) {
+		return kh_dao.capNhat1(kh);
+	}
+	
 	public boolean themHD(HoaDon hd) {
 		return hd_dao.them(hd);
 	}
 	
-	public boolean capNhatSoLuongSP(String maSanPham, int soLuongDaBan) {
-		return lh_dao.capNhatSoLuongSP(maSanPham, soLuongDaBan);
+	public boolean capNhatSoLuongSP(String maSanPham, int soLuongDVT1, int soLuongDVT2, int soLuongDVT3) {
+		return lh_dao.capNhatSoLuongSP(maSanPham, soLuongDVT1, soLuongDVT2, soLuongDVT3);
 	}
 	
 	public void capNhatDTL(KhachHang kh, int diemDaDung, BigDecimal tongTien) {
@@ -72,6 +81,10 @@ public class BanHangCTR {
 			DTL = -diemDaDung;
 		
 		kh_dao.capNhatDTL(kh, DTL);
+	}
+	
+	public LoHang timLoHang(String msSP) {
+		return lh_dao.timLoSP(msSP);
 	}
 	
 	
@@ -95,9 +108,16 @@ public class BanHangCTR {
 		return null;
 	}
 	
-	public BigDecimal tinhTongTienTungSP(BigDecimal giaBan, String sl) {
-		BigDecimal soLuong = new BigDecimal(sl);
-		return giaBan.multiply(soLuong);
+	public BigDecimal tinhTongTienTungSP(BigDecimal giaBan1, BigDecimal giaBan2, BigDecimal giaBan3, String sl1, String sl2, String sl3) {
+		BigDecimal soLuong1 = new BigDecimal(sl1);
+		BigDecimal soLuong2 = new BigDecimal(sl2);
+		BigDecimal soLuong3 = new BigDecimal(sl3);
+		
+		BigDecimal tongGia1 = giaBan1.multiply(soLuong1);
+		BigDecimal tongGia2 = giaBan2.multiply(soLuong2);
+		BigDecimal tongGia3 = giaBan3.multiply(soLuong3);
+		
+		return (tongGia1.add(tongGia2)).add(tongGia3);
 	}
 	
 	public BigDecimal tinhTongTienHoaDon(CustomItemList list) {
@@ -108,8 +128,9 @@ public class BanHangCTR {
 				BanHangRow row = (BanHangRow) item; // Chuyển đổi item thành BanHangRow
 	            Thuoc sp = row.getSanPhamYTe();
 	          
-	            BigDecimal soLuong = new BigDecimal(sp.soLuong);
-	            BigDecimal tongTienSP = soLuong.multiply(sp.giaBan);
+//	            BigDecimal soLuong = new BigDecimal(sp.soLuong);
+//	            BigDecimal tongTienSP = soLuong.multiply(sp.giaBan);
+	            BigDecimal tongTienSP = tinhTongTienTungSP(sp.giaBanDonViTinh1, sp.giaBanDonViTinh2, sp.giaBanDonViTinh3, String.valueOf(sp.soLuongDVT1), String.valueOf(sp.soLuongDVT2), String.valueOf(sp.soLuongDVT3));
 	            tongTien = tongTien.add(tongTienSP);
 			}
 		}
@@ -190,6 +211,12 @@ public class BanHangCTR {
 	    
 	    KhachHang kh = timKHTheoSDT(sdt);
 	
+	    if (kh.getMaKhachHang().equalsIgnoreCase("KH000000") || kh == null) {
+	    	danhSachChietKhau.add(0);
+	    	return danhSachChietKhau;
+	    }
+	    	
+	    
 	    if (kh.getDiemTichLuy() > 1000) {
 	        danhSachChietKhau.add(10000);
 	        danhSachChietKhau.add(0);
@@ -269,8 +296,7 @@ public class BanHangCTR {
 	}
     
     public boolean themChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-//    	return cthd_dao.themChiTietHoadon(chiTietHoaDon);
-    	return true;
+    	return cthd_dao.themChiTietHoadon(chiTietHoaDon);
     }
 
 	public String timMaLoTheoMaSP(String maSP) {

@@ -52,25 +52,27 @@ public class ChiTietHoaDonDAO {
 	}
 	
 	// thêm chi tiết đơn đổi trả
-//		public boolean themChiTietHoadon(ChiTietHoaDon chiTietHoaDon) {
-//		    String sql = "INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, SoLuong, TongTien, MaHoaDon, MaSanPham, MaLo, MaLoHangThayThe) VALUES (?, ?, ?, ?, ?, ?, ?)";
-//		    
-//		    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
-//		        ps.setString(1, chiTietHoaDon.getMaChiTietHoaDon()); 
-//		        ps.setInt(2, chiTietHoaDon.getSoLuong());           
-//		        ps.setBigDecimal(3, chiTietHoaDon.getGiaBan());      
-//		        ps.setString(4, chiTietHoaDon.getHoaDon().getMaHoaDon());    
-//		        ps.setString(5, chiTietHoaDon.getSanPhamYTe().getMaSanPham());       
-//		        ps.setString(6, chiTietHoaDon.getLoHang().getMaLo());            
-//		        ps.setString(7, chiTietHoaDon.getLoHangThayThe() != null ? chiTietHoaDon.getLoHangThayThe().getMaLo() : null);     
-//
-//		        int rowsAffected = ps.executeUpdate(); 
-//		        return rowsAffected > 0;              
-//		    } catch (SQLException e) {
-//		        e.printStackTrace();
-//		        return false; 
-//		    }
-//		}
+		public boolean themChiTietHoadon(ChiTietHoaDon chiTietHoaDon) {
+		    String sql = "INSERT INTO ChiTietHoaDon (MaChiTietHoaDon, SoLuongDonViTinh1, SoLuongDonViTinh2, SoLuongDonViTinh3, TongTien, MaHoaDon, MaSanPham, MaLo, MaLoHangThayThe) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		    
+		    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+		        ps.setString(1, chiTietHoaDon.getMaChiTietHoaDon()); 
+		        ps.setInt(2, chiTietHoaDon.getSoLuongDonViTinh1());           
+		        ps.setInt(3, chiTietHoaDon.getSoLuongDonViTinh2());      
+		        ps.setInt(4, chiTietHoaDon.getSoLuongDonViTinh3());    
+		        ps.setBigDecimal(5, chiTietHoaDon.getTongTien());  
+		        ps.setString(6, chiTietHoaDon.getHoaDon().getMaHoaDon());  
+		        ps.setString(7, chiTietHoaDon.getSanPhamYTe().getMaSanPham());  
+		        ps.setString(8, chiTietHoaDon.getLoHang().getMaLo());            
+		        ps.setString(9, chiTietHoaDon.getLoHangThayThe() != null ? chiTietHoaDon.getLoHangThayThe().getMaLo() : null);     
+
+		        int rowsAffected = ps.executeUpdate(); 
+		        return rowsAffected > 0;              
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false; 
+		    }
+		}
 		
 		// lấy danh sách các cgi tiet doi tra
 		public ArrayList<ChiTietHoaDon> layDSCTHD() {

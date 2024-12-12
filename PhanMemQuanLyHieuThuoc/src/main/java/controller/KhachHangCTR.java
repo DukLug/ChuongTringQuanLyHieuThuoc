@@ -19,7 +19,7 @@ public class KhachHangCTR {
 //		System.out.println("Connect!!");
 	}
 
-	private KhachHangDAO kh_dao;
+	public static KhachHangDAO kh_dao;
 	
 	public KhachHangCTR() {
 		kh_dao = new KhachHangDAO();
@@ -57,6 +57,7 @@ public class KhachHangCTR {
 	public static String taoMa() {
 	    String stt = "000000";
 	    int soHienTai = Integer.parseInt(stt); 
+	    danhSach = layData();
 	    soHienTai = danhSach.length + 1;
 	   
 	    String maKH = String.format("KH%06d", soHienTai);
@@ -105,6 +106,10 @@ public class KhachHangCTR {
 	        }
 	    }
 	    return false; 
+	}
+	
+	public static KhachHang kiemTraTrungsdt(String sdt) {
+		return kh_dao.timTheoSDT1(sdt);
 	}
 	
 	public static Object[][] locDTL(int batDau, int ketThuc) {

@@ -148,19 +148,61 @@ public class LoHangDAO {
 
 	    return maLo; 
 	}
+	
+	public LoHang timLoSP(String maSP) {
+	    String sql = "SELECT MaLo, MaSanPham, SoLuongDonViTinh1, SoLuongDonViTinh2, SoLuongDonViTinh3 FROM LoHang WHERE MaSanPham = ?";
+	    LoHang loHang = null;
 
-	public boolean capNhatSoLuongSP(String maSanPham, int soLuongDaBan) {
-	    int n = 0;
+	    try (PreparedStatement ps = ConnectDB.getConnection().prepareStatement(sql)) {
+	        ps.setString(1, maSP);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            String maLo = rs.getString("MaLo");
+	            String maSanPham = rs.getString("MaSanPham");
+	            SanPhamYTe sp = new SanPhamYTe(maSanPham);
+	            int soLuongDVT1 = rs.getInt("SoLuongDonViTinh1");
+	            int soLuongDVT2 = rs.getInt("SoLuongDonViTinh2");
+	            int soLuongDVT3 = rs.getInt("SoLuongDonViTinh3");
+
+	            loHang = new LoHang(maLo, soLuongDVT1, soLuongDVT2, soLuongDVT3, sp);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return loHang;
+	}
+
+
+	public boolean capNhatSoLuongSP(String maSanPham, int soLuongDVT1, int soLuongDVT2, int soLuongDVT3) {
+	    int n1 = 0, n2 = 0, n3 = 0;
 	    try {
-	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("UPDATE LoHang SET SoLuong = SoLuong - ? WHERE MaSanPham = ?");
-	        ps.setInt(1, soLuongDaBan);  
-	        ps.setString(2, maSanPham); 
+	        // Cập nhật SoLuongDonViTinh1
+	        PreparedStatement ps1 = ConnectDB.getConnection().prepareStatement(
+	            "UPDATE LoHang SET SoLuongDonViTinh1 = SoLuongDonViTinh1 - ? WHERE MaSanPham = ?");
+	        ps1.setInt(1, soLuongDVT1);
+	        ps1.setString(2, maSanPham);
+	        n1 = ps1.executeUpdate();
 
-	        n = ps.executeUpdate();  
+	        // Cập nhật SoLuongDonViTinh2
+	        PreparedStatement ps2 = ConnectDB.getConnection().prepareStatement(
+	            "UPDATE LoHang SET SoLuongDonViTinh2 = SoLuongDonViTinh2 - ? WHERE MaSanPham = ?");
+	        ps2.setInt(1, soLuongDVT2);
+	        ps2.setString(2, maSanPham);
+	        n2 = ps2.executeUpdate();
+
+	        // Cập nhật SoLuongDonViTinh3
+	        PreparedStatement ps3 = ConnectDB.getConnection().prepareStatement(
+	            "UPDATE LoHang SET SoLuongDonViTinh3 = SoLuongDonViTinh3 - ? WHERE MaSanPham = ?");
+	        ps3.setInt(1, soLuongDVT3);
+	        ps3.setString(2, maSanPham);
+	        n3 = ps3.executeUpdate();
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    return n > 0;
+	    return (n1 > 0 && n2 > 0 && n3 > 0); // Chỉ trả về true nếu cả ba đều thành công
 	}
+
 }

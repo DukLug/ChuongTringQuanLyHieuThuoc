@@ -261,7 +261,7 @@ public class KhuyenMaiDAO {
 	    ArrayList<KhuyenMai> khuyenMaiTheoDieuKien = new ArrayList<>();
 	    try {
 	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement(
-	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ? and NgayKetThuc < GETDATE();"
+	            "SELECT * FROM KhuyenMai WHERE TRY_CAST(DieuKien AS DECIMAL) < ? and NgayKetThuc < GETDATE() and SoLuongGioiHan > 0;"
 	        );
 	        ps.setString(1,DieuKien);  
 	        ResultSet rs = ps.executeQuery();

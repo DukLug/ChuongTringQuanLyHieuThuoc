@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import customDataType.LoaiHoaDon;
+
 public class HoaDon {
 	private String maHoaDon;
 	private Date ngayTao;
@@ -14,6 +16,7 @@ public class HoaDon {
 	private NhanVien nhanVien;
 	private KhuyenMai khuyenMai;
 	private KhachHang khachHang;
+	private LoaiHoaDon loaiHD;
 	private ArrayList<ChiTietHoaDon> chiTietHoaDon;
 	
 	public HoaDon(String maHoaDon) {
@@ -33,6 +36,7 @@ public class HoaDon {
 		setKhachHang(khachHang);
 		setChiTietHoaDon(chiTietHoaDon);
 	}
+
 	public HoaDon(String maHoaDon, Date ngayTao, int diemSuDung, BigDecimal thanhTien, NhanVien nhanVien,
 			KhuyenMai khuyenMai, KhachHang khachHang) {
 		super();
@@ -51,6 +55,33 @@ public class HoaDon {
 		this.maHoaDon = mahd;
 		this.thanhTien = thanhTien;
 		
+	}
+
+	public HoaDon(String maHoaDon, Date ngayTao, int diemSuDung, BigDecimal thanhTien, NhanVien nhanVien,
+			KhuyenMai khuyenMai, KhachHang khachHang, LoaiHoaDon loaiHD, ArrayList<ChiTietHoaDon> chiTietHoaDon) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.ngayTao = ngayTao;
+		this.diemSuDung = diemSuDung;
+		this.thanhTien = thanhTien;
+		this.nhanVien = nhanVien;
+		this.khuyenMai = khuyenMai;
+		this.khachHang = khachHang;
+		this.loaiHD = loaiHD;
+		this.chiTietHoaDon = chiTietHoaDon;
+	}
+
+	public HoaDon(String maHoaDon, Date ngayTao, int diemSuDung, BigDecimal thanhTien, NhanVien nhanVien,
+			KhuyenMai khuyenMai, KhachHang khachHang, LoaiHoaDon loaiHD) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.ngayTao = ngayTao;
+		this.diemSuDung = diemSuDung;
+		this.thanhTien = thanhTien;
+		this.nhanVien = nhanVien;
+		this.khuyenMai = khuyenMai;
+		this.khachHang = khachHang;
+		this.loaiHD = loaiHD;
 	}
 
 	public HoaDon() {
@@ -115,12 +146,22 @@ public class HoaDon {
 		}
 		this.chiTietHoaDon = chiTietHoaDon;
 	}
+	
+	
+	
+	public LoaiHoaDon getLoaiHD() {
+		return loaiHD;
+	}
+
+	public void setLoaiHD(LoaiHoaDon loaiHD) {
+		this.loaiHD = loaiHD;
+	}
 
 	@Override
 	public String toString() {
 		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayTao=" + ngayTao + ", diemSuDung=" + diemSuDung + ", thanhTien="
 				+ thanhTien + ", nhanVien=" + nhanVien + ", khuyenMai=" + khuyenMai + ", khachHang=" + khachHang
-				+ ", chiTietHoaDon=" + chiTietHoaDon + "]";
+				+ ", loaiHD=" + loaiHD + ", chiTietHoaDon=" + chiTietHoaDon + "]";
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import component.CustomItemList;
 import component.CustomTable;
 import component.RoundedBorder;
 import controller.BanHangCTR;
+import controller.KhachHangCTR;
 import controller.SanPhamCTR;
 import component.CustomButton.CustomButtonIconSide;
 import customDataType.LoaiHoaDon;
@@ -99,6 +100,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	private static SanPhamYTe sp;
 	private static String maKM;
 
+	private KhachHangCTR kh_ctr = new KhachHangCTR();
 	public BanHangUI() {
 		super();
 		taoHinh();
@@ -172,7 +174,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		txtTenKH = new JTextField();
 		txtTenKH.setDisabledTextColor(Color.BLACK);
-		txtTenKH.setEnabled(false);
 		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenKH.setBounds(177, 115, 298, 30);
 		panelKhachHang.add(txtTenKH);
@@ -211,7 +212,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		txtCCCD = new JTextField();
 		txtCCCD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtCCCD.setEnabled(false);
 		txtCCCD.setColumns(10);
 		txtCCCD.setBorder(new LineBorder(Color.BLACK, 1));
 		txtCCCD.setBounds(177, 242, 298, 30);
@@ -225,7 +225,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		txtSDT = new JTextField();
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtSDT.setEnabled(false);
 		txtSDT.setDisabledTextColor(Color.BLACK);
 		txtSDT.setColumns(10);
 		txtSDT.setBorder(new LineBorder(Color.BLACK, 1));
@@ -409,13 +408,10 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		// phần bảng
 		banHangList = new CustomItemList(
-// ************************************************************************************
-//				1255, 604,  100, 50, Color.white, 
-// ************************************************************************************
 				1255, 549,  10, 50, Color.white, 
-				new int[]{30, 400, 150, 150, 150, 200, 100}, 
+				new int[]{30, 200, 240, 240, 240, 200, 100}, 
 				Color.LIGHT_GRAY,  50, 
-				new String[]{"","Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá Bán", "Tổng tiền", ""}, 
+				new String[]{"","Tên sản phẩm", "ĐVT1", "ĐVT2", "ĐVT3", "Tổng tiền", ""}, 
 				new Font("Arial", Font.BOLD, 20), 
 				new ArrayList<CustomItem>()
 		);
@@ -487,6 +483,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		// tìm sản phẩm bằng mã vạch
 		if (o.equals(txtTimSP) || o.equals(btnThemSP) ) {
+			
 			thongTinCanTim = txtTimSP.getText().trim();
 			sdt = txtSDT.getText();
 			
@@ -498,13 +495,14 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			}
 			else {
 				phanPhanTramKM = 0;
+				
 				for (CustomItem item : banHangList.getItemList()) {
 			        if (item instanceof BanHangRow) {
 			            BanHangRow row = (BanHangRow) item;
 			            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
 
 			            if (sanPham.maThuoc.equalsIgnoreCase(sp.getMaSanPham())) {
-			                sanPham.soLuong += 1; // Cập nhật số lượng
+			                sanPham.soLuongDVT1 += 1; // Cập nhật số lượng
 
 			                // Cập nhật lại BanHangRow trong banHangList
 			                row.setSanPhamYTe(sanPham); // Đảm bảo BanHangRow được cập nhật với thuốc mới
@@ -518,12 +516,9 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 				
 				// Nếu không tìm thấy, thêm mới vào danh sách
 	            int stt = banHangList.getItemList().size() + 1;
-// ************************************************************************************
-//	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh(), 1, sp.getGiaBan()))); // 1: số lượng mặc định khi chọn
-// ************************************************************************************
-	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh1(), 1, sp.getGiaBanDonViTinh1()))); // 1: số lượng mặc định khi chọn
-				
-				tinhChietKhau(sdt);
+	            banHangList.addItem(new BanHangRow(stt, new Thuoc(sp.getMaSanPham(), sp.getTenSanPham(), sp.getDonViTinh1(), sp.getDonViTinh2(), sp.getDonViTinh3(), 1, 0, 0, sp.getGiaBanDonViTinh1(), sp.getGiaBanDonViTinh2(), sp.getGiaBanDonViTinh3(), sp.getGiaTriQuyDoi2(), sp.getGiaTriQuyDoi3())));
+	            
+	            tinhChietKhau(sdt);
 			}
 			
 			txtTimSP.setText("");
@@ -561,12 +556,44 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			
 			txtTenKH.setText(kh.getHoTen());
 			txtCCCD.setText(kh.getCccd());
-			txtDTL.setText(Integer.toString(kh.getDiemTichLuy()));
 			txtSDT.setText(kh.getSdt());
+		}
+		
+		// thêm khách hàng
+		if (o.equals(btnThemKH)) {
+				
+			String tenKh = txtTenKH.getText().trim();
+			String sdtKH = txtSDT.getText().trim();
+			int diemTicLuy = 0;
+			String ma = kh_ctr.taoMa();
+
+		
+			KhachHang khachHangMoi = new KhachHang(ma, tenKh, sdtKH, diemTicLuy);
+				
+			if (bh_ctr.themKH(khachHangMoi)) {
+				kh = bh_ctr.timKHTheoSDT(sdtKH);
+					
+				chckbxKhachLe.setSelected(false);
+				txtTenKH.setText(kh.getHoTen());
+				txtCCCD.setText(kh.getCccd());
+				txtDTL.setText(Integer.toString(kh.getDiemTichLuy()));
+				txtSDT.setText(kh.getSdt());
+	
+				tinhChietKhau(sdtKH);
+			}
+
 		}
 		
 		// thêm hóa đơn
 		if (o.equals(btnTaoHD)) {
+			
+			kiemTraSLTon(banHangList);
+			
+			if (!chckbxKhachLe.isSelected() || txtSDT.getText().trim() == null) {
+				JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+				return;
+			}
+			
 			String maHD = bh_ctr.taoMaHoaDon();
 			LocalDate localDate = LocalDate.now(); // Lấy ngày hiện tại
 			Date ngayTao = Date.valueOf(localDate);
@@ -576,8 +603,9 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			KhachHang khachHang = new KhachHang(kh.getMaKhachHang());
 			KhuyenMai khuyenMai = new KhuyenMai(maKM);
 			int diemDaDung = bh_ctr.tinhSoDTLDaDung(tienChietKhau);
+			LoaiHoaDon loaiHD = (LoaiHoaDon) comboBoxLoaiHD.getSelectedItem();
 			
-			HoaDon hoaDon = new HoaDon(maHD, ngayTao, dtl, thanhTien, nhanVien, khuyenMai, khachHang);
+			HoaDon hoaDon = new HoaDon(maHD, ngayTao, dtl, thanhTien, nhanVien, khuyenMai, khachHang, loaiHD);
 			
 			if (bh_ctr.themHD(hoaDon)) {
 	
@@ -589,8 +617,8 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
 
 			            String maCTHD = bh_ctr.taoMaChiTietHoaDon(hoaDon.getMaHoaDon());
-			            int soLuong = sanPham.soLuong;
-						BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(sanPham.giaBan, sanPham.soLuong + "");
+						BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(sanPham.giaBanDonViTinh1, sanPham.giaBanDonViTinh2, sanPham.giaBanDonViTinh3, 
+								sanPham.soLuongDVT1 + "", sanPham.soLuongDVT2 + "", sanPham.soLuongDVT3 + "");
 						HoaDon hd = new HoaDon(maHD);
 						String maSP = sanPham.maThuoc;
 						SanPhamYTe sanPhamYTe = new SanPhamYTe(maSP);
@@ -600,17 +628,16 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 						
 						String maLoThayThe = null;
 						LoHang LohayThe = new LoHang(maLoThayThe);
-// ************************************************************************************
-//						ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, soLuong, tongTien, hd, sanPhamYTe, LoHang, LohayThe);
+
+						ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3,
+								tongTien, hd, sanPhamYTe, LoHang, LohayThe);
 						
-//						if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) 
-//								&& bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuong))
-//							JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
-//						else
-//							JOptionPane.showMessageDialog(this, "Thêm không thành công");
-// ************************************************************************************
+						if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)) 
+							continue;
 			        }
 				}
+				
+				JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
 			}
 				
 			else
@@ -625,12 +652,14 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	
 	private void tinhChietKhau(String sdt) {
 		ArrayList<Integer> dsCK = bh_ctr.tinhTienChietKhau(sdt);
-
 		comboBoxChietKhau.removeAllItems();
+
+		
 		for (Integer ck : dsCK)
 			comboBoxChietKhau.addItem(bh_ctr.formatDecimal(new BigDecimal(ck)));
-
+		
 		tinhCacLoaiTienCuaHD();
+		
 	}
 	
 	public static void tinhCacLoaiTienCuaHD() {
@@ -712,31 +741,33 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	public static class BanHangRow extends CustomItem implements ActionListener{
 		private static int prefWidth = 1250;
 		private static int prefHeight = 100;
-// ************************************************************************************
-//		private static Color backgroundColor = Color.white;
-//		private static Border border = new RoundedBorder(Color.BLUE, 3, 20);
-// ************************************************************************************
 		private static Font font = UIStyles.DefaultFont;
-		private static Color backgroundColor = Color.red;
+		private static Color backgroundColor = Color.WHITE;
 		private static Border border = BorderFactory.createEmptyBorder();
 		private BanHangCTR bh_ctr = new BanHangCTR();
 	
-		private static int[] cellsWidth = new int[] {30, 400, 150, 150, 150, 200, 100};
+		private static int[] cellsWidth = new int[] {30, 220, 220, 240, 240, 200, 100};
 
 		private JComponent[] cells;
 
 		public Thuoc thuoc;	
-		private CustomButton btnTang;
-		private JTextField txtSLBan;
-		private CustomButton btnGiam;
-		private JLabel lblDVT;
 		private JLabel lblTenSP;
-		private JLabel lblGiaBan;
 		private JLabel lblTongTienSP;
 		private CustomButton btnXoa;
 		private JLabel lblSTT;
-		
 		private int STT;
+		private CustomButton btnGiam1;
+		private JTextField txtSLBan1;
+		private CustomButton btnTang1;
+		private JLabel lblDVT1;
+		private CustomButton btnGiam2;
+		private JTextField txtSLBan2;
+		private CustomButton btnTang2;
+		private JLabel lblDVT2;
+		private CustomButton btnGiam3;
+		private JTextField txtSLBan3;
+		private CustomButton btnTang3;
+		private JLabel lblDVT3;
 		
 		public BanHangRow(int stt, Thuoc thuoc) {
 			super(prefWidth, prefHeight, backgroundColor, border, cellsWidth);
@@ -761,49 +792,110 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		    // cột 3: đơn vị tính
 		    JPanel cell3 = new JPanel();
 		    cell3.setBackground(Color.WHITE);
-		    cell3.setLayout(new BorderLayout());
+		    cell3.setLayout(null); // Bố cục tự do
+		    cell3.setPreferredSize(new Dimension(240, 80)); // Chiều rộng 240px, chiều cao 80px để có đủ không gian
+		    cell3.setBounds(10, 30, 240, 80);
+		    // Nút giảm
+		    btnGiam1 = new CustomButton("-", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnGiam1.setBounds(5, 15, 40, 30); // Đặt nút giảm rộng hơn
+
+		    // TextField số lượng
+		    txtSLBan1 = new JTextField();
+		    txtSLBan1.setText(thuoc.soLuongDVT1 + "");
+		    txtSLBan1.setFont(new Font("Arial", Font.PLAIN, 16));
+		    txtSLBan1.setHorizontalAlignment(JTextField.CENTER);
+		    txtSLBan1.setBounds(50, 15, 80, 30); // Đặt TextField rộng hơn
+
+		    // Nút tăng
+		    btnTang1 = new CustomButton("+", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnTang1.setBounds(135, 15, 40, 30); // Đặt nút tăng rộng hơn
+
+		    // Nhãn đơn vị tính
+		    lblDVT1 = new JLabel(thuoc.donViTinh1.toString() + '/' + bh_ctr.formatDecimal(thuoc.giaBanDonViTinh1));
+		    lblDVT1.setFont(new Font(lblDVT1.getFont().getName(), Font.PLAIN, 18)); // Tăng kích thước font và chữ đậm
+		    lblDVT1.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa nhãn
+		    lblDVT1.setBounds(40, 45, 160, 30); // Đặt vị trí xuống dưới và căn giữa
+
+		    // Thêm các thành phần vào panel
+		    cell3.add(btnGiam1);
+		    cell3.add(txtSLBan1);
+		    cell3.add(btnTang1);
+		    cell3.add(lblDVT1);
+
 		    
-		    lblDVT = new JLabel(thuoc.donViTinh.toString());
-		    lblDVT.setFont(new Font(lblDVT.getFont().getName(), Font.PLAIN, 20));
-		    lblDVT.setHorizontalAlignment(SwingConstants.CENTER); // canh theo chiều ngang
-		    cell3.add(lblDVT, BorderLayout.CENTER); // thêm vào giữa
-		    
-		    // cột 4: số lượng
+		    // cột 4: 
 		    JPanel cell4 = new JPanel();
 		    cell4.setBackground(Color.WHITE);
-		    cell4.setLayout(new BoxLayout(cell4, BoxLayout.X_AXIS));
+		    cell4.setLayout(null); // Bố cục tự do
+		    cell4.setPreferredSize(new Dimension(240, 80)); // Chiều rộng 240px, chiều cao 80px để có đủ không gian
 
-		    btnGiam = new CustomButton("-", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, ()->quayLai());
-		    btnGiam.setPreferredSize(new Dimension(30, btnGiam.getPreferredSize().height));
-		   
-		    txtSLBan = new JTextField();
-		    txtSLBan.setText(thuoc.soLuong + "");
-		    txtSLBan.setFont(new Font("Arial", Font.PLAIN, 20));
-		    
-		    btnTang = new CustomButton("+", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, ()->quayLai());
-		    btnTang.setPreferredSize(new Dimension(30, btnTang.getPreferredSize().height));
-		  
-		    cell4.add(btnGiam);
-		    cell4.add(txtSLBan);
-		    cell4.add(btnTang);
-		    
-		    // cột 5: giá bán
+		    // Nút giảm
+		    btnGiam2 = new CustomButton("-", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnGiam2.setBounds(5, 15, 40, 30); // Đặt nút giảm rộng hơn
+
+		    // TextField số lượng
+		    txtSLBan2 = new JTextField();
+		    txtSLBan2.setText(thuoc.soLuongDVT2 + "");
+		    txtSLBan2.setFont(new Font("Arial", Font.PLAIN, 16));
+		    txtSLBan2.setHorizontalAlignment(JTextField.CENTER);
+		    txtSLBan2.setBounds(50, 15, 80, 30); // Đặt TextField rộng hơn
+
+		    // Nút tăng
+		    btnTang2 = new CustomButton("+", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnTang2.setBounds(135, 15, 40, 30); // Đặt nút tăng rộng hơn
+
+		    // Nhãn đơn vị tính
+		    lblDVT2 = new JLabel(thuoc.donViTinh2.toString() + '/' + bh_ctr.formatDecimal(thuoc.giaBanDonViTinh2));
+		    lblDVT2.setFont(new Font(lblDVT2.getFont().getName(), Font.PLAIN, 18)); // Tăng kích thước font và chữ đậm
+		    lblDVT2.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa nhãn
+		    lblDVT2.setBounds(40, 45, 160, 30); // Đặt vị trí xuống dưới và căn giữa
+
+		    // Thêm các thành phần vào panel
+		    cell4.add(btnGiam2);
+		    cell4.add(txtSLBan2);
+		    cell4.add(btnTang2);
+		    cell4.add(lblDVT2);
+
+		    // cột 5: 
 		    JPanel cell5 = new JPanel();
 		    cell5.setBackground(Color.WHITE);
-		    cell5.setLayout(new BorderLayout());
-		    
-		    BigDecimal giaBan = new BigDecimal(thuoc.giaBan.toString());
-		    lblGiaBan = new JLabel(bh_ctr.formatDecimal(giaBan));
-		    lblGiaBan.setFont(new Font(lblGiaBan.getFont().getName(), Font.PLAIN, 20));
-		    lblGiaBan.setHorizontalAlignment(SwingConstants.CENTER); 
-		    cell5.add(lblGiaBan, BorderLayout.CENTER);
-		    
+		    cell5.setLayout(null); // Bố cục tự do
+		    cell5.setPreferredSize(new Dimension(240, 80)); // Chiều rộng 240px, chiều cao 80px để có đủ không gian
+
+		    // Nút giảm
+		    btnGiam3 = new CustomButton("-", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnGiam3.setBounds(5, 15, 40, 30); // Đặt nút giảm rộng hơn
+
+		    // TextField số lượng
+		    txtSLBan3 = new JTextField();
+		    txtSLBan3.setText(thuoc.soLuongDVT3+ "");
+		    txtSLBan3.setFont(new Font("Arial", Font.PLAIN, 16));
+		    txtSLBan3.setHorizontalAlignment(JTextField.CENTER);
+		    txtSLBan3.setBounds(50, 15, 80, 30); // Đặt TextField rộng hơn
+
+		    // Nút tăng
+		    btnTang3 = new CustomButton("+", UIStyles.LabelBarButtonStyle, null, CustomButtonIconSide.LEFT, () -> quayLai());
+		    btnTang3.setBounds(135, 15, 40, 30); // Đặt nút tăng rộng hơn
+
+		    // Nhãn đơn vị tính
+		    lblDVT3 = new JLabel(thuoc.donViTinh3.toString() + '/' + bh_ctr.formatDecimal(thuoc.giaBanDonViTinh3));
+		    lblDVT3.setFont(new Font(lblDVT3.getFont().getName(), Font.PLAIN, 18)); // Tăng kích thước font và chữ đậm
+		    lblDVT3.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa nhãn
+		    lblDVT3.setBounds(40, 45, 160, 30); // Đặt vị trí xuống dưới và căn giữa
+
+		    // Thêm các thành phần vào panel
+		    cell5.add(btnGiam3);
+		    cell5.add(txtSLBan3);
+		    cell5.add(btnTang3);
+		    cell5.add(lblDVT3);
+
 		    // cột 6: tổng tiền
 		    JPanel cell6 = new JPanel();
 		    cell6.setBackground(Color.WHITE);
 		    cell6.setLayout(new BorderLayout());
 		    
-		    BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(giaBan, txtSLBan.getText().trim());
+		    BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+		    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
 		    lblTongTienSP = new JLabel(bh_ctr.formatDecimal(tongTien));
 		    lblTongTienSP.setFont(new Font(lblTongTienSP.getFont().getName(), Font.PLAIN, 20));
 		    lblTongTienSP.setHorizontalAlignment(SwingConstants.CENTER); 
@@ -825,17 +917,31 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		    
 		    super.addCells(cells);
 		    
-		    btnGiam.addActionListener(this);
-		    btnTang.addActionListener(this);
+		    btnGiam1.addActionListener(this);
+		    btnGiam2.addActionListener(this);
+		    btnGiam3.addActionListener(this);
+		    
+		    btnTang1.addActionListener(this);
+		    btnTang2.addActionListener(this);
+		    btnTang3.addActionListener(this);
+		    
 		    btnXoa.addActionListener(this);
 		    
-		    txtSLBan.addActionListener(this);
+		    txtSLBan1.addActionListener(this);
+		    txtSLBan2.addActionListener(this);
+		    txtSLBan3.addActionListener(this);
 		}
 		
-		public void capNhatSoLuong(int thayDoi) {
-			thuoc.soLuong += thayDoi;
-			txtSLBan.setText("" + thuoc.soLuong);
+		public void capNhatSoLuong(int thayDoi1, int thayDoi2, int thayDoi3) {
+			thuoc.soLuongDVT1 += thayDoi1;
+			thuoc.soLuongDVT2 += thayDoi2;
+			thuoc.soLuongDVT3 += thayDoi3;
+			
+			txtSLBan1.setText("" + thuoc.soLuongDVT1);
+			txtSLBan2.setText("" + thuoc.soLuongDVT2);
+			txtSLBan3.setText("" + thuoc.soLuongDVT3);
 		}
+		
 		public void layThongTin() {
 			System.out.println(this.thuoc);
 		}
@@ -850,8 +956,11 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	    }
 		
 		private void capNhatRowUI() {
-	        txtSLBan.setText(String.valueOf(thuoc.soLuong));
-	        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBan, String.valueOf(thuoc.soLuong));
+	        txtSLBan1.setText(String.valueOf(thuoc.soLuongDVT1));
+	        txtSLBan2.setText(String.valueOf(thuoc.soLuongDVT2));
+	        txtSLBan3.setText(String.valueOf(thuoc.soLuongDVT3));
+	        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+		    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
 		    lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien));
 	    }
 		
@@ -864,42 +973,78 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		public void actionPerformed(ActionEvent e) {
 			Object o = e.getSource();
 			
-			int thayDoi = 0;
-			int SLSP = Integer.parseInt(txtSLBan.getText());
+			int thayDoi1 = 0;
+			int thayDoi2 = 0;
+			int thayDoi3 = 0;
+			
+			int SLSP1 = Integer.parseInt(txtSLBan1.getText());
+			int SLSP2 = Integer.parseInt(txtSLBan2.getText());
+			int SLSP3 = Integer.parseInt(txtSLBan3.getText());
 			
 			if (banHangList.getItemList().size() >= 1) {
-				if (o.equals(btnTang)) {
-			        thayDoi = 1; 
+				if (o.equals(btnTang1)) {
+			        thayDoi1 = 1; 
 			    }
 				
-				if (o.equals(btnGiam)) {
-			    	if (txtSLBan.getText().equals("1")) {
-//			    		banHangList.removeAllItems();
-//						System.out.println("da xoa");
-//						banHangList.repaint();
-//						lamMoi();
+				if (o.equals(btnTang2)) {
+			        thayDoi2 = 1; 
+			    }
+				
+				if (o.equals(btnTang3)) {
+			        thayDoi3 = 1; 
+			    }
+				
+				if (o.equals(btnGiam1)) {
+			    	if (txtSLBan1.getText().equals("1") && txtSLBan2.getText().trim().equals("0")  && txtSLBan3.getText().trim().equals("0")) {
 			    		banHangList.removeItem(this);
 				    	capNhatBang(banHangList);
 				    	tinhCacLoaiTienCuaHD();
 			    	}
+			    	if (txtSLBan1.getText().equals("0") && (!txtSLBan2.getText().trim().equals("0")  || !txtSLBan3.getText().trim().equals("0"))) {
+			    		thayDoi1 = 0; 
+			    	}
 			    	else 
-			    		thayDoi = -1; 
+			    		thayDoi1 = -1; 
 			    }
-
-			    if (thayDoi != 0) {
-			        capNhatSoLuong(thayDoi); 
-			        BigDecimal giaBan = new BigDecimal(thuoc.giaBan.toString());
-			        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(giaBan, String.valueOf(thuoc.soLuong));
+				
+				if (o.equals(btnGiam2)) {
+			    	if (txtSLBan2.getText().equals("1") && txtSLBan1.getText().trim().equals("0")  && txtSLBan3.getText().trim().equals("0")) {
+			    		banHangList.removeItem(this);
+				    	capNhatBang(banHangList);
+				    	tinhCacLoaiTienCuaHD();
+			    	}
+			    	if (txtSLBan2.getText().equals("0") && (!txtSLBan1.getText().trim().equals("0")  || !txtSLBan3.getText().trim().equals("0"))) {
+			    		thayDoi2 = 0;
+			    	}
+			    	else 
+			    		thayDoi2 = -1; 
+			    }
+				
+				if (o.equals(btnGiam3)) {
+			    	if (txtSLBan3.getText().equals("1") && txtSLBan2.getText().trim().equals("0")  && txtSLBan1.getText().trim().equals("0")) {
+			    		banHangList.removeItem(this);
+				    	capNhatBang(banHangList);
+				    	tinhCacLoaiTienCuaHD();
+			    	}
+			    	if (txtSLBan3.getText().equals("0") && (!txtSLBan2.getText().trim().equals("0")  || !txtSLBan1.getText().trim().equals("0"))) {
+			    		thayDoi3 = 0;
+			    	}
+			    	else 
+			    		thayDoi3 = -1; 
+			    }
+				
+			    if (thayDoi1 != 0 || thayDoi2 != 0 || thayDoi3 != 0) {
+			        capNhatSoLuong(thayDoi1, thayDoi2, thayDoi3); 
+			                      
+			        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
+				    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
 			        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien));
-			        SLSP = thuoc.soLuong;
+			        SLSP1 = thuoc.soLuongDVT1;
+			        SLSP2 = thuoc.soLuongDVT2;
+			        SLSP3 = thuoc.soLuongDVT3;
 			        tinhCacLoaiTienCuaHD();
 			    }
 			    
-//			    if ((banHangList.getItemList().size() == 1 || SLSP == 1) && (o.equals(btnXoa) || o.equals(btnGiam))) {
-//			    	banHangList.removeAllItems();
-//			    	System.out.println("da xoa");
-//			    }
-//		|| SLSP == 0
 			    if (o.equals(btnXoa) ) {
 			    	banHangList.removeItem(this);
 			    	capNhatBang(banHangList);
@@ -934,6 +1079,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		txtCCCD.setText("");
 		comboBoxChietKhau.removeAllItems();
 		chckbxKhachLe.setSelected(false);
+		kh = null;
 	}
 	
 	public static void lamMoi() {
@@ -956,6 +1102,30 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		banHangList.updateList(new ArrayList<>());
 		banHangList.repaint();
 
+	}
+	
+	private void kiemTraSLTon(CustomItemList banHangList) {
+		for (CustomItem item : banHangList.getItemList()) {
+	        if (item instanceof BanHangRow) {
+	            BanHangRow row = (BanHangRow) item;
+	            Thuoc sanPham = row.getSanPhamYTe(); // Lấy đối tượng Thuoc từ BanHangRow
+
+	            LoHang loHang = bh_ctr.timLoHang(sanPham.maThuoc);
+	            
+	            if (loHang.getSoLuongDonViTinh1() < sanPham.soLuongDVT1) {
+	                JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT1) chi còn " + loHang.getSoLuongDonViTinh1());
+	                return;
+	            }
+	            if (loHang.getSoLuongDonViTinh2() < sanPham.soLuongDVT2) {
+	            	 JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT2) chi còn " + loHang.getSoLuongDonViTinh2());
+	                return;
+	            }
+	            if (loHang.getSoLuongDonViTinh3() < sanPham.soLuongDVT3) {
+	            	 JOptionPane.showMessageDialog(this, "Sản phẩm " + sanPham.tenThuoc + "(ĐVT3) chi còn " + loHang.getSoLuongDonViTinh3());
+	                return;
+	            }
+	        }
+		}
 	}
 	
 	private void layThoiGianHienTai() {

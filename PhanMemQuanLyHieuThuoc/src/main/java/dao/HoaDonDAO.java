@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import connectDB.ConnectDB;
+import customDataType.LoaiHoaDon;
 import entity.HoaDon;
 import entity.KhachHang;
 import java.math.BigDecimal;
@@ -244,7 +245,7 @@ public class HoaDonDAO {
 		int n = 0;
 		
 		try {
-			stmt = con.prepareStatement("insert into " + "HoaDon values(?, ?, ?, ?, ?, ?, ?)");
+			stmt = con.prepareStatement("insert into " + "HoaDon values(?, ?, ?, ?, ?, ?, ?, ?)");
 			stmt.setString(1, hd.getMaHoaDon());
 			stmt.setDate(2, hd.getNgayTao());
 			stmt.setInt(3, hd.getDiemSuDung());
@@ -258,6 +259,9 @@ public class HoaDonDAO {
             }
 			
 			stmt.setString(7, hd.getKhachHang().getMaKhachHang());
+			
+			LoaiHoaDon loaiHD = hd.getLoaiHD(); 
+			stmt.setString(8, loaiHD.toString());
 			
 			n = stmt.executeUpdate();
 			

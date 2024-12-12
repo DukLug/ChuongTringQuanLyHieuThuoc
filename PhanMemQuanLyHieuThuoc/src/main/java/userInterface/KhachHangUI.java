@@ -421,6 +421,11 @@ public class KhachHangUI extends JPanel implements ActionListener, MouseListener
 		String sdt = txtSDT.getText().trim();
 		String cccd = txtCCCD.getText().trim();
 		
+		if (KhachHangCTR.kiemTraTrungsdt(sdt) != null) {
+			thongBaoLoi(txtHoTen, "Số điện thoại đã trùng");
+			return false;
+		}
+			
 		if (ten.isEmpty() || ten == null) {
 			thongBaoLoi(txtHoTen, "Tên khách hàng không được để trống");
 			return false;

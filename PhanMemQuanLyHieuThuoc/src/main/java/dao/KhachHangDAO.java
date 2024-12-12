@@ -213,7 +213,7 @@ public class KhachHangDAO {
 	}
 	
 	public KhachHang timTheoSDT1(String SDT) {
-		KhachHang khachHang = new KhachHang();
+		KhachHang khachHang = null;
 	    try {
 	        PreparedStatement ps = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE Sdt = ?");
 	        ps.setString(1, SDT);

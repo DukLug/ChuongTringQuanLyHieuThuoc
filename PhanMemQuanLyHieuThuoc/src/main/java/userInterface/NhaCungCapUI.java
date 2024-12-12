@@ -354,6 +354,11 @@ public class NhaCungCapUI extends JPanel implements ActionListener, MouseListene
 			return false;
 		}
 		
+		if (!(sdt.length() > 0)) {
+			thongBaoLoi(txtTen, "Số điện thoại nhà cung cấp không được để trống");
+			return false;
+		}
+		
 		if (!(sdt.length() > 0 && sdt.matches("[0-9]{10,14}"))) {
 			thongBaoLoi(txtSDT, "Số điện thoại phải từ 10 đến 14 ký tự số");
 			return false;

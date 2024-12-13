@@ -1,11 +1,13 @@
 package controller;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import connectDB.ConnectDB;
 import dao.HoaDonDAO;
+import entity.ChiTietHoaDon;
 import entity.DonDoiTra;
 import entity.HoaDon;
 
@@ -83,6 +85,32 @@ public class HoaDonCTR {
 	
 	public ArrayList<HoaDon> layDanhSachHoaDon(){
 		return hdDAO.getHoaDon();
+	}
+
+	public static ArrayList<HoaDon> layDanhSachTatCaHoaDon() {
+		
+		
+		return HoaDonDAO.layDanhSachTatCaHoaDon();
+	}
+
+	public static ArrayList<ChiTietHoaDon> layDanhSachChiTietHoaDon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static ArrayList<HoaDon> layDanhSachDonNhapTheoNgay(Date fromDate, Date toDate) {
+//		  ArrayList<HoaDon> filteredList = HoaDonCTR.layDanhSachDonNhapTheoNgay(fromDate, toDate);			
+		    ArrayList<HoaDon> result = new ArrayList<HoaDon>();
+		    ArrayList<HoaDon> data = layDanhSachTatCaHoaDon();
+
+		    for (HoaDon hd : data) {
+		        if (hd.getNgayTao().compareTo(fromDate) >= 0 && hd.getNgayTao().compareTo(toDate) <= 0) {
+		            result.add(hd);
+		        }
+		    }
+
+		    return result;	
+		
 	}
 
 	

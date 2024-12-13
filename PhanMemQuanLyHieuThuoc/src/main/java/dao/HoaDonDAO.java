@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import connectDB.ConnectDB;
 import customDataType.LoaiHoaDon;
+import entity.DonNhapHang;
 import entity.HoaDon;
 import entity.KhachHang;
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class HoaDonDAO {
 	
 	public static ArrayList<HoaDon> dsHoaDon;
 	private static ArrayList<HoaDon> dsHoaDon2;
+	private static ArrayList<HoaDon> dsHoaDon3;
 	
 	public String getMaKhachHangByMaHoaDon(String maHoaDon) {
         String maKhachHang = null;
@@ -378,5 +380,58 @@ public class HoaDonDAO {
 	        e.printStackTrace();
 	    }
 	    return data;
+	}
+	
+	
+//	  public static ArrayList<HoaDon> layDanhSachTatCaHoaDon() {
+//		  dsHoaDon3 = new ArrayList<>();
+//	        try {
+//	            ConnectDB.getInstance();
+//	            Connection con = ConnectDB.getConnection();
+//	            String sql = "SELECT * FROM HoaDon";
+//	            Statement statement = con.createStatement();
+//	            ResultSet rs = statement.executeQuery(sql);
+//	            
+//	            while (rs.next()) {
+//	            	
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	        return dsHoaDon3;
+//	  }
+	public static ArrayList<HoaDon> layDanhSachTatCaHoaDon() {
+	    ArrayList<HoaDon> dsHoaDon3 = new ArrayList<>();
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT * FROM HoaDon";
+	        Statement statement = con.createStatement();
+	        ResultSet rs = statement.executeQuery(sql);
+	        
+	        while (rs.next()) {
+	            // Giả sử lớp HoaDon có một constructor phù hợp với các tham số này
+				String maHoaDon = rs.getString("MaHoaDon");
+				Date ngayTao = rs.getDate("NgayTao");
+				int diemSuDung = rs.getInt("DiemSuDung");
+				BigDecimal thanhTien = rs.getBigDecimal("ThanhTien");
+				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"));
+				KhuyenMai km = new KhuyenMai(rs.getString("MaKhuyenMai"));
+				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"));
+				String loaiHDStr = rs.getString("LoaiHoaDon");
+
+	            // Chuyển đổi từ chuỗi mô tả sang giá trị enum
+	            LoaiHoaDon loaiHD = LoaiHoaDon.fromString(loaiHDStr);
+
+				HoaDon hd = new HoaDon(maHoaDon, ngayTao, diemSuDung, thanhTien, nv, km, kh, loaiHD);
+
+
+
+	            dsHoaDon3.add(hd);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return dsHoaDon3;
 	}
 }

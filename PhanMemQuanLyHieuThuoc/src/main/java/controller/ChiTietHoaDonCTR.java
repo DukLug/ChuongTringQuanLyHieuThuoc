@@ -10,7 +10,7 @@ import entity.ChiTietHoaDon;
 
 public class ChiTietHoaDonCTR {
 
-	private ChiTietHoaDonDAO chiTietHoaDonDAO;
+	private static ChiTietHoaDonDAO chiTietHoaDonDAO;
 
     public ChiTietHoaDonCTR() {
         this.chiTietHoaDonDAO = new ChiTietHoaDonDAO(); 
@@ -20,6 +20,12 @@ public class ChiTietHoaDonCTR {
     
     public ArrayList<ChiTietHoaDon> timChiTietHoaDonTheoMaHoaDon(String maHoaDon) {
         return chiTietHoaDonDAO.timChiTietHoaDonTheoMaHoaDon(maHoaDon);
+    }
+    
+
+    
+    public static ArrayList<ChiTietHoaDon> layDSCTHDTheoMa(String maHoaDon) {
+        return chiTietHoaDonDAO.layDSCTHDTheoMa(maHoaDon);
     }
 
 }

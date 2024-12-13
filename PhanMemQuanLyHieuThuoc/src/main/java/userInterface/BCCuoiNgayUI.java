@@ -51,7 +51,7 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private JLabel labelNgayBan;
     private JButton btnXuatFile;
-    private String[] headers = {"Mã hóa đơn", "Ngày Bán", "Doanh thu", "Loại hóa đơn", "Phí trả hàng", "Thực thu"};
+    private String[] headers = {"Mã hóa đơn", "Ngày Bán", "Doanh thu", "Loại hóa đơn", "Tiền trả khách", "Thực thu"};
 
     public BCCuoiNgayUI() {
         super();
@@ -134,7 +134,7 @@ public class BCCuoiNgayUI extends JPanel implements ActionListener, MouseListene
 
         JLabel lblTongHoaDon = new JLabel("Tổng số hóa đơn: " + tongHoaDon);
         JLabel lblTongDoanhThu = new JLabel("Tổng doanh thu: " + tongDoanhThu.toString());
-        JLabel lblTongPhiTra = new JLabel("Tổng phí trả: " + tongPhiTra.toString());
+        JLabel lblTongPhiTra = new JLabel("Tổng tiền trả: " + tongPhiTra.toString());
         JLabel lblTongThucThu = new JLabel("Tổng thực thu: " + tongThucThu.toString());
 //
 

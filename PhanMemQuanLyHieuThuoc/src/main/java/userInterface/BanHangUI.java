@@ -628,7 +628,21 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			}
 			
 			if (kiemTraSLTon(banHangList)) {
+				if ( txtSDT.getText().trim() == null) {
+					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+					return;
+				}
 				
+				if (txtSDT.getText().trim() == null && !chckbxKhachLe.isSelected() ) {
+					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+					return;
+				}
+				
+				if (banHangList.getItemList().size() == 0) {
+					JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm");
+					return;
+				}
+
 				String maHD = bh_ctr.taoMaHoaDon();
 				LocalDate localDate = LocalDate.now(); // Lấy ngày hiện tại
 				Date ngayTao = Date.valueOf(localDate);

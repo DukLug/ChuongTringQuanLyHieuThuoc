@@ -2,4 +2,8 @@
 /userInterface/
 /controller/
 /dao/
+<<<<<<< HEAD
 /entity/
+=======
+>>>>>>> a083e933f2365ba5ba31a0359c8cd1ffb8f81278
+/connectDB/

@@ -56,4 +56,12 @@
 /userInterface/
 /controller/
 /dao/
+<<<<<<< HEAD
 >>>>>>> a083e933f2365ba5ba31a0359c8cd1ffb8f81278
+=======
+<<<<<<< HEAD
+/entity/
+=======
+>>>>>>> a083e933f2365ba5ba31a0359c8cd1ffb8f81278
+/connectDB/
+>>>>>>> 0383650a8d75423262e2bf3dcc10e1e6f50430c8

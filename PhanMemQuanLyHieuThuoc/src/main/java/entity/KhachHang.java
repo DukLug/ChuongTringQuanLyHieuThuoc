@@ -69,10 +69,10 @@ public class KhachHang {
 	}
 
 	public void setSdt(String sdt) {
-		if (sdt.length() > 0) {
-			if (sdt.length() < 10 || sdt.length() > 14)
-				throw new  IllegalArgumentException("Số điện thoại chỉ gồm 10 đến 14 ký tự số");
-		}
+//		if (sdt.length() > 0) {
+//			if (sdt.length() < 10 || sdt.length() > 14)
+//				throw new  IllegalArgumentException("Số điện thoại chỉ gồm 10 đến 14 ký tự số");
+//		}
 
 		
 		this.sdt = sdt;

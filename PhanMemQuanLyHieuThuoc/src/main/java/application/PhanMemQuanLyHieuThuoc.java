@@ -39,13 +39,11 @@ import dao.SanPhamYTeDAO;
 import entity.NhanVien;
 import entity.SanPhamYTe;
 import entity.TaiKhoan;
-import functionalClass.DataImporter;
 import functionalClass.GlobalExceptionHandler;
 import functionalClass.SearchTool;
 import testEntity.TestNguoi;
 import testEntity.Thuoc;
 import userInterface.*;
-import userInterface.NhapHangUI.NhapHangRow;
 
 public class PhanMemQuanLyHieuThuoc {
 	public static final boolean HienLoi = false;

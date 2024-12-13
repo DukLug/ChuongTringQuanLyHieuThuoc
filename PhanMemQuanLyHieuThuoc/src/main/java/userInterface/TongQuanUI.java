@@ -47,7 +47,6 @@ import dao.KhuyenMaiDAO;
 import dao.SanPhamYTeDAO;
 import entity.KhuyenMai;
 import entity.SanPhamYTe;
-import functionalClass.ImageLoader;
 import testEntity.Thuoc;
 import component.CustomButton.ButtonStyle;
 import component.CustomButton.CustomButtonIconSide;

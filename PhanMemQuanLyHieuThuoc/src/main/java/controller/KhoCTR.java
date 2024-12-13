@@ -2,6 +2,7 @@ package controller;
 
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import dao.ChiTietDonNhapDAO;
@@ -111,6 +112,50 @@ public class KhoCTR {
         // Format the new ID with leading zeros
         String newId = String.format("DHH%05d", nextNumber);
 
+        return newId;
+    }
+	public static String layMaNhapHangMoi() {
+        // Get the current list of Purchase Orders (assuming a function similar to layDanhSachTatCaDonHuy())
+        ArrayList<DonNhapHang> data = layDanhSachTatCaDonNhap(); 
+        
+        // Get the current SQL date (simulating the SQL Date object)
+        Date sqlDate = new Date(System.currentTimeMillis()); // Example: current date in SQL format
+        
+        // Convert SQL Date to the format ddMMyyyy
+        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+        String currentDate = sdf.format(sqlDate); // Format the SQL Date into a string
+        
+        // Initialize the highest number found to 0
+        int maxNumber = 0;
+
+        for (DonNhapHang donNhap : data) {
+            String currentId = donNhap.getMaDonNhap(); // Get the current ID
+            
+            // Check if the ID starts with "DN" and follows the correct format
+            if (currentId.startsWith("DN") && currentId.length() == 14) {
+                try {
+                    // Extract the date and number part of the ID
+                    String datePart = currentId.substring(2, 10); // ddMMyyyy
+                    int numberPart = Integer.parseInt(currentId.substring(10)); // Last four digits
+                    
+                    // Check if the date part matches the current date
+                    if (datePart.equals(currentDate)) {
+                        // Update maxNumber if the current number is larger
+                        if (numberPart > maxNumber) {
+                            maxNumber = numberPart;
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle the case where the numeric part is invalid (optional)
+                    System.err.println("Invalid ID format: " + currentId);
+                }
+            }
+        }
+
+        // Generate the new ID with the incremented number, padded to 4 digits
+        int newNumber = maxNumber + 1;
+        String newId = "DN" + currentDate + String.format("%04d", newNumber);
+        
         return newId;
     }
 }

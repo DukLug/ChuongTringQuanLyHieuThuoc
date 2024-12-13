@@ -78,6 +78,9 @@ public class UIStyles {
 	public static final ButtonStyle CancelButtonStyle = new ButtonStyle(
 			160, NavBarHeight, 18, Color.white, Color.decode("#a83e32"), Color.decode("#91352a"), Color.decode("#752a22")
 		);
+	public static final ButtonStyle SmallButtonStyle = new ButtonStyle(
+			20, NavBarHeight, 18, Color.white, Color.decode("#a83e32"), Color.decode("#91352a"), Color.decode("#752a22")
+		);
 	public static final int NavBarDropBoxItemHeight = NavBarHeight - 30;
 	
 	public static final Color MainSectionBackgroundColor = Color.gray;

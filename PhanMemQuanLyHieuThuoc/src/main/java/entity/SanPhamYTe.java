@@ -9,8 +9,6 @@ import java.util.Objects;
 
 import customDataType.DonViTinh;
 import customDataType.TrangThaiSanPham;
-import functionalClass.ImageLoader;
-
 
 public class SanPhamYTe {
 	private String maSanPham;

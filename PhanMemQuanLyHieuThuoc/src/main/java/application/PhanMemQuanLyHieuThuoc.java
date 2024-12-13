@@ -61,10 +61,10 @@ public class PhanMemQuanLyHieuThuoc {
 	    SwingUtilities.invokeLater(new Runnable() {
 	        @Override
 	        public void run() {
-	            //new DangNhapUI().setVisible(true);
-	        	nhanVienHienTai = NhanVienCTR.timTheoMa("NV000005");
-	        	taiKhoanHienTai = TaiKhoanCTR.timTheoMa("NV000005");
-	        	new TrangChuUI(false).setVisible(true);
+	            new DangNhapUI().setVisible(true);
+	        	//nhanVienHienTai = NhanVienCTR.timTheoMa("NV000005");
+	        	//taiKhoanHienTai = TaiKhoanCTR.timTheoMa("NV000005");
+	        	//new TrangChuUI(false).setVisible(true);
 	        }
 	    });
 	}

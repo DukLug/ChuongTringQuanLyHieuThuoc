@@ -82,8 +82,8 @@ public class TrangChuUI extends JFrame {
         
         labelBarEast = new JPanel();
         labelBarEast.setLayout(new BoxLayout(labelBarEast, BoxLayout.X_AXIS));
-        labelBarEast.add(new CustomButton("About", UIStyles.LabelBarButtonStyle, UIStyles.AboutIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
-        labelBarEast.add(new CustomButton("Help", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
+        //labelBarEast.add(new CustomButton("About", UIStyles.LabelBarButtonStyle, UIStyles.AboutIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
+        //labelBarEast.add(new CustomButton("Help", UIStyles.LabelBarButtonStyle, UIStyles.HelpIcon, CustomButtonIconSide.LEFT, ()->quayLai()));
         //labelBarEast.add(new CustomButton(PhanMemQuanLyHieuThuoc.nhanVienHienTai.getHoTen(), UIStyles.LabelBarButtonStyle, UIStyles.UserIcon, CustomButtonIconSide.RIGHT, ()->quayLai()));
         labelBarEast.add(new CustomComboBox(
         		PhanMemQuanLyHieuThuoc.nhanVienHienTai.getHoTen(), 
@@ -188,7 +188,7 @@ public class TrangChuUI extends JFrame {
 		}
 		
 
-
+		
 
 				
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));

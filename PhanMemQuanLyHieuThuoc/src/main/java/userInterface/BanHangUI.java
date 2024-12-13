@@ -463,7 +463,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		if (o.equals(txtTimSDT)){
 			thongTinCanTim = txtTimSDT.getText().trim();
 			kh = bh_ctr.timKHTheoSDT(thongTinCanTim);
-			
 			if (kh == null) {
 				thongBaoLoi(txtTimSDT, "Khách hàng không tồn tại");
 				return;
@@ -562,32 +561,37 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		
 		// thêm khách hàng
 		if (o.equals(btnThemKH)) {
+			if (kiemTraDuLieu()) {
+				String tenKh = txtTenKH.getText().trim();
+				String sdtKH = txtSDT.getText().trim();
 				
-			String tenKh = txtTenKH.getText().trim();
-			String sdtKH = txtSDT.getText().trim();
-			
-			kh = bh_ctr.timKHTheoSDT(sdtKH);
-			
-			if (kh == null) {	
-				int diemTicLuy = 0;
-				String ma = kh_ctr.taoMa();
+				kh = bh_ctr.timKHTheoSDT(sdtKH);
 
-				KhachHang khachHangMoi = new KhachHang(ma, tenKh, sdtKH, diemTicLuy);
+				if (kh == null) {	
+					int diemTicLuy = 0;
+					String ma = kh_ctr.taoMa();
+
+					KhachHang khachHangMoi = new KhachHang(ma, tenKh, sdtKH, diemTicLuy);
+					
+
+						if (bh_ctr.themKH(khachHangMoi)) {
+							chckbxKhachLe.setSelected(false);
+							txtTenKH.setText(khachHangMoi.getHoTen());
+							txtCCCD.setText(khachHangMoi.getCccd());
+							txtDTL.setText(Integer.toString(khachHangMoi.getDiemTichLuy()));
+							txtSDT.setText(khachHangMoi.getSdt());
 				
-				if (bh_ctr.themKH(khachHangMoi)) {
-					chckbxKhachLe.setSelected(false);
-					txtTenKH.setText(khachHangMoi.getHoTen());
-					txtCCCD.setText(khachHangMoi.getCccd());
-					txtDTL.setText(Integer.toString(khachHangMoi.getDiemTichLuy()));
-					txtSDT.setText(khachHangMoi.getSdt());
-		
-					tinhChietKhau(sdtKH);
+							tinhChietKhau(sdtKH);
+						}
+					
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Khách hàng đã tồn tại");
+					return;
 				}
 			}
-			else {
-				JOptionPane.showMessageDialog(this, "Khách hàng đã tồn tại");
-				return;
-			}
+				
+			
 			
 
 		}
@@ -607,12 +611,23 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		// thêm hóa đơn
 		if (o.equals(btnTaoHD)) {
 			
+			if (txtSDT.getText().trim().isEmpty() && !chckbxKhachLe.isSelected() ) {
+				JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+				return;
+			}
+			
+		
+//			if (txtSDT.getText().trim().isEmpty()) {
+//				JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
+//				return;
+//			}
+			
+			if (banHangList.getItemList().size() == 0) {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn sanr phẩm");
+				return;
+			}
+			
 			if (kiemTraSLTon(banHangList)) {
-				
-				if (!chckbxKhachLe.isSelected() || txtSDT.getText().trim() == null) {
-					JOptionPane.showMessageDialog(this, "Phải nhập thông tin khách hàng");
-					return;
-				}
 				
 				String maHD = bh_ctr.taoMaHoaDon();
 				LocalDate localDate = LocalDate.now(); // Lấy ngày hiện tại
@@ -652,7 +667,8 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 							ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maCTHD, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3,
 									tongTien, hd, sanPhamYTe, LoHang, LohayThe);
 							
-							if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)) 
+							if (bh_ctr.themChiTietHoaDon(chiTietHoaDon) && bh_ctr.capNhatSoLuongSP(sanPham.maThuoc, sanPham.soLuongDVT1, sanPham.soLuongDVT2, sanPham.soLuongDVT3)
+									&& bh_ctr.capNhatSoLuongKM(khuyenMai.getMaKhuyenMai())) 
 								continue;
 				        }
 					}
@@ -1152,24 +1168,6 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 			} 
 		}
 		
-//		private void capNhatSL(int thayDoi1_1, int thayDoi2_2, int thayDoi3_3) {
-//			 	capNhatSoLuong(thayDoi1_1, thayDoi2_2, thayDoi3_3); 
-//             
-////				int SLSP1 = Integer.parseInt(txtSLBan1.getText());
-////				int SLSP2 = Integer.parseInt(txtSLBan2.getText());
-////				int SLSP3 = Integer.parseInt(txtSLBan3.getText());
-//				
-////		        BigDecimal tongTien = bh_ctr.tinhTongTienTungSP(thuoc.giaBanDonViTinh1, thuoc.giaBanDonViTinh2, thuoc.giaBanDonViTinh3, 
-////			    		txtSLBan1.getText().trim(), txtSLBan2.getText().trim(), txtSLBan3.getText().trim());
-////		        lblTongTienSP.setText(bh_ctr.formatDecimal(tongTien));
-//		        
-////		        SLSP1 = thuoc.soLuongDVT1;
-////		        SLSP2 = thuoc.soLuongDVT2;
-////		        SLSP3 = thuoc.soLuongDVT3;
-//		        
-//		        tinhCacLoaiTienCuaHD();
-//		}
-		
 		private boolean kiemTraSLNhapVao(String soLuong) {
 		    return soLuong.matches("\\d+");  // Kiểm tra chuỗi có chứa chỉ các chữ số
 		}
@@ -1199,7 +1197,7 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 		txtCCCD.setText("");
 		comboBoxChietKhau.removeAllItems();
 		chckbxKhachLe.setSelected(false);
-		kh = null;
+		kh = new KhachHang();
 	}
 	
 	public static void lamMoi() {
@@ -1248,6 +1246,41 @@ public class BanHangUI extends JPanel implements ActionListener, MouseListener  
 	                return false;
 	            }
 	        }
+		}
+		
+		return true;
+	}
+	
+	private boolean kiemTraDuLieu() {
+		String ten = txtTenKH.getText().trim();
+		String sdt = txtSDT.getText().trim();
+		String cccd = txtCCCD.getText().trim();
+			
+		if (ten.isEmpty() || ten == null) {
+			thongBaoLoi(txtTenKH, "Tên khách hàng không được để trống");
+			return false;
+		}
+		
+		if (!ten.matches("[a-zA-Z\\s]*")) {
+			thongBaoLoi(txtTenKH, "Họ tên chỉ chứa ký tự là chữ thường, chữ hoa và khoảng trắng");
+			return false;
+		}
+		
+		if (sdt.isEmpty() || sdt == null) {
+			thongBaoLoi(txtSDT, "Số điện thoại không được để trống");
+			return false;
+		}
+		
+		if (!(sdt.length() > 0 && sdt.matches("[0-9]{10,14}"))) {
+			thongBaoLoi(txtSDT, "Số điện thoại phải từ 10 đến 14 ký tự số");
+			return false;
+		}
+		
+		if (cccd.length() > 0 && cccd != null) {
+			if (!(cccd.matches("[0-9]{12}"))) {
+				thongBaoLoi(txtCCCD, "Căn cước công dân phải đủ 12 ký tự số");
+				return false;
+			}
 		}
 		
 		return true;

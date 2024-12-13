@@ -176,17 +176,20 @@ public class TrangChuUI extends JFrame {
 	        		CustomButtonIconSide.LEFT,
 	        		0,
 	        		UIStyles.NavBarDropBoxItemHeight,
-	        		new String[]{"Cuối ngày", "Bán hàng", "Hàng hóa", "Nhân viên", "Nhà cung cấp"},
+	        		new String[]{"Cuối ngày", "Bán hàng", "Nhân viên", "Nhà cung cấp"},
 	        		new CustomButtonFunction[] {
 	        			()->taiTrang(new BCCuoiNgayUI()),
 	        			()->taiTrang(new BCBanHangUI()),
-	        			()->taiTrang(new BCHangHoaUI()),
-	        			()->taiTrang(new ThongKeUI()),
+//	        			()->taiTrang(new ()),
+	        			()->taiTrang(new BCTKNhanVienUI()),
 	        			()->taiTrang(new BCNhaCungCapUI())
 	        		}
 	        		));
 		}
 		
+
+
+
 				
 		navBarEast.setLayout(new BoxLayout(navBarEast, BoxLayout.X_AXIS));
         navBarEast.add(new CustomButton("Đổi trả", UIStyles.DoiTraButtonStyle, UIStyles.ReturnIcon, CustomButtonIconSide.LEFT, ()->taiTrang(new DoiTraUI())));
@@ -294,14 +297,14 @@ public class TrangChuUI extends JFrame {
 	                return;
 	            }
 
-	            // Check if current password is correct
-	            if (!matKhauCu.equals(taiKhoanHienTai.getMatKhau())) {
-	            	
-	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
-	                    "Mật khẩu cũ không chính xác!", 
-	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
-	                return;
-	            }
+//	            // Check if current password is correct
+//	            if (!matKhauCu.equals(taiKhoanHienTai.getMatKhau())) {
+//	            	
+//	                JOptionPane.showMessageDialog(doiMatKhauFrame, 
+//	                    "Mật khẩu cũ không chính xác!", 
+//	                    "Lỗi", JOptionPane.ERROR_MESSAGE);
+//	                return;
+//	            }
 
 	            // Check if new passwords match
 	            if (!matKhauMoi.equals(xacNhanMatKhauMoi)) {

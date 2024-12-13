@@ -66,7 +66,50 @@ public class ChiTietHoaDonDAO {
 	    
 	    return chiTietHoaDons;
 	}
+	
+	public static ArrayList<ChiTietHoaDon> layDSCTHDTheoMa(String maHoaDon) {
+	    ArrayList<ChiTietHoaDon> dsCTHDTheoMa = new ArrayList<>();
+	    PreparedStatement stmt = null;
+	    try {
+	        ConnectDB.getInstance();
+	        Connection con = ConnectDB.getConnection();
+	        String sql = "SELECT * FROM ChiTietHoaDon where MaHoaDon = ?";
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, maHoaDon);
+	        
+	        // Thực thi câu lệnh SQL và trả về ResultSet
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // Duyệt qua các kết quả trả về
+	        while (rs.next()) {
+//	        	String maChiTietHoaDon = rs.getNString("MaChiTietHoaDon");
+               
+                int soLuongDonViTinh1 = rs.getInt("SoLuongDonViTinh1");
+                int soLuongDonViTinh2 = rs.getInt("SoLuongDonViTinh2");
+                int soLuongDonViTinh3 = rs.getInt("SoLuongDonViTinh3");
+                BigDecimal tongTien = rs.getBigDecimal("TongTien"); 
+                String maSanPham = rs.getNString("MaSanPham");
+                String malo = rs.getNString("MaLo");
+                String malo2 = rs.getNString("MaLoHangThayThe");
+                
+                HoaDon hoaDon = new HoaDon(maHoaDon);
+                SanPhamYTe spyt = new SanPhamYTe(maSanPham);
+                LoHang lh1 = new LoHang(malo);
+                LoHang lh2 = new LoHang(malo2);
 
+                
+                ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(maHoaDon, soLuongDonViTinh1, soLuongDonViTinh2, soLuongDonViTinh3, tongTien, hoaDon, spyt, lh1, lh2);
+                
+
+				 dsCTHDTheoMa.add(chiTietHoaDon);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return dsCTHDTheoMa;
+	}
 	
 	// thêm chi tiết đơn đổi trả
 		public boolean themChiTietHoadon(ChiTietHoaDon chiTietHoaDon) {
@@ -132,6 +175,8 @@ public class ChiTietHoaDonDAO {
 		    
 		    return dsCTHD;
 		}
+		
+		
 		
 
 }

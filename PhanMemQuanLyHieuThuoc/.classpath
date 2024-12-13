@@ -48,6 +48,8 @@
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="libs/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
@@ -57,7 +59,5 @@
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="libs/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

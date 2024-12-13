@@ -80,6 +80,16 @@ public class KhoCTR {
 	public static boolean themDonHuy(DonHuyHang donHuy) {
 		return DonHuyHangDAO.themDonHuyHang(donHuy);
 	}
+	
+	public static boolean themDonNhap(DonNhapHang donNhap) {
+		return DonNhapHangDAO.themDonNhapHang(donNhap);
+	}
+	public static boolean themChiTietDonNhap(ChiTietDonNhap chiTiet) {
+		return ChiTietDonNhapDAO.them(chiTiet);
+	}
+	public static boolean themLoHang(LoHang loHang) {
+		return LoHangDAO.themLoHang(loHang);
+	}
 	public static String layMaDonHuyMoi() {
         ArrayList<DonHuyHang> data = layDanhSachTatCaDonHuy(); // Get the current list of objects
         

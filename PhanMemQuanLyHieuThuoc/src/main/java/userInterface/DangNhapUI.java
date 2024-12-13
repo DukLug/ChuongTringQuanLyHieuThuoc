@@ -104,7 +104,7 @@ public class DangNhapUI extends JFrame {
     private void xuLyDangNhap() {
         String tenDangNhap = txtTenDangNhap.getText().trim();
         String matKhau = TaiKhoanCTR.hashPassword(new String(txtMatKhau.getPassword()));
-
+        System.out.print(matKhau);
         // Check for empty fields
         if (tenDangNhap.isEmpty() || matKhau.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
@@ -149,7 +149,7 @@ public class DangNhapUI extends JFrame {
         if (dangNhapThanhCong && nhanVienDangNhap != null) {
             // Set the current logged-in employee
             PhanMemQuanLyHieuThuoc.nhanVienHienTai = nhanVienDangNhap;
-            PhanMemQuanLyHieuThuoc.taiKhoanHienTai = taiKhoanDangNhap;
+            //PhanMemQuanLyHieuThuoc.taiKhoanHienTai = taiKhoanDangNhap;
             
             // Close login window
             dispose();

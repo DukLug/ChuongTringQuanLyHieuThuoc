@@ -1,11 +1,14 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /application/
 /component/
 /connectDB/
 /controller/
+=======
+>>>>>>> 5783d785983e742f81ed135ba48583324376ef37
 /customDataType/
 /dao/
 /entity/
@@ -13,6 +16,7 @@
 /testEntity/
 /userInterface/
 /META-INF/
+<<<<<<< HEAD
 =======
 >>>>>>> 497a51e422283770c080a420749fb288b1df7296
 /META-INF/
@@ -65,3 +69,5 @@
 >>>>>>> a083e933f2365ba5ba31a0359c8cd1ffb8f81278
 /connectDB/
 >>>>>>> 0383650a8d75423262e2bf3dcc10e1e6f50430c8
+=======
+>>>>>>> 5783d785983e742f81ed135ba48583324376ef37

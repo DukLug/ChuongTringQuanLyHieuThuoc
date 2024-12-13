@@ -293,4 +293,5 @@ public class BCBanHangUI extends JPanel implements ActionListener,MouseListener 
 		
 	}
 	
+	
 }

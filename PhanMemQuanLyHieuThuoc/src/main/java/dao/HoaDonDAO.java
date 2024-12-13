@@ -115,7 +115,7 @@ public class HoaDonDAO {
 	
 	}
 
-	public Object[][] layDanhSachHoaDonBanHangTheoNgay() {
+	public static Object[][] layDanhSachHoaDonBanHangTheoNgay() {
 	    dsHoaDon2 = new ArrayList<>();
 
 	    try {
